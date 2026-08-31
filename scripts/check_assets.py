@@ -62,9 +62,15 @@ def check_worker(js, sw):
             errs.append("app.js registers a worker without an https guard")
         if "unregister()" not in js:
             errs.append("app.js never unregisters — a stale worker cannot be evicted")
+        if "updateViaCache" not in js:
+            errs.append("app.js registers without updateViaCache: 'none' — Safari will serve a four-hour-cached sw.js")
+        if ".update()" not in js:
+            errs.append("app.js never pokes update() — an iOS home-screen WebView will not check on its own")
 
     if "self.registration.unregister()" not in sw:
         errs.append("sw.js cannot take itself out when it wakes up off https")
+    if sw.count(".navigate(") < 2:
+        errs.append("sw.js must navigate clients both off https and when a new cache replaces an old one")
 
     for e in errs:
         print(f"  WORKER {e}")

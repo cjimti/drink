@@ -158,6 +158,12 @@ sitting on the brass fill has to flip with it.
   Off https, `app.js` actively unregisters and drops caches, and `sw.js`
   takes itself out if it ever wakes up off https. `check_assets.py`
   fails the build if either safeguard goes missing.
+- An iOS home-screen WebView resumes without navigating, so it will not
+  check for a new worker on its own, and a worker that merely claims
+  still leaves the old shell on screen. Production registration uses
+  `updateViaCache: 'none'` and pokes `update()` on foreground; a worker
+  that drops an old cache navigates its clients onto the new one.
+  `check_assets.py` fails the build if those are missing.
 - Symptom to recognise: the page loads, or shows stale content, with
   nothing listening on the port. Check `lsof -nP -iTCP:<port>` before
   believing anything the browser shows you. `make unstick` prints the

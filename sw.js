@@ -35,7 +35,17 @@ var SHELL = [
 self.addEventListener('install', function (e) {
   e.waitUntil(
     caches.open(CACHE)
-      .then(function (c) { return c.addAll(SHELL); })
+      .then(function (c) {
+        /* reload, not addAll: GitHub Pages caches JS for four hours, and
+           filling a new shell from that copy would stamp the old app into
+           the new cache. */
+        return Promise.all(SHELL.map(function (path) {
+          return fetch(path, { cache: 'reload' }).then(function (res) {
+            if (!res.ok) throw new Error(path);
+            return c.put(path, res);
+          });
+        }));
+      })
       .then(function () { return self.skipWaiting(); })
   );
 });
@@ -43,22 +53,39 @@ self.addEventListener('install', function (e) {
 self.addEventListener('activate', function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
-      return Promise.all(keys.map(function (k) {
-        return k === CACHE ? null : caches.delete(k);
-      }));
-    }).then(function () { return self.clients.claim(); })
+      var stale = keys.filter(function (k) { return k !== CACHE; });
+      return Promise.all(stale.map(function (k) { return caches.delete(k); }))
+        .then(function () { return stale.length; });
+    }).then(function (n) {
+      return self.clients.claim().then(function () { return n; });
+    }).then(function (n) {
+      if (!n) return;
+      /* Claiming is not enough. An iOS home-screen WebView resumes in
+         place, old shell still parsed, and will sit on it until something
+         navigates. The https eviction already uses this; a replacing
+         cache has to as well. */
+      return self.clients.matchAll({ type: 'window' }).then(function (cs) {
+        cs.forEach(function (c) { c.navigate(c.url); });
+      });
+    })
   );
 });
 
 self.addEventListener('fetch', function (e) {
   var req = e.request;
-  if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  if (req.method !== 'GET') return;
 
-  var isData = /\/data\/.*\.json$/.test(new URL(req.url).pathname);
+  var url = new URL(req.url);
+  if (url.origin !== location.origin) return;
+  /* Never cache the worker itself. A cache-first hit here is how a
+     phone keeps an old sw.js after a deploy. */
+  if (/\/sw\.js$/.test(url.pathname)) return;
+
+  var isData = /\/data\/.*\.json$/.test(url.pathname);
 
   if (isData) {
     e.respondWith(
-      fetch(req).then(function (res) {
+      fetch(req, { cache: 'no-store' }).then(function (res) {
         var copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put(req, copy); });
         return res;

@@ -926,11 +926,24 @@
      Skipping registration is not enough to undo that: the stale worker
      is already serving the old app.js, so the guard never gets to run.
      Off https, this actively unregisters whatever is there, drops the
-     caches, and reloads once into a clean origin. */
+     caches, and reloads once into a clean origin.
+
+     iOS home-screen WebViews resume without navigating, so they will
+     not check for a new worker on their own. updateViaCache: 'none'
+     stops Safari using the four-hour CDN copy of sw.js, and a poke on
+     foreground is the check the resume never made. */
   if ('serviceWorker' in navigator) {
     if (location.protocol === 'https:') {
       window.addEventListener('load', function () {
-        navigator.serviceWorker.register('sw.js').catch(function () { /* offline is a bonus */ });
+        navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+          .then(function (reg) {
+            function poke() { reg.update(); }
+            document.addEventListener('visibilitychange', function () {
+              if (!document.hidden) poke();
+            });
+            window.addEventListener('pageshow', poke);
+          })
+          .catch(function () { /* offline is a bonus */ });
       });
     } else {
       navigator.serviceWorker.getRegistrations().then(function (regs) {
