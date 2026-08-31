@@ -123,51 +123,63 @@
   "garnishes": [
     {
       "code": "c",
-      "label": "Cherry"
+      "label": "Cherry",
+      "ingredient": "cherry"
     },
     {
       "code": "l",
-      "label": "Lemon twist"
+      "label": "Lemon twist",
+      "ingredient": "lemon"
     },
     {
       "code": "L",
-      "label": "Lime twist"
+      "label": "Lime twist",
+      "ingredient": "lime"
     },
     {
       "code": "Lw",
-      "label": "Lime wheel"
+      "label": "Lime wheel",
+      "ingredient": "lime"
     },
     {
       "code": "o",
-      "label": "Orange twist"
+      "label": "Orange twist",
+      "ingredient": "orange"
     },
     {
       "code": "fo",
-      "label": "Flamed orange twist"
+      "label": "Flamed orange twist",
+      "ingredient": "orange"
     },
     {
       "code": "O",
-      "label": "Olive"
+      "label": "Olive",
+      "ingredient": "olive"
     },
     {
       "code": "s",
-      "label": "Sugar rim"
+      "label": "Sugar rim",
+      "ingredient": "sugar"
     },
     {
       "code": "S",
-      "label": "Salt rim"
+      "label": "Salt rim",
+      "ingredient": "salt"
     },
     {
       "code": "m",
-      "label": "Mint"
+      "label": "Mint",
+      "ingredient": "mint"
     },
     {
       "code": "a",
-      "label": "Apple fan"
+      "label": "Apple fan",
+      "ingredient": "fresh-apple"
     },
     {
       "code": "cin",
-      "label": "Grated cinnamon"
+      "label": "Grated cinnamon",
+      "ingredient": "cinnamon"
     },
     {
       "code": "3",

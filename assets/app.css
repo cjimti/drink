@@ -15,17 +15,17 @@
    ───────────────────────────────────────────────────────────── */
 
 :root {
-  --ground:  #0B0B0A;
-  --sunk:    #191918;
-  --bone:    #F2EFE8;
-  --muted:   #8B8780;
-  --faint:   #605D58;
-  --rule:    #2A2A27;
-  --hair:    #1F1F1D;
-  --brass:   #C9A25C;
-  --on-brass: #0B0B0A;
-  --mark-bg: #F2EFE8;
-  --mark-fg: #0B0B0A;
+  --ground:  #121211;
+  --sunk:    #232320;
+  --bone:    #FBF8F1;
+  --muted:   #ADA79C;
+  --faint:   #837D72;
+  --rule:    #403E39;
+  --hair:    #2C2B27;
+  --brass:   #E0B86B;
+  --on-brass: #121211;
+  --mark-bg: #FBF8F1;
+  --mark-fg: #121211;
 
   --display: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --body: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -41,15 +41,15 @@
 @media (prefers-color-scheme: light) {
   :root {
     --ground:  #FFFFFF;
-    --sunk:    #F4F2ED;
+    --sunk:    #FAF8F3;
     --bone:    #111110;
-    --muted:   #6E6B65;
-    --faint:   #9A968F;
+    --muted:   #73706A;
+    --faint:   #A29E96;
     --rule:    #111110;
-    --hair:    #E2DFD8;
-    --brass:   #8A6420;
+    --hair:    #E9E6E0;
+    --brass:   #946200;
     --on-brass: #FFFFFF;
-    --mark-bg: #0B0B0A;
+    --mark-bg: #121211;
     --mark-fg: #FFFFFF;
     color-scheme: light;
   }
@@ -59,16 +59,39 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+/* An app shell, not a long page. The top rule and the tab bar are flex
+   items in a viewport-tall column and #main is the only thing that
+   scrolls. Fixed positioning is what let the tab bar drift: a fixed bar
+   is anchored to a viewport the browser resizes out from under it every
+   time the URL bar collapses, the keyboard opens, or a scroll-to-top
+   jolts the chrome back in. In flow inside a dvh-tall shell there is
+   nothing left for it to drift against. */
 body {
   margin: 0;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background: var(--ground);
   color: var(--bone);
   font-family: var(--body);
   font-size: 16px;
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
-  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
-  overscroll-behavior-y: none;
+}
+
+#main {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  /* Hold the scrollbar track open. A short view and a long one otherwise
+     differ by a scrollbar's width, and everything centred — the tabs
+     included — slides sideways as you move between them. */
+  scrollbar-gutter: stable;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -82,8 +105,7 @@ a { color: inherit; text-decoration: none; }
 /* ── Top bar ──────────────────────────────────────────────── */
 
 .topbar {
-  position: sticky;
-  top: 0;
+  flex: none;
   z-index: 30;
   display: flex;
   align-items: center;
@@ -142,7 +164,7 @@ a { color: inherit; text-decoration: none; }
 
 .filters {
   position: sticky;
-  top: calc(var(--topbar-h) + env(safe-area-inset-top));
+  top: 0;
   z-index: 20;
   background: var(--ground);
   border-bottom: 1px solid var(--rule);
@@ -302,11 +324,13 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.3;
 }
 
+/* The code is the thing this project is preserving, so it reads at full
+   strength in the margin rather than sitting back as a grey note. */
 .drink__code {
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: .02em;
-  color: var(--faint);
+  color: var(--bone);
   white-space: nowrap;
   align-self: start;
   padding-top: 2px;
@@ -388,6 +412,9 @@ a { color: inherit; text-decoration: none; }
 }
 .serve__row + .serve__row { margin-top: 3px; }
 
+/* A garnish you are short of reads like a pour you are short of. */
+.serve__g.is-out { color: var(--faint); text-decoration: line-through; }
+
 .serve__k {
   font-family: var(--display);
   font-weight: 700;
@@ -459,25 +486,63 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Bar ──────────────────────────────────────────────────── */
 
-.tally__hit {
-  display: block;
+/* The count is the only reason to tick anything, so it does not scroll
+   away. It rides the top of the shelf and goes up under your thumb as
+   you stock bottles, which is the whole feeling this tab is selling. */
+.tally {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--ground);
+  border-bottom: 1px solid var(--rule);
+  margin: 0 calc(var(--pad) * -1);
+  padding: 0 var(--pad);
+}
+
+.tally__hit,
+.tally__fig {
+  display: flex;
+  align-items: center;
+  gap: 13px;
   width: 100%;
+  min-height: 62px;
+  padding: 11px 0;
   appearance: none;
   background: transparent;
   border: 0;
   color: inherit;
   font: inherit;
   text-align: left;
-  padding: 0;
-  cursor: pointer;
+}
+.tally__hit { cursor: pointer; }
+
+.tally__n {
+  flex: none;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 34px;
+  line-height: .9;
+  letter-spacing: -.02em;
+  color: var(--brass);
+  font-variant-numeric: tabular-nums;
+}
+
+.tally__of {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 .tally__cta {
-  display: inline-block;
-  margin-top: 11px;
+  flex: none;
+  margin-left: auto;
   font-family: var(--display);
   font-weight: 700;
-  font-size: 10.5px;
+  font-size: 10px;
   letter-spacing: .15em;
   text-transform: uppercase;
   color: var(--brass);
@@ -485,33 +550,10 @@ a { color: inherit; text-decoration: none; }
   padding-bottom: 2px;
 }
 
-
-.tally {
-  padding: 26px 0 20px;
-  border-bottom: 1px solid var(--rule);
-}
-
-.tally__n {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 62px;
-  line-height: .9;
-  letter-spacing: -.02em;
-  color: var(--brass);
-}
-
-.tally__of {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 9px;
-}
+.tally__body { padding: 17px 0 2px; }
 
 .tally__note {
-  margin: 11px 0 0;
+  margin: 0;
   font-size: 14px;
   font-style: italic;
   color: var(--muted);
@@ -797,11 +839,22 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.6;
 }
 
+.sign {
+  margin: 14px 0 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.sign a { color: var(--muted); border-bottom: 1px solid var(--hair); }
+.sign a:hover { color: var(--brass); border-bottom-color: var(--brass); }
+
 /* ── Tab bar ──────────────────────────────────────────────── */
 
 .tabbar {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
+  flex: none;
   z-index: 40;
   display: flex;
   height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
@@ -831,7 +884,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tab__glyph { width: 17px; height: 17px; border: 1.5px solid currentColor; }
-.tab__glyph--menu { border-width: 1.5px 0; height: 13px; }
+/* The three glyphs are drawn at different heights on purpose, so each
+   reserves the same 17px box — otherwise the labels under them sit at
+   three slightly different heights. */
+.tab__glyph--menu { border-width: 1.5px 0; height: 13px; margin: 2px 0; }
 .tab__glyph--bar {
   border: 0;
   border-bottom: 1.5px solid currentColor;
@@ -841,7 +897,12 @@ a { color: inherit; text-decoration: none; }
     linear-gradient(currentColor, currentColor) 7.75px 0 / 1.5px 100% no-repeat,
     linear-gradient(currentColor, currentColor) 100% 0 / 1.5px 100% no-repeat;
 }
-.tab__glyph--key { border-radius: 50% 50% 0 0; border-bottom-width: 0; height: 14px; }
+.tab__glyph--key {
+  border-radius: 50% 50% 0 0;
+  border-bottom-width: 0;
+  height: 14px;
+  margin: 1.5px 0;
+}
 
 .tab__count {
   position: absolute;
@@ -862,6 +923,12 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: no-preference) {
   .recipe { animation: unfold .16s ease-out; }
   @keyframes unfold { from { opacity: 0; transform: translateY(-3px); } }
+
+  /* Only when the number actually went up. A tick on every repaint is
+     noise; a tick when a bottle just bought you three drinks is the
+     point of the tab. */
+  .tally__n.is-up { animation: tick .3s ease-out; }
+  @keyframes tick { from { opacity: .3; transform: translateY(5px) scale(.82); } }
 }
 
 /* ── Print ────────────────────────────────────────────────────
@@ -886,7 +953,22 @@ a { color: inherit; text-decoration: none; }
   .topbar, .tabbar, .filters, .tonight__acts, .tally__acts,
   .drink__missing, .loading { display: none !important; }
 
-  body { padding: 0; font-size: 11pt; }
+  /* The app shell is a viewport-tall box with one internal scroller.
+     On paper there is no viewport, so unwind it back to normal flow or
+     the printer gets one screenful and nothing after it. */
+  body {
+    display: block;
+    height: auto;
+    overflow: visible;
+    padding: 0;
+    font-size: 11pt;
+  }
+  #main {
+    overflow: visible;
+    min-height: 0;
+    scrollbar-gutter: auto;
+  }
+  .tally { position: static; }
   .view { max-width: none; padding: 0; }
 
   .tonight { border-bottom: 3px solid #000; padding-top: 0; }
@@ -899,6 +981,11 @@ a { color: inherit; text-decoration: none; }
 
   .drink.is-pourable .drink__name { color: #000; }
   .drink__head { padding: 7pt 0; }
+
+  /* On screen the code reads at full strength. On paper it goes back to
+     the printed card, where the shorthand sits small and grey in the
+     margin beside the drink rather than competing with it. */
+  .drink__code { color: var(--faint); }
 
   a[href]::after { content: ""; }
 }

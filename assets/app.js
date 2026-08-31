@@ -31,6 +31,11 @@
 
   var filter = { method: 'all', family: null, pourable: false, q: '' };
 
+  /* The shelf's running order, fixed on the way into the tab. See
+     renderBar. */
+  var barOrder = null;
+  var lastCan = null;    /* what the tally said last time, to tick it */
+
   /* ── helpers ───────────────────────────────────────────── */
 
   function $(s) { return document.querySelector(s); }
@@ -109,7 +114,7 @@
     return {
       glass: glass ? glass.label : serve[0],
       gloss: glass ? glass.gloss : '',
-      garnish: found.map(function (g) { return g.label; })
+      garnish: found
     };
   }
 
@@ -126,15 +131,49 @@
 
   function stocked() { return Object.keys(have).filter(function (k) { return have[k]; }); }
 
-  /* Every ingredient a drink needs, garnish pours included — a drink is
-     not pourable because you skipped the bitters that go on top. */
-  function needs(d) {
-    return d.build.map(function (p) { return p[0]; });
+  /* Two lists, because there are two different questions.
+
+     What a drink *pours* is its build, and missing one of those is the
+     end of it. What it *needs* adds whatever the serve token garnishes
+     it with — a real call on the shelf, since a lemon twist costs a
+     lemon — but never a reason to say no. A Martini with no olive is
+     still a Martini.
+
+     So the line is the whole rule: the build gates, the serve token does
+     not. The bitters dropped on a sour's foam are in the build with a
+     "g" flag rather than in the serve token, which is exactly why those
+     still count.
+
+     Worked out once per drink at boot: marginalGain asks these a few
+     thousand times per render of the Bar tab. */
+  var poursBy = {};
+  var needsBy = {};
+
+  function buildNeeds() {
+    data.menu.cocktails.forEach(function (d) {
+      var pours = [];
+      var all = [];
+
+      function add(list, id) { if (id && list.indexOf(id) < 0) list.push(id); }
+
+      d.build.forEach(function (p) { add(pours, p[0]); add(all, p[0]); });
+      readServe(d.serve).garnish.forEach(function (g) { add(all, g.ingredient); });
+
+      poursBy[d.id] = pours;
+      needsBy[d.id] = all;
+    });
   }
+
+  /* Everything a bottle is wanted for, garnish included. This answers
+     "who calls for this", which is the shelf's question. */
+  function needs(d) { return needsBy[d.id]; }
+
+  /* Only what has to end up in the glass. This is the one that gates. */
+  function pours(d) { return poursBy[d.id]; }
 
   function missingFor(d, held) {
     var out = [];
-    needs(d).forEach(function (id) {
+    pours(d).forEach(function (id) {
       if (!held[id] && out.indexOf(id) < 0) out.push(id);
     });
     return out;
@@ -212,7 +251,12 @@
       '</span></div>' +
       (s.garnish.length
         ? '<div class="serve__row"><span class="serve__k">Garnish</span><span>' +
-            esc(s.garnish.join(', ')) + '</span></div>'
+            s.garnish.map(function (g) {
+              var gone = shelfInUse && g.ingredient && !held[g.ingredient];
+              return '<span class="serve__g' + (gone ? ' is-out' : '') + '">' +
+                esc(g.label) + '</span>';
+            }).join(', ') +
+          '</span></div>'
         : '') +
       '</div>';
 
@@ -286,7 +330,7 @@
       '<div class="tonight__n">' + n + '</div>' +
       '<div class="tonight__of">' + (n === 1 ? 'drink' : 'drinks') + ' you can pour tonight</div>' +
       '<p class="tonight__note">Everything the ' + plural(bottles, 'bottle', 'bottles') +
-        ' on your shelf will make, in full, with nothing missing.</p>' +
+        ' on your shelf will pour, in full. Garnish where you have it.</p>' +
       '<div class="tonight__acts">' +
         '<button class="btn" data-print="1">Print or save as PDF</button>' +
         '<button class="btn" data-pourable="1">Show all ' + data.menu.cocktails.length + '</button>' +
@@ -374,11 +418,32 @@
 
   /* ── bar view ──────────────────────────────────────────── */
 
+  /* The running order of the shelf, worked out once on the way into the
+     tab and then held.
+
+     Sorting live is what made this tab hard to use: the moment you tick
+     a bottle its gain drops to nothing and the row you just touched
+     jumps somewhere else, so the next tick lands on whatever slid into
+     its place. Freezing the order on entry keeps the best buys at the
+     top where they are worth seeing, and keeps the list still while you
+     work down it. Only the numbers move. */
+  function freezeBarOrder(held) {
+    barOrder = {};
+    data.bar.ingredients.map(function (i) {
+      return { id: i.id, gain: marginalGain(i.id, held), uses: usageCount(i.id) };
+    }).sort(function (a, b) {
+      if (b.gain !== a.gain) return b.gain - a.gain;
+      return b.uses - a.uses;
+    }).forEach(function (r, n) { barOrder[r.id] = n; });
+  }
+
   function renderBar() {
     var held = have;
     var can = pourableCount(held);
     var total = data.menu.cocktails.length;
     var bottles = stocked().length;
+
+    if (!barOrder) freezeBarOrder(held);
 
     var note;
     if (!bottles) {
@@ -388,21 +453,26 @@
       note = 'Not enough yet. The gain figures below are drinks unlocked, ' +
              'not drinks that merely use the bottle.';
     } else {
-      note = plural(bottles, 'bottle', 'bottles') + ' on the shelf. ' +
-             'Sort by what each unopened one would add and the menu grows fastest.';
+      note = plural(bottles, 'bottle', 'bottles') + ' on the shelf. The count ' +
+             'above follows you down the page, so you can watch it move.';
     }
 
     /* The count is only worth reading if it leads to the list it counts,
        so the whole figure is the way through to that menu. */
-    var figure = '<div class="tally__n">' + can + '</div>' +
-      '<div class="tally__of">drinks you can pour · of ' + total + '</div>';
+    var up = lastCan !== null && can > lastCan;
+    lastCan = can;
+
+    var figure = '<span class="tally__n' + (up ? ' is-up' : '') + '">' + can + '</span>' +
+      '<span class="tally__of">drinks you can pour<br>of ' + total + '</span>';
 
     var html = '<div class="tally">' +
       (can
         ? '<button class="tally__hit" data-seemenu="1">' + figure +
             '<span class="tally__cta">See the menu <span aria-hidden="true">&rarr;</span></span>' +
           '</button>'
-        : figure) +
+        : '<div class="tally__fig">' + figure + '</div>') +
+      '</div>' +
+      '<div class="tally__body">' +
       '<p class="tally__note">' + esc(note) + '</p>' +
       '<div class="tally__acts">' +
         '<button class="btn" data-bar="all">Stock everything</button>' +
@@ -416,19 +486,17 @@
       html += '<section class="shelf"><h2 class="shelf__h">' + esc(k.label) + '</h2>' +
         (k.blurb ? '<p class="shelf__blurb">' + esc(k.blurb) + '</p>' : '');
 
-      /* Biggest unlock first. Bottles already stocked keep their place
-         at the top so the shelf reads as a shelf, not a leaderboard. */
+      /* Biggest unlock first, in the order frozen on the way in — a row
+         never moves out from under the finger that just ticked it. */
       rows.map(function (i) {
         return { i: i, gain: marginalGain(i.id, held), uses: usageCount(i.id) };
       }).sort(function (a, b) {
-        if (!!held[a.i.id] !== !!held[b.i.id]) return held[a.i.id] ? -1 : 1;
-        if (b.gain !== a.gain) return b.gain - a.gain;
-        return b.uses - a.uses;
+        return barOrder[a.i.id] - barOrder[b.i.id];
       }).forEach(function (r) {
         var on = !!held[r.i.id];
         html += '<button class="bottle' + (on ? ' is-on' : '') + '" data-bottle="' + esc(r.i.id) + '">' +
           '<span class="bottle__box"></span>' +
-          '<span class="bottle__name">' + esc(r.i.name) + '</span>' +
+          '<span class="bottle__name">' + esc(r.i.shelf || r.i.name) + '</span>' +
           (on
             ? '<span class="bottle__in">in ' + r.uses + '</span>'
             : '<span class="bottle__gain' + (r.gain ? '' : ' bottle__gain--flat') + '">' +
@@ -505,7 +573,9 @@
       esc(data.menu.cocktails.length + ' drinks, ' + data.bar.ingredients.length +
           ' ingredients. Every code here is the one from the printed card; the ' +
           'recipes are generated from it, so the two cannot drift apart.') +
-      '</p>';
+      '</p>' +
+      '<p class="sign">© 2026 <a href="https://imti.co/resume/" ' +
+        'rel="noopener">Craig Johnston</a></p>';
 
     $('#key-body').innerHTML = html;
   }
@@ -526,9 +596,17 @@
        whatever the bar looked like earlier, still claiming nothing is
        pourable while the badge says otherwise. */
     if (view === 'menu') repaintMenu();
-    if (view === 'bar') renderBar();
+    if (view === 'bar') {
+      /* Re-sort on the way in, and only here. Within a visit the shelf
+         holds still under your finger; arriving is when it is fair to
+         put the best buys back on top. */
+      barOrder = null;
+      renderBar();
+    }
     if (view === 'key') renderKey();
-    window.scrollTo(0, 0);
+    /* The shell is viewport-tall and #main is what scrolls, so the
+       window has nowhere to go. */
+    $('#main').scrollTop = 0;
   }
 
   function route() { show((location.hash || '#menu').slice(1)); }
@@ -599,19 +677,24 @@
       have[t.dataset.bottle] = !have[t.dataset.bottle];
       if (!have[t.dataset.bottle]) delete have[t.dataset.bottle];
       saveHave();
+      /* Every figure on the shelf is relative to what is stocked, so the
+         whole list is rewritten. Put the scroll back where it was or the
+         row you just ticked leaves the screen. */
+      var y = $('#main').scrollTop;
       renderBar();
+      $('#main').scrollTop = y;
       refreshCount();
       return;
     }
 
     if (t.dataset.bar === 'all') {
       data.bar.ingredients.forEach(function (i) { have[i.id] = true; });
-      saveHave(); renderBar(); refreshCount(); return;
+      saveHave(); barOrder = null; renderBar(); refreshCount(); return;
     }
 
     if (t.dataset.bar === 'none') {
       have = {};
-      saveHave(); renderBar(); refreshCount(); return;
+      saveHave(); barOrder = null; renderBar(); refreshCount(); return;
     }
   });
 
@@ -646,6 +729,7 @@
     garnishCodes = data.notation.garnishes.map(function (g) { return g.code; })
       .sort(function (a, b) { return b.length - a.length; });
 
+    buildNeeds();
     loadHave();
 
     $('#loading').hidden = true;

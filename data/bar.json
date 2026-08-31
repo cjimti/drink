@@ -1,12 +1,13 @@
 {
-  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand.",
+  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand, `shelf` overrides the name where the bottle and the pour want different words for the same thing. Garnish is stocked like anything else \u2014 the letter lives in the serve token, and notation.json says which bottle it calls for \u2014 but it is optional, so it never decides whether a drink can be poured.",
   "kinds": [
     { "id": "base",     "label": "Base spirits",  "blurb": "Ten bottles carry the whole menu." },
     { "id": "vermouth", "label": "Vermouth",      "blurb": "Two bottles. Refrigerate them." },
     { "id": "modifier", "label": "Modifiers",     "blurb": "Where the range actually comes from." },
     { "id": "bitters",  "label": "Bitters",       "blurb": "Measured in dashes." },
     { "id": "syrup",    "label": "Syrups",        "blurb": "Made at home, keeps for weeks." },
-    { "id": "juice",    "label": "Juice",         "blurb": "Squeezed to order. Never bottled." },
+    { "id": "juice",    "label": "Citrus",        "blurb": "Squeezed to order. The peel is the garnish." },
+    { "id": "garnish",  "label": "Garnish",       "blurb": "The tail of every code. Optional, so it is never counted against a drink." },
     { "id": "other",    "label": "Other",         "blurb": "" }
   ],
   "ingredients": [
@@ -42,8 +43,17 @@
     { "id": "honey-syrup",    "name": "Honey syrup",        "short": "honey",       "kind": "syrup",  "staple": true },
     { "id": "grenadine",      "name": "Grenadine",          "short": "grenadine",   "kind": "syrup",  "staple": true },
 
-    { "id": "lemon",          "name": "Lemon juice",        "short": "lemon",       "kind": "juice",  "staple": true },
-    { "id": "lime",           "name": "Lime juice",         "short": "lime",        "kind": "juice",  "staple": true },
+    { "id": "lemon",          "name": "Lemon juice",        "short": "lemon",       "kind": "juice",  "staple": true, "shelf": "Lemons" },
+    { "id": "lime",           "name": "Lime juice",         "short": "lime",        "kind": "juice",  "staple": true, "shelf": "Limes" },
+
+    { "id": "cherry",        "name": "Cocktail cherries",   "short": "cherries",    "kind": "garnish", "staple": true },
+    { "id": "orange",        "name": "Oranges",             "short": "orange",      "kind": "garnish", "staple": true },
+    { "id": "olive",         "name": "Olives",              "short": "olives",      "kind": "garnish", "staple": true },
+    { "id": "mint",          "name": "Mint",                "short": "mint",        "kind": "garnish", "staple": true },
+    { "id": "sugar",         "name": "Sugar",               "short": "sugar",       "kind": "garnish", "staple": true },
+    { "id": "salt",          "name": "Salt",                "short": "salt",        "kind": "garnish", "staple": true },
+    { "id": "cinnamon",      "name": "Cinnamon",            "short": "cinnamon",    "kind": "garnish", "staple": true },
+    { "id": "fresh-apple",   "name": "Apple",               "short": "apple fan",   "kind": "garnish", "staple": true },
 
     { "id": "egg-white",      "name": "Egg white",          "short": "egg white",   "kind": "other",  "unit": "none", "staple": true }
   ]

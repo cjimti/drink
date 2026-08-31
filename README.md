@@ -43,7 +43,7 @@ spirit or modifier, then by what the shelf can actually support.
 | `assets/app.js` | Decoder, filters, and the marginal-gain engine. |
 | `assets/app.css` | Every colour is a token, defined twice — dark and light. |
 | `data/cocktails.json` | The menu. Each drink carries both a `code` and a `build`. |
-| `data/bar.json` | Every bottle any drink can call for. |
+| `data/bar.json` | Every bottle any drink can call for, garnish included. |
 | `data/notation.json` | The shorthand key, and what the decoder reads from. |
 | `scripts/check_menu.py` | Regenerates each code from its build and refuses a mismatch. |
 | `scripts/check_assets.py` | Missing files, and ids `app.js` reaches for that nothing renders. |

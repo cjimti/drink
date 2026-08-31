@@ -43,6 +43,15 @@ slots, and the decoder resolves it against the ingredient:
   grated cinnamon, not `c` + `i` + `n` — the decoder matches longest
   first, and that is load-bearing.
 
+Garnish is on the shelf but never gates a drink. The letter for it
+rides the serve token, and `notation.json` names the bottle it calls for
+— a lemon twist costs a lemon — so the shelf stocks it and the Bar tab
+counts who wants it. But **the build gates and the serve token does
+not.** Garnish is optional; a Martini with no olive is still a Martini,
+and the expanded recipe just strikes the missing twist through. `3` is
+the exception that proves the line: those bitters sit in the build with
+a `g` rather than in the serve token, which is why they still count.
+
 Two things carry no amount token:
 
 - **Egg white** is written into the build with `null`. It never had a
@@ -50,7 +59,8 @@ Two things carry no amount token:
 - **Bitters dropped on the foam** live in the garnish token, not among
   the amounts. The Brass Rail's Angostura is the `3` in `c3`. Those get
   a third build element, `"g"`, so the drink still counts as needing
-  them — a drink is not pourable because you skipped the garnish.
+  them. They are a pour written into the garnish slot, not a garnish,
+  which is why they gate when an olive does not.
 
 ## Data model
 
@@ -70,14 +80,19 @@ hundred-odd hand-typed shorthand strings can be trusted.
 
 Every bottle any drink can call for, grouped by `kind` for the shelf.
 `unit: "dash"` is what tells the decoder a bare number counts dashes;
-`unit: "none"` marks the unmeasured ones. The checker fails on a
-stocked ingredient no drink uses, so the bar cannot quietly drift.
+`unit: "none"` marks the unmeasured ones. `shelf` overrides the name on
+the Bar tab where the bottle and the pour want different words for the
+same thing — one lemon is `Lemon juice` in a recipe and `Lemons` in a
+bowl. The checker fails on a stocked ingredient no drink uses, and a
+garnish letter counts as use, so the bar cannot quietly drift.
 
 ### `data/notation.json`
 
 The key tab, and the table the decoder reads from. Adding a garnish
 letter here is what makes it decodable — there is no second list in the
-JavaScript.
+JavaScript. `ingredient` on a garnish is the bottle it costs, and that
+is the only place the mapping lives, so the same table that makes a
+letter readable makes it countable.
 
 ## The marginal-gain engine
 
@@ -102,6 +117,11 @@ phone happens to be in must never decide how much toner a menu costs.
 The printed menu is pure black and white: a heavy rule under a
 letterspaced cap, italic ingredient lines, the shorthand set small and
 grey in the margin. This is that page after dark.
+
+On screen the shorthand is the exception: it reads in full-strength ink,
+not grey, because the code is the thing this project exists to preserve.
+The print stylesheet puts it back to grey, so paper still looks like the
+card.
 
 Dark is the default because a menu gets read in a dim room. **Light mode
 is not an inversion** — it is the printed page, near enough to hold the

@@ -9,6 +9,11 @@ way a typo in a hundred-odd shorthand strings ever gets caught.
 
 It also checks that every ingredient is a bottle the bar actually stocks,
 and that every serve token decodes to a real glass and real garnishes.
+A garnish is stocked like any other bottle: the letter is in the serve
+token rather than the build, but the lemon it costs is a lemon either way,
+so the bottle it calls for counts as used. Whether a missing garnish stops
+you pouring is the app's question, not this one — here it only has to be a
+bottle something wants.
 """
 import json
 import re
@@ -42,6 +47,17 @@ def garnish_tokens(notation):
     return sorted(codes, key=len, reverse=True)
 
 
+def garnish_bottles(notation):
+    """Which bottle each garnish letter calls for, where it calls for one.
+
+    '3' is the exception and has none: those bitters are already written
+    into the build with a "g" flag, and counting them here would count them
+    twice.
+    """
+    return {g["code"]: g["ingredient"] for g in notation["garnishes"]
+            if g.get("ingredient")}
+
+
 def split_garnish(rest, codes):
     out = []
     while rest:
@@ -65,8 +81,13 @@ def main():
     families = {f["id"] for f in menu["families"]}
     methods = {m["id"] for m in menu["methods"]}
     gcodes = garnish_tokens(notation)
+    gbottle = garnish_bottles(notation)
 
     errs = []
+    for code, ingredient in sorted(gbottle.items()):
+        if ingredient not in stocked:
+            errs.append(f"notation: garnish {code!r} calls for {ingredient!r}, "
+                        f"which is not in the bar")
     seen = set()
     used = set()
 
@@ -109,8 +130,14 @@ def main():
         serve = d["serve"]
         if not serve or serve[0] not in GLASSES:
             errs.append(f"{who}: serve {serve!r} does not start with a glass")
-        elif split_garnish(serve[1:], gcodes) is None:
-            errs.append(f"{who}: cannot read garnish in serve {serve!r}")
+        else:
+            got = split_garnish(serve[1:], gcodes)
+            if got is None:
+                errs.append(f"{who}: cannot read garnish in serve {serve!r}")
+            else:
+                # The bottle a garnish calls for counts as used, or every
+                # garnish on the shelf reads as one nothing asks for.
+                used.update(gbottle[c] for c in got if c in gbottle)
 
         # ── the two hands agree ──────────────────────────────────
         rebuilt = ",".join(parts + [serve])
@@ -127,8 +154,10 @@ def main():
 
     n = len(menu["cocktails"])
     st = sum(1 for d in menu["cocktails"] if d["method"] == "stirred")
+    ng = sum(1 for i in bar["ingredients"] if i["kind"] == "garnish")
     print(f"  menu    {n} drinks ({st} stirred, {n - st} shaken), "
-          f"{len(stocked)} ingredients, every code checks out")
+          f"{len(stocked)} ingredients ({ng} garnish, "
+          f"{len(gbottle)} letters that call for one), every code checks out")
     return 0
 
 
