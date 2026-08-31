@@ -63,15 +63,43 @@
       ] },
 
     { "id": "burnt-fuselage", "name": "Burnt Fuselage", "method": "stirred", "family": "cognac", "code": "1,1,1,c", "serve": "c",
-      "build": [["cognac","1"],["dry-vermouth","1"],["orange-liqueur","1"]] },
+      "build": [["cognac","1"],["dry-vermouth","1"],["orange-liqueur","1"]],
+      "taste": "Equal ounces of cognac, dry vermouth, and orange liqueur, so the orange is a third of the drink, not a dash. Candied peel sits against the cognac; dry vermouth cuts the sugar so it does not drink as a cordial. Stirred, no bitters, coupe, no twist. It is a stiff orange Manhattan, grape and peel.",
+      "history": "The Burnt Fuselage first appears in Harry MacElhone's 1927 Barflies and Cocktails, in the Cocktails Around Town section listing drinks of regulars at Harry's New York Bar in Paris. MacElhone credits Colonel C.W. Chuck Kerwood of Philadelphia, President of the International League of Aviators, who wanted a stiff steadier when he came down to earth: one-third Grand Marnier, one-third cognac, and one-third French vermouth. Kerwood was known as the wild man of aviation. This card keeps the equal parts and the coupe, with no bitters and no twist.",
+      "refs": [
+        { "title": "Difford's Guide, Burnt Fuselage", "url": "https://www.diffordsguide.com/cocktails/recipe/4912/burnt-fuselage" }
+      ] },
     { "id": "palace-hotel", "name": "Palace Hotel", "method": "stirred", "family": "cognac", "code": "1h,1h,1b,cl", "serve": "cl",
-      "build": [["cognac","1h"],["sweet-vermouth","1h"],["orange-liqueur","1b"]] },
+      "build": [["cognac","1h"],["sweet-vermouth","1h"],["orange-liqueur","1b"]],
+      "taste": "Equal ounces and a half of cognac and sweet vermouth, grape on grape, a Manhattan ratio with no whiskey. One barspoon of orange liqueur is peel, not sweetness. No bitters. Stirred, coupe, lemon twist. It drinks as a brandy Manhattan that swapped Angostura for a thin orange film.",
+      "history": "A drink called Palace Hotel does not appear in the pre-1970 manuals under that name, nor in Difford's, Punch, or Imbibe. The nearest parent is the Harvard, which George J. Kappeler prints in 1895 Modern American Drinks: equal brandy and Italian vermouth, gum, Angostura, and a seltzer top. Albert Stevens Crockett, in Old Waldorf Bar Days (1931), ties the name to the college on the Charles. This card keeps the equal cognac and sweet vermouth and the lemon twist, yet it drops the bitters and the soda, and puts a barspoon of orange liqueur in their place.",
+      "refs": [
+        { "title": "Difford's Guide, Harvard", "url": "https://www.diffordsguide.com/cocktails/recipe/934/harvard" }
+      ] },
     { "id": "metropole", "name": "Metropole", "method": "stirred", "family": "cognac", "code": "1h,1h,2,1,cc", "serve": "cc",
-      "build": [["cognac","1h"],["dry-vermouth","1h"],["peychauds","2"],["orange-bitters","1"]] },
+      "build": [["cognac","1h"],["dry-vermouth","1h"],["peychauds","2"],["orange-bitters","1"]],
+      "taste": "Equal ounces and a half of cognac and dry vermouth, so neither wins. Two dashes of Peychaud's pull it toward cherry and anise rather than the bark of an Angostura Manhattan. One dash of orange bitters is peel on the dry vermouth. Stirred, coupe, cherry. It reads pink and lean.",
+      "history": "George J. Kappeler prints the Metropole in 1895 Modern American Drinks as the house cocktail of the Hotel Metropole at Broadway and 42nd Street: equal brandy and French vermouth, gum, Peychaud's, orange bitters, and a cherry. It is a dry, Peychaud's turn on O.H. Byron's 1884 Metropolitan. Albert Stevens Crockett, in The Old Waldorf Bar Days (1931), calls the hotel somewhat lively. The street-level Cafe Metropole held an all-night license; Herman Rosenthal was shot outside it in 1912, and the hotel went bankrupt that July. This card keeps Kappeler's equal parts, two dashes of Peychaud's, one of orange bitters, and the cherry. No gum.",
+      "refs": [
+        { "title": "Difford's Guide, Metropole", "url": "https://www.diffordsguide.com/cocktails/recipe/2496/metropole" },
+        { "title": "Esquire, Metropole (David Wondrich)", "url": "https://www.esquire.com/food-drink/drinks/recipes/a3711/metropole-drink-recipe/" }
+      ] },
     { "id": "brandy-crusta", "name": "Brandy Crusta", "method": "stirred", "family": "cognac", "code": "2,q,q,q,2,Rl", "serve": "Rl",
-      "build": [["cognac","2"],["maraschino","q"],["demerara","q"],["lemon","q"],["angostura","2"]] },
+      "build": [["cognac","2"],["maraschino","q"],["demerara","q"],["lemon","q"],["angostura","2"]],
+      "taste": "Two ounces of cognac, then a quarter each of maraschino, demerara, and lemon. The lemon is an accent, not a sour; the drink is still a cocktail. Two dashes of Angostura sit under cherry and brown sugar. Stirred, not shaken. Rocks with ice and a lemon twist: no sugar crust, and it sits.",
+      "history": "Joseph Santini, an Italian bartender in New Orleans, built the Crusta in the 1850s, either at the City Exchange in the French Quarter or at Jewel of the South on Gravier Street, which he opened in 1855. Jerry Thomas prints it in the 1862 Bar-Tender's Guide, misspelling Santini as Santina and calling him Spanish. The name is the sugar crust on the rim; the lemon is a dash, not a pour. David Wondrich, in The Oxford Companion, treats that citrus as an accent, and traces the Sidecar through the Daisy instead. This card pours two ounces of cognac, a quarter each of maraschino, demerara, and lemon, two dashes of Angostura, over ice, no crust.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Brandy Crusta", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-266" },
+        { "title": "Difford's Guide, Brandy Crusta", "url": "https://www.diffordsguide.com/cocktails/recipe/310/brandy-crusta" }
+      ] },
     { "id": "ritz", "name": "Ritz", "method": "stirred", "family": "cognac", "code": "Q,h,q,q,3,cfo", "serve": "cfo",
-      "build": [["cognac","Q"],["maraschino","h"],["demerara","q"],["lemon","q"],["angostura","3"]] },
+      "build": [["cognac","Q"],["maraschino","h"],["demerara","q"],["lemon","q"],["angostura","3"]],
+      "taste": "Three-quarters of an ounce of cognac, so this is a small drink. Half an ounce of maraschino is the sweet and the cherry; a quarter each of demerara and lemon keep it from being a cordial. Three dashes of Angostura is a lot of bark for so little spirit. Stirred, coupe, flamed orange twist. It is not a full sour and it is not Champagne.",
+      "history": "Dale DeGroff built a Ritz Cocktail at Aurora in New York in 1985, later printed in The Craft of the Cocktail (2002) as a tribute to the Ritz drinks of Paris and Madrid: three-quarters cognac, half orange liqueur, a quarter each of maraschino and lemon, topped with Champagne, and a flamed orange twist. This card keeps the small cognac, the maraschino, the lemon, and the flamed twist. It drops the Champagne and the orange liqueur, adds a quarter of demerara and three dashes of Angostura, and stirs it.",
+      "refs": [
+        { "title": "Imbibe, Ritz Cocktail", "url": "https://imbibemagazine.com/recipe/ritz-cocktail/" },
+        { "title": "Difford's Guide, Ritz Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/1677/ritz-cocktail" }
+      ] },
 
     { "id": "old-fashioned", "name": "Old-Fashioned", "method": "stirred", "family": "bourbon", "code": "1,1b,2,R", "serve": "R",
       "build": [["bourbon","1"],["demerara","1b"],["angostura","2"]] },
@@ -91,9 +119,20 @@
       "build": [["bourbon","Q"],["benedictine","Q"],["cognac","h"],["orange-liqueur","q"],["angostura","1"]] },
 
     { "id": "rosita", "name": "Rosita", "method": "stirred", "family": "tequila", "code": "1h,1,h,h,1,Ro", "serve": "Ro",
-      "build": [["tequila","1h"],["campari","1"],["sweet-vermouth","h"],["dry-vermouth","h"],["angostura","1"]] },
+      "build": [["tequila","1h"],["campari","1"],["sweet-vermouth","h"],["dry-vermouth","h"],["angostura","1"]],
+      "taste": "An ounce and a half of tequila against a full ounce of Campari, so the bitter leads. Half an ounce each of sweet and dry vermouth split the wine, a Perfect Negroni with agave. One dash of Angostura is spice, not a second bitter. Stirred, rocks, ice, orange twist.",
+      "history": "The Rosita first appears, creator unknown, in the 1974 Mr. Boston Official Bartender's Guide: one ounce tequila, one ounce Campari, half an ounce each of dry and sweet vermouth, stirred on cracked ice, lemon twist. Gary Regan reprinted it in The Bartender's Bible (1991) with more tequila and a dash of Angostura, then forgot he had. Terry Sullivan and Regan traced it back in 2007 in the San Francisco Chronicle. Mexico City is sometimes named; no period citation supports that. This card keeps Regan's ounce and a half of tequila and the dash of Angostura, yet it pours a full ounce of Campari and garnishes with orange.",
+      "refs": [
+        { "title": "Imbibe, The Rosita Cocktail", "url": "https://imbibemagazine.com/recipe/the-rosita-cocktail-recipe/" },
+        { "title": "Difford's Guide, Rosita", "url": "https://www.diffordsguide.com/cocktails/recipe/1696/rosita" }
+      ] },
     { "id": "one-chance-fancy", "name": "One Chance Fancy", "method": "stirred", "family": "tequila", "code": "2,q,q,2,Ro", "serve": "Ro",
-      "build": [["tequila","2"],["orange-liqueur","q"],["sweet-vermouth","q"],["angostura","2"]] },
+      "build": [["tequila","2"],["orange-liqueur","q"],["sweet-vermouth","q"],["angostura","2"]],
+      "taste": "Two ounces of tequila, a quarter of orange liqueur, a quarter of sweet vermouth. The vermouth is the sugar; the orange liqueur is peel. Two dashes of Angostura. Stirred, rocks, ice, orange twist. It drinks as a tequila Fancy Cocktail, spirit first, liqueur as dressing.",
+      "history": "Jerry Thomas prints the Fancy Brandy Cocktail in 1862 as the plain Cocktail strained into a wine glass with lemon on the rim: spirit, gum, bitters, and curacao. Brett Adams and Jacob Grier, in Raising the Bar (2022), still treat The Fancy as whiskey, orange liqueur, and bitters, an Old-Fashioned with a liqueur in the sugar slot. A drink called One Chance Fancy does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. This card puts the Fancy template on tequila, with a quarter ounce of sweet vermouth in the sugar slot, two dashes of Angostura, over ice with an orange twist.",
+      "refs": [
+        { "title": "Willamette Week, Raising the Bar (The Fancy)", "url": "https://www.wweek.com/drink/2023/03/29/a-new-book-by-two-local-mixologists-tells-you-how-to-stock-your-bar-cart-one-bottle-at-a-time/" }
+      ] },
 
     { "id": "old-pal", "name": "Old Pal", "method": "stirred", "family": "rye", "code": "1,1,1,1b,R", "serve": "R",
       "build": [["rye","1"],["campari","1"],["dry-vermouth","1"],["demerara","1b"]] },
@@ -235,7 +274,13 @@
       ] },
 
     { "id": "sidecar", "name": "Sidecar", "method": "shaken", "family": "cognac", "code": "1h,1,Q,cs", "serve": "cs",
-      "build": [["cognac","1h"],["orange-liqueur","1"],["lemon","Q"]] },
+      "build": [["cognac","1h"],["orange-liqueur","1"],["lemon","Q"]],
+      "taste": "An ounce and a half of cognac, a full ounce of orange liqueur, three-quarters lemon. The orange liqueur is heavier than the lemon, so the drink is peel and candy more than a dry sour. Shaken, coupe, sugar rim. It is not the equal-parts French school and not Craddock's two-to-one-to-one.",
+      "history": "Robert Vermeire prints the Sidecar in May 1922 in Cocktails How to Mix Them: equal cognac, Cointreau, and lemon, very popular in France, and first introduced in London by Pat MacGarry of Buck's Club. Harry MacElhone, who had worked with MacGarry, prints the same formula later that year and later takes the credit himself. Frank Meier at the Ritz Bar in Paris listed it among cocktails new since the war. David Embury, in 1948, credits an unnamed American captain in a Paris sidecar. The origin stays disputed. This card pours an ounce and a half of cognac, a full ounce of orange liqueur, and three-quarters lemon, shaken, with a sugar rim.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Sidecar", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-417" },
+        { "title": "Difford's Guide, Sidecar", "url": "https://www.diffordsguide.com/cocktails/recipe/4791/sidecar" }
+      ] },
 
     { "id": "buster-brown", "name": "Buster Brown", "method": "shaken", "family": "bourbon", "code": "2,Q,h,3,co", "serve": "co",
       "build": [["bourbon","2"],["lemon","Q"],["demerara","h"],["orange-bitters","3"]] },
@@ -287,13 +332,34 @@
       "build": [["gin","1"],["dry-vermouth","1"],["elderflower","h"]] },
 
     { "id": "margarita", "name": "Margarita", "method": "shaken", "family": "tequila", "code": "2,Q,Q,cS", "serve": "cS",
-      "build": [["tequila","2"],["orange-liqueur","Q"],["lime","Q"]] },
+      "build": [["tequila","2"],["orange-liqueur","Q"],["lime","Q"]],
+      "taste": "Two ounces of tequila against three-quarters each of orange liqueur and lime. The tequila is the drink; the orange and lime are equal and small, peel and acid around agave. Shaken, coupe, salt rim. Short, no ice in the glass.",
+      "history": "The origin is a pile of claims. William J. Tarling prints the same three ingredients as the Picador in the 1937 Cafe Royal Cocktail Book in London. Charlie Connolly's 1939 Cotton Club booklet has a Tequila Sour with Cointreau, lime, and a salt rim. Under the name Margarita it surfaces in a 1953 Santa Rosa Press Democrat item from Ensenada. Claimants include Danny Negrete at Tehuacan in 1936, Johnny Durlesser at the Tail o' the Cock in Los Angeles, Pancho Morales in Juarez in 1942, Danny Herrera at Rancho La Gloria, and Margaret Sames in Acapulco in 1948. This card pours two ounces of tequila, three-quarters orange liqueur, three-quarters lime, shaken, in a coupe with salt.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Margarita", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-360" },
+        { "title": "Difford's Guide, History of the Margarita cocktail", "url": "https://www.diffordsguide.com/g/1138/margarita-cocktail/origins-and-history" }
+      ] },
     { "id": "mexican-firing-squad", "name": "Mexican Firing Squad", "method": "shaken", "family": "tequila", "code": "2,Q,Q,2,cc", "serve": "cc",
-      "build": [["tequila","2"],["grenadine","Q"],["lime","Q"],["angostura","2"]] },
+      "build": [["tequila","2"],["grenadine","Q"],["lime","Q"],["angostura","2"]],
+      "taste": "Two ounces of tequila, three-quarters grenadine, three-quarters lime. Equal pomegranate and lime, so it is a pink tequila sour, not a rickey. Two dashes of Angostura pull clove through the fruit. Shaken, coupe, cherry. No soda, no pineapple wedge. Short.",
+      "history": "Charles H. Baker records the Mexican Firing Squad Special in The Gentleman's Companion, Volume II (1939), as a drink he found at La Cucaracha Bar in Mexico City in 1937: two jiggers tequila, juice of two small limes, one and a half to two teaspoons of grenadine, two dashes of Angostura, in a tall collins packed with cracked ice, garnished with orange, pineapple, and cherry. Period menus from the bar do not list it; it may have been off-menu. This card keeps the tequila, grenadine, lime, and Angostura, equalizes the grenadine and lime at three-quarters, and pours it short in a coupe with a cherry.",
+      "refs": [
+        { "title": "Difford's Guide, Mexican Firing Squad Special", "url": "https://www.diffordsguide.com/cocktails/recipe/4945/mexican-firing-squad-special" }
+      ] },
     { "id": "vermouth-arita", "name": "Vermouth-arita", "method": "shaken", "family": "tequila", "code": "1h,1,h,h,Rc", "serve": "Rc",
-      "build": [["tequila","1h"],["sweet-vermouth","1"],["orange-liqueur","h"],["lime","h"]] },
+      "build": [["tequila","1h"],["sweet-vermouth","1"],["orange-liqueur","h"],["lime","h"]],
+      "taste": "An ounce and a half of tequila against a full ounce of sweet vermouth, so the wine is a second base, not a modifier. Half an ounce of orange liqueur and half of lime are the Margarita's other two, cut down. Shaken, rocks, ice, cherry. It drinks as a tequila Manhattan that took a lime.",
+      "history": "A drink called Vermouth-arita does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. The parent is the Margarita: tequila, orange liqueur, and lime, a formula in print by 1937 as William J. Tarling's Picador and under this name by 1953. This card keeps the tequila and the shake, puts a full ounce of sweet vermouth in the glass, cuts the orange liqueur and lime to half an ounce each, and pours it over ice with a cherry.",
+      "refs": [
+        { "title": "Difford's Guide, History of the Margarita cocktail", "url": "https://www.diffordsguide.com/g/1138/margarita-cocktail/origins-and-history" }
+      ] },
     { "id": "stingless-bee", "name": "Stingless Bee", "method": "shaken", "family": "tequila", "code": "2,Q,h,h,c3", "serve": "c3",
-      "build": [["tequila","2"],["honey-syrup","Q"],["lime","h"],["lemon","h"],["egg-white",null],["peychauds","3","g"]] },
+      "build": [["tequila","2"],["honey-syrup","Q"],["lime","h"],["lemon","h"],["egg-white",null],["peychauds","3","g"]],
+      "taste": "Two ounces of tequila, three-quarters honey syrup, half lime, half lemon. The citrus is split, so neither fruit wins; the honey is waxier than sugar. Egg white gives it a foam cap. Three dashes of Peychaud's are dropped on the foam, a pour, not a garnish, cherry-anise on the white. Coupe.",
+      "history": "The Bee's Knees is a gin sour with honey, first printed in Paris around 1929. Frank Meier's Bar de Ritz recipe appears in Cocktails de Paris that year; a Brooklyn Standard Union article of 22 April 1929 credits Mrs. J.J. Brown of Denver and Paris, later called Molly Brown. Both claims stay in print. A drink called Stingless Bee does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. This card swaps gin for tequila, splits the citrus between lime and lemon, shakes egg white, and drops three dashes of Peychaud's on the foam.",
+      "refs": [
+        { "title": "Difford's Guide, Bee's Knees", "url": "https://www.diffordsguide.com/cocktails/recipe/2144/bees-knees" }
+      ] },
 
     { "id": "mickie-walker", "name": "Mickie Walker", "method": "shaken", "family": "scotch", "code": "1h,h,h,h,cc", "serve": "cc",
       "build": [["scotch","1h"],["sweet-vermouth","h"],["grenadine","h"],["lemon","h"]] },
