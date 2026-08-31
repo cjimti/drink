@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 270" fill="none" color="#111110">
+  <!-- Empty rocks with a citrus wheel on the rim. -->
+  <g stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M66 160h68l-6 96H72z"/>
+    <path d="M80 244h40"/>
+    <circle cx="132" cy="160" r="24"/>
+    <path d="M108 160h48"/>
+    <path d="M132 136v48"/>
+    <path d="M115 143l34 34"/>
+    <path d="M149 143l-34 34"/>
+  </g>
+</svg>

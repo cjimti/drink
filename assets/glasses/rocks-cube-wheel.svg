@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 270" fill="none" color="#111110">
+  <!-- Rocks, one cube, citrus wheel on the rim. -->
+  <g stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M66 160h68l-6 96H72z"/>
+    <path d="M80 244h40"/>
+    <path d="M77 234V200h34v34z"/>
+    <path d="M77 200l13-13h34l-13 13"/>
+    <path d="M111 200l13-13v34l-13 13"/>
+    <circle cx="132" cy="158" r="23"/>
+    <path d="M109 158h46"/>
+    <path d="M132 135v46"/>
+    <path d="M115.7 141.7l32.6 32.6"/>
+    <path d="M148.3 141.7l-32.6 32.6"/>
+  </g>
+</svg>

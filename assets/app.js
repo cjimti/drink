@@ -29,6 +29,7 @@
   var have = {};         /* id -> true, what is on the shelf */
   var open = {};         /* id -> true, which recipes are expanded */
   var recipePane = {};   /* id -> recipe|taste|history; resets on open */
+  var glassMarkup = {};  /* art id -> inline svg */
 
   var filter = { method: 'all', family: null, pourable: false, q: '' };
 
@@ -243,6 +244,44 @@
     });
   }
 
+  /* First pass of garnish art. Combinations we do not have a drawing
+     for yet fall back to the empty glass of that type. */
+  function garnishArt(rest) {
+    if (!rest) return '';
+    if (rest === 'Lw') return 'wheel';
+    if (rest === 'c' || rest === 'O' || (rest.charAt(0) === 'c' && rest.indexOf('cin') !== 0)) {
+      return 'pick';
+    }
+    if (rest === 'l' || rest === 'L' || rest === 'o' || rest === 'fo') return 'twist';
+    return '';
+  }
+
+  function pickGlassArt(serve) {
+    var g = serve[0];
+    var rest = serve.slice(1);
+    var extra = garnishArt(rest);
+    if (g === 'c') return extra ? 'nick-nora-' + extra : 'nick-nora';
+    if (g === 'r') return extra ? 'rocks-' + extra : 'rocks';
+    if (g === 'R') return extra ? 'rocks-cube-' + extra : 'rocks-cube';
+    return null;
+  }
+
+  function renderGlass(serve) {
+    var id = pickGlassArt(serve);
+    var svg = id && glassMarkup[id];
+    if (!svg) return '';
+    var cls = 'drink__glass';
+    if (id.indexOf('rocks') === 0) {
+      /* Cropped to the tumbler and centred on it (x = 100). A rocks
+         glass is shorter than a Nick & Nora, so the CSS scales this
+         down rather than stretching it to the row. Garnishes that
+         stick out still draw — overflow is visible. */
+      svg = svg.replace('viewBox="0 0 200 270"', 'viewBox="45 118 110 146"');
+      cls += ' drink__glass--rocks';
+    }
+    return '<span class="' + cls + '" aria-hidden="true">' + svg + '</span>';
+  }
+
   function renderPours(d, held) {
     var shelfInUse = stocked().length > 0;
     var html = '';
@@ -356,6 +395,8 @@
     var html = '<div class="' + cls + '">' +
       '<button class="drink__head" data-drink="' + esc(d.id) + '" ' +
         'aria-expanded="' + (open[d.id] ? 'true' : 'false') + '">' +
+        renderGlass(d.serve) +
+        '<span class="drink__text">' +
         '<span class="drink__name">' + esc(d.name) + '</span>' +
         '<span class="drink__code">' + esc(d.code) + '</span>' +
         '<span class="drink__line">' + esc(ingredientLine(d)) + '</span>';
@@ -366,7 +407,7 @@
       }).join(', ')) + '</span>';
     }
 
-    html += '</button>';
+    html += '</span></button>';
     if (open[d.id]) html += renderRecipe(d, held);
     return html + '</div>';
   }
@@ -830,10 +871,27 @@
 
   /* ── boot ──────────────────────────────────────────────── */
 
+  var GLASS_FILES = [
+    'nick-nora', 'nick-nora-twist', 'nick-nora-pick', 'nick-nora-wheel',
+    'rocks', 'rocks-twist', 'rocks-pick', 'rocks-wheel',
+    'rocks-cube', 'rocks-cube-twist', 'rocks-cube-pick', 'rocks-cube-wheel',
+    'rocks-ice'
+  ];
+
+  function loadGlassArt() {
+    return Promise.all(GLASS_FILES.map(function (id) {
+      return fetch('assets/glasses/' + id + '.svg').then(function (r) {
+        if (!r.ok) return;
+        return r.text().then(function (t) { glassMarkup[id] = t; });
+      }).catch(function () { /* art is decorative */ });
+    }));
+  }
+
   Promise.all([
     fetch('data/cocktails.json').then(function (r) { return r.json(); }),
     fetch('data/bar.json').then(function (r) { return r.json(); }),
-    fetch('data/notation.json').then(function (r) { return r.json(); })
+    fetch('data/notation.json').then(function (r) { return r.json(); }),
+    loadGlassArt()
   ]).then(function (res) {
     data.menu = res[0];
     data.bar = res[1];

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 270" fill="none" color="#111110">
+  <!-- Nick & Nora with an olive (or cherry) on a pick. -->
+  <g stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M76 256h48"/>
+    <path d="M100 256V148"/>
+    <path d="M68 86c-2 32 14 54 32 62 18-8 34-30 32-62"/>
+    <path d="M68 86h64"/>
+    <path d="M150 58l-46 64"/>
+    <circle cx="112" cy="110" r="9"/>
+    <ellipse cx="112" cy="110" rx="2.5" ry="4.5"/>
+  </g>
+</svg>

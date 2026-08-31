@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 270" fill="none" color="#111110">
+  <!-- Empty rocks glass. Same baseline as the Nick & Nora set. -->
+  <g stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M66 160h68l-6 96H72z"/>
+    <path d="M80 244h40"/>
+  </g>
+</svg>

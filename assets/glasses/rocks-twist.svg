@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 270" fill="none" color="#111110">
+  <!-- Empty rocks with a citrus twist on the rim. -->
+  <g stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M66 160h68l-6 96H72z"/>
+    <path d="M80 244h40"/>
+    <path d="M114 158c21-33 54-27 51 3-3 21-24 24-30 6-5-12 12-15 21-3 6 9-3 21-18 24"/>
+  </g>
+</svg>

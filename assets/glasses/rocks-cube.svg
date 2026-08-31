@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 270" fill="none" color="#111110">
+  <!-- Rocks glass with one large cube. -->
+  <g stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M66 160h68l-6 96H72z"/>
+    <path d="M80 244h40"/>
+    <path d="M77 234V200h34v34z"/>
+    <path d="M77 200l13-13h34l-13 13"/>
+    <path d="M111 200l13-13v34l-13 13"/>
+  </g>
+</svg>

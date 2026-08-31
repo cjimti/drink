@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 270" fill="none" color="#111110">
+  <!-- Rocks glass with a pile of ice cubes. -->
+  <g stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M66 160h68l-6 96H72z"/>
+    <path d="M80 244h40"/>
+    <rect x="74" y="206" width="28" height="26" rx="3"/>
+    <rect x="100" y="210" width="24" height="24" rx="3"/>
+    <rect x="84" y="182" width="24" height="22" rx="3"/>
+    <rect x="106" y="186" width="22" height="20" rx="3"/>
+  </g>
+</svg>
