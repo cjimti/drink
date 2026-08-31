@@ -465,11 +465,29 @@
         { "title": "Saveur, Vermouth on the Rise", "url": "https://www.saveur.com/article/wine-and-drink/vermouth-on-the-rise/" }
       ] },
     { "id": "diplomat", "name": "Diplomat", "method": "stirred", "family": "vermouth", "code": "2,1,q,clc", "serve": "clc",
-      "build": [["dry-vermouth","2"],["sweet-vermouth","1"],["maraschino","q"]] },
+      "build": [["dry-vermouth","2"],["sweet-vermouth","1"],["maraschino","q"]],
+      "taste": "Two ounces of dry vermouth to one of sweet, so the dry wine is two thirds of the drink, then a quarter ounce of maraschino. No bitters, no base spirit. Cherry glue on two vermouths, dry leading. Stirred, coupe, lemon and cherry.",
+      "history": "Robert Vermeire prints it as Diplomate in Cocktails: How to Mix Them (1922), \"very well known in the French Diplomatic Service.\" Harry Craddock's 1930 Savoy Cocktail Book anglicizes the name: two-thirds French vermouth, one-third Italian, a dash of maraschino, shaken, cherry and lemon peel. Patrick Gavin Duffy's 1934 Official Mixer's Manual stirs the same formula. This card keeps the two-to-one dry to sweet, pours a quarter ounce of maraschino rather than a dash, and skips the bitters later writers add. Coupe, lemon, cherry.",
+      "refs": [
+        { "title": "Difford's Guide, Diplomat", "url": "https://www.diffordsguide.com/cocktails/recipe/648/diplomat" },
+        { "title": "The Kitchn, The Diplomat Cocktail", "url": "https://www.thekitchn.com/the-9bottle-bar-recipe-the-diplomat-cocktail-drink-recipes-from-the-kitchn-207294" }
+      ] },
     { "id": "chrysanthemum", "name": "Chrysanthemum", "method": "stirred", "family": "vermouth", "code": "2,h,2b,co", "serve": "co",
-      "build": [["dry-vermouth","2"],["benedictine","h"],["absinthe","2b"]] },
+      "build": [["dry-vermouth","2"],["benedictine","h"],["absinthe","2b"]],
+      "taste": "Two ounces of dry vermouth, half an ounce of Benedictine, two barspoons of absinthe. The vermouth is the drink; the liqueur is honeyed spice; two barspoons of absinthe is a pour, anise laid over the wine. Stirred, coupe, orange twist.",
+      "history": "Hugo R. Ensslin prints the Chrysanthemum in Recipes for Mixed Drinks (1917, and likely the 1916 first edition): equal French vermouth and Benedictine, three dashes of absinthe, orange peel. Harry Craddock's 1930 Savoy Cocktail Book dries it to two-thirds vermouth and one-third Benedictine, still three dashes of absinthe, and notes it was \"well-known and very popular in the American Bar of the S.S. Europa.\" Difford's suggests the name may track Scott Joplin's 1904 ragtime piece The Chrysanthemum, issued on record in 1916. This card is two ounces of dry vermouth, half an ounce of Benedictine, and two barspoons of absinthe, stirred, orange twist.",
+      "refs": [
+        { "title": "Difford's Guide, Chrysanthemum", "url": "https://www.diffordsguide.com/cocktails/recipe/2338/chrysanthemum" },
+        { "title": "Imbibe, Chrysanthemum Cocktail", "url": "https://imbibemagazine.com/recipe/chrysanthemum-cocktail/" }
+      ] },
     { "id": "tip-top", "name": "Tip Top", "method": "stirred", "family": "vermouth", "code": "2,Q,2,cl", "serve": "cl",
-      "build": [["dry-vermouth","2"],["benedictine","Q"],["orange-bitters","2"]] },
+      "build": [["dry-vermouth","2"],["benedictine","Q"],["orange-bitters","2"]],
+      "taste": "Two ounces of dry vermouth, three-quarters Benedictine, two dashes of orange bitters. The liqueur is a real pour of honey and spice, not a few dashes. Orange bitters pull peel through the wine. Stirred, coupe, lemon twist.",
+      "history": "Albert Stevens Crockett prints Tiptop in Old Waldorf Bar Days (1931): four dashes of Benedictine, two dashes of Angostura, one jigger of French vermouth, stirred, lemon peel. No bartender is named. Difford's later scales the Benedictine to three-quarters of an ounce. This card keeps that pour and the lemon twist, and uses two dashes of orange bitters in place of Angostura.",
+      "refs": [
+        { "title": "Difford's Guide, Tip Top Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/2889/tip-top-cocktail" },
+        { "title": "Old Waldorf Bar Days (1931), p. 167", "url": "https://euvs-vintage-cocktail-books.cld.bz/1931-Ol-Waldorf-Astoria-Bar-Days-by-Albert-Stevens-Crockett/167/" }
+      ] },
 
     { "id": "winter-daiquiri", "name": "Winter Daiquiri", "method": "shaken", "family": "aged-rum", "code": "2,1,h,2,c", "serve": "c",
       "build": [["aged-rum","2"],["lime","1"],["demerara","h"],["angostura","2"]],
@@ -751,23 +769,76 @@
       ] },
 
     { "id": "daiquiri", "name": "Daiquiri", "method": "shaken", "family": "light-rum", "code": "2,Q,h,c", "serve": "c",
-      "build": [["light-rum","2"],["lime","Q"],["simple","h"]] },
+      "build": [["light-rum","2"],["lime","Q"],["simple","h"]],
+      "taste": "Two ounces of light rum, three-quarters lime, half an ounce of simple. Lime leads; the sugar is only there to keep the rum from going thin. Shaken hard and strained into a coupe, no ice in the glass, no blender. Cane and pith, cold.",
+      "history": "Jennings Stockton Cox, an American mining engineer at the Daiquiri iron mines near Santiago de Cuba, mixed Bacardi, lime, and sugar around 1898. Francesco Domenico Pagliuchi wrote in 1948 that he was there and suggested the name; Basil Woon's 1928 When It's Cocktail Time in Cuba records Cox naming it at Santiago's Venus bar. The first recipe-book printing is Jacques Straub's 1914 Drinks, misspelt Daiguiri. Constantino Ribalaigua Vert later numbered several Daiquiris at El Floridita in Havana; the frozen drink is his, not this one. This card is two ounces of light rum, three-quarters lime, and half an ounce of simple, shaken, coupe.",
+      "refs": [
+        { "title": "Difford's Guide, Daiquiri history", "url": "https://www.diffordsguide.com/g/1083/daiquiri-cocktail/story" },
+        { "title": "Difford's Guide, Daiquiri (Difford's recipe)", "url": "https://www.diffordsguide.com/cocktails/recipe/611/daiquiri-diffords-recipe" }
+      ] },
     { "id": "honeysuckle", "name": "Honeysuckle", "method": "shaken", "family": "light-rum", "code": "2,Q,Q,c", "serve": "c",
-      "build": [["light-rum","2"],["lime","Q"],["honey-syrup","Q"]] },
+      "build": [["light-rum","2"],["lime","Q"],["honey-syrup","Q"]],
+      "taste": "Two ounces of light rum, three-quarters lime, three-quarters honey syrup. Equal lime and honey, so the sour sits on beeswax rather than cane. Honey is thicker than simple; the rum tastes rounder than the Daiquiri beside it, and a little floral. Coupe.",
+      "history": "David Embury, in The Fine Art of Mixing Drinks (1948), writes that a Bee's Knees with white Cuban rum in place of gin is a Honeysuckle, and with Jamaica rum a Honey Bee. He also notes that the Honeysuckle is sometimes called the Airmail; later writers treat the Airmail as the honey Daiquiri lengthened with Champagne. Esquire's 1949 Handbook for Hosts prints a Honey Bee of honey, Bacardi, and lemon. This card keeps Embury's rum and honey, uses lime rather than lemon, and pours them equal at three-quarters of an ounce against two ounces of light rum.",
+      "refs": [
+        { "title": "Difford's Guide, Honeysuckle Daiquiri", "url": "https://www.diffordsguide.com/cocktails/recipe/970/honeysuckle-daiquiri" },
+        { "title": "Difford's Guide, Honey Bee", "url": "https://www.diffordsguide.com/cocktails/recipe/962/honey-bee" }
+      ] },
     { "id": "santiago", "name": "Santiago", "method": "shaken", "family": "light-rum", "code": "2,Q,h,c", "serve": "c",
-      "build": [["light-rum","2"],["lime","Q"],["grenadine","h"]] },
+      "build": [["light-rum","2"],["lime","Q"],["grenadine","h"]],
+      "taste": "Two ounces of light rum, three-quarters lime, half an ounce of grenadine. Same bones as the Daiquiri, pomegranate in the sugar slot. Pink, tart, a little berry where the other is only cane. Shaken, coupe.",
+      "history": "Harry Craddock prints the Santiago Cocktail in the 1930 Savoy Cocktail Book: two dashes of grenadine, two dashes of lemon juice, one glass of Bacardi. Santiago de Cuba is the city nearest the Daiquiri mines, and the name tracks that. Difford's notes that with lime instead of lemon the same idea is a Bacardi Cocktail. This card is a grenadine Daiquiri, not Craddock's dashes: two ounces of light rum, three-quarters lime, half an ounce of grenadine.",
+      "refs": [
+        { "title": "Difford's Guide, Santiago Daiquiri", "url": "https://www.diffordsguide.com/cocktails/recipe/1746/santiago-daiquiri" },
+        { "title": "The Savoy Cocktail Book (1930), p. 141", "url": "https://euvs-vintage-cocktail-books.cld.bz/1930-The-Savoy-Cocktail-Book/141/" }
+      ] },
     { "id": "stan-lee", "name": "Stan Lee", "method": "shaken", "family": "light-rum", "code": "1h,Q,Q,h,1,c", "serve": "c",
-      "build": [["light-rum","1h"],["gin","Q"],["lime","Q"],["grenadine","h"],["angostura","1"]] },
+      "build": [["light-rum","1h"],["gin","Q"],["lime","Q"],["grenadine","h"],["angostura","1"]],
+      "taste": "An ounce and a half of light rum and three-quarters gin, so the rum leads and the gin is botanicals underneath. Three-quarters lime, half an ounce of grenadine, one dash of Angostura. Pink, bark through the pomegranate. Shaken, coupe.",
+      "history": "A drink called Stan Lee does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. The nearest parent is Harry Craddock's Stanley Cocktail in the 1930 Savoy Cocktail Book: equal gin and rum, a sixth each of lemon juice and grenadine. This card keeps the split base and the grenadine, swaps lime for lemon, leads with an ounce and a half of rum against three-quarters gin, and adds a dash of Angostura.",
+      "refs": [
+        { "title": "Difford's Guide, Stanley Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/1867/stanley-cocktail" }
+      ] },
     { "id": "lani-honi", "name": "Lani-Honi", "method": "shaken", "family": "light-rum", "code": "1q,1q,Q,R", "serve": "R",
-      "build": [["light-rum","1q"],["benedictine","1q"],["lemon","Q"]] },
+      "build": [["light-rum","1q"],["benedictine","1q"],["lemon","Q"]],
+      "taste": "Equal ounces and a quarter of light rum and Benedictine, three-quarters lemon. The liqueur is honey and spice, the lemon a sour cut, the rum a cane floor. Rocks glass with ice: it sits and dilutes. Herbal punch, not a coupe sour.",
+      "history": "Jeff Berry and Annene Kaye print the Lani-Honi in Beachbum Berry's Grog Log. It was served aboard the Matson Line's SS Mariposa on its 42-day South Seas cruise in 1962: an ounce and a half of Benedictine, an ounce of light Puerto Rican rum, half an ounce of lemon, shaken and strained into a wine goblet of crushed ice. The original is a liqueur drink with rum riding second. This card equalizes rum and Benedictine at an ounce and a quarter each, raises the lemon to three-quarters, and pours it over ice in a rocks glass.",
+      "refs": [
+        { "title": "Kindred Cocktails, Lani-Honi", "url": "https://kindredcocktails.com/cocktail/lani-honi" },
+        { "title": "Summit Sips, Lani-Honi", "url": "https://summitsips.com/2023/12/lani-honi/" }
+      ] },
     { "id": "the-rum-drink", "name": "The Rum Drink", "method": "shaken", "family": "light-rum", "code": "2,Q,h,1b,c", "serve": "c",
-      "build": [["light-rum","2"],["lime","Q"],["simple","h"],["campari","1b"]] },
+      "build": [["light-rum","2"],["lime","Q"],["simple","h"],["campari","1b"]],
+      "taste": "The Daiquiri's two ounces of light rum and three-quarters lime, with only a half ounce of simple, then a barspoon of Campari. The Campari is a bitter orange film, not a pour. Pink at the rim, dry at the back. Coupe.",
+      "history": "John Lermayer mixed The Rum Drink at Sweet Liberty in Miami Beach; Eater printed it in March 2016: two ounces of white rum, three-quarters lime, three-quarters simple, one spoon of Campari, shaken, coupe. Kevin Armstrong's Dry Daiquiri, at London's Match Bar in 2005, is an earlier Campari Daiquiri, with passion fruit syrup in the mix. This card keeps Lermayer's name, rum, lime, and barspoon of Campari, and cuts the simple to half an ounce.",
+      "refs": [
+        { "title": "Eater, The Rum Drink (Sweet Liberty)", "url": "https://www.eater.com/2016/3/21/11272946/rum-cocktail-campari-sweet-liberty" },
+        { "title": "Punch, How the Dry Daiquiri Became a Modern Classic", "url": "https://punchdrink.com/articles/dry-daiquiri-cocktail-trend-london/" }
+      ] },
     { "id": "kings-jubilee", "name": "King's Jubilee", "method": "shaken", "family": "light-rum", "code": "1h,h,h,cc", "serve": "cc",
-      "build": [["light-rum","1h"],["maraschino","h"],["lemon","h"]] },
+      "build": [["light-rum","1h"],["maraschino","h"],["lemon","h"]],
+      "taste": "An ounce and a half of light rum, half an ounce of maraschino, half an ounce of lemon. Cherry stone and almond against the lemon, rum underneath. Coupe, cherry. Maraschino is half the sour; it is not a dash.",
+      "history": "Harry Craddock invented the King's Jubilee in 1935 for the Silver Jubilee of King George V, while head bartender at the American Bar in the Savoy. William James Tarling prints it in the 1937 Cafe Royal Cocktail Book, Coronation Edition, as Craddock's: half Daiquiri rum, a quarter Luxardo maraschino (dry), a quarter lemon juice. The United Kingdom Bartenders' Guild Approved Cocktails of the same year carries the same formula. This card is an ounce and a half of light rum and half an ounce each of maraschino and lemon, coupe, cherry.",
+      "refs": [
+        { "title": "Difford's Guide, King's Jubilee", "url": "https://www.diffordsguide.com/cocktails/recipe/2880/kings-jubilee" },
+        { "title": "Cafe Royal Cocktail Book (1937), p. 108", "url": "https://euvs-vintage-cocktail-books.cld.bz/1937-Cafe-Royal-Cocktail-Book-Coronation-Edition/108/" }
+      ] },
     { "id": "twelve-mile-limit", "name": "Twelve Mile Limit", "method": "shaken", "family": "light-rum", "code": "1,h,h,h,h,c", "serve": "c",
-      "build": [["light-rum","1"],["rye","h"],["cognac","h"],["grenadine","h"],["lemon","h"]] },
+      "build": [["light-rum","1"],["rye","h"],["cognac","h"],["grenadine","h"],["lemon","h"]],
+      "taste": "One ounce of light rum, then half ounces of rye, cognac, grenadine, and lemon. Three spirits, rum first. The grenadine is pomegranate, the lemon the sour, the rye and cognac spice and grape under the cane. Shaken, coupe.",
+      "history": "Ted Haigh, in Vintage Spirits and Forgotten Cocktails, credits the Twelve Mile Limit to Tommy Millard, a war correspondent, and the name to the Prohibition coastal limit: three miles, then twelve, the distance you had to sail to drink. Imbibe reprints Haigh's pour. The Three Mile Limit is the rum, brandy, lemon, and grenadine parent; this one adds rye. This card is one ounce of light rum and half an ounce each of rye, cognac, grenadine, and lemon, shaken, coupe.",
+      "refs": [
+        { "title": "Imbibe, Twelve Mile Limit Cocktail", "url": "https://imbibemagazine.com/recipe/twelve-mile-limit-cocktail/" },
+        { "title": "Saveur, Twelve Mile Limit Cocktail", "url": "https://www.saveur.com/article/recipes/classic-12-mile-limit-cocktail/" }
+      ] },
     { "id": "elderflower-daiquiri", "name": "Elderflower Daiquiri", "method": "shaken", "family": "light-rum", "code": "2,Q,1,c", "serve": "c",
-      "build": [["light-rum","2"],["elderflower","Q"],["lime","1"]] },
+      "build": [["light-rum","2"],["elderflower","Q"],["lime","1"]],
+      "taste": "Two ounces of light rum, three-quarters elderflower liqueur, a full ounce of lime. No simple: the liqueur is the sugar. Lime is a third of the drink, so it reads tart, then floral. Coupe.",
+      "history": "The parent is the Daiquiri, rum, lime, and sugar, in print from Jacques Straub's 1914 Drinks. An Elderflower Daiquiri cannot predate Robert Cooper's St-Germain, launched in 2007; the Seattle Times, citing Cooper's New York Times obituary, notes the liqueur was ubiquitous in bars by 2008. This card puts three-quarters of an ounce of elderflower in the sugar slot and a full ounce of lime against two ounces of light rum. No simple.",
+      "refs": [
+        { "title": "Difford's Guide, Daiquiri history", "url": "https://www.diffordsguide.com/g/1083/daiquiri-cocktail/story" },
+        { "title": "The Seattle Times, St-Germain", "url": "https://www.seattletimes.com/pacific-nw-magazine/st-germain-liqueur-tastes-old-world-but-is-a-modern-take-on-elderflower/" }
+      ] },
 
     { "id": "scofflaw", "name": "Scofflaw", "method": "shaken", "family": "rye", "code": "1,1,h,h,1,co", "serve": "co",
       "build": [["rye","1"],["dry-vermouth","1"],["grenadine","h"],["lemon","h"],["orange-bitters","1"]],
