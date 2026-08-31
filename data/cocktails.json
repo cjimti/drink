@@ -26,14 +26,14 @@
 
     { "id": "pedro-martinez", "name": "Pedro Martinez", "method": "stirred", "family": "aged-rum", "code": "2,1,q,3,10,2b,R", "serve": "R",
       "build": [["aged-rum","2"],["sweet-vermouth","1"],["maraschino","q"],["orange-bitters","3"],["angostura","10"],["absinthe","2b"]],
-      "taste": "Aged rum and sweet vermouth sit two to one, the Martinez ratio, with a quarter ounce of maraschino as the cherry glue. Ten dashes of Angostura is a bark flood, not a hint, and three orange bitters keep peel in the mix. Two barspoons of absinthe is a pour you can taste, anise laid over the rum rather than a rinse. Ice in the rocks glass is the point: this one is meant to sit and dilute.",
+      "taste": "Aged rum and sweet vermouth sit two to one, the Martinez ratio, with a quarter ounce of maraschino as the cherry glue. Ten dashes of Angostura is a bark flood, and three orange bitters keep peel in the mix. Two barspoons of absinthe is a pour you can taste, anise laid over the rum. Ice in the rocks glass is the point: this one is meant to sit and dilute.",
       "history": "The Pedro Martinez is a rum Martinez from Michael Shea at Rum Club in Portland, Oregon, published by Imbibe in August 2020. Shea builds it on Demerara rum with Cocchi Vermouth di Torino, maraschino, aromatic bitters, orange bitters, and a few drops of absinthe, stirred and strained over a large cube. It is a modern sugarcane version of the gin Martinez, not a recipe from the nineteenth-century manuals. This card keeps the two-to-one rum and vermouth, the quarter of maraschino, and the rocks glass with ice, yet it pours ten dashes of Angostura and two barspoons of absinthe, heavier than Shea's drops.",
       "refs": [
         { "title": "Imbibe, Pedro Martinez Cocktail", "url": "https://imbibemagazine.com/recipe/pedro-martinez-cocktail/" }
       ] },
     { "id": "rum-old-fashioned", "name": "Rum Old Fashioned", "method": "stirred", "family": "aged-rum", "code": "2,1b,2,1,Ro", "serve": "Ro",
       "build": [["aged-rum","2"],["demerara","1b"],["angostura","2"],["orange-bitters","1"]],
-      "taste": "Two ounces of aged rum, one barspoon of demerara, nothing more for sugar. The molasses of the syrup and the barrel of the rum are the same family, so the drink reads as rum first, then spice. Two dashes of Angostura and one of orange bitters keep clove and peel in the glass without turning it into a whiskey cocktail. Rocks, ice, and an orange twist: it sits.",
+      "taste": "Two ounces of aged rum, one barspoon of demerara, nothing more for sugar. The molasses of the syrup and the barrel of the rum are the same family, so the drink reads as rum first, then spice. Two dashes of Angostura and one of orange bitters keep clove and peel in the glass. Rocks, ice, and an orange twist: it sits.",
       "history": "The Old-Fashioned takes its name from drinkers in the 1870s who asked for an old-fashioned whiskey cocktail after bartenders began dressing the Whiskey Cocktail with absinthe, curacao, and other liqueurs. The formula itself is older: spirit, sugar, water, and bitters, the definition printed in The Balance and Columbian Repository in 1806. A rum Old-Fashioned is that template with the whiskey swapped out, a substitution that became common in craft bars in the 2000s as aged rum was treated as a sipping spirit. This card pours two ounces of aged rum, one barspoon of demerara syrup, two dashes of Angostura, and one of orange bitters, over ice with an orange twist.",
       "refs": [
         { "title": "Difford's Guide, Old Fashioned cocktail history", "url": "https://www.diffordsguide.com/g/1198/old-fashioned-cocktail/history" }
@@ -41,7 +41,7 @@
 
     { "id": "so-so-cocktail", "name": "So So Cocktail", "method": "stirred", "family": "apple-brandy", "code": "1,1,h,h,cc", "serve": "cc",
       "build": [["gin","1"],["dry-vermouth","1"],["apple-brandy","h"],["grenadine","h"]],
-      "taste": "Equal gin and dry vermouth, a half ounce of apple brandy riding underneath, and a half ounce of grenadine that is more fruit than tint. The gin is the drink; the apple is a peel of orchard, not a base. Dry vermouth keeps it lean, so the grenadine is the only roundness. Coupe, cherry.",
+      "taste": "Equal gin and dry vermouth, a half ounce of apple brandy riding underneath, and a half ounce of grenadine that tastes of pomegranate. The gin is the drink; the apple is a peel of orchard. Dry vermouth keeps it lean, so the grenadine is the only roundness. Coupe, cherry.",
       "history": "The So So Cocktail appears in Harry MacElhone's 1923 Harry of Ciro's ABC of Mixing Cocktails, credited to Mr. P. Soso, manager of Ciro's Club in London (MacElhone also names the Kit-Kat Club). The printed formula is one-sixth grenadine, one-sixth Calvados, one-third Cinzano vermouth, one-third gin. Harry Craddock repeats it in the 1930 Savoy Cocktail Book with Italian vermouth in place of the brand. This card files under apple brandy and is mostly gin. It also swaps the Italian vermouth for dry, and it pours a half ounce of grenadine rather than a sixth.",
       "refs": [
         { "title": "Difford's Guide, So So Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/1794/so-so-cocktail" },
@@ -49,14 +49,14 @@
       ] },
     { "id": "dempsey", "name": "Dempsey", "method": "stirred", "family": "apple-brandy", "code": "1h,1h,h,q,c", "serve": "c",
       "build": [["apple-brandy","1h"],["gin","1h"],["grenadine","h"],["absinthe","q"]],
-      "taste": "Equal ounces and a half of apple brandy and gin, so neither wins. Half an ounce of grenadine is a real pour, pomegranate against the orchard, and a quarter ounce of absinthe is enough anise to coat the glass. Stirred, no juice, coupe. It drinks as a pink, wormwood-edged brandy-and-gin cocktail, not a sour.",
+      "taste": "Equal ounces and a half of apple brandy and gin, so neither wins. Half an ounce of grenadine is a real pour, pomegranate against the orchard, and a quarter ounce of absinthe is enough anise to coat the glass. Stirred, no juice, coupe. Pink, wormwood-edged brandy and gin.",
       "history": "Robert Vermeire prints the Dempsey in Cocktails How to Mix Them (1922) and says it was introduced at Deauville in 1921 after Jack Dempsey knocked out Georges Carpentier on 2 July 1921 at Boyle's Thirty Acres in Jersey City, the first million-dollar gate. Vermeire's formula is two-thirds Calvados to one-third gin, with dashes of absinthe and a teaspoon of grenadine. Harry MacElhone, the same year, credits Fred Martin at the Casino de Deauville in 1922, and uses a dash of Anis del Osa. Both claims stay in print. This card splits apple brandy and gin equally, then pours half an ounce of grenadine and a quarter ounce of absinthe, heavier than the dashes.",
       "refs": [
         { "title": "Difford's Guide, Dempsey", "url": "https://www.diffordsguide.com/cocktails/recipe/629/dempsey" }
       ] },
     { "id": "corpse-reviver-1", "name": "Corpse Reviver No. 1", "method": "stirred", "family": "apple-brandy", "code": "1h,Q,Q,cc", "serve": "cc",
       "build": [["cognac","1h"],["apple-brandy","Q"],["sweet-vermouth","Q"]],
-      "taste": "Cognac first, an ounce and a half, then three-quarters each of apple brandy and sweet vermouth. The apple is a second brandy, not the drink. No juice, no bitters, stirred. It reads as a Manhattan that swapped whiskey for two brandies, orchard under grape, vermouth holding them. Coupe, cherry.",
+      "taste": "Cognac first, an ounce and a half, then three-quarters each of apple brandy and sweet vermouth. The apple is a second brandy. No juice, no bitters, stirred. Two brandies and vermouth, orchard under grape. Coupe, cherry.",
       "history": "Harry Craddock prints Corpse Reviver No. 1 in The Savoy Cocktail Book in 1930: half brandy, a quarter apple brandy or Calvados, a quarter Italian vermouth, \"to be taken before 11 a.m., or whenever steam and energy are needed.\" Difford's Guide notes that the drink is sometimes credited to Frank Meier at the Ritz Bar in Paris, although Meier makes no claim in his 1936 The Artistry of Mixing Drinks. The No. 2, gin, Lillet, orange liqueur, lemon, and absinthe, is a different cocktail and is not on this card. This one leads with cognac. The card pours an ounce and a half of cognac and three-quarters each of apple brandy and sweet vermouth.",
       "refs": [
         { "title": "Difford's Guide, Corpse Reviver No.1 (Savoy recipe)", "url": "https://www.diffordsguide.com/cocktails/recipe/471/corpse-reviver-no1-savoy-recipe" }
@@ -64,21 +64,21 @@
 
     { "id": "burnt-fuselage", "name": "Burnt Fuselage", "method": "stirred", "family": "cognac", "code": "1,1,1,c", "serve": "c",
       "build": [["cognac","1"],["dry-vermouth","1"],["orange-liqueur","1"]],
-      "taste": "Equal ounces of cognac, dry vermouth, and orange liqueur, so the orange is a third of the drink, not a dash. Candied peel sits against the cognac; dry vermouth cuts the sugar so it does not drink as a cordial. Stirred, no bitters, coupe, no twist. It is a stiff orange Manhattan, grape and peel.",
+      "taste": "Equal ounces of cognac, dry vermouth, and orange liqueur, so the orange is a third of the drink. Candied peel sits against the cognac; dry vermouth cuts the sugar. Stirred, no bitters, coupe, no twist. A stiff orange Manhattan, grape and peel.",
       "history": "The Burnt Fuselage first appears in Harry MacElhone's 1927 Barflies and Cocktails, in the Cocktails Around Town section listing drinks of regulars at Harry's New York Bar in Paris. MacElhone credits Colonel C.W. Chuck Kerwood of Philadelphia, President of the International League of Aviators, who wanted a stiff steadier when he came down to earth: one-third Grand Marnier, one-third cognac, and one-third French vermouth. Kerwood was known as the wild man of aviation. This card keeps the equal parts and the coupe, with no bitters and no twist.",
       "refs": [
         { "title": "Difford's Guide, Burnt Fuselage", "url": "https://www.diffordsguide.com/cocktails/recipe/4912/burnt-fuselage" }
       ] },
     { "id": "palace-hotel", "name": "Palace Hotel", "method": "stirred", "family": "cognac", "code": "1h,1h,1b,cl", "serve": "cl",
       "build": [["cognac","1h"],["sweet-vermouth","1h"],["orange-liqueur","1b"]],
-      "taste": "Equal ounces and a half of cognac and sweet vermouth, grape on grape, a Manhattan ratio with no whiskey. One barspoon of orange liqueur is peel, not sweetness. No bitters. Stirred, coupe, lemon twist. It drinks as a brandy Manhattan that swapped Angostura for a thin orange film.",
+      "taste": "Equal ounces and a half of cognac and sweet vermouth, grape on grape, a Manhattan ratio. One barspoon of orange liqueur is peel. No bitters. Stirred, coupe, lemon twist. A brandy Manhattan with a thin orange film.",
       "history": "A drink called Palace Hotel does not appear in the pre-1970 manuals under that name, nor in Difford's, Punch, or Imbibe. The nearest parent is the Harvard, which George J. Kappeler prints in 1895 Modern American Drinks: equal brandy and Italian vermouth, gum, Angostura, and a seltzer top. Albert Stevens Crockett, in Old Waldorf Bar Days (1931), ties the name to the college on the Charles. This card keeps the equal cognac and sweet vermouth and the lemon twist, yet it drops the bitters and the soda, and puts a barspoon of orange liqueur in their place.",
       "refs": [
         { "title": "Difford's Guide, Harvard", "url": "https://www.diffordsguide.com/cocktails/recipe/934/harvard" }
       ] },
     { "id": "metropole", "name": "Metropole", "method": "stirred", "family": "cognac", "code": "1h,1h,2,1,cc", "serve": "cc",
       "build": [["cognac","1h"],["dry-vermouth","1h"],["peychauds","2"],["orange-bitters","1"]],
-      "taste": "Equal ounces and a half of cognac and dry vermouth, so neither wins. Two dashes of Peychaud's pull it toward cherry and anise rather than the bark of an Angostura Manhattan. One dash of orange bitters is peel on the dry vermouth. Stirred, coupe, cherry. It reads pink and lean.",
+      "taste": "Equal ounces and a half of cognac and dry vermouth, so neither wins. Two dashes of Peychaud's pull it toward cherry and anise. One dash of orange bitters is peel on the dry vermouth. Stirred, coupe, cherry. It reads pink and lean.",
       "history": "George J. Kappeler prints the Metropole in 1895 Modern American Drinks as the house cocktail of the Hotel Metropole at Broadway and 42nd Street: equal brandy and French vermouth, gum, Peychaud's, orange bitters, and a cherry. It is a dry, Peychaud's turn on O.H. Byron's 1884 Metropolitan. Albert Stevens Crockett, in The Old Waldorf Bar Days (1931), calls the hotel somewhat lively. The street-level Cafe Metropole held an all-night license; Herman Rosenthal was shot outside it in 1912, and the hotel went bankrupt that July. This card keeps Kappeler's equal parts, two dashes of Peychaud's, one of orange bitters, and the cherry. No gum.",
       "refs": [
         { "title": "Difford's Guide, Metropole", "url": "https://www.diffordsguide.com/cocktails/recipe/2496/metropole" },
@@ -86,7 +86,7 @@
       ] },
     { "id": "brandy-crusta", "name": "Brandy Crusta", "method": "stirred", "family": "cognac", "code": "2,q,q,q,2,Rl", "serve": "Rl",
       "build": [["cognac","2"],["maraschino","q"],["demerara","q"],["lemon","q"],["angostura","2"]],
-      "taste": "Two ounces of cognac, then a quarter each of maraschino, demerara, and lemon. The lemon is an accent, not a sour; the drink is still a cocktail. Two dashes of Angostura sit under cherry and brown sugar. Stirred, not shaken. Rocks with ice and a lemon twist: no sugar crust, and it sits.",
+      "taste": "Two ounces of cognac, then a quarter each of maraschino, demerara, and lemon. The lemon is an accent; the drink is still a cocktail. Two dashes of Angostura sit under cherry and brown sugar. Stirred. Rocks with ice and a lemon twist. It sits.",
       "history": "Joseph Santini, an Italian bartender in New Orleans, built the Crusta in the 1850s, either at the City Exchange in the French Quarter or at Jewel of the South on Gravier Street, which he opened in 1855. Jerry Thomas prints it in the 1862 Bar-Tender's Guide, misspelling Santini as Santina and calling him Spanish. The name is the sugar crust on the rim; the lemon is a dash, not a pour. David Wondrich, in The Oxford Companion, treats that citrus as an accent, and traces the Sidecar through the Daisy instead. This card pours two ounces of cognac, a quarter each of maraschino, demerara, and lemon, two dashes of Angostura, over ice, no crust.",
       "refs": [
         { "title": "The Oxford Companion to Spirits and Cocktails, The Brandy Crusta", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-266" },
@@ -94,7 +94,7 @@
       ] },
     { "id": "ritz", "name": "Ritz", "method": "stirred", "family": "cognac", "code": "Q,h,q,q,3,cfo", "serve": "cfo",
       "build": [["cognac","Q"],["maraschino","h"],["demerara","q"],["lemon","q"],["angostura","3"]],
-      "taste": "Three-quarters of an ounce of cognac, so this is a small drink. Half an ounce of maraschino is the sweet and the cherry; a quarter each of demerara and lemon keep it from being a cordial. Three dashes of Angostura is a lot of bark for so little spirit. Stirred, coupe, flamed orange twist. It is not a full sour and it is not Champagne.",
+      "taste": "Three-quarters of an ounce of cognac, so this is a small drink. Half an ounce of maraschino is the sweet and the cherry; a quarter each of demerara and lemon. Three dashes of Angostura is a lot of bark for so little spirit. Stirred, coupe, flamed orange twist.",
       "history": "Dale DeGroff built a Ritz Cocktail at Aurora in New York in 1985, later printed in The Craft of the Cocktail (2002) as a tribute to the Ritz drinks of Paris and Madrid: three-quarters cognac, half orange liqueur, a quarter each of maraschino and lemon, topped with Champagne, and a flamed orange twist. This card keeps the small cognac, the maraschino, the lemon, and the flamed twist. It drops the Champagne and the orange liqueur, adds a quarter of demerara and three dashes of Angostura, and stirs it.",
       "refs": [
         { "title": "Imbibe, Ritz Cocktail", "url": "https://imbibemagazine.com/recipe/ritz-cocktail/" },
@@ -103,7 +103,7 @@
 
     { "id": "old-fashioned", "name": "Old-Fashioned", "method": "stirred", "family": "bourbon", "code": "2,1b,2,R", "serve": "R",
       "build": [["bourbon","2"],["demerara","1b"],["angostura","2"]],
-      "taste": "Two ounces of bourbon, one barspoon of demerara, two dashes of Angostura. The sugar is a film, not a pour; the bitters are bark and clove against the corn. Rocks with ice, no orange, no cherry, no muddle. It sits.",
+      "taste": "Two ounces of bourbon, one barspoon of demerara, two dashes of Angostura. The sugar is a film; the bitters are bark and clove against the corn. Rocks with ice. It sits.",
       "history": "The cocktail itself is spirit, sugar, water, and bitters, defined in The Balance and Columbian Repository on 13 May 1806. By the 1870s bartenders were dressing the Whiskey Cocktail with curacao, maraschino, and absinthe; drinkers who wanted the older formula asked for an old-fashioned whiskey cocktail. Robert Hess and David Wondrich, in The Oxford Companion, reject the Pendennis Club origin: Chicago papers were already talking about old-fashioned cocktails in 1880, a year before the Louisville club was founded. This card pours two ounces of bourbon, one barspoon of demerara, and two dashes of Angostura, over ice. No fruit.",
       "refs": [
         { "title": "The Oxford Companion to Spirits and Cocktails, The Old-Fashioned Cocktail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-377" },
@@ -111,7 +111,7 @@
       ] },
     { "id": "boulevardier", "name": "Boulevardier", "method": "stirred", "family": "bourbon", "code": "1h,1,1,R", "serve": "R",
       "build": [["bourbon","1h"],["campari","1"],["sweet-vermouth","1"]],
-      "taste": "An ounce and a half of bourbon against a full ounce each of Campari and sweet vermouth. The whiskey leads, but not by much; Campari is nearly a third of the drink. Stirred, rocks with ice, no twist on this card. Bitter orange, grape, and corn whiskey, and the cube.",
+      "taste": "An ounce and a half of bourbon against a full ounce each of Campari and sweet vermouth. The whiskey leads a little; Campari is nearly a third of the drink. Stirred, rocks with ice. Bitter orange, grape, and corn whiskey, and the cube.",
       "history": "The Boulevardier first appears in print in Harry MacElhone's 1927 Barflies and Cocktails, not in the main recipe list but in Arthur Moss's Cocktails Round Town essay, credited to Erskine Gwynne. Gwynne was an American in Paris who edited a monthly magazine of the same name from 1927 to 1932; Moss prints it as equal parts Campari, Italian vermouth, and bourbon. Ted Haigh notes that Americans had barely heard of Campari in 1927, and that the Negroni would not see print for another twenty years. This card keeps the bourbon and the rocks glass, yet it pours an ounce and a half of whiskey against an ounce each of Campari and sweet vermouth.",
       "refs": [
         { "title": "Imbibe, History Lesson: The Boulevardier", "url": "https://imbibemagazine.com/the-history-of-the-boulevardier-cocktail/" },
@@ -119,14 +119,14 @@
       ] },
     { "id": "fancy-cocktail", "name": "Fancy Cocktail", "method": "stirred", "family": "bourbon", "code": "1h,q,1b,2,cl", "serve": "cl",
       "build": [["bourbon","1h"],["orange-liqueur","q"],["demerara","1b"],["angostura","2"]],
-      "taste": "An ounce and a half of bourbon, a quarter ounce of orange liqueur, one barspoon of demerara, two dashes of Angostura. The orange liqueur is peel and a little sugar, not a third of the glass. Stirred, coupe, lemon twist. It is an Old-Fashioned with curacao in the sugar slot, served up.",
+      "taste": "An ounce and a half of bourbon, a quarter ounce of orange liqueur, one barspoon of demerara, two dashes of Angostura. The orange liqueur is peel and a little sugar. Stirred, coupe, lemon twist. An Old-Fashioned with curacao in the sugar slot, served up.",
       "history": "Jerry Thomas prints the Fancy Brandy Cocktail and Fancy Gin Cocktail in the 1862 Bar-Tender's Guide as the plain Cocktail strained into a fancy wine-glass, lemon on the rim and a piece of peel thrown on top. Wayne Curtis, in Imbibe, notes that the difference is mostly the glass. Thomas's later Improved Cocktail is the one that adds maraschino and absinthe; this card is the older fancy, whiskey with a splash of orange liqueur rather than those. This card pours an ounce and a half of bourbon, a quarter of orange liqueur, a barspoon of demerara, two dashes of Angostura, coupe, lemon.",
       "refs": [
         { "title": "Imbibe, Mixopedia: Fancy Drinks", "url": "https://imbibemagazine.com/mixopedia-fancy-drinks/" }
       ] },
     { "id": "manhattan", "name": "Manhattan", "method": "stirred", "family": "bourbon", "code": "2,1,2,cc", "serve": "cc",
       "build": [["bourbon","2"],["sweet-vermouth","1"],["angostura","2"]],
-      "taste": "Two ounces of bourbon to one of sweet vermouth, so the whiskey leads. Two dashes of Angostura sit under the vermouth's grape and spice. Stirred, coupe, cherry. No rye heat, no lemon oil. Corn, bark, and the cherry at the bottom.",
+      "taste": "Two ounces of bourbon to one of sweet vermouth, so the whiskey leads. Two dashes of Angostura sit under the vermouth's grape and spice. Stirred, coupe, cherry. Corn, bark, and the cherry at the bottom.",
       "history": "The Manhattan is American whiskey, Italian vermouth, and bitters, first named in print in an 1882 Gotham Gossip column syndicated out of New York, and first given a full recipe in O.H. Byron's 1884 The Modern Bartenders' Guide. The Manhattan Club dinner for Samuel Tilden in 1874, later tied to Jennie Jerome, is a late story: she was in England with a month-old Winston Churchill. William F. Mulhall, writing in 1923, credited a man named Black who kept a place on Broadway; David Wondrich found George Black's Manhattan Inn near Houston Street in the 1870s. Early books call for rye or bourbon, often at equal parts. This card files under bourbon, pours two to one, two dashes of Angostura, coupe, cherry.",
       "refs": [
         { "title": "The Oxford Companion to Spirits and Cocktails, The Manhattan Cocktail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-359" },
@@ -134,7 +134,7 @@
       ] },
     { "id": "fancy-free", "name": "Fancy Free", "method": "stirred", "family": "bourbon", "code": "2,h,1,1,Ro", "serve": "Ro",
       "build": [["bourbon","2"],["maraschino","h"],["angostura","1"],["orange-bitters","1"]],
-      "taste": "Two ounces of bourbon, half an ounce of maraschino in place of sugar. One dash of Angostura, one of orange bitters. The cherry liqueur is almond and pit as much as fruit. Stirred, rocks with ice, orange twist. It drinks as an Old-Fashioned with maraschino doing the sweetening.",
+      "taste": "Two ounces of bourbon, half an ounce of maraschino. One dash of Angostura, one of orange bitters. The cherry liqueur is almond and pit as much as fruit, and it does the sweetening. Stirred, rocks with ice, orange twist.",
       "history": "The Fancy Free first appears in Crosby Gaige's Cocktail Guide and Ladies' Companion, printed in 1941: a jigger of Fine Arts whiskey, two dashes of maraschino, a dash each of Angostura and orange bitters, shaken, strained into a sugar-rimmed cocktail glass. Gaige was a New York publisher and theatrical producer; Punch treats the naming as his. Revival bartenders, working from Milk & Honey spec sheets, dropped the sugar rim, stirred it, and poured it over ice with an orange twist. This card keeps the two ounces of bourbon, the half ounce of maraschino, one dash of each bitters, rocks, orange.",
       "refs": [
         { "title": "Punch, Bring Back the Fancy Free", "url": "https://punchdrink.com/articles/bring-back-the-fancy-free/" },
@@ -142,14 +142,14 @@
       ] },
     { "id": "frisco", "name": "Frisco", "method": "stirred", "family": "bourbon", "code": "2,h,R", "serve": "R",
       "build": [["bourbon","2"],["benedictine","h"]],
-      "taste": "Two ounces of bourbon, half an ounce of Bénédictine, nothing else. Honey, baking spice, and herbs against the whiskey, no lemon to cut it. Stirred, rocks with ice, no twist on this card. It is a short, sweet, herbal whiskey.",
+      "taste": "Two ounces of bourbon, half an ounce of Bénédictine, nothing else. Honey, baking spice, and herbs against the whiskey. Stirred, rocks with ice. Short, sweet, herbal whiskey.",
       "history": "The Frisco first prints in William \"Cocktail Bill\" Boothby's 1934 The World's Drinks and How to Mix Them as three-quarters of a jigger of whisky and a quarter of Bénédictine, stirred on a lump of ice with a lemon twist and a water chaser. Lucius Beebe repeats it in 1946 as two ounces of bourbon and three-quarters of Bénédictine, up. David Embury, in 1948, allows lemon juice; later books split the drink into a Frisco and a Frisco Sour. This card keeps Boothby's two-ingredient whiskey and Bénédictine, on bourbon, over ice, no juice and no twist.",
       "refs": [
         { "title": "Difford's Guide, Frisco Sour", "url": "https://www.diffordsguide.com/cocktails/recipe/2417/frisco-sour" }
       ] },
     { "id": "derby", "name": "Derby", "method": "stirred", "family": "bourbon", "code": "2,Q,h,h,cm", "serve": "cm",
       "build": [["bourbon","2"],["lime","Q"],["sweet-vermouth","h"],["orange-liqueur","h"]],
-      "taste": "Two ounces of bourbon against three-quarters of an ounce of lime, so the lime is loud. Half an ounce each of sweet vermouth and orange liqueur dress it: grape and peel, not enough to bury the citrus. Stirred, not shaken, despite the juice. Coupe, mint. Bourbon and lime sit in the same glass, cold but not aerated.",
+      "taste": "Two ounces of bourbon against three-quarters of an ounce of lime, so the lime is loud. Half an ounce each of sweet vermouth and orange liqueur dress it: grape and peel under the citrus. Stirred, despite the juice. Coupe, mint. Bourbon and lime sit in the same glass, cold.",
       "history": "At least three drinks share the name Derby. The gin-and-peach-bitters version is Harry MacElhone, 1926, later in the Savoy. This card is the bourbon one: lime, sweet vermouth, and orange curacao, which Ted Haigh reprints from Trader Vic's 1947 Bartender's Guide, one of three Derbies Vic listed. Vic's formula is a short pour of bourbon against a heavy lime, and it is shaken. This card keeps the lime, the vermouth, the orange liqueur, and the mint, yet it pours two ounces of bourbon and stirs the drink.",
       "refs": [
         { "title": "Serious Eats, The Derby", "url": "https://www.seriouseats.com/derby-cocktail-bourbon-vermouth-grand-marnier-lime-recipe" }
@@ -164,7 +164,7 @@
 
     { "id": "rosita", "name": "Rosita", "method": "stirred", "family": "tequila", "code": "1h,1,h,h,1,Ro", "serve": "Ro",
       "build": [["tequila","1h"],["campari","1"],["sweet-vermouth","h"],["dry-vermouth","h"],["angostura","1"]],
-      "taste": "An ounce and a half of tequila against a full ounce of Campari, so the bitter leads. Half an ounce each of sweet and dry vermouth split the wine, a Perfect Negroni with agave. One dash of Angostura is spice, not a second bitter. Stirred, rocks, ice, orange twist.",
+      "taste": "An ounce and a half of tequila against a full ounce of Campari, so the bitter leads. Half an ounce each of sweet and dry vermouth split the wine, a Perfect Negroni with agave. One dash of Angostura is spice. Stirred, rocks, ice, orange twist.",
       "history": "The Rosita first appears, creator unknown, in the 1974 Mr. Boston Official Bartender's Guide: one ounce tequila, one ounce Campari, half an ounce each of dry and sweet vermouth, stirred on cracked ice, lemon twist. Gary Regan reprinted it in The Bartender's Bible (1991) with more tequila and a dash of Angostura, then forgot he had. Terry Sullivan and Regan traced it back in 2007 in the San Francisco Chronicle. Mexico City is sometimes named; no period citation supports that. This card keeps Regan's ounce and a half of tequila and the dash of Angostura, yet it pours a full ounce of Campari and garnishes with orange.",
       "refs": [
         { "title": "Imbibe, The Rosita Cocktail", "url": "https://imbibemagazine.com/recipe/the-rosita-cocktail-recipe/" },
@@ -179,25 +179,81 @@
       ] },
 
     { "id": "old-pal", "name": "Old Pal", "method": "stirred", "family": "rye", "code": "1,1,1,1b,R", "serve": "R",
-      "build": [["rye","1"],["campari","1"],["dry-vermouth","1"],["demerara","1b"]] },
+      "build": [["rye","1"],["campari","1"],["dry-vermouth","1"],["demerara","1b"]],
+      "taste": "Equal ounces of rye, Campari, and dry vermouth, so Campari is a third of the drink. Bitter orange and rye heat sit against a dry wine cut, and one barspoon of demerara is brown sugar in a lean formula, rounding the Campari. Rocks with ice. It sits.",
+      "history": "The Old Pal first prints in Harry MacElhone's 1927 Barflies and Cocktails, not in the A-Z list but in Arthur Moss's Cocktails Round Town essay, the same appendix that carries the Boulevardier. Moss credits William \"Sparrow\" Robinson, sports editor of the New York Herald in Paris, with equal parts Canadian Club, Italian vermouth, and Campari, dedicated to Moss as My Old Pal. However, by the 1929 edition of Harry's ABC of Mixing Cocktails the vermouth is French, dry, and that is the formula that stuck. This card keeps equal rye, Campari, and dry vermouth, adds a barspoon of demerara, and pours it over ice.",
+      "refs": [
+        { "title": "Difford's Guide, Old Pal", "url": "https://www.diffordsguide.com/cocktails/recipe/1430/old-pal" },
+        { "title": "Serious Eats, The Old Pal and a New Friend", "url": "https://www.seriouseats.com/classic-cocktail-old-pal-cocktail-history-harry-macelhone" }
+      ] },
     { "id": "saratoga", "name": "Saratoga", "method": "stirred", "family": "rye", "code": "1,1,1,2,cl", "serve": "cl",
-      "build": [["rye","1"],["cognac","1"],["sweet-vermouth","1"],["angostura","2"]] },
+      "build": [["rye","1"],["cognac","1"],["sweet-vermouth","1"],["angostura","2"]],
+      "taste": "Equal ounces of rye, cognac, and sweet vermouth, so neither spirit leads. The cognac rounds the rye; two dashes of Angostura sit under grape and barrel. Stirred, coupe, lemon. A Manhattan that split the whiskey with brandy.",
+      "history": "David Wondrich, in The Oxford Companion, treats the Saratoga as two competing drinks that shared the name of the New York spa town. Jerry Thomas's posthumous 1887 Bar-Tenders Guide prints equal ponies of brandy, whiskey, and vermouth with two dashes of Angostura, shaken, in a claret glass with a quarter slice of lemon. Harry Johnson, the following year, printed a fancy brandy cocktail with a squirt of champagne. For thirty years the books took sides; by the 1930s both were a memory. This card is Thomas's split-base Manhattan: one ounce each of rye, cognac, and sweet vermouth, two dashes of Angostura, coupe, lemon.",
+      "refs": [
+        { "title": "Difford's Guide, Saratoga Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/2196/saratoga-cocktail" },
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Saratoga", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-409" }
+      ] },
     { "id": "monte-carlo", "name": "Monte Carlo", "method": "stirred", "family": "rye", "code": "1Q,h,1,R", "serve": "R",
-      "build": [["rye","1Q"],["benedictine","h"],["angostura","1"]] },
+      "build": [["rye","1Q"],["benedictine","h"],["angostura","1"]],
+      "taste": "An ounce and three-quarters of rye against a half ounce of Benedictine. Honey, baking spice, and herbs ride on the whiskey, and one dash of Angostura is bark at the end. Rocks with ice. It sits.",
+      "history": "The Monte Carlo first prints in David Embury's 1948 The Fine Art of Mixing Drinks: one part Benedictine, two parts rye, one or two dashes of Angostura, shaken with cracked ice. Embury, a New York tax lawyer, called it a bit on the sweet side and suggested lemon juice and more rye. No bartender or bar is named. The drink is a Manhattan with Benedictine in place of vermouth, served here over ice. This card pours an ounce and three-quarters of rye, a half ounce of Benedictine, and one dash of Angostura.",
+      "refs": [
+        { "title": "Difford's Guide, Monte Carlo", "url": "https://www.diffordsguide.com/cocktails/recipe/2506/monte-carlo" }
+      ] },
     { "id": "improved-cocktail", "name": "Improved Coctail", "method": "stirred", "family": "rye", "code": "2,1b,1b,1b,2,Rl", "serve": "Rl",
-      "build": [["rye","2"],["maraschino","1b"],["absinthe","1b"],["simple","1b"],["angostura","2"]] },
+      "build": [["rye","2"],["maraschino","1b"],["absinthe","1b"],["simple","1b"],["angostura","2"]],
+      "taste": "Two ounces of rye, then a barspoon each of maraschino, absinthe, and simple. The absinthe is in the drink, anise against cherry pit and sugar. Two dashes of Angostura. Rocks with ice, lemon. Rye first, then wormwood.",
+      "history": "Jerry Thomas prints the Improved Whiskey Cocktail in the 1876 Bar-Tender's Guide as the Improved Brandy Cocktail with whiskey in place of brandy: Boker's or Angostura, gum, maraschino, a dash of absinthe, lemon oil, shaken. The improvement is European liqueur on the old cocktail of spirit, sugar, and bitters, the same dressing drinkers later asked to skip when they called for an old-fashioned whiskey cocktail. The card spells it Coctail, as the paper menu does. This card pours two ounces of rye, a barspoon each of maraschino, absinthe, and simple, two dashes of Angostura, over ice with a lemon twist.",
+      "refs": [
+        { "title": "Difford's Guide, Improved Whiskey Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/5083/improved-whiskey-cocktail" },
+        { "title": "Eater, Building on a Classic: the Evolution of the Improved Cocktail", "url": "https://www.eater.com/drinks/2016/4/1/11322654/cocktail-recipe-maraschino-absinthe-cheers" }
+      ] },
     { "id": "sazerac", "name": "Sazerac", "method": "stirred", "family": "rye", "code": "2,1b,4,r,r", "serve": "r",
-      "build": [["rye","2"],["simple","1b"],["peychauds","4"],["absinthe","r"]] },
+      "build": [["rye","2"],["simple","1b"],["peychauds","4"],["absinthe","r"]],
+      "taste": "Two ounces of rye, one barspoon of simple, four dashes of Peychaud's. The absinthe is a rinse, a thin anise film on the glass. Four dashes of Peychaud's is a lot: cherry and spice, enough to pink the drink. Rocks with no ice. The barspoon of sugar is the softness in it.",
+      "history": "The Sazerac takes its name from Sazerac de Forge et Fils cognac, imported into New Orleans by Sewell Taylor around 1850 and poured at the Sazerac Coffee House with Antoine Peychaud's bitters. Thomas Handy took the bar around 1870; phylloxera wrecked French stocks, and rye replaced the cognac. Stanley Clisby Arthur's 1937 Famous New Orleans Drinks credits Leon Lamothe with the absinthe around 1870. However, David Wondrich treats the named drink as later, a bottled whiskey cocktail first printed by William T. Boothby in 1908. New Orleans named it the official cocktail of the city in 2008. This card pours two ounces of rye, one barspoon of simple, four dashes of Peychaud's, an absinthe rinse, rocks with no ice.",
+      "refs": [
+        { "title": "Difford's Guide, Sazerac (New Orleans style)", "url": "https://www.diffordsguide.com/cocktails/recipe/3390/sazerac-new-orleans-style" }
+      ] },
     { "id": "red-hook", "name": "Red Hook", "method": "stirred", "family": "rye", "code": "2,h,h,cc", "serve": "cc",
-      "build": [["rye","2"],["sweet-vermouth","h"],["maraschino","h"]] },
+      "build": [["rye","2"],["sweet-vermouth","h"],["maraschino","h"]],
+      "taste": "Two ounces of rye, then a half ounce each of sweet vermouth and maraschino. The vermouth is grape and sugar; the cherry liqueur is almond and pit. Stirred, coupe, cherry. Rye first, then a thin cherry film.",
+      "history": "Vincenzo Errico built the Red Hook at Sasha Petraske's Milk & Honey in New York in 2003, a Manhattan crossed with a Brooklyn and named for the south Brooklyn neighborhood. Errico, an Italian bartender Petraske brought over after opening Milk & Honey London, used Punt e Mes, the bittersweet Turin vermouth, with rye and maraschino. He told Imbibe a fellow Italian neighbor in Brooklyn suggested the name. This card keeps the two ounces of rye and the half ounce of maraschino, yet it pours sweet vermouth in place of Punt e Mes.",
+      "refs": [
+        { "title": "Imbibe, Red Hook Cocktail", "url": "https://imbibemagazine.com/recipe/red-hook-recipe/" }
+      ] },
     { "id": "waldorf", "name": "Waldorf", "method": "stirred", "family": "rye", "code": "2,Q,q,2,cc", "serve": "cc",
-      "build": [["rye","2"],["sweet-vermouth","Q"],["absinthe","q"],["angostura","2"]] },
+      "build": [["rye","2"],["sweet-vermouth","Q"],["absinthe","q"],["angostura","2"]],
+      "taste": "Two ounces of rye, three-quarters sweet vermouth, a quarter ounce of absinthe. The absinthe is in the drink, anise over grape, and two dashes of Angostura sit under both. Stirred, coupe, cherry. A Manhattan with wormwood in it.",
+      "history": "Jacques Straub prints the Waldorf in 1913 Manual of Mixed Drinks as equal rye, Italian vermouth, and absinthe, with two dashes of orange bitters, shaken. Albert Stevens Crockett repeats it in Old Waldorf Bar Days (1931) as a third each of whiskey, absinthe, and Italian vermouth, a dash of Manhattan bitters, frappe, from the old Waldorf Hotel on Fifth Avenue, demolished in 1929 for the Empire State Building. Dale DeGroff later cut the absinthe to a rinse. This card pours two ounces of rye, three-quarters sweet vermouth, a quarter ounce of absinthe, and two dashes of Angostura, coupe, cherry.",
+      "refs": [
+        { "title": "Difford's Guide, Waldorf No. 1", "url": "https://www.diffordsguide.com/cocktails/recipe/2600/waldorf-cocktail-no1" }
+      ] },
     { "id": "the-slope", "name": "The Slope", "method": "stirred", "family": "rye", "code": "2h,Q,q,1,cc", "serve": "cc",
-      "build": [["rye","2h"],["sweet-vermouth","Q"],["apricot","q"],["angostura","1"]] },
+      "build": [["rye","2h"],["sweet-vermouth","Q"],["apricot","q"],["angostura","1"]],
+      "taste": "Two and a half ounces of rye, three-quarters sweet vermouth, a quarter of apricot liqueur. Stone fruit against a large rye pour. One dash of Angostura. Stirred, coupe, cherry. The apricot is orchard on a Manhattan.",
+      "history": "Julie Reiner built The Slope in 2006 and named it for Park Slope, first served at Flatiron Lounge, then as the house Manhattan at Clover Club, which she opened in Brooklyn in 2008. Jim Meehan printed the rye, Punt e Mes, apricot, and Angostura formula in GQ in 2010. This card keeps the two and a half ounces of rye, three-quarters vermouth, and a quarter of apricot, yet it pours sweet vermouth in place of Punt e Mes.",
+      "refs": [
+        { "title": "Difford's Guide, The Slope", "url": "https://www.diffordsguide.com/cocktails/recipe/2853/the-slope" },
+        { "title": "GQ, The Platinum Age of the Cocktail", "url": "https://www.gq.com/story/the-platinum-age-of-the-cocktail-2" }
+      ] },
     { "id": "vieux-carre", "name": "Vieux Carré", "method": "stirred", "family": "rye", "code": "Q,Q,Q,1b,1,1,Rl", "serve": "Rl",
-      "build": [["rye","Q"],["cognac","Q"],["sweet-vermouth","Q"],["benedictine","1b"],["angostura","1"],["peychauds","1"]] },
+      "build": [["rye","Q"],["cognac","Q"],["sweet-vermouth","Q"],["benedictine","1b"],["angostura","1"],["peychauds","1"]],
+      "taste": "Three-quarters of an ounce each of rye, cognac, and sweet vermouth, equal and small. One barspoon of Benedictine is honey and herbs. One dash of Angostura, one of Peychaud's. Rocks with ice, lemon. Split-base Manhattan with an herbal film.",
+      "history": "Walter Bergeron, head bartender at the Hotel Monteleone in New Orleans, built the Vieux Carré in the 1930s and named it for the French Quarter, the old square. Stanley Clisby Arthur prints it in 1937: equal rye, cognac, and Italian vermouth, a half teaspoon of Benedictine, a dash each of Peychaud's and Angostura. The Carousel Bar, where the drink now lives, opened in 1949; Bergeron was mixing it in the hotel's earlier lounge. Chuck Taggart, in The Oxford Companion, notes Bergeron had worked the bar before Prohibition and returned at Repeal. This card keeps the equal three-quarters and both bitters, with a barspoon of Benedictine, over ice with a lemon twist.",
+      "refs": [
+        { "title": "Difford's Guide, Vieux Carré Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/2048/vieux-carre-cocktail" },
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Vieux Carré", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-442" }
+      ] },
     { "id": "cocktail-de-la-louisiane", "name": "Cocktail de la Louisiane", "method": "stirred", "family": "rye", "code": "Q,Q,Q,2b,3,clc", "serve": "clc",
-      "build": [["rye","Q"],["sweet-vermouth","Q"],["benedictine","Q"],["absinthe","2b"],["peychauds","3"]] },
+      "build": [["rye","Q"],["sweet-vermouth","Q"],["benedictine","Q"],["absinthe","2b"],["peychauds","3"]],
+      "taste": "Equal three-quarters of rye, sweet vermouth, and Benedictine, so the herbal liqueur is a third of the drink. Two barspoons of absinthe is anise you can taste. Three dashes of Peychaud's. Stirred, coupe, lemon and cherry. Honey, wormwood, and rye.",
+      "history": "Stanley Clisby Arthur prints Cocktail à la Louisiane in Famous New Orleans Drinks and How to Mix 'Em (1937) as the special cocktail of Restaurant de la Louisiane, a French Quarter Creole house opened in 1881: equal rye, Italian vermouth, and Benedictine, three or four dashes each of absinthe substitute and Peychaud's, strained onto a cherry. Whether it predates Walter Bergeron's Vieux Carré is disputed; both first see print in Arthur's book. This card keeps Arthur's equal three-quarters, pours two barspoons of absinthe and three dashes of Peychaud's, coupe, lemon and cherry.",
+      "refs": [
+        { "title": "Difford's Guide, La Louisiane", "url": "https://www.diffordsguide.com/cocktails/recipe/2985/la-louisiane" },
+        { "title": "Saveur, Drink the Secret Cocktail of New Orleans", "url": "https://www.saveur.com/la-louisiane-new-orleans-cocktail-history/" }
+      ] },
 
     { "id": "bobby-burns", "name": "Bobby Burns", "method": "stirred", "family": "scotch", "code": "1h,1,h,cl", "serve": "cl",
       "build": [["scotch","1h"],["sweet-vermouth","1"],["benedictine","h"]] },
@@ -216,9 +272,19 @@
       "build": [["light-rum","2"],["sweet-vermouth","1"],["apricot","q"]] },
 
     { "id": "tipsy-coachman", "name": "Tipsy Coachman", "method": "stirred", "family": "vodka", "code": "1h,Q,1,Rl", "serve": "Rl",
-      "build": [["vodka","1h"],["benedictine","Q"],["angostura","1"]] },
+      "build": [["vodka","1h"],["benedictine","Q"],["angostura","1"]],
+      "taste": "An ounce and a half of vodka, three-quarters of Bénédictine, one dash of Angostura. Honey and herbs, vodka as the thinner so the liqueur is a third of the drink. Stirred, rocks with ice, lemon twist. It sits, herbal and sweet, with bark at the end.",
+      "history": "The formula is the Gypsy Queen: vodka, Bénédictine, and bitters. David Wondrich found the earliest printing in a 1938 booklet from New York's Russian Tea Room, one of the first American vodka cocktails. David Embury reprints it in 1948 as Gypsy or Gypsy Queen and prefers a drier ratio than the original one-to-two. A drink called Tipsy Coachman does not appear under that name in those books; the phrase is older, from Oliver Goldsmith, and later a legal doctrine. This card keeps the ounce and a half of vodka, three-quarters of Bénédictine, and a dash of Angostura, over ice with a lemon twist.",
+      "refs": [
+        { "title": "Difford's Guide, Gypsy Queen", "url": "https://www.diffordsguide.com/cocktails/recipe/2804/gypsy-queen" }
+      ] },
     { "id": "vodka-martini", "name": "Vodka Martini", "method": "stirred", "family": "vodka", "code": "2,h,cl", "serve": "cl",
-      "build": [["vodka","2"],["dry-vermouth","h"]] },
+      "build": [["vodka","2"],["dry-vermouth","h"]],
+      "taste": "Two ounces of vodka, half an ounce of dry vermouth. Four to one; the wine is in the drink. Stirred, coupe, lemon twist. Cold, grape.",
+      "history": "A vodka Martini prints in a 1935 Smirnoff pamphlet at three parts vodka to one of French vermouth, with lemon peel in the mixing glass. Lucius Beebe puts two versions in The Stork Club Bar Book in 1946. Ted Saucier, in 1952 Bottoms Up, credits photographer Jerome Zerbe with a four-to-one Vodkatini and a lemon twist. John G. Martin at Heublein spent the 1940s and 1950s selling Smirnoff as a mixer. This card is two ounces of vodka to half an ounce of dry vermouth, stirred, coupe, lemon.",
+      "refs": [
+        { "title": "Difford's Guide, Vodkatini / Vodka Martini", "url": "https://www.diffordsguide.com/cocktails/recipe/2054/vodkatini-vodka-martini" }
+      ] },
 
     { "id": "quill", "name": "Quill", "method": "stirred", "family": "gin", "code": "1,1,1,q,co", "serve": "co",
       "build": [["gin","1"],["campari","1"],["sweet-vermouth","1"],["absinthe","q"]] },
@@ -264,14 +330,14 @@
 
     { "id": "winter-daiquiri", "name": "Winter Daiquiri", "method": "shaken", "family": "aged-rum", "code": "2,1,h,2,c", "serve": "c",
       "build": [["aged-rum","2"],["lime","1"],["demerara","h"],["angostura","2"]],
-      "taste": "Two ounces of aged rum against a full ounce of lime and only a half ounce of demerara: tart, brown sugar, barrel. Two dashes of Angostura pull clove and bark through the lime, so the drink is a Daiquiri that has been wintered rather than a rum Old-Fashioned that has been shaken. Coupe, no ice in the glass.",
+      "taste": "Two ounces of aged rum against a full ounce of lime and only a half ounce of demerara: tart, brown sugar, barrel. Two dashes of Angostura pull clove and bark through the lime. Coupe.",
       "history": "The Daiquiri is credited to Jennings Stockton Cox, an American mining engineer at Daiquiri, Cuba, around the turn of the twentieth century, mixing Bacardi, lime, and sugar. Francesco Domenico Pagliuchi wrote in 1948 that he was there and suggested the name; Basil Woon's 1928 When It's Cocktail Time in Cuba records Cox naming it at Santiago's Venus bar. The first recipe-book appearance is Jacques Straub's 1914 Drinks, misspelt Daiguiri. A winter version keeps the sour and changes the rum and the sugar. This card uses aged rum, demerara syrup, a full ounce of lime against a half ounce of sweetener, and two dashes of Angostura.",
       "refs": [
         { "title": "Difford's Guide, Daiquiri history", "url": "https://www.diffordsguide.com/g/1083/daiquiri-cocktail/story" }
       ] },
     { "id": "air-mail", "name": "Air Mail", "method": "shaken", "family": "aged-rum", "code": "1h,Q,Q,2,R", "serve": "R",
       "build": [["aged-rum","1h"],["lime","Q"],["honey-syrup","Q"],["champagne","2"]],
-      "taste": "A rum sour of an ounce and a half of aged rum, three-quarters lime, three-quarters honey, then two ounces of Champagne over ice in a rocks glass. Honey is thicker and waxier than sugar, so the rum tastes darker than a Daiquiri. The bubbles and the melt are the lift. It is not a flute drink on this card.",
+      "taste": "A rum sour of an ounce and a half of aged rum, three-quarters lime, three-quarters honey, then two ounces of Champagne over ice in a rocks glass. Honey is thicker and waxier than sugar, so the rum tastes darker than a Daiquiri. The bubbles and the melt are the lift.",
       "history": "The Air Mail first saw print in Bacardi and Its Many Uses, a 1930 pamphlet from the still-Cuban company. Jeff Berry, writing in The Oxford Companion to Spirits and Cocktails, notes that Cuba began air-mail service that year, yet the pamphlet names no bartender. W.C. Whitfield's 1941 Here's How prints it as rum, lime, honey, and Champagne in a highball, with the line \"It ought to make you fly high.\" Some later writers treat it as a rum French 75. The early printings, however, are a honey Daiquiri topped with sparkling wine and served long, over ice. This card keeps the honey and the Champagne, uses aged rum, and pours it in a rocks glass with ice.",
       "refs": [
         { "title": "The Oxford Companion to Spirits and Cocktails, Air Mail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-232" },
@@ -279,7 +345,7 @@
       ] },
     { "id": "brass-rail", "name": "Brass Rail", "method": "shaken", "family": "aged-rum", "code": "1h,h,1,h,2,c3", "serve": "c3",
       "build": [["aged-rum","1h"],["benedictine","h"],["lemon","1"],["simple","h"],["orange-bitters","2"],["egg-white",null],["angostura","3","g"]],
-      "taste": "An ounce and a half of aged rum, a half of Benedictine, a full ounce of lemon, a half of simple: a rum sour with a herbal liqueur in the sugar slot. Egg white gives it a foam cap. Two dashes of orange bitters sit in the shake; three dashes of Angostura are dropped on the foam, a pour, not a garnish, clove and bark on the white. Coupe.",
+      "taste": "An ounce and a half of aged rum, a half of Benedictine, a full ounce of lemon, a half of simple: a rum sour with a herbal liqueur in the sugar slot. Egg white gives it a foam cap. Two dashes of orange bitters sit in the shake; three dashes of Angostura are dropped on the foam, clove and bark on the white. Coupe.",
       "history": "Tony Abou-Ganim built the Brass Rail as a nightcap for his cousin Helen David, who favored Benedictine, and named it for her bar in Port Huron, Michigan, which she opened in 1937. Difford's Guide adapts the recipe from Abou-Ganim: aged rum, Benedictine, lemon, sugar, egg white, and orange bitters, with a flamed orange twist and cinnamon on the foam. This card uses aged rum, Benedictine, a full ounce of lemon, half an ounce of simple, two dashes of orange bitters, egg white, and three dashes of Angostura dropped on the foam.",
       "refs": [
         { "title": "Difford's Guide, Brass Rail", "url": "https://www.diffordsguide.com/cocktails/recipe/564/brass-rail" }
@@ -287,7 +353,7 @@
 
     { "id": "jack-rose", "name": "Jack Rose", "method": "shaken", "family": "apple-brandy", "code": "1h,Q,Q,c", "serve": "c",
       "build": [["apple-brandy","1h"],["lime","Q"],["grenadine","Q"]],
-      "taste": "An ounce and a half of apple brandy, three-quarters lime, three-quarters grenadine. Lime, not lemon, so the sour is sharper and greener. Equal grenadine means the drink is as pink as it is tart; the apple sits under pomegranate rather than shouting. Shaken, no egg, no gin. Coupe.",
+      "taste": "An ounce and a half of apple brandy, three-quarters lime, three-quarters grenadine. Lime, so the sour is sharp and green. Equal grenadine means the drink is as pink as it is tart; the apple sits under pomegranate. Shaken. Coupe.",
       "history": "David Wondrich traces the Jack Rose to Frank Haas at Fred Eberlin's downtown New York bar, named in the New York Press in 1899. Jacob Grohusko's 1908 Jack's Manual is the first printed formula. By Jacques Straub's 1914 Drinks it had become applejack, lime, and grenadine. The name is disputed: Wondrich favors the General Jacqueminot, or Jack, rose, a pink hybrid the drink resembles; Frank J. May claimed it in the 1905 Police Gazette; Bald Jack Rose, the 1912 Rosenthal-case informant, is a later story, and the drink predates him. This card is Straub's three-ingredient drink: an ounce and a half of apple brandy, three-quarters lime, three-quarters grenadine.",
       "refs": [
         { "title": "The Oxford Companion to Spirits and Cocktails, The Jack Rose", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-345" },
@@ -295,7 +361,7 @@
       ] },
     { "id": "pink-lady", "name": "Pink Lady", "method": "shaken", "family": "apple-brandy", "code": "1h,Q,Q,h,cc", "serve": "cc",
       "build": [["gin","1h"],["apple-brandy","Q"],["lime","Q"],["grenadine","h"],["egg-white",null]],
-      "taste": "Gin at an ounce and a half, then three-quarters of apple brandy and three-quarters of lime, a half ounce of grenadine, and egg white. The foam is the texture; the apple is a real pour, not a ghost. Lime and gin keep it sharp. Grenadine is color and a little pomegranate, not a dessert. Coupe, cherry.",
+      "taste": "Gin at an ounce and a half, then three-quarters of apple brandy and three-quarters of lime, a half ounce of grenadine, and egg white. The foam is the texture; the apple is a real pour. Lime and gin keep it sharp. Grenadine is color and a little pomegranate. Coupe, cherry.",
       "history": "The Pink Lady takes its name from Ivan Caryll's 1911 Broadway musical, starring Hazel Dawn. Wondrich records that the drink mixed for her at Murray's Roman Gardens was ojen with Peychaud's and Angostura, not this one. Jacques Straub's 1913 Manual of Mixed Drinks prints the version that entered the books: equal gin, applejack, and lime, with dashes of grenadine, and no egg. Later recipes drop the apple brandy, add egg white or cream, or both. Craddock's Savoy omits the applejack and adds the white. This card keeps Straub's gin, apple brandy, lime, and grenadine, and it shakes egg white with them.",
       "refs": [
         { "title": "The Oxford Companion to Spirits and Cocktails, Pink Lady Cocktail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-384" },
@@ -303,7 +369,7 @@
       ] },
     { "id": "honeymoon", "name": "Honeymoon", "method": "shaken", "family": "apple-brandy", "code": "1q,1,1b,h,1,Ro", "serve": "Ro",
       "build": [["apple-brandy","1q"],["benedictine","1"],["orange-liqueur","1b"],["lemon","h"],["orange-bitters","1"]],
-      "taste": "An ounce and a quarter of apple brandy against a full ounce of Benedictine: herb almost even with orchard. A barspoon of orange liqueur and a dash of orange bitters are peel, not sweetness. Half an ounce of lemon is enough acid to lift it, not enough to make a sour. Rocks, ice, orange twist: it sits and the Benedictine warms.",
+      "taste": "An ounce and a quarter of apple brandy against a full ounce of Benedictine: herb almost even with orchard. A barspoon of orange liqueur and a dash of orange bitters are peel. Half an ounce of lemon lifts it. Rocks, ice, orange twist: it sits and the Benedictine warms.",
       "history": "Hugo R. Ensslin first prints the Honey Moon Cocktail in Recipes for Mixed Drinks (1916): equal Benedictine and apple brandy, juice of half a lemon, three dashes of curacao. Ensslin was at the Hotel Wallick in Times Square. Craddock copies it into the Savoy in 1930. It later turns up at the Brown Derby in Los Angeles, and David Embury (1948) also calls it the Farmer's Daughter, with a much drier applejack-forward ratio. This card pours an ounce and a quarter of apple brandy, a full ounce of Benedictine, a barspoon of orange liqueur, half an ounce of lemon, and a dash of orange bitters, over ice with an orange twist.",
       "refs": [
         { "title": "Difford's Guide, Honeymoon", "url": "https://www.diffordsguide.com/cocktails/recipe/969/honeymoon" },
@@ -319,7 +385,7 @@
 
     { "id": "sidecar", "name": "Sidecar", "method": "shaken", "family": "cognac", "code": "1h,1,Q,cs", "serve": "cs",
       "build": [["cognac","1h"],["orange-liqueur","1"],["lemon","Q"]],
-      "taste": "An ounce and a half of cognac, a full ounce of orange liqueur, three-quarters lemon. The orange liqueur is heavier than the lemon, so the drink is peel and candy more than a dry sour. Shaken, coupe, sugar rim. It is not the equal-parts French school and not Craddock's two-to-one-to-one.",
+      "taste": "An ounce and a half of cognac, a full ounce of orange liqueur, three-quarters lemon. The orange liqueur is heavier than the lemon, so the drink is peel and candy. Shaken, coupe, sugar rim.",
       "history": "Robert Vermeire prints the Sidecar in May 1922 in Cocktails How to Mix Them: equal cognac, Cointreau, and lemon, very popular in France, and first introduced in London by Pat MacGarry of Buck's Club. Harry MacElhone, who had worked with MacGarry, prints the same formula later that year and later takes the credit himself. Frank Meier at the Ritz Bar in Paris listed it among cocktails new since the war. David Embury, in 1948, credits an unnamed American captain in a Paris sidecar. The origin stays disputed. This card pours an ounce and a half of cognac, a full ounce of orange liqueur, and three-quarters lemon, shaken, with a sugar rim.",
       "refs": [
         { "title": "The Oxford Companion to Spirits and Cocktails, The Sidecar", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-417" },
@@ -327,26 +393,79 @@
       ] },
 
     { "id": "buster-brown", "name": "Buster Brown", "method": "shaken", "family": "bourbon", "code": "2,Q,h,3,co", "serve": "co",
-      "build": [["bourbon","2"],["lemon","Q"],["demerara","h"],["orange-bitters","3"]] },
+      "build": [["bourbon","2"],["lemon","Q"],["demerara","h"],["orange-bitters","3"]],
+      "taste": "Two ounces of bourbon, three-quarters lemon, half an ounce of demerara, three dashes of orange bitters. The lemon is a full sour; orange bitters are peel over the brown sugar. Shaken, coupe, orange twist.",
+      "history": "The Buster Brown prints in the 1933 Mixer's Guide as a whiskey cocktail: a teaspoon of gum, two dashes of lemon, two dashes of orange bitters, and a jigger of whisky, stirred and strained. The comic-strip boy of the same name had been running in American newspapers since 1902. This card turns those lemon dashes into three-quarters of an ounce, sweetens with half an ounce of demerara, shakes it, and keeps three dashes of orange bitters. Coupe, orange twist.",
+      "refs": [
+        { "title": "1933 Mixer's Guide, Cocktail, Buster Brown", "url": "https://euvs-vintage-cocktail-books.cld.bz/1933-Mixer-s-Guide/17/" }
+      ] },
     { "id": "gold-rush", "name": "Gold Rush", "method": "shaken", "family": "bourbon", "code": "2,Q,Q,R", "serve": "R",
-      "build": [["bourbon","2"],["lemon","Q"],["honey-syrup","Q"]] },
+      "build": [["bourbon","2"],["lemon","Q"],["honey-syrup","Q"]],
+      "taste": "Two ounces of bourbon, three-quarters lemon, three-quarters honey syrup. Honey is thick and floral against the lemon. Shaken, rocks with ice. Bourbon, citrus, and a brown pour that sits.",
+      "history": "T.J. Siegal, a childhood friend of Sasha Petraske, asked for honey syrup in his bourbon sour at Milk & Honey in New York around 2000, shortly after Petraske opened the bar on New Year's Eve 1999. Siegal named it while drinking the first one. Robert Simonson traces the story in Punch; Sam Ross later built the Penicillin from the same honey-sour idea. This card keeps the two ounces of bourbon and three-quarters each of lemon and honey syrup, over ice. No twist.",
+      "refs": [
+        { "title": "Punch, How the Gold Rush Became a Modern Classic", "url": "https://punchdrink.com/articles/gold-rush-bourbon-cocktail-recipe-became-modern-classic/" },
+        { "title": "Punch, Gold Rush", "url": "https://punchdrink.com/recipes/gold-rush/" }
+      ] },
     { "id": "whiskey-sour", "name": "Whiskey Sour", "method": "shaken", "family": "bourbon", "code": "2,Q,h,Rcl", "serve": "Rcl",
-      "build": [["bourbon","2"],["lemon","Q"],["demerara","h"],["egg-white",null]] },
+      "build": [["bourbon","2"],["lemon","Q"],["demerara","h"],["egg-white",null]],
+      "taste": "Two ounces of bourbon, three-quarters lemon, half an ounce of demerara, egg white. The foam is the texture; demerara is brown sugar under the lemon. Shaken, rocks with ice, cherry and lemon. A short sour with a dry cap.",
+      "history": "A whisky sour is named as early as 1826, and Jerry Thomas prints sours in 1862. The Waukesha Plain Dealer uses the name in 1870 without explaining it. Paul Clarke, in The Oxford Companion, tracks egg white as a European addition from the 1920s that was common in America by the 1940s. The Atlanta Daily Constitution put it in 1879: when American meets American, then comes the whisky sour. This card pours two ounces of bourbon, three-quarters lemon, half an ounce of demerara, egg white, over ice with cherry and lemon. No wine float.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Whisky Sour", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-445" }
+      ] },
     { "id": "expat", "name": "Expat", "method": "shaken", "family": "bourbon", "code": "2,1,h,2,cm", "serve": "cm",
-      "build": [["bourbon","2"],["lime","1"],["simple","h"],["angostura","2"]] },
+      "build": [["bourbon","2"],["lime","1"],["simple","h"],["angostura","2"]],
+      "taste": "Two ounces of bourbon, a full ounce of lime, half an ounce of simple, two dashes of Angostura. Lime, so the sour is sharp and green; the sugar is thin against that ounce of juice. Shaken, coupe, mint. Clove on the lime.",
+      "history": "Lauren Schell built the Expat at Little Branch in Manhattan in 2009. She did not name it until she moved overseas and the bar kept sending the bourbon shake out; Expat seemed the obvious word. Erick Castro printed the spec in Eater in 2015: two ounces of bourbon, an ounce of lime, three-quarters simple, Angostura, mint. This card keeps the bourbon, the full ounce of lime, the mint, and the dashes, yet it pours only half an ounce of simple.",
+      "refs": [
+        { "title": "Eater, Nine Awesome Cocktails That Should Be Considered Modern Classics", "url": "https://www.eater.com/drinks/2015/5/26/8628313/nine-awesome-cocktails-that-should-be-considered-modern-classics" }
+      ] },
     { "id": "whiskey-daisy", "name": "Whiskey Daisy", "method": "shaken", "family": "bourbon", "code": "2,Q,q,1b,R", "serve": "R",
-      "build": [["bourbon","2"],["lemon","Q"],["orange-liqueur","q"],["simple","1b"]] },
+      "build": [["bourbon","2"],["lemon","Q"],["orange-liqueur","q"],["simple","1b"]],
+      "taste": "Two ounces of bourbon, three-quarters lemon, a quarter of orange liqueur, one barspoon of simple. The orange liqueur is peel in the sugar slot. Shaken, rocks with ice. A short sour that sits.",
+      "history": "Jerry Thomas prints the Daisy in the 1876 Bar-Tender's Guide as a sour sweetened with orange liqueur and topped with seltzer, in brandy, whiskey, gin, and rum versions. David Wondrich, in The Oxford Companion, notes an 1883 claim that Billy Taylor gave the idea to Frank Haas at Fred Eberlin's bar near the New York Stock Exchange about 1873. Later daisies swapped grenadine for curaçao and went long. This card keeps the whiskey, lemon, and orange liqueur, adds a barspoon of simple, and pours it over ice with no soda.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Daisy", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-296" }
+      ] },
     { "id": "man-o-war", "name": "Man o' War", "method": "shaken", "family": "bourbon", "code": "2,Q,h,h,cl", "serve": "cl",
-      "build": [["bourbon","2"],["orange-liqueur","Q"],["sweet-vermouth","h"],["lemon","h"]] },
+      "build": [["bourbon","2"],["orange-liqueur","Q"],["sweet-vermouth","h"],["lemon","h"]],
+      "taste": "Two ounces of bourbon, three-quarters orange liqueur, half an ounce each of sweet vermouth and lemon. The orange liqueur is heavier than the lemon, so peel leads. Shaken, coupe, lemon twist. A Manhattan sour: grape, whiskey, and candy citrus.",
+      "history": "The drink is named for the thoroughbred who won 20 of 21 races in 1919 and 1920, including the Preakness and Belmont. Simon Difford finds no mid-century book recipe and treats the cocktail as modern; a 1915 newspaper Man-o'-war cocktail is condensed milk, alcohol, and eggs. The Indianapolis Star printed the bourbon, Cointreau, sweet vermouth, and lemon formula in 2015 as a Derby drink. This card pours two ounces of bourbon, three-quarters orange liqueur, half each of sweet vermouth and lemon, coupe, lemon twist.",
+      "refs": [
+        { "title": "Difford's Guide, Man O' War", "url": "https://www.diffordsguide.com/cocktails/recipe/4819/man-o-war" }
+      ] },
     { "id": "little-honey", "name": "Little Honey", "method": "shaken", "family": "bourbon", "code": "1h,Q,h,h,q,Ro", "serve": "Ro",
-      "build": [["bourbon","1h"],["elderflower","Q"],["dry-vermouth","h"],["lemon","h"],["honey-syrup","q"],["egg-white",null]] },
+      "build": [["bourbon","1h"],["elderflower","Q"],["dry-vermouth","h"],["lemon","h"],["honey-syrup","q"],["egg-white",null]],
+      "taste": "An ounce and a half of bourbon, three-quarters elderflower, half an ounce each of dry vermouth and lemon, a quarter of honey, egg white. The foam carries the flower; dry vermouth keeps it lean. Shaken, rocks with ice, orange twist. Bourbon under elderflower.",
+      "history": "A drink called Little Honey does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. The nearest parents are the Gold Rush, T.J. Siegal's bourbon, lemon, and honey sour at Milk & Honey around 2000, and the Bee's Knees, with St-Germain, launched by Robert Cooper in 2007, in the elderflower slot. This card adds dry vermouth and egg white, pours an ounce and a half of bourbon, and serves it over ice with an orange twist.",
+      "refs": [
+        { "title": "Punch, How the Gold Rush Became a Modern Classic", "url": "https://punchdrink.com/articles/gold-rush-bourbon-cocktail-recipe-became-modern-classic/" },
+        { "title": "VinePair, 8 Things You Should Know About St-Germain Elderflower Liqueur", "url": "https://vinepair.com/articles/ntk-st-germain/" }
+      ] },
 
     { "id": "lemon-drop", "name": "Lemon Drop", "method": "shaken", "family": "vodka", "code": "2,Q,1,1b,cs", "serve": "cs",
-      "build": [["vodka","2"],["orange-liqueur","Q"],["lemon","1"],["simple","1b"]] },
+      "build": [["vodka","2"],["orange-liqueur","Q"],["lemon","1"],["simple","1b"]],
+      "taste": "Two ounces of vodka, three-quarters orange liqueur, a full ounce of lemon, one barspoon of simple. The lemon is louder than the orange liqueur; a barspoon of sugar barely covers an ounce of juice. Shaken, coupe, sugar rim. Candy, then pith.",
+      "history": "Norman Hobday, who ran Henry Africa's in San Francisco, the fern bar that opened in 1969, built the Lemon Drop in the 1970s as a vodka sour in a sugar-rimmed cocktail glass. Martin Cate, in The Oxford Companion, files it with the Harvey Wallbanger and the wine spritzer. Later bars reduced it to a chilled vodka shot with a sugared lemon wedge. This card keeps the glass and the sugar rim, with two ounces of vodka, three-quarters orange liqueur, a full ounce of lemon, and a barspoon of simple.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Lemon Drop", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-354" }
+      ] },
     { "id": "katinka", "name": "Katinka", "method": "shaken", "family": "vodka", "code": "1h,Q,h,c", "serve": "c",
-      "build": [["vodka","1h"],["apricot","Q"],["lime","h"]] },
+      "build": [["vodka","1h"],["apricot","Q"],["lime","h"]],
+      "taste": "An ounce and a half of vodka, three-quarters apricot liqueur, half an ounce of lime. Stone fruit and lime; the apricot sweetens the sour by itself. Shaken, coupe. Short, tart apricot.",
+      "history": "David Embury prints a Katinka in The Fine Art of Mixing Drinks (1948): vodka, apricot liqueur, and lime. Haus Alpenz reprints that spec as two ounces of vodka and half an ounce each of apricot and lime. This card is leaner on the vodka and heavier on the apricot: an ounce and a half, three-quarters, and half a lime, shaken, coupe.",
+      "refs": [
+        { "title": "Haus Alpenz, Katinka (Embury)", "url": "https://alpenz.com/recipe-G2mUOQsZth.html" }
+      ] },
     { "id": "queen-bee", "name": "Queen Bee", "method": "shaken", "family": "vodka", "code": "Q,Q,Q,q,1,cl", "serve": "cl",
-      "build": [["vodka","Q"],["elderflower","Q"],["lemon","Q"],["honey-syrup","q"],["champagne","1"]] },
+      "build": [["vodka","Q"],["elderflower","Q"],["lemon","Q"],["honey-syrup","q"],["champagne","1"]],
+      "taste": "Three-quarters each of vodka, elderflower, and lemon, a quarter of honey, an ounce of Champagne. The Champagne is the volume. Shaken, then the wine, coupe, lemon twist. Flower, honey, bubbles, a small drink that foams from the fizz.",
+      "history": "Charles H. Baker prints a Queen Bee in 1951 The South American Gentleman's Companion on apple brandy, lemon, honey, and curaçao; that is not this drink. A vodka, elderflower, lemon, honey, and Champagne Queen Bee does not appear in the pre-1970 manuals. St-Germain, the elderflower liqueur this card calls for, launched in 2007. This card pours three-quarters each of vodka, elderflower, and lemon, a quarter of honey syrup, and an ounce of Champagne, coupe, lemon twist.",
+      "refs": [
+        { "title": "Punch, Bring Back the Queen Bee", "url": "https://punchdrink.com/articles/bring-back-charles-baker-queen-bee-cocktail-recipe/" },
+        { "title": "VinePair, 8 Things You Should Know About St-Germain Elderflower Liqueur", "url": "https://vinepair.com/articles/ntk-st-germain/" }
+      ] },
 
     { "id": "gimlet", "name": "Gimlet", "method": "shaken", "family": "gin", "code": "2,Q,h,c", "serve": "c",
       "build": [["gin","2"],["lime","Q"],["simple","h"]] },
@@ -385,21 +504,21 @@
       ] },
     { "id": "mexican-firing-squad", "name": "Mexican Firing Squad", "method": "shaken", "family": "tequila", "code": "2,Q,Q,2,cc", "serve": "cc",
       "build": [["tequila","2"],["grenadine","Q"],["lime","Q"],["angostura","2"]],
-      "taste": "Two ounces of tequila, three-quarters grenadine, three-quarters lime. Equal pomegranate and lime, so it is a pink tequila sour, not a rickey. Two dashes of Angostura pull clove through the fruit. Shaken, coupe, cherry. No soda, no pineapple wedge. Short.",
+      "taste": "Two ounces of tequila, three-quarters grenadine, three-quarters lime. Equal pomegranate and lime, a pink tequila sour. Two dashes of Angostura pull clove through the fruit. Shaken, coupe, cherry. Short.",
       "history": "Charles H. Baker records the Mexican Firing Squad Special in The Gentleman's Companion, Volume II (1939), as a drink he found at La Cucaracha Bar in Mexico City in 1937: two jiggers tequila, juice of two small limes, one and a half to two teaspoons of grenadine, two dashes of Angostura, in a tall collins packed with cracked ice, garnished with orange, pineapple, and cherry. Period menus from the bar do not list it; it may have been off-menu. This card keeps the tequila, grenadine, lime, and Angostura, equalizes the grenadine and lime at three-quarters, and pours it short in a coupe with a cherry.",
       "refs": [
         { "title": "Difford's Guide, Mexican Firing Squad Special", "url": "https://www.diffordsguide.com/cocktails/recipe/4945/mexican-firing-squad-special" }
       ] },
     { "id": "vermouth-arita", "name": "Vermouth-arita", "method": "shaken", "family": "tequila", "code": "1h,1,h,h,Rc", "serve": "Rc",
       "build": [["tequila","1h"],["sweet-vermouth","1"],["orange-liqueur","h"],["lime","h"]],
-      "taste": "An ounce and a half of tequila against a full ounce of sweet vermouth, so the wine is a second base, not a modifier. Half an ounce of orange liqueur and half of lime are the Margarita's other two, cut down. Shaken, rocks, ice, cherry. It drinks as a tequila Manhattan that took a lime.",
+      "taste": "An ounce and a half of tequila against a full ounce of sweet vermouth, so the wine is a second base. Half an ounce of orange liqueur and half of lime are the Margarita's other two, cut down. Shaken, rocks, ice, cherry. A tequila Manhattan that took a lime.",
       "history": "A drink called Vermouth-arita does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. The parent is the Margarita: tequila, orange liqueur, and lime, a formula in print by 1937 as William J. Tarling's Picador and under this name by 1953. This card keeps the tequila and the shake, puts a full ounce of sweet vermouth in the glass, cuts the orange liqueur and lime to half an ounce each, and pours it over ice with a cherry.",
       "refs": [
         { "title": "Difford's Guide, History of the Margarita cocktail", "url": "https://www.diffordsguide.com/g/1138/margarita-cocktail/origins-and-history" }
       ] },
     { "id": "stingless-bee", "name": "Stingless Bee", "method": "shaken", "family": "tequila", "code": "2,Q,h,h,c3", "serve": "c3",
       "build": [["tequila","2"],["honey-syrup","Q"],["lime","h"],["lemon","h"],["egg-white",null],["peychauds","3","g"]],
-      "taste": "Two ounces of tequila, three-quarters honey syrup, half lime, half lemon. The citrus is split, so neither fruit wins; the honey is waxier than sugar. Egg white gives it a foam cap. Three dashes of Peychaud's are dropped on the foam, a pour, not a garnish, cherry-anise on the white. Coupe.",
+      "taste": "Two ounces of tequila, three-quarters honey syrup, half lime, half lemon. The citrus is split, so neither fruit wins; the honey is waxier than sugar. Egg white gives it a foam cap. Three dashes of Peychaud's are dropped on the foam, cherry-anise on the white. Coupe.",
       "history": "The Bee's Knees is a gin sour with honey, first printed in Paris around 1929. Frank Meier's Bar de Ritz recipe appears in Cocktails de Paris that year; a Brooklyn Standard Union article of 22 April 1929 credits Mrs. J.J. Brown of Denver and Paris, later called Molly Brown. Both claims stay in print. A drink called Stingless Bee does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. This card swaps gin for tequila, splits the citrus between lime and lemon, shakes egg white, and drops three dashes of Peychaud's on the foam.",
       "refs": [
         { "title": "Difford's Guide, Bee's Knees", "url": "https://www.diffordsguide.com/cocktails/recipe/2144/bees-knees" }
@@ -429,14 +548,14 @@
 
     { "id": "scofflaw", "name": "Scofflaw", "method": "shaken", "family": "rye", "code": "1,1,h,h,1,co", "serve": "co",
       "build": [["rye","1"],["dry-vermouth","1"],["grenadine","h"],["lemon","h"],["orange-bitters","1"]],
-      "taste": "Equal ounces of rye and dry vermouth, so the wine is half the drink. Half an ounce of grenadine, half of lemon, one dash of orange bitters. Shaken, coupe, orange twist. The rye is spice, the grenadine pomegranate rather than candy, the lemon a sour cut through the dry vermouth.",
+      "taste": "Equal ounces of rye and dry vermouth, so the wine is half the drink. Half an ounce of grenadine, half of lemon, one dash of orange bitters. Shaken, coupe, orange twist. The rye is spice, the grenadine pomegranate, the lemon a sour cut through the dry vermouth.",
       "history": "Delcevare King, a Massachusetts teetotaler, ran a 1924 contest for a word to shame drinkers who flouted Prohibition; Henry Irving Shaw and Kate L. Butler split the prize for \"scofflaw.\" The Chicago Tribune reported a Scofflaw cocktail at Maxim's in Paris on 21 January 1924: three parts rye, two parts French vermouth, a dash of lemon and of grenadine. Harry MacElhone claimed Jock at Harry's New York Bar invented it days later, with orange bitters and equal Canadian Club and French vermouth. Difford's notes the Tribune piece on Maxim's predates MacElhone's claim. This card is one to one rye to dry vermouth, half an ounce each of grenadine and lemon, one dash of orange bitters, shaken, coupe, orange.",
       "refs": [
         { "title": "Difford's Guide, Scofflaw", "url": "https://www.diffordsguide.com/cocktails/recipe/1755/scofflaw" }
       ] },
     { "id": "harvest-sour", "name": "Harvest Sour", "method": "shaken", "family": "rye", "code": "1,1,Q,h,ccin", "serve": "ccin",
       "build": [["rye","1"],["apple-brandy","1"],["lemon","Q"],["simple","h"],["egg-white",null]],
-      "taste": "Equal ounces of rye and apple brandy, so neither is a modifier. Three-quarters of an ounce of lemon, half an ounce of simple, egg white. The foam is the texture; grated cinnamon on the coupe is the spice. Orchard, pepper, lemon, and a dry foam.",
+      "taste": "Equal ounces of rye and apple brandy. Three-quarters of an ounce of lemon, half an ounce of simple, egg white. The foam is the texture; grated cinnamon on the coupe is the spice. Orchard, pepper, lemon, and a dry foam.",
       "history": "The Harvest Sour is Sam Ross at Attaboy in New York, printed by Punch and dated by Difford's to around 2017: one ounce rye, one ounce applejack, three-quarters lemon, three-quarters simple, egg white, apple slice and cinnamon. Ross's other split-base drinks, the Paper Plane among them, are the parent method. A drink of this name does not appear in the pre-1970 manuals. This card keeps the equal rye and apple brandy, the lemon, the egg white, and the cinnamon. It pours half an ounce of simple rather than three-quarters, and it skips the apple slice.",
       "refs": [
         { "title": "Punch, Harvest Sour", "url": "https://punchdrink.com/recipes/harvest-sour/" },

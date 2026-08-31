@@ -170,3 +170,7 @@ sitting on the brass fill has to flip with it.
   pours, a 1 oz Old-Fashioned — ask before writing notes around it. Do
   not silently correct it, and do not treat an obvious typing error as
   the card.
+- Taste describes what is in the glass. Do not define a pour by what it
+  is not (`a real pour, not a ghost`, `grenadine is color, not a dessert`,
+  `the sugar is a film, not a pour`). Say the amount and what it tastes
+  like.
