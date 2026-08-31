@@ -28,6 +28,7 @@
 
   var have = {};         /* id -> true, what is on the shelf */
   var open = {};         /* id -> true, which recipes are expanded */
+  var recipePane = {};   /* id -> recipe|taste|history; resets on open */
 
   var filter = { method: 'all', family: null, pourable: false, q: '' };
 
@@ -221,9 +222,30 @@
     return true;
   }
 
-  function renderRecipe(d, held) {
+  function paneOf(d) {
+    var pane = recipePane[d.id] || 'recipe';
+    if (pane === 'taste' && !d.taste) return 'recipe';
+    if (pane === 'history' && !d.history) return 'recipe';
+    return pane;
+  }
+
+  function applyRecipePane(recipe, pane) {
+    recipe.querySelectorAll('.recipe-tab').forEach(function (tab) {
+      var on = tab.getAttribute('data-recipe-tab') === pane;
+      tab.classList.toggle('is-on', on);
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+    });
+    recipe.querySelectorAll('.recipe-panel').forEach(function (panel) {
+      var on = panel.getAttribute('data-pane') === pane;
+      panel.classList.toggle('is-on', on);
+      panel.hidden = !on;
+    });
+  }
+
+  function renderPours(d, held) {
     var shelfInUse = stocked().length > 0;
-    var html = '<div class="recipe">';
+    var html = '';
 
     d.build.forEach(function (p) {
       var i = ing[p[0]] || { name: p[0] };
@@ -260,6 +282,69 @@
         : '') +
       '</div>';
 
+    return html;
+  }
+
+  function renderRecipeTabs(d, current) {
+    var panes = [{ id: 'recipe', label: 'Recipe' }];
+    if (d.taste) panes.push({ id: 'taste', label: 'Taste' });
+    if (d.history) panes.push({ id: 'history', label: 'History' });
+    if (panes.length === 1) return '';
+
+    var html = '<div class="recipe-tabs" role="tablist" aria-label="' +
+      esc(d.name) + '">';
+    panes.forEach(function (p) {
+      var on = p.id === current;
+      html += '<button type="button" class="recipe-tab' + (on ? ' is-on' : '') + '"' +
+        ' role="tab"' +
+        ' id="rtab-' + esc(d.id) + '-' + p.id + '"' +
+        ' aria-selected="' + (on ? 'true' : 'false') + '"' +
+        ' aria-controls="rpanel-' + esc(d.id) + '-' + p.id + '"' +
+        ' tabindex="' + (on ? '0' : '-1') + '"' +
+        ' data-recipe-tab="' + p.id + '"' +
+        ' data-recipe-for="' + esc(d.id) + '">' + p.label + '</button>';
+    });
+    return html + '</div>';
+  }
+
+  function renderRefs(refs) {
+    if (!refs || !refs.length) return '';
+    var html = '<ul class="recipe-refs">';
+    refs.forEach(function (r) {
+      if (!r || !r.title || !r.url) return;
+      html += '<li><a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">' +
+        esc(r.title) + '</a></li>';
+    });
+    return html + '</ul>';
+  }
+
+  function renderPanel(d, pane, current, inner) {
+    var on = pane === current;
+    return '<div class="recipe-panel recipe-panel--' + pane + (on ? ' is-on' : '') + '"' +
+      ' role="tabpanel"' +
+      ' id="rpanel-' + esc(d.id) + '-' + pane + '"' +
+      ' aria-labelledby="rtab-' + esc(d.id) + '-' + pane + '"' +
+      ' data-pane="' + pane + '"' +
+      (on ? '' : ' hidden') + '>' + inner + '</div>';
+  }
+
+  function renderRecipe(d, held) {
+    var html = '<div class="recipe">';
+    var extra = !!(d.taste || d.history);
+
+    if (!extra) return html + renderPours(d, held) + '</div>';
+
+    var current = paneOf(d);
+    html += renderRecipeTabs(d, current);
+    html += renderPanel(d, 'recipe', current, renderPours(d, held));
+    if (d.taste) {
+      html += renderPanel(d, 'taste', current,
+        '<p class="recipe-copy">' + esc(d.taste) + '</p>');
+    }
+    if (d.history) {
+      html += renderPanel(d, 'history', current,
+        '<p class="recipe-copy">' + esc(d.history) + '</p>' + renderRefs(d.refs));
+    }
     return html + '</div>';
   }
 
@@ -630,12 +715,25 @@
   }
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-drink],[data-method],[data-family],[data-pourable],' +
+    var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pourable],' +
       '[data-clear],[data-clearothers],[data-bottle],[data-bar],[data-seemenu],[data-print]');
     if (!t) return;
 
+    if (t.dataset.recipeTab) {
+      recipePane[t.dataset.recipeFor] = t.dataset.recipeTab;
+      applyRecipePane(t.closest('.recipe'), t.dataset.recipeTab);
+      return;
+    }
+
     if (t.dataset.drink) {
-      open[t.dataset.drink] = !open[t.dataset.drink];
+      var id = t.dataset.drink;
+      if (open[id]) {
+        delete open[id];
+        delete recipePane[id];
+      } else {
+        open[id] = true;
+        recipePane[id] = 'recipe';
+      }
       renderMenu();
       return;
     }
@@ -696,6 +794,24 @@
       have = {};
       saveHave(); barOrder = null; renderBar(); refreshCount(); return;
     }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    var tab = e.target.closest('[data-recipe-tab]');
+    if (!tab) return;
+    var list = tab.parentNode.querySelectorAll('[data-recipe-tab]');
+    var i = Array.prototype.indexOf.call(list, tab);
+    var next = -1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % list.length;
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + list.length) % list.length;
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = list.length - 1;
+    else return;
+    e.preventDefault();
+    var ntab = list[next];
+    recipePane[ntab.dataset.recipeFor] = ntab.dataset.recipeTab;
+    applyRecipePane(ntab.closest('.recipe'), ntab.dataset.recipeTab);
+    ntab.focus();
   });
 
   document.addEventListener('input', function (e) {

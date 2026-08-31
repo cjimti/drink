@@ -14,6 +14,10 @@ token rather than the build, but the lemon it costs is a lemon either way,
 so the bottle it calls for counts as used. Whether a missing garnish stops
 you pouring is the app's question, not this one — here it only has to be a
 bottle something wants.
+
+Taste, history, and refs are optional until the research tickets finish.
+If they are present they have to be the right shape, and a fourth invention
+on a cocktail object is a fail.
 """
 import json
 import re
@@ -35,6 +39,14 @@ AMOUNT = re.compile(r"""
 """, re.X)
 
 GLASSES = set("crR")
+
+COCKTAIL_KEYS = {
+    "id", "name", "method", "family", "code", "serve", "build",
+    "taste", "history", "refs",
+}
+REF_KEYS = {"title", "url"}
+HTML = re.compile(r"<[^>]+>")
+MD_LINK = re.compile(r"\[[^\]]+\]\([^)]+\)")
 
 
 def load(name):
@@ -71,6 +83,51 @@ def split_garnish(rest, codes):
     return out
 
 
+def check_notes(d, who, errs):
+    """Optional taste / history / refs, when present, have to be the contract.
+
+    They are not required on every drink yet. A stray key is, because the
+    research tickets write into these three and nowhere else.
+    """
+    extra = sorted(set(d) - COCKTAIL_KEYS)
+    for k in extra:
+        errs.append(f"{who}: unknown key {k!r}")
+
+    for field in ("taste", "history"):
+        if field not in d:
+            continue
+        val = d[field]
+        if not isinstance(val, str) or not val.strip():
+            errs.append(f"{who}: {field} must be a non-empty string")
+            continue
+        if HTML.search(val):
+            errs.append(f"{who}: {field} contains HTML")
+        if field == "history" and MD_LINK.search(val):
+            errs.append(f"{who}: history contains a markdown link")
+
+    if "refs" not in d:
+        return
+    refs = d["refs"]
+    if not isinstance(refs, list):
+        errs.append(f"{who}: refs must be an array")
+        return
+    for i, item in enumerate(refs):
+        if not isinstance(item, dict):
+            errs.append(f"{who}: refs[{i}] is not an object")
+            continue
+        extra = sorted(set(item) - REF_KEYS)
+        for k in extra:
+            errs.append(f"{who}: refs[{i}] unknown key {k!r}")
+        title = item.get("title")
+        url = item.get("url")
+        if not isinstance(title, str) or not title.strip():
+            errs.append(f"{who}: refs[{i}] title must be a non-empty string")
+        if not isinstance(url, str) or not url.strip():
+            errs.append(f"{who}: refs[{i}] url must be a non-empty string")
+        elif not url.startswith("https://"):
+            errs.append(f"{who}: refs[{i}] url must start with https://")
+
+
 def main():
     bar = load("bar.json")
     notation = load("notation.json")
@@ -104,6 +161,8 @@ def main():
             errs.append(f"{who}: unknown method {d['method']!r}")
         if d["family"] not in families:
             errs.append(f"{who}: unknown family {d['family']!r}")
+
+        check_notes(d, who, errs)
 
         # ── the build ────────────────────────────────────────────
         parts = []

@@ -367,6 +367,64 @@ a { color: inherit; text-decoration: none; }
   margin-top: -1px;
 }
 
+/* Sub-tabs live inside the expanded drink, not in the app tab bar.
+   Brass is the selected tab: a filter that is on. Taste and history
+   copy stay in body ink. */
+.recipe-tabs {
+  display: flex;
+  gap: 0;
+  margin: 8px 0 10px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.recipe-tab {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 7px 11px;
+  cursor: pointer;
+}
+.recipe-tab.is-on {
+  background: var(--brass);
+  color: var(--on-brass);
+}
+.recipe-tab:focus-visible {
+  outline: 1px solid var(--brass);
+  outline-offset: 2px;
+}
+
+.recipe-panel[hidden] { display: none; }
+
+.recipe-copy {
+  font-family: var(--body);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--bone);
+  margin: 8px 0 0;
+}
+
+.recipe-refs {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+.recipe-refs li + li { margin-top: 6px; }
+.recipe-refs a {
+  font-size: 13px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--hair);
+}
+.recipe-refs a:hover {
+  color: var(--brass);
+  border-bottom-color: var(--brass);
+}
+
 .pour {
   display: grid;
   grid-template-columns: 74px 1fr;
@@ -951,7 +1009,12 @@ a { color: inherit; text-decoration: none; }
   }
 
   .topbar, .tabbar, .filters, .tonight__acts, .tally__acts,
-  .drink__missing, .loading { display: none !important; }
+  .drink__missing, .loading,
+  .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
+  .recipe-copy, .recipe-refs { display: none !important; }
+
+  /* Taste may be selected on screen; paper is still the pour list. */
+  .recipe-panel--recipe { display: block !important; }
 
   /* The app shell is a viewport-tall box with one internal scroller.
      On paper there is no viewport, so unwind it back to normal flow or

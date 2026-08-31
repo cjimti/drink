@@ -25,16 +25,42 @@
   "cocktails": [
 
     { "id": "pedro-martinez", "name": "Pedro Martinez", "method": "stirred", "family": "aged-rum", "code": "2,1,q,3,10,2b,R", "serve": "R",
-      "build": [["aged-rum","2"],["sweet-vermouth","1"],["maraschino","q"],["orange-bitters","3"],["angostura","10"],["absinthe","2b"]] },
+      "build": [["aged-rum","2"],["sweet-vermouth","1"],["maraschino","q"],["orange-bitters","3"],["angostura","10"],["absinthe","2b"]],
+      "taste": "Aged rum and sweet vermouth sit two to one, the Martinez ratio, with a quarter ounce of maraschino as the cherry glue. Ten dashes of Angostura is a bark flood, not a hint, and three orange bitters keep peel in the mix. Two barspoons of absinthe is a pour you can taste, anise laid over the rum rather than a rinse. Ice in the rocks glass is the point: this one is meant to sit and dilute.",
+      "history": "The Pedro Martinez is a rum Martinez from Michael Shea at Rum Club in Portland, Oregon, published by Imbibe in August 2020. Shea builds it on Demerara rum with Cocchi Vermouth di Torino, maraschino, aromatic bitters, orange bitters, and a few drops of absinthe, stirred and strained over a large cube. It is a modern sugarcane version of the gin Martinez, not a recipe from the nineteenth-century manuals. This card keeps the two-to-one rum and vermouth, the quarter of maraschino, and the rocks glass with ice, yet it pours ten dashes of Angostura and two barspoons of absinthe, heavier than Shea's drops.",
+      "refs": [
+        { "title": "Imbibe, Pedro Martinez Cocktail", "url": "https://imbibemagazine.com/recipe/pedro-martinez-cocktail/" }
+      ] },
     { "id": "rum-old-fashioned", "name": "Rum Old Fashioned", "method": "stirred", "family": "aged-rum", "code": "2,1b,2,1,Ro", "serve": "Ro",
-      "build": [["aged-rum","2"],["demerara","1b"],["angostura","2"],["orange-bitters","1"]] },
+      "build": [["aged-rum","2"],["demerara","1b"],["angostura","2"],["orange-bitters","1"]],
+      "taste": "Two ounces of aged rum, one barspoon of demerara, nothing more for sugar. The molasses of the syrup and the barrel of the rum are the same family, so the drink reads as rum first, then spice. Two dashes of Angostura and one of orange bitters keep clove and peel in the glass without turning it into a whiskey cocktail. Rocks, ice, and an orange twist: it sits.",
+      "history": "The Old-Fashioned takes its name from drinkers in the 1870s who asked for an old-fashioned whiskey cocktail after bartenders began dressing the Whiskey Cocktail with absinthe, curacao, and other liqueurs. The formula itself is older: spirit, sugar, water, and bitters, the definition printed in The Balance and Columbian Repository in 1806. A rum Old-Fashioned is that template with the whiskey swapped out, a substitution that became common in craft bars in the 2000s as aged rum was treated as a sipping spirit. This card pours two ounces of aged rum, one barspoon of demerara syrup, two dashes of Angostura, and one of orange bitters, over ice with an orange twist.",
+      "refs": [
+        { "title": "Difford's Guide, Old Fashioned cocktail history", "url": "https://www.diffordsguide.com/g/1198/old-fashioned-cocktail/history" }
+      ] },
 
     { "id": "so-so-cocktail", "name": "So So Cocktail", "method": "stirred", "family": "apple-brandy", "code": "1,1,h,h,cc", "serve": "cc",
-      "build": [["gin","1"],["dry-vermouth","1"],["apple-brandy","h"],["grenadine","h"]] },
+      "build": [["gin","1"],["dry-vermouth","1"],["apple-brandy","h"],["grenadine","h"]],
+      "taste": "Equal gin and dry vermouth, a half ounce of apple brandy riding underneath, and a half ounce of grenadine that is more fruit than tint. The gin is the drink; the apple is a peel of orchard, not a base. Dry vermouth keeps it lean, so the grenadine is the only roundness. Coupe, cherry.",
+      "history": "The So So Cocktail appears in Harry MacElhone's 1923 Harry of Ciro's ABC of Mixing Cocktails, credited to Mr. P. Soso, manager of Ciro's Club in London (MacElhone also names the Kit-Kat Club). The printed formula is one-sixth grenadine, one-sixth Calvados, one-third Cinzano vermouth, one-third gin. Harry Craddock repeats it in the 1930 Savoy Cocktail Book with Italian vermouth in place of the brand. This card files under apple brandy and is mostly gin. It also swaps the Italian vermouth for dry, and it pours a half ounce of grenadine rather than a sixth.",
+      "refs": [
+        { "title": "Difford's Guide, So So Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/1794/so-so-cocktail" },
+        { "title": "The Savoy Cocktail Book (1930), p. 151", "url": "https://euvs-vintage-cocktail-books.cld.bz/1930-The-Savoy-Cocktail-Book/151/" }
+      ] },
     { "id": "dempsey", "name": "Dempsey", "method": "stirred", "family": "apple-brandy", "code": "1h,1h,h,q,c", "serve": "c",
-      "build": [["apple-brandy","1h"],["gin","1h"],["grenadine","h"],["absinthe","q"]] },
+      "build": [["apple-brandy","1h"],["gin","1h"],["grenadine","h"],["absinthe","q"]],
+      "taste": "Equal ounces and a half of apple brandy and gin, so neither wins. Half an ounce of grenadine is a real pour, pomegranate against the orchard, and a quarter ounce of absinthe is enough anise to coat the glass. Stirred, no juice, coupe. It drinks as a pink, wormwood-edged brandy-and-gin cocktail, not a sour.",
+      "history": "Robert Vermeire prints the Dempsey in Cocktails How to Mix Them (1922) and says it was introduced at Deauville in 1921 after Jack Dempsey knocked out Georges Carpentier on 2 July 1921 at Boyle's Thirty Acres in Jersey City, the first million-dollar gate. Vermeire's formula is two-thirds Calvados to one-third gin, with dashes of absinthe and a teaspoon of grenadine. Harry MacElhone, the same year, credits Fred Martin at the Casino de Deauville in 1922, and uses a dash of Anis del Osa. Both claims stay in print. This card splits apple brandy and gin equally, then pours half an ounce of grenadine and a quarter ounce of absinthe, heavier than the dashes.",
+      "refs": [
+        { "title": "Difford's Guide, Dempsey", "url": "https://www.diffordsguide.com/cocktails/recipe/629/dempsey" }
+      ] },
     { "id": "corpse-reviver-1", "name": "Corpse Reviver No. 1", "method": "stirred", "family": "apple-brandy", "code": "1h,Q,Q,cc", "serve": "cc",
-      "build": [["cognac","1h"],["apple-brandy","Q"],["sweet-vermouth","Q"]] },
+      "build": [["cognac","1h"],["apple-brandy","Q"],["sweet-vermouth","Q"]],
+      "taste": "Cognac first, an ounce and a half, then three-quarters each of apple brandy and sweet vermouth. The apple is a second brandy, not the drink. No juice, no bitters, stirred. It reads as a Manhattan that swapped whiskey for two brandies, orchard under grape, vermouth holding them. Coupe, cherry.",
+      "history": "Harry Craddock prints Corpse Reviver No. 1 in The Savoy Cocktail Book in 1930: half brandy, a quarter apple brandy or Calvados, a quarter Italian vermouth, \"to be taken before 11 a.m., or whenever steam and energy are needed.\" Difford's Guide notes that the drink is sometimes credited to Frank Meier at the Ritz Bar in Paris, although Meier makes no claim in his 1936 The Artistry of Mixing Drinks. The No. 2, gin, Lillet, orange liqueur, lemon, and absinthe, is a different cocktail and is not on this card. This one leads with cognac. The card pours an ounce and a half of cognac and three-quarters each of apple brandy and sweet vermouth.",
+      "refs": [
+        { "title": "Difford's Guide, Corpse Reviver No.1 (Savoy recipe)", "url": "https://www.diffordsguide.com/cocktails/recipe/471/corpse-reviver-no1-savoy-recipe" }
+      ] },
 
     { "id": "burnt-fuselage", "name": "Burnt Fuselage", "method": "stirred", "family": "cognac", "code": "1,1,1,c", "serve": "c",
       "build": [["cognac","1"],["dry-vermouth","1"],["orange-liqueur","1"]] },
@@ -154,20 +180,59 @@
       "build": [["dry-vermouth","2"],["benedictine","Q"],["orange-bitters","2"]] },
 
     { "id": "winter-daiquiri", "name": "Winter Daiquiri", "method": "shaken", "family": "aged-rum", "code": "2,1,h,2,c", "serve": "c",
-      "build": [["aged-rum","2"],["lime","1"],["demerara","h"],["angostura","2"]] },
+      "build": [["aged-rum","2"],["lime","1"],["demerara","h"],["angostura","2"]],
+      "taste": "Two ounces of aged rum against a full ounce of lime and only a half ounce of demerara: tart, brown sugar, barrel. Two dashes of Angostura pull clove and bark through the lime, so the drink is a Daiquiri that has been wintered rather than a rum Old-Fashioned that has been shaken. Coupe, no ice in the glass.",
+      "history": "The Daiquiri is credited to Jennings Stockton Cox, an American mining engineer at Daiquiri, Cuba, around the turn of the twentieth century, mixing Bacardi, lime, and sugar. Francesco Domenico Pagliuchi wrote in 1948 that he was there and suggested the name; Basil Woon's 1928 When It's Cocktail Time in Cuba records Cox naming it at Santiago's Venus bar. The first recipe-book appearance is Jacques Straub's 1914 Drinks, misspelt Daiguiri. A winter version keeps the sour and changes the rum and the sugar. This card uses aged rum, demerara syrup, a full ounce of lime against a half ounce of sweetener, and two dashes of Angostura.",
+      "refs": [
+        { "title": "Difford's Guide, Daiquiri history", "url": "https://www.diffordsguide.com/g/1083/daiquiri-cocktail/story" }
+      ] },
     { "id": "air-mail", "name": "Air Mail", "method": "shaken", "family": "aged-rum", "code": "1h,Q,Q,2,R", "serve": "R",
-      "build": [["aged-rum","1h"],["lime","Q"],["honey-syrup","Q"],["champagne","2"]] },
+      "build": [["aged-rum","1h"],["lime","Q"],["honey-syrup","Q"],["champagne","2"]],
+      "taste": "A rum sour of an ounce and a half of aged rum, three-quarters lime, three-quarters honey, then two ounces of Champagne over ice in a rocks glass. Honey is thicker and waxier than sugar, so the rum tastes darker than a Daiquiri. The bubbles and the melt are the lift. It is not a flute drink on this card.",
+      "history": "The Air Mail first saw print in Bacardi and Its Many Uses, a 1930 pamphlet from the still-Cuban company. Jeff Berry, writing in The Oxford Companion to Spirits and Cocktails, notes that Cuba began air-mail service that year, yet the pamphlet names no bartender. W.C. Whitfield's 1941 Here's How prints it as rum, lime, honey, and Champagne in a highball, with the line \"It ought to make you fly high.\" Some later writers treat it as a rum French 75. The early printings, however, are a honey Daiquiri topped with sparkling wine and served long, over ice. This card keeps the honey and the Champagne, uses aged rum, and pours it in a rocks glass with ice.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, Air Mail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-232" },
+        { "title": "Difford's Guide, Air Mail", "url": "https://www.diffordsguide.com/cocktails/recipe/27/air-mail" }
+      ] },
     { "id": "brass-rail", "name": "Brass Rail", "method": "shaken", "family": "aged-rum", "code": "1h,h,1,h,2,c3", "serve": "c3",
-      "build": [["aged-rum","1h"],["benedictine","h"],["lemon","1"],["simple","h"],["orange-bitters","2"],["egg-white",null],["angostura","3","g"]] },
+      "build": [["aged-rum","1h"],["benedictine","h"],["lemon","1"],["simple","h"],["orange-bitters","2"],["egg-white",null],["angostura","3","g"]],
+      "taste": "An ounce and a half of aged rum, a half of Benedictine, a full ounce of lemon, a half of simple: a rum sour with a herbal liqueur in the sugar slot. Egg white gives it a foam cap. Two dashes of orange bitters sit in the shake; three dashes of Angostura are dropped on the foam, a pour, not a garnish, clove and bark on the white. Coupe.",
+      "history": "Tony Abou-Ganim built the Brass Rail as a nightcap for his cousin Helen David, who favored Benedictine, and named it for her bar in Port Huron, Michigan, which she opened in 1937. Difford's Guide adapts the recipe from Abou-Ganim: aged rum, Benedictine, lemon, sugar, egg white, and orange bitters, with a flamed orange twist and cinnamon on the foam. This card uses aged rum, Benedictine, a full ounce of lemon, half an ounce of simple, two dashes of orange bitters, egg white, and three dashes of Angostura dropped on the foam.",
+      "refs": [
+        { "title": "Difford's Guide, Brass Rail", "url": "https://www.diffordsguide.com/cocktails/recipe/564/brass-rail" }
+      ] },
 
     { "id": "jack-rose", "name": "Jack Rose", "method": "shaken", "family": "apple-brandy", "code": "1h,Q,Q,c", "serve": "c",
-      "build": [["apple-brandy","1h"],["lime","Q"],["grenadine","Q"]] },
+      "build": [["apple-brandy","1h"],["lime","Q"],["grenadine","Q"]],
+      "taste": "An ounce and a half of apple brandy, three-quarters lime, three-quarters grenadine. Lime, not lemon, so the sour is sharper and greener. Equal grenadine means the drink is as pink as it is tart; the apple sits under pomegranate rather than shouting. Shaken, no egg, no gin. Coupe.",
+      "history": "David Wondrich traces the Jack Rose to Frank Haas at Fred Eberlin's downtown New York bar, named in the New York Press in 1899. Jacob Grohusko's 1908 Jack's Manual is the first printed formula. By Jacques Straub's 1914 Drinks it had become applejack, lime, and grenadine. The name is disputed: Wondrich favors the General Jacqueminot, or Jack, rose, a pink hybrid the drink resembles; Frank J. May claimed it in the 1905 Police Gazette; Bald Jack Rose, the 1912 Rosenthal-case informant, is a later story, and the drink predates him. This card is Straub's three-ingredient drink: an ounce and a half of apple brandy, three-quarters lime, three-quarters grenadine.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Jack Rose", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-345" },
+        { "title": "Difford's Guide, Jack Rose Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/1039/jack-rose-cocktail" }
+      ] },
     { "id": "pink-lady", "name": "Pink Lady", "method": "shaken", "family": "apple-brandy", "code": "1h,Q,Q,h,cc", "serve": "cc",
-      "build": [["gin","1h"],["apple-brandy","Q"],["lime","Q"],["grenadine","h"],["egg-white",null]] },
+      "build": [["gin","1h"],["apple-brandy","Q"],["lime","Q"],["grenadine","h"],["egg-white",null]],
+      "taste": "Gin at an ounce and a half, then three-quarters of apple brandy and three-quarters of lime, a half ounce of grenadine, and egg white. The foam is the texture; the apple is a real pour, not a ghost. Lime and gin keep it sharp. Grenadine is color and a little pomegranate, not a dessert. Coupe, cherry.",
+      "history": "The Pink Lady takes its name from Ivan Caryll's 1911 Broadway musical, starring Hazel Dawn. Wondrich records that the drink mixed for her at Murray's Roman Gardens was ojen with Peychaud's and Angostura, not this one. Jacques Straub's 1913 Manual of Mixed Drinks prints the version that entered the books: equal gin, applejack, and lime, with dashes of grenadine, and no egg. Later recipes drop the apple brandy, add egg white or cream, or both. Craddock's Savoy omits the applejack and adds the white. This card keeps Straub's gin, apple brandy, lime, and grenadine, and it shakes egg white with them.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, Pink Lady Cocktail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-384" },
+        { "title": "Difford's Guide, Pink Lady", "url": "https://www.diffordsguide.com/cocktails/recipe/1548/pink-lady" }
+      ] },
     { "id": "honeymoon", "name": "Honeymoon", "method": "shaken", "family": "apple-brandy", "code": "1q,1,1b,h,1,Ro", "serve": "Ro",
-      "build": [["apple-brandy","1q"],["benedictine","1"],["orange-liqueur","1b"],["lemon","h"],["orange-bitters","1"]] },
+      "build": [["apple-brandy","1q"],["benedictine","1"],["orange-liqueur","1b"],["lemon","h"],["orange-bitters","1"]],
+      "taste": "An ounce and a quarter of apple brandy against a full ounce of Benedictine: herb almost even with orchard. A barspoon of orange liqueur and a dash of orange bitters are peel, not sweetness. Half an ounce of lemon is enough acid to lift it, not enough to make a sour. Rocks, ice, orange twist: it sits and the Benedictine warms.",
+      "history": "Hugo R. Ensslin first prints the Honey Moon Cocktail in Recipes for Mixed Drinks (1916): equal Benedictine and apple brandy, juice of half a lemon, three dashes of curacao. Ensslin was at the Hotel Wallick in Times Square. Craddock copies it into the Savoy in 1930. It later turns up at the Brown Derby in Los Angeles, and David Embury (1948) also calls it the Farmer's Daughter, with a much drier applejack-forward ratio. This card pours an ounce and a quarter of apple brandy, a full ounce of Benedictine, a barspoon of orange liqueur, half an ounce of lemon, and a dash of orange bitters, over ice with an orange twist.",
+      "refs": [
+        { "title": "Difford's Guide, Honeymoon", "url": "https://www.diffordsguide.com/cocktails/recipe/969/honeymoon" },
+        { "title": "Vintage American Cocktails, Honeymoon", "url": "https://vintageamericancocktails.com/honeymoon-cocktail-recipe/" }
+      ] },
     { "id": "southern-point", "name": "Southern Point", "method": "shaken", "family": "apple-brandy", "code": "Q,Q,Q,Q,ca", "serve": "ca",
-      "build": [["apple-brandy","Q"],["elderflower","Q"],["orange-liqueur","Q"],["lemon","Q"]] },
+      "build": [["apple-brandy","Q"],["elderflower","Q"],["orange-liqueur","Q"],["lemon","Q"]],
+      "taste": "Four equal three-quarter-ounce pours: apple brandy, elderflower liqueur, orange liqueur, lemon. Nothing leads. The elderflower is floral honey against the orchard, and the orange liqueur is peel; the lemon is the whole sour. Coupe, apple garnish. It drinks as a Sidecar that split the cognac and the orange liqueur and put apple and elderflower in their place.",
+      "history": "A drink called Southern Point does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. Equal-parts sours of this shape are modern, and the elderflower half of it cannot predate Robert Cooper's St-Germain, launched in 2007. The nearest parent is the Sidecar: brandy, orange liqueur, and lemon. This card swaps cognac for apple brandy, splits the sweet between elderflower and orange liqueur, and pours all four at three-quarters of an ounce, shaken, in a coupe with an apple garnish.",
+      "refs": [
+        { "title": "VinePair, 8 Things You Should Know About St-Germain Elderflower Liqueur", "url": "https://vinepair.com/articles/ntk-st-germain/" }
+      ] },
 
     { "id": "sidecar", "name": "Sidecar", "method": "shaken", "family": "cognac", "code": "1h,1,Q,cs", "serve": "cs",
       "build": [["cognac","1h"],["orange-liqueur","1"],["lemon","Q"]] },
