@@ -34,6 +34,12 @@ be regenerated from whatever is actually on the shelf that night.
 
 **Filters the way you choose a drink.** Stirred or shaken, then by any
 spirit or modifier, then by what the shelf can actually support.
+Families regroups the same list by shape — Martini, Sour, Daisy — so
+the Manhattan sits with the Martini, not just under bourbon.
+
+**Names the other drinks of the same shape.** A Kin pane on every recipe
+lists the nearest swaps (`scotch for bourbon`) and leads through to the
+family those drinks sit in.
 
 ## Layout
 
@@ -45,7 +51,9 @@ spirit or modifier, then by what the shelf can actually support.
 | `data/cocktails.json` | The menu. Each drink carries both a `code` and a `build`. |
 | `data/bar.json` | Every bottle any drink can call for, garnish included. |
 | `data/notation.json` | The shorthand key, and what the decoder reads from. |
+| `data/kin.json` | Generated families of shape, and each drink's nearest neighbours. |
 | `scripts/check_menu.py` | Regenerates each code from its build and refuses a mismatch. |
+| `scripts/kin.py` | Rebuilds `data/kin.json` from the builds. `--check` refuses a drift. |
 | `scripts/check_assets.py` | Missing files, and ids `app.js` reaches for that nothing renders. |
 
 ## Working on it
@@ -53,6 +61,7 @@ spirit or modifier, then by what the shelf can actually support.
 ```sh
 make serve     # http://localhost:8010 — no-store, so edits show up
 make verify    # the whole pipeline
+make kin       # rebuild data/kin.json from the builds
 make icons     # redraw the home-screen PNG
 ```
 
@@ -60,7 +69,8 @@ make icons     # redraw the home-screen PNG
 the two scripts the browser loads, confirms every asset `index.html` asks
 for exists and every element id `app.js` reaches for is real, and — the
 one that matters — checks that all 108 shorthand codes still agree with
-the recipes they stand for.
+the recipes they stand for, and that `data/kin.json` still matches those
+builds.
 
 The service worker registers in production only, and off https the app
 actively unregisters any worker it finds. A worker owns an *origin*, not
@@ -86,6 +96,9 @@ Add one object to `cocktails` in `data/cocktails.json`:
 `code` and `build` are two hands writing the same drink, which is exactly
 why the checker compares them. Write the code as it appears on the paper
 menu, spell the build out, and let `make verify` catch the disagreement.
+
+Then run `make kin` so the new drink joins its family in `data/kin.json`.
+Verify will fail on a stale copy.
 
 Ingredients that take no measure (egg white) get `null`. An ingredient
 poured on top rather than into the shaker — the bitters in a `c3` sour —

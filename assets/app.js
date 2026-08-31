@@ -11,7 +11,12 @@
    The second is that the menu is a function of the shelf. The point of
    this bar is range from few bottles, so the Bar tab is not a checklist
    for its own sake: it computes what each unopened bottle would add, in
-   drinks, and that number is the whole reason to buy one. */
+   drinks, and that number is the whole reason to buy one.
+
+   Kin is the third cut: drinks of the same shape in different bottles.
+   The Martini and the Manhattan share almost no ingredients and share
+   almost the whole pour. scripts/kin.py works that out; this file only
+   renders it. */
 
 (function () {
   'use strict';
@@ -22,16 +27,22 @@
 
   var data = {};
   var ing = {};          /* id -> ingredient */
+  var cocktailBy = {};   /* id -> cocktail */
+  var patternBy = {};    /* id -> kin pattern */
   var garnishCodes = []; /* longest first */
   var glassBy = {};
   var garnishBy = {};
 
   var have = {};         /* id -> true, what is on the shelf */
   var open = {};         /* id -> true, which recipes are expanded */
-  var recipePane = {};   /* id -> recipe|taste|history; resets on open */
+  var recipePane = {};   /* id -> recipe|taste|history|kin; resets on open */
   var glassMarkup = {};  /* art id -> inline svg */
 
-  var filter = { method: 'all', family: null, pourable: false, q: '' };
+  var filter = emptyFilter();
+
+  function emptyFilter() {
+    return { method: 'all', family: null, pattern: null, pourable: false, q: '' };
+  }
 
   /* The shelf's running order, fixed on the way into the tab. See
      renderBar. */
@@ -213,8 +224,11 @@
   }
 
   function matches(d, held) {
-    if (filter.method !== 'all' && d.method !== filter.method) return false;
+    if (filter.method === 'stirred' || filter.method === 'shaken') {
+      if (d.method !== filter.method) return false;
+    }
     if (filter.family && needs(d).indexOf(filter.family) < 0) return false;
+    if (filter.pattern && patternIdOf(d) !== filter.pattern) return false;
     if (filter.pourable && !canPour(d, held)) return false;
     if (filter.q) {
       var hay = (d.name + ' ' + ingredientLine(d) + ' ' + d.code).toLowerCase();
@@ -223,10 +237,22 @@
     return true;
   }
 
+  function kinRow(d) {
+    return (data.kin && data.kin.drinks[d.id]) || { pattern: null, kin: [] };
+  }
+
+  function patternIdOf(d) { return kinRow(d).pattern; }
+
+  function patternOf(d) {
+    var id = patternIdOf(d);
+    return id ? patternBy[id] : null;
+  }
+
   function paneOf(d) {
     var pane = recipePane[d.id] || 'recipe';
     if (pane === 'taste' && !d.taste) return 'recipe';
     if (pane === 'history' && !d.history) return 'recipe';
+    if (pane === 'kin' && !data.kin) return 'recipe';
     return pane;
   }
 
@@ -328,6 +354,7 @@
     var panes = [{ id: 'recipe', label: 'Recipe' }];
     if (d.taste) panes.push({ id: 'taste', label: 'Taste' });
     if (d.history) panes.push({ id: 'history', label: 'History' });
+    if (data.kin) panes.push({ id: 'kin', label: 'Kin' });
     if (panes.length === 1) return '';
 
     var html = '<div class="recipe-tabs" role="tablist" aria-label="' +
@@ -367,9 +394,37 @@
       (on ? '' : ' hidden') + '>' + inner + '</div>';
   }
 
+  function renderKin(d) {
+    var row = kinRow(d);
+    var pat = patternOf(d);
+    var html = '<div class="kin">';
+    if (pat) {
+      html += '<div class="kin__k">' + esc(pat.label) + '</div>' +
+        '<p class="kin__blurb">' + esc(pat.blurb) + '</p>';
+    }
+    if (row.kin && row.kin.length) {
+      html += '<div class="kin-list">';
+      row.kin.forEach(function (k) {
+        var other = cocktailBy[k.id];
+        if (!other) return;
+        html += '<button type="button" class="kin-item" data-kin="' + esc(k.id) + '">' +
+          '<span class="kin-item__name">' + esc(other.name) + '</span>' +
+          '<span class="kin-item__why">' + esc(k.why) + '</span>' +
+          '</button>';
+      });
+      html += '</div>';
+    }
+    if (pat && pat.members && pat.members.length > 1) {
+      html += '<button type="button" class="kin-more" data-see-pattern="' + esc(pat.id) + '">' +
+        plural(pat.members.length, 'drink', 'drinks') + ' in this family' +
+        ' <span aria-hidden="true">&rarr;</span></button>';
+    }
+    return html + '</div>';
+  }
+
   function renderRecipe(d, held) {
     var html = '<div class="recipe">';
-    var extra = !!(d.taste || d.history);
+    var extra = !!(d.taste || d.history || data.kin);
 
     if (!extra) return html + renderPours(d, held) + '</div>';
 
@@ -384,6 +439,7 @@
       html += renderPanel(d, 'history', current,
         '<p class="recipe-copy">' + esc(d.history) + '</p>' + renderRefs(d.refs));
     }
+    if (data.kin) html += renderPanel(d, 'kin', current, renderKin(d));
     return html + '</div>';
   }
 
@@ -392,7 +448,7 @@
     var cls = 'drink';
     if (showShelf) cls += missing.length ? ' is-short' : ' is-pourable';
 
-    var html = '<div class="' + cls + '">' +
+    var html = '<div class="' + cls + '" id="drink-' + esc(d.id) + '">' +
       '<button class="drink__head" data-drink="' + esc(d.id) + '" ' +
         'aria-expanded="' + (open[d.id] ? 'true' : 'false') + '">' +
         renderGlass(d.serve) +
@@ -425,7 +481,13 @@
       if (filter.family) {
         blocking.push('use ' + ((ing[filter.family] || {}).short || filter.family));
       }
-      if (filter.method !== 'all') blocking.push('are ' + filter.method);
+      if (filter.method === 'stirred' || filter.method === 'shaken') {
+        blocking.push('are ' + filter.method);
+      }
+      if (filter.pattern) {
+        var pat = patternBy[filter.pattern];
+        blocking.push('sit in the ' + (pat ? pat.label : filter.pattern) + ' family');
+      }
       if (filter.q) blocking.push('match “' + filter.q + '”');
 
       return '<div class="empty empty--clash">' +
@@ -475,25 +537,39 @@
 
     var html = filter.pourable ? renderMasthead(list.length) : '';
 
-    data.menu.methods.forEach(function (m) {
-      var inMethod = list.filter(function (d) { return d.method === m.id; });
-      if (!inMethod.length) return;
-
-      html += '<section class="method">' +
-        '<h2 class="method__title">' + esc(m.label) + '</h2>' +
-        '<div class="method__rule"></div>' +
-        '<p class="method__blurb">' + esc(m.blurb) + '</p>';
-
-      data.menu.families.forEach(function (f) {
-        var inFamily = inMethod.filter(function (d) { return d.family === f.id; });
-        if (!inFamily.length) return;
-
-        html += '<h3 class="family">' + esc(f.label) + '</h3>';
-        inFamily.forEach(function (d) { html += renderDrink(d, held, showShelf); });
+    if (filter.method === 'families' && data.kin) {
+      data.kin.patterns.forEach(function (p) {
+        var inPat = p.members.map(function (id) { return cocktailBy[id]; })
+          .filter(function (d) { return d && list.indexOf(d) >= 0; });
+        if (!inPat.length) return;
+        html += '<section class="method" id="pattern-' + esc(p.id) + '">' +
+          '<h2 class="method__title">' + esc(p.label) + '</h2>' +
+          '<div class="method__rule"></div>' +
+          '<p class="method__blurb">' + esc(p.blurb) + '</p>';
+        inPat.forEach(function (d) { html += renderDrink(d, held, showShelf); });
+        html += '</section>';
       });
+    } else {
+      data.menu.methods.forEach(function (m) {
+        var inMethod = list.filter(function (d) { return d.method === m.id; });
+        if (!inMethod.length) return;
 
-      html += '</section>';
-    });
+        html += '<section class="method">' +
+          '<h2 class="method__title">' + esc(m.label) + '</h2>' +
+          '<div class="method__rule"></div>' +
+          '<p class="method__blurb">' + esc(m.blurb) + '</p>';
+
+        data.menu.families.forEach(function (f) {
+          var inFamily = inMethod.filter(function (d) { return d.family === f.id; });
+          if (!inFamily.length) return;
+
+          html += '<h3 class="family">' + esc(f.label) + '</h3>';
+          inFamily.forEach(function (d) { html += renderDrink(d, held, showShelf); });
+        });
+
+        html += '</section>';
+      });
+    }
 
     $('#menu-body').innerHTML = html;
   }
@@ -513,15 +589,26 @@
     var seg = [{ id: 'all', label: 'All' }].concat(data.menu.methods.map(function (m) {
       return { id: m.id, label: m.label };
     }));
+    if (data.kin) seg.push({ id: 'families', label: 'Families' });
 
     var html = '<div class="filters">' +
-      '<div class="seg">' + seg.map(function (s) {
+      '<div class="seg' + (seg.length > 3 ? ' seg--wide' : '') + '">' + seg.map(function (s) {
         return '<button class="seg__b' + (filter.method === s.id ? ' is-on' : '') +
           '" data-method="' + s.id + '">' + esc(s.label) + '</button>';
       }).join('') + '</div>' +
       '<input class="search" id="q" type="search" placeholder="Name, ingredient, or code…" ' +
-        'value="' + esc(filter.q) + '" autocomplete="off" spellcheck="false">' +
-      '<div class="chips">';
+        'value="' + esc(filter.q) + '" autocomplete="off" spellcheck="false">';
+
+    if (filter.method === 'families' && data.kin) {
+      html += '<div class="chips">';
+      data.kin.patterns.forEach(function (p) {
+        html += '<button class="chip' + (filter.pattern === p.id ? ' is-on' : '') +
+          '" data-pattern="' + esc(p.id) + '">' + esc(p.label) + '</button>';
+      });
+      html += '</div>';
+    }
+
+    html += '<div class="chips">';
 
     /* Spirits first — they are how anyone actually chooses a drink —
        then the modifiers that decide the rest of the menu. */
@@ -541,7 +628,7 @@
       '<button class="chip chip--pour' + (filter.pourable ? ' is-on' : '') +
         '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + 'What I can pour' +
         (canNow === null ? '' : ' · ' + canNow) + '</button>' +
-      (filter.family || filter.q || filter.method !== 'all' || filter.pourable
+      (filter.family || filter.pattern || filter.q || filter.method !== 'all' || filter.pourable
         ? '<button class="chip" data-clear="1">Clear</button>' : '') +
       '</div>' +
       '<p class="filters__note"><b>' + n + '</b> of ' + data.menu.cocktails.length + ' shown</p>' +
@@ -751,6 +838,29 @@
 
   /* ── wiring ────────────────────────────────────────────── */
 
+  /* Open a drink and put it on screen. If the current filters hide it,
+     drop whatever is hiding it — a kin link that does not lead to the
+     drink it names is trivia. */
+  function revealDrink(id) {
+    var d = cocktailBy[id];
+    if (!d) return;
+    if (!matches(d, have)) {
+      filter.family = null;
+      filter.q = '';
+      if (filter.pattern && patternIdOf(d) !== filter.pattern) filter.pattern = null;
+      if (filter.method === 'stirred' || filter.method === 'shaken') {
+        if (d.method !== filter.method) filter.method = 'all';
+      }
+      if (filter.pourable && !canPour(d, have)) filter.pourable = false;
+    }
+    open = {};
+    open[id] = true;
+    recipePane[id] = data.kin ? 'kin' : 'recipe';
+    repaintMenu();
+    var el = document.getElementById('drink-' + id);
+    if (el) el.scrollIntoView({ block: 'center' });
+  }
+
   function refreshCount() {
     var can = pourableCount(have);
     var badge = $('#tab-count');
@@ -768,8 +878,9 @@
   }
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pourable],' +
-      '[data-clear],[data-clearothers],[data-bottle],[data-bar],[data-seemenu],[data-print]');
+    var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
+      '[data-pourable],[data-clear],[data-clearothers],[data-bottle],[data-bar],[data-seemenu],' +
+      '[data-print],[data-kin],[data-see-pattern]');
     if (!t) return;
 
     if (t.dataset.recipeTab) {
@@ -791,7 +902,12 @@
       return;
     }
 
-    if (t.dataset.method) { filter.method = t.dataset.method; repaintMenu(); return; }
+    if (t.dataset.method) {
+      filter.method = t.dataset.method;
+      if (filter.method !== 'families') filter.pattern = null;
+      repaintMenu();
+      return;
+    }
 
     if (t.dataset.family) {
       filter.family = filter.family === t.dataset.family ? null : t.dataset.family;
@@ -799,11 +915,33 @@
       return;
     }
 
+    if (t.dataset.pattern) {
+      filter.pattern = filter.pattern === t.dataset.pattern ? null : t.dataset.pattern;
+      repaintMenu();
+      return;
+    }
+
+    if (t.dataset.kin) {
+      revealDrink(t.dataset.kin);
+      return;
+    }
+
+    if (t.dataset.seePattern) {
+      filter.method = 'families';
+      filter.pattern = t.dataset.seePattern;
+      filter.family = null;
+      filter.q = '';
+      repaintMenu();
+      $('#main').scrollTop = 0;
+      return;
+    }
+
     if (t.dataset.pourable) { filter.pourable = !filter.pourable; repaintMenu(); return; }
 
     /* Jump from the count on the Bar tab to the menu it is counting. */
     if (t.dataset.seemenu) {
-      filter = { method: 'all', family: null, pourable: true, q: '' };
+      filter = emptyFilter();
+      filter.pourable = true;
       repaintMenu();
       location.hash = '#menu';
       return;
@@ -813,13 +951,14 @@
 
     /* Keep the shelf filter, drop whatever else was excluding things. */
     if (t.dataset.clearothers) {
-      filter = { method: 'all', family: null, pourable: true, q: '' };
+      filter = emptyFilter();
+      filter.pourable = true;
       repaintMenu();
       return;
     }
 
     if (t.dataset.clear) {
-      filter = { method: 'all', family: null, pourable: false, q: '' };
+      filter = emptyFilter();
       repaintMenu();
       return;
     }
@@ -903,13 +1042,17 @@
     fetch('data/cocktails.json').then(function (r) { return r.json(); }),
     fetch('data/bar.json').then(function (r) { return r.json(); }),
     fetch('data/notation.json').then(function (r) { return r.json(); }),
+    fetch('data/kin.json').then(function (r) { return r.json(); }),
     loadGlassArt()
   ]).then(function (res) {
     data.menu = res[0];
     data.bar = res[1];
     data.notation = res[2];
+    data.kin = res[3];
 
     data.bar.ingredients.forEach(function (i) { ing[i.id] = i; });
+    data.menu.cocktails.forEach(function (d) { cocktailBy[d.id] = d; });
+    data.kin.patterns.forEach(function (p) { patternBy[p.id] = p; });
     data.notation.glasses.forEach(function (g) { glassBy[g.code] = g; });
     data.notation.garnishes.forEach(function (g) { garnishBy[g.code] = g; });
     garnishCodes = data.notation.garnishes.map(function (g) { return g.code; })

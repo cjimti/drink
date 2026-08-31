@@ -1,7 +1,7 @@
 # drink.shoephone.net — no build step, so `verify` is the whole pipeline.
 
 .DEFAULT_GOAL := verify
-.PHONY: verify check json syntax menu assets serve icons clean
+.PHONY: verify check json syntax menu kin assets serve icons clean
 
 ## verify — run every check, then stamp the review-gate sentinel
 verify: check
@@ -22,12 +22,18 @@ json:
 syntax:
 	@node --check assets/app.js && echo "  syntax  assets/app.js"
 	@node --check sw.js && echo "  syntax  sw.js"
-	@python3 -m py_compile scripts/check_menu.py scripts/make-icons.py
+	@python3 -m py_compile scripts/check_menu.py scripts/make-icons.py scripts/kin.py
 	@echo "  syntax  scripts/*.py"
 
-## menu — every shorthand code agrees with the build it stands for
+## menu — every shorthand code agrees with the build it stands for,
+##         and data/kin.json still matches those builds
 menu:
 	@python3 scripts/check_menu.py
+	@python3 scripts/kin.py --check
+
+## kin — regenerate data/kin.json from the builds
+kin:
+	@python3 scripts/kin.py
 
 ## assets — every file index.html asks for is actually here
 assets:

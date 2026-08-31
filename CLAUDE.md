@@ -94,6 +94,25 @@ JavaScript. `ingredient` on a garnish is the bottle it costs, and that
 is the only place the mapping lives, so the same table that makes a
 letter readable makes it countable.
 
+### `data/kin.json`
+
+Generated. `scripts/kin.py` reads every build, files the drink under a
+named shape (Martini, Sour, Daisy, Negroni, Old-Fashioned, Fancy,
+Vermouth, Sparkling), and lists the nearest others of that shape with
+the bottle that changed. The app does not recompute this.
+
+`family` on a cocktail is still the printed-card section. Kin is a
+second filing: the Martini and the Manhattan sit under gin and bourbon
+on the card, and in the same pattern here. Do not write a `pattern`
+onto the cocktail object — the generated file is the one source, and
+`make verify` refuses a drift the same way it refuses a code that does
+not match its build.
+
+Adding a drink means running `python3 scripts/kin.py` (or `make kin`)
+so the new one joins its family. A handful of drinks the ratio would
+misfile live as `OVERRIDE` at the top of the script; keep that list
+small.
+
 ## The marginal-gain engine
 
 The Bar tab's number beside each unopened bottle is **drinks unlocked**,
@@ -109,8 +128,21 @@ shelf filter on, where the same list renders with a masthead and a print
 button. A number that does not lead to the list it counts is trivia, so
 if the tally ever stops being a button, that is a regression.
 
+Same rule on a drink's Kin pane: the neighbour is a button that opens
+that drink, and the count of the family opens the Families view of the
+list it is counting. If either stops being a way through, that is a
+regression.
+
 The print stylesheet forces the light palette outright. What theme a
 phone happens to be in must never decide how much toner a menu costs.
+
+## Families
+
+A fourth segment after All / Stirred / Shaken. It regroups the same
+menu by shape instead of by method and printed section. Pattern chips
+appear only in that view. Print still hides the Kin pane; a Families
+print is the list under those headings, light palette, same as any
+other menu.
 
 ## Design
 

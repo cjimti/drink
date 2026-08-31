@@ -197,6 +197,14 @@ a { color: inherit; text-decoration: none; }
 .seg__b:last-child { border-right: 0; }
 .seg__b.is-on { background: var(--bone); color: var(--ground); }
 
+/* Four segments (All / Stirred / Shaken / Families) on a phone.
+   Tracking drops a little so FAMILIES still sits on one line. */
+.seg--wide .seg__b {
+  letter-spacing: .11em;
+  font-size: 10px;
+  padding: 9px 2px;
+}
+
 .search {
   display: block;
   width: 100%;
@@ -292,6 +300,9 @@ a { color: inherit; text-decoration: none; }
   border-top: 1px solid var(--rule);
 }
 .method > .family:first-of-type { border-top: 0; padding-top: 0; margin-top: 22px; }
+
+/* Families view: drinks sit directly under the blurb, no spirit heading. */
+.method__blurb + .drink { margin-top: 16px; }
 
 /* ── A drink ──────────────────────────────────────────────── */
 
@@ -409,7 +420,11 @@ a { color: inherit; text-decoration: none; }
   gap: 0;
   margin: 8px 0 10px;
   border-bottom: 1px solid var(--hair);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
+.recipe-tabs::-webkit-scrollbar { display: none; }
 
 .recipe-tab {
   appearance: none;
@@ -441,6 +456,82 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.55;
   color: var(--bone);
   margin: 8px 0 0;
+}
+
+.kin__k {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin: 4px 0 0;
+}
+
+.kin__blurb {
+  margin: 6px 0 12px;
+  font-size: 13.5px;
+  font-style: italic;
+  color: var(--muted);
+  max-width: 46ch;
+}
+
+.kin-list { margin: 0; }
+
+.kin-item {
+  display: grid;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--hair);
+  color: inherit;
+  text-align: left;
+  padding: 10px 0;
+  cursor: pointer;
+  font: inherit;
+}
+.kin-item:last-of-type { border-bottom: 1px solid var(--hair); }
+.kin-item:focus-visible {
+  outline: 1px solid var(--brass);
+  outline-offset: 2px;
+}
+
+.kin-item__name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.kin-item__why {
+  display: block;
+  margin-top: 2px;
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.kin-more {
+  display: block;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--brass);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 14px 0 4px;
+  cursor: pointer;
+}
+.kin-more:focus-visible {
+  outline: 1px solid var(--brass);
+  outline-offset: 2px;
 }
 
 .recipe-refs {
@@ -1044,7 +1135,7 @@ a { color: inherit; text-decoration: none; }
 
   .topbar, .tabbar, .filters, .tonight__acts, .tally__acts,
   .drink__missing, .loading,
-  .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
+  .recipe-tabs, .recipe-panel--taste, .recipe-panel--history, .recipe-panel--kin,
   .recipe-copy, .recipe-refs, .drink__glass { display: none !important; }
 
   /* Taste may be selected on screen; paper is still the pour list. */
