@@ -502,6 +502,14 @@
     var held = have;
     var n = data.menu.cocktails.filter(function (d) { return matches(d, held); }).length;
 
+    /* The chip row is a horizontal scroller. Rebuilding it from innerHTML
+       drops you back at the start, so the chip you just tapped is gone
+       and toggling it off means scrolling the whole row again. */
+    var chipX = [];
+    document.querySelectorAll('#filters .chips').forEach(function (el) {
+      chipX.push(el.scrollLeft);
+    });
+
     var seg = [{ id: 'all', label: 'All' }].concat(data.menu.methods.map(function (m) {
       return { id: m.id, label: m.label };
     }));
@@ -540,6 +548,10 @@
       '</div>';
 
     $('#filters').innerHTML = html;
+
+    document.querySelectorAll('#filters .chips').forEach(function (el, i) {
+      if (i < chipX.length) el.scrollLeft = chipX[i];
+    });
   }
 
   /* ── bar view ──────────────────────────────────────────── */
