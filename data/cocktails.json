@@ -328,25 +328,86 @@
       ] },
 
     { "id": "quill", "name": "Quill", "method": "stirred", "family": "gin", "code": "1,1,1,q,co", "serve": "co",
-      "build": [["gin","1"],["campari","1"],["sweet-vermouth","1"],["absinthe","q"]] },
+      "build": [["gin","1"],["campari","1"],["sweet-vermouth","1"],["absinthe","q"]],
+      "taste": "Equal ounces of gin, Campari, and sweet vermouth, so Campari is a third of the drink, then a quarter ounce of absinthe in the mix, not a rinse. That is a real pour of anise, enough to sit on the Campari rather than perfume the glass. Stirred, coupe, orange twist. Bitter orange, grape, and wormwood, served up.",
+      "history": "The Quill first prints in the 1996 edition of Harry's ABC of Mixing Cocktails, where Andrew and Duncan MacElhone added forty-odd recipes to Harry MacElhone's original books and credited this one to Frank C. Payne of New York. It is not in the earlier editions, nor in MacElhone's 1927 Barflies and Cocktails. Payne was a theatrical press agent in the Theatrical Press Representatives of America, which published a magazine called The Quill. The drink is a Negroni with absinthe. This card keeps the equal ounces and puts a quarter ounce of absinthe in the build, coupe, orange twist.",
+      "refs": [
+        { "title": "Difford's Guide, Quill", "url": "https://www.diffordsguide.com/cocktails/recipe/5064/quill" },
+        { "title": "Serious Eats, If You Like Negronis, Try the Quill", "url": "https://www.seriouseats.com/classic-cocktail-quill-negroni-variation-with-absinthe-history-story" }
+      ] },
     { "id": "negroni", "name": "Negroni", "method": "stirred", "family": "gin", "code": "1,1,1,R", "serve": "R",
-      "build": [["gin","1"],["campari","1"],["sweet-vermouth","1"]] },
+      "build": [["gin","1"],["campari","1"],["sweet-vermouth","1"]],
+      "taste": "Equal ounces of gin, Campari, and sweet vermouth. Campari is a third of the drink: bitter orange against grape and juniper. Stirred, rocks with ice, no twist on the card. The cube is the dilution, so the Campari stays loud as it sits.",
+      "history": "The usual story puts Count Camillo Negroni at Caffe Casoni on Via de' Tornabuoni in Florence around 1919, asking Fosco Scarselli to stiffen his Americano with gin in place of soda. Luca Picchi reconstructed that account in 2002; it is the better-supported one. However, Colonel Hector Andres Negroni later said there was no Camillo in the family tree and pointed instead to General Pascal Olivier Comte de Negroni. The equal-parts formula does not see print until Amedeo Gandiglio's 1947 Cocktails Portfolio. This card pours one ounce each of gin, Campari, and sweet vermouth, over ice, no garnish letter.",
+      "refs": [
+        { "title": "Difford's Guide, History of the Negroni", "url": "https://www.diffordsguide.com/g/1078/negroni-cocktail/history" },
+        { "title": "Punch, The Negroni Has a Secret", "url": "https://punchdrink.com/articles/negroni-cocktail-recipe-has-a-secret-history/" }
+      ] },
     { "id": "claridge", "name": "Claridge", "method": "stirred", "family": "gin", "code": "1,1,h,h,c", "serve": "c",
-      "build": [["gin","1"],["dry-vermouth","1"],["apricot","h"],["orange-liqueur","h"]] },
+      "build": [["gin","1"],["dry-vermouth","1"],["apricot","h"],["orange-liqueur","h"]],
+      "taste": "Equal ounces of gin and dry vermouth, then a half ounce each of apricot liqueur and orange liqueur, so the two liqueurs together match the gin. Stone fruit and candied peel sit against a dry wine cut. Stirred, coupe, no twist on the card. Apricot and orange on a wet Martini.",
+      "history": "Harry MacElhone prints the Claridge in 1922 Harry's ABC of Mixing Cocktails, credited to Leon, bartender at Claridge's Hotel on the Champs-Elysees in Paris: one-third gin, one-third French vermouth, one-sixth apricot brandy, one-sixth Cointreau. Harry Craddock repeats the formula in The Savoy Cocktail Book in 1930, and prints the same measures again as the Frankenjack. The London hotel of the same name is a later guess; Leon's Paris house is the one in the book. This card keeps equal gin and dry vermouth and a half ounce of each liqueur, stirred, coupe.",
+      "refs": [
+        { "title": "Difford's Guide, Claridge Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/440/claridge-cocktail" },
+        { "title": "The 1930 Savoy Cocktail Book, Claridge Cocktail", "url": "https://savoycocktaildatabase.com/cocktails/claridge-cocktail/" }
+      ] },
     { "id": "lucien-gaudin", "name": "Lucien Gaudin", "method": "stirred", "family": "gin", "code": "1,h,h,h,co", "serve": "co",
-      "build": [["gin","1"],["campari","h"],["dry-vermouth","h"],["orange-liqueur","h"]] },
+      "build": [["gin","1"],["campari","h"],["dry-vermouth","h"],["orange-liqueur","h"]],
+      "taste": "An ounce of gin against half ounces of Campari, dry vermouth, and orange liqueur, so gin leads and the three modifiers split. Bitter orange and candied peel sit against a dry wine cut, leaner than a Negroni and more orange. Stirred, coupe, orange twist.",
+      "history": "Named for Lucien Gaudin, a French fencer who won gold in foil and epee at the 1924 Paris Olympics and again in 1928 at Amsterdam. The drink first prints in RIP's 1929 Cocktails de Paris, credited to Charlie of Le Cheval Pie, a Paris restaurant that ran from 1925 to 1930, and it took the Coupe d'honneur at the Professional Bartenders Championship in Paris on 2 February 1929. RIP is Georges Gabriel Thenon. This card pours an ounce of gin and a half ounce each of Campari, dry vermouth, and orange liqueur, coupe, orange.",
+      "refs": [
+        { "title": "Difford's Guide, Lucien Gaudin", "url": "https://www.diffordsguide.com/cocktails/recipe/2709/lucien-gaudin" },
+        { "title": "Cold Glass, The Lucien Gaudin Cocktail", "url": "https://cold-glass.com/2014/12/05/the-lucien-gaudin-cocktail/" }
+      ] },
     { "id": "martinez", "name": "Martinez", "method": "stirred", "family": "gin", "code": "1h,1,h,q,1,1,co", "serve": "co",
-      "build": [["gin","1h"],["sweet-vermouth","1"],["dry-vermouth","h"],["maraschino","q"],["orange-bitters","1"],["angostura","1"]] },
+      "build": [["gin","1h"],["sweet-vermouth","1"],["dry-vermouth","h"],["maraschino","q"],["orange-bitters","1"],["angostura","1"]],
+      "taste": "An ounce and a half of gin against a full ounce of sweet vermouth and a half of dry, so the wine is wet and split. A quarter ounce of maraschino is cherry pit and almond, and one dash each of orange bitters and Angostura keep peel and bark in the mix. Stirred, coupe, orange. It drinks as a gin Manhattan with both vermouths and a cherry film.",
+      "history": "O.H. Byron prints the Martinez in 1884 The Modern Bartender's Guide as \"Same as Manhattan, only you substitute gin for whisky,\" on a page with two Manhattan formulas. Jerry Thomas's posthumous 1887 Bar-Tender's Guide gives the first full spec: a pony of Old Tom gin, a wine-glass of vermouth, two dashes of maraschino, a dash of Boker's bitters. The California stories, Jerry Thomas at the Occidental and Julio Richelieu in Martinez, stay unproven. This card pours an ounce and a half of gin, both vermouths, a quarter of maraschino, and one dash each of orange bitters and Angostura, coupe, orange.",
+      "refs": [
+        { "title": "Difford's Guide, Martinez", "url": "https://www.diffordsguide.com/cocktails/recipe/1264/martinez-diffords-recipe" },
+        { "title": "Punch, Martinez", "url": "https://punchdrink.com/recipes/martinez/" }
+      ] },
     { "id": "ford-cocktail", "name": "Ford Cocktail", "method": "stirred", "family": "gin", "code": "1h,1h,q,2,co", "serve": "co",
-      "build": [["gin","1h"],["dry-vermouth","1h"],["benedictine","q"],["orange-bitters","2"]] },
+      "build": [["gin","1h"],["dry-vermouth","1h"],["benedictine","q"],["orange-bitters","2"]],
+      "taste": "Equal ounces and a half of gin and dry vermouth, then a quarter ounce of Bénédictine, honey and herbs as a pour rather than a dash. Two dashes of orange bitters keep peel in the mix. Stirred, coupe, orange twist. A wet Martini with an herbal film.",
+      "history": "George J. Kappeler prints the Ford Cocktail in 1895 Modern American Drinks: three dashes of Bénédictine, three dashes of orange bitters, half a jigger of Tom gin, half a jigger of French vermouth, orange peel. He does not name a Ford. Ted Haigh, in Vintage Spirits and Forgotten Cocktails, points to Malcolm Webster Ford, the 1880s all-around athlete and journalist, rather than Henry, whose company postdates the recipe. This card keeps the equal gin and dry vermouth and the orange bitters, yet it pours a quarter ounce of Bénédictine, coupe, orange.",
+      "refs": [
+        { "title": "Difford's Guide, Ford Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/3379/ford-cocktail" },
+        { "title": "Cold Glass, The Ford Cocktail", "url": "https://cold-glass.com/2020/01/10/a-martini-with-something-in-it-the-ford-cocktail/" }
+      ] },
     { "id": "journalist", "name": "Journalist", "method": "stirred", "family": "gin", "code": "1h,h,h,q,q,1,cl", "serve": "cl",
-      "build": [["gin","1h"],["sweet-vermouth","h"],["dry-vermouth","h"],["orange-liqueur","q"],["lemon","q"],["angostura","1"]] },
+      "build": [["gin","1h"],["sweet-vermouth","h"],["dry-vermouth","h"],["orange-liqueur","q"],["lemon","q"],["angostura","1"]],
+      "taste": "An ounce and a half of gin, then a half ounce each of sweet and dry vermouth, a Perfect Martini ratio. A quarter ounce of orange liqueur and a quarter ounce of lemon sit in the same glass: peel and pith, enough lemon that the drink is tart even stirred. One dash of Angostura. Coupe, lemon twist. Citrus in a stirred gin drink.",
+      "history": "Harry Craddock prints the Journalist in The Savoy Cocktail Book in 1930: two-thirds Gordon's dry gin, one-sixth each of French and Italian vermouth, two dashes of lemon juice, two dashes of curaçao, one dash of Angostura, shaken. No bartender is named. Paul Clarke, in Serious Eats, treats it as a Perfect Martini with dashes of lemon and orange liqueur. This card keeps both vermouths and the Angostura, yet it pours a quarter ounce each of orange liqueur and lemon, stirred, coupe, lemon.",
+      "refs": [
+        { "title": "Difford's Guide, Journalist", "url": "https://www.diffordsguide.com/cocktails/recipe/1072/journalist" },
+        { "title": "The 1930 Savoy Cocktail Book, Journalist Cocktail", "url": "https://savoycocktaildatabase.com/cocktails/journalist-cocktail/" },
+        { "title": "Serious Eats, Journalist Cocktail", "url": "https://www.seriouseats.com/journalist-cocktail-recipe" }
+      ] },
     { "id": "vancouver", "name": "Vancouver", "method": "stirred", "family": "gin", "code": "1h,Q,h,1,cO", "serve": "cO",
-      "build": [["gin","1h"],["dry-vermouth","Q"],["benedictine","h"],["orange-bitters","1"]] },
+      "build": [["gin","1h"],["dry-vermouth","Q"],["benedictine","h"],["orange-bitters","1"]],
+      "taste": "An ounce and a half of gin against three-quarters of dry vermouth, so the wine is a real pour, then a half ounce of Bénédictine, honey and herbs nearly even with the vermouth. One dash of orange bitters. Stirred, coupe, orange twist. Gin first, then the liqueur's spice on a dry wine.",
+      "history": "The Vancouver prints in the About Town Cocktail Book, issued in Vancouver around 1925 by Mitchell Publishing: fifty percent gin, thirty percent French vermouth, twenty percent Bénédictine, a dash of orange bitters, olive. Joseph A. Fitchett, head bar steward of the Vancouver Club, checked the recipes. A later story, told to Steve da Cruz in 2006, put a sweet-vermouth version at the Sylvia Hotel after 1954. Alex Black, in Scout Magazine in 2020, showed that the 1925 Vancouver used dry vermouth; the sweet one in the same book is the Fitchett. This card keeps dry vermouth: an ounce and a half of gin, three-quarters vermouth, a half ounce of Bénédictine, and one dash of orange bitters, coupe, orange.",
+      "refs": [
+        { "title": "Difford's Guide, Vancouver", "url": "https://www.diffordsguide.com/cocktails/recipe/2759/vancouver" },
+        { "title": "Scout Magazine, We've Been Making the Vancouver Cocktail Wrong", "url": "https://scoutmagazine.ca/weve-been-making-the-vancouver-cocktail-wrong-for-15-years/" }
+      ] },
     { "id": "wiffin", "name": "Wiffin", "method": "stirred", "family": "gin", "code": "1h,Q,h,1d,cl", "serve": "cl",
-      "build": [["gin","1h"],["sweet-vermouth","Q"],["cognac","h"],["absinthe","1d"]] },
+      "build": [["gin","1h"],["sweet-vermouth","Q"],["cognac","h"],["absinthe","1d"]],
+      "taste": "An ounce and a half of gin against three-quarters of sweet vermouth, then a half ounce of cognac, grape spirit under gin. One dash of absinthe is a thin anise wash, not a pour. Stirred, coupe, lemon twist. Two spirits and vermouth, wormwood at the edge.",
+      "history": "The Wiffin is not a pre-1970 bar-book drink. P. G. Wodehouse, in the 1928 story \"The Passing of Ambrose,\" has Ambrose Wiffin sketch a cocktail of gin, Italian vermouth, a spot of old brandy, and a dash of absinthe. David Wondrich reconstructed the formula in Australian Bartender in 2011: English gin, Italian vermouth, cognac, and a dash or two of absinthe. This card pours an ounce and a half of gin, three-quarters sweet vermouth, a half ounce of cognac, and one dash of absinthe, coupe, lemon.",
+      "refs": [
+        { "title": "Difford's Guide, Wiffin", "url": "https://www.diffordsguide.com/cocktails/recipe/23463/wiffin" },
+        { "title": "David Wondrich, The Wiffin, Australian Bartender", "url": "https://australianbartender.com.au/2011/08/24/david-wondrich-the-wiffin/" }
+      ] },
     { "id": "fitchett", "name": "Fitchett", "method": "stirred", "family": "gin", "code": "1h,Q,q,1,cc", "serve": "cc",
-      "build": [["gin","1h"],["sweet-vermouth","Q"],["benedictine","q"],["orange-bitters","1"]] },
+      "build": [["gin","1h"],["sweet-vermouth","Q"],["benedictine","q"],["orange-bitters","1"]],
+      "taste": "An ounce and a half of gin against three-quarters of sweet vermouth, then a quarter ounce of Bénédictine, honey and herbs as a film rather than a half-ounce pour. One dash of orange bitters. Stirred, coupe, cherry. Gin first, grape, then a thin herbal coat. Wetter and less herbal than the Vancouver on this card.",
+      "history": "The Fitchett prints in the same About Town Cocktail Book as the Vancouver, around 1925. The unnamed writer credits Joseph A. Fitchett, head bar steward of the Vancouver Club: of the thousand and one drinks he can mix, it is the best. The formula is fifty percent gin, thirty percent Italian vermouth, twenty percent Bénédictine, a dash of orange bitters, olive or cherry. It is the sweet-vermouth sibling of the Vancouver in that book. This card keeps the gin and sweet vermouth, yet it pours only a quarter ounce of Bénédictine, coupe, cherry.",
+      "refs": [
+        { "title": "Difford's Guide, Vancouver (Fitchett recipe)", "url": "https://www.diffordsguide.com/cocktails/recipe/2759/vancouver" },
+        { "title": "Scout Magazine, We've Been Making the Vancouver Cocktail Wrong", "url": "https://scoutmagazine.ca/weve-been-making-the-vancouver-cocktail-wrong-for-15-years/" }
+      ] },
     { "id": "martini", "name": "Martini", "method": "stirred", "family": "gin", "code": "2,1,1,cl", "serve": "cl",
       "build": [["gin","2"],["dry-vermouth","1"],["orange-bitters","1"]] },
     { "id": "villa-straylight", "name": "Villa Straylight", "method": "stirred", "family": "gin", "code": "2,1,h,1b,c", "serve": "c",
