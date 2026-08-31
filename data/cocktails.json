@@ -449,9 +449,21 @@
       ] },
 
     { "id": "duplex", "name": "Duplex", "method": "stirred", "family": "vermouth", "code": "1h,1h,2,co", "serve": "co",
-      "build": [["sweet-vermouth","1h"],["dry-vermouth","1h"],["orange-bitters","2"]] },
+      "build": [["sweet-vermouth","1h"],["dry-vermouth","1h"],["orange-bitters","2"]],
+      "taste": "Equal ounces and a half of sweet and dry vermouth, so neither wins. Two dashes of orange bitters are peel on the split wine. Stirred, no spirit, coupe, orange twist. Grape and spice, cold, with a thin orange film on the wine.",
+      "history": "Albert Stevens Crockett, in Old Waldorf Bar Days (1931), lists the Duplex as equal Italian and French vermouth with two dashes of orange bitters or two squeezes of orange peel, and calls it parent of the original Bronx. Johnnie Solon of the Waldorf said he was making a Duplex when Traverson, head waiter of the Empire Room, challenged him to invent a new cocktail, and he added gin and orange juice. This card is the Waldorf Duplex: an ounce and a half of each vermouth, two dashes of orange bitters, stirred, coupe, orange twist.",
+      "refs": [
+        { "title": "Albert Stevens Crockett, Old Waldorf Bar Days (1931), Duplex", "url": "https://euvs-vintage-cocktail-books.cld.bz/1931-Ol-Waldorf-Astoria-Bar-Days-by-Albert-Stevens-Crockett/132/" },
+        { "title": "Crockett, Old Waldorf Bar Days, Solon on the Bronx", "url": "https://euvs-vintage-cocktail-books.cld.bz/1931-Ol-Waldorf-Astoria-Bar-Days-by-Albert-Stevens-Crockett/80/" }
+      ] },
     { "id": "vermouth-panache", "name": "Vermouth Panaché", "method": "stirred", "family": "vermouth", "code": "2,1,1,cl", "serve": "cl",
-      "build": [["sweet-vermouth","2"],["dry-vermouth","1"],["orange-bitters","1"]] },
+      "build": [["sweet-vermouth","2"],["dry-vermouth","1"],["orange-bitters","1"]],
+      "taste": "Two ounces of sweet vermouth to one of dry, so the sweet leads. One dash of orange bitters is peel on the grape. Stirred, coupe, lemon twist. Grape and spice, the sweet vermouth leading, with a thin lemon oil on top.",
+      "history": "Panache is French for mixed. Philip Greene, in To Have and Have Another (2012), gives the name Vermouth Panache to a drink Ernest Hemingway described in a 1934 Esquire piece: on a fishing trip off Havana, French and Italian vermouth over ice with a dash of bitters and a lemon peel. Hemingway did not name it. Greene's reconstruction, as printed in Saveur, is three ounces dry to one sweet, Angostura, on the rocks. This card inverts the ratio, two sweet to one dry, uses orange bitters, and pours it up with a lemon twist.",
+      "refs": [
+        { "title": "Saveur, Vermouth Panache", "url": "https://www.saveur.com/article/recipes/vermouth-panache-cocktail/" },
+        { "title": "Saveur, Vermouth on the Rise", "url": "https://www.saveur.com/article/wine-and-drink/vermouth-on-the-rise/" }
+      ] },
     { "id": "diplomat", "name": "Diplomat", "method": "stirred", "family": "vermouth", "code": "2,1,q,clc", "serve": "clc",
       "build": [["dry-vermouth","2"],["sweet-vermouth","1"],["maraschino","q"]] },
     { "id": "chrysanthemum", "name": "Chrysanthemum", "method": "stirred", "family": "vermouth", "code": "2,h,2b,co", "serve": "co",
@@ -638,21 +650,67 @@
         { "title": "Epicurious, Bee's Knees", "url": "https://www.epicurious.com/recipes/food/views/bees-knees" }
       ] },
     { "id": "pegu-club", "name": "Pegu Club", "method": "shaken", "family": "gin", "code": "1Q,Q,h,1,1,c", "serve": "c",
-      "build": [["gin","1Q"],["orange-liqueur","Q"],["lime","h"],["angostura","1"],["orange-bitters","1"]] },
+      "build": [["gin","1Q"],["orange-liqueur","Q"],["lime","h"],["angostura","1"],["orange-bitters","1"]],
+      "taste": "One and three-quarters ounces of gin against three-quarters of orange liqueur and only a half ounce of lime, so the lime is a squeeze under the peel. One dash of Angostura and one of orange bitters sit on the orange, bark and pith over a small lime. Shaken, coupe. Gin, candied orange, and a thin lime line.",
+      "history": "The Pegu Club was the house cocktail of the British officers' club of the same name, just outside Rangoon, Burma, now Yangon. Who mixed the first one is unknown. Harry MacElhone prints it in the 1920s: gin, orange curacao, lime, and a dash each of Angostura and orange bitters. Harry Craddock reprints it in the 1930 Savoy Cocktail Book as a drink that has travelled, and is asked for, round the world. Craddock's lime is a teaspoon of Rose's; Jimmy, late of Ciro's, equalizes the curacao and the lime that same year. This card pours one and three-quarters gin, three-quarters orange liqueur, half an ounce of lime, and one dash of each bitters.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Pegu Club Cocktail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-380" },
+        { "title": "Difford's Guide, Pegu Club Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/2728/pegu-club-cocktail-diffords-recipe" },
+        { "title": "The Savoy Cocktail Book (1930), Pegu Club Cocktail", "url": "https://savoycocktaildatabase.com/cocktails/pegu-club-cocktail" }
+      ] },
     { "id": "white-lady", "name": "White Lady", "method": "shaken", "family": "gin", "code": "1h,Q,Q,1b,c", "serve": "c",
-      "build": [["gin","1h"],["orange-liqueur","Q"],["lemon","Q"],["simple","1b"],["egg-white",null]] },
+      "build": [["gin","1h"],["orange-liqueur","Q"],["lemon","Q"],["simple","1b"],["egg-white",null]],
+      "taste": "An ounce and a half of gin, three-quarters each of orange liqueur and lemon, a barspoon of simple, and egg white. The white is foam and a silk coat over lemon pith and candied peel. The barspoon of simple is a thin sweetness against equal orange and lemon. Shaken, coupe.",
+      "history": "Two drinks share the name. Harry MacElhone prints a White Lady in 1922 in Harry's ABC of Mixing Cocktails as brandy, creme de menthe, and Cointreau. The gin, lemon, and Cointreau version prints in Harry Craddock's 1930 Savoy Cocktail Book at half gin and a quarter each of Cointreau and lemon, with no egg. MacElhone later claimed a 1929 gin revision at Harry's New York Bar in Paris; Victor Cabrin at London's Grosvenor House also claimed 1929. Egg white is later, New York in the late 1930s. This card is gin, orange liqueur, lemon, a barspoon of simple, and egg white.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, White Lady", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-446" },
+        { "title": "Difford's Guide, White Lady", "url": "https://www.diffordsguide.com/cocktails/recipe/2091/white-lady-cocktail" },
+        { "title": "The Savoy Cocktail Book (1930), White Lady Cocktail", "url": "https://savoycocktaildatabase.com/cocktails/white-lady-cocktail" }
+      ] },
     { "id": "fine-and-dandy", "name": "Fine and Dandy", "method": "shaken", "family": "gin", "code": "1h,Q,Q,1b,2,c", "serve": "c",
-      "build": [["gin","1h"],["orange-liqueur","Q"],["lemon","Q"],["simple","1b"],["angostura","2"]] },
+      "build": [["gin","1h"],["orange-liqueur","Q"],["lemon","Q"],["simple","1b"],["angostura","2"]],
+      "taste": "An ounce and a half of gin, three-quarters orange liqueur, three-quarters lemon, a barspoon of simple. Two dashes of Angostura pull bark and clove through the orange. Shaken, coupe. Peel, pith, and a little clove on the gin.",
+      "history": "The Fine and Dandy prints in Harry Craddock's 1930 Savoy Cocktail Book: a quarter lemon, a quarter Cointreau, half Plymouth gin, and one dash of Angostura, shaken. It is a White Lady with bitters and without egg, under another name. Craddock does not claim it. This card keeps the two-to-one gin against equal orange liqueur and lemon, adds a barspoon of simple, and doubles the bitters to two dashes.",
+      "refs": [
+        { "title": "Difford's Guide, Fine and Dandy", "url": "https://www.diffordsguide.com/cocktails/recipe/746/fine-and-dandy" },
+        { "title": "The Savoy Cocktail Book (1930), Fine and Dandy Cocktail", "url": "https://savoycocktaildatabase.com/cocktails/fine-and-dandy" }
+      ] },
     { "id": "jasmine", "name": "Jasmine", "method": "shaken", "family": "gin", "code": "1h,Q,q,q,cl", "serve": "cl",
-      "build": [["gin","1h"],["lemon","Q"],["campari","q"],["orange-liqueur","q"]] },
+      "build": [["gin","1h"],["lemon","Q"],["campari","q"],["orange-liqueur","q"]],
+      "taste": "An ounce and a half of gin against three-quarters of lemon; a quarter each of Campari and orange liqueur. The Campari is bitter orange in a sour, so the drink reads pink and like grapefruit. Shaken, coupe, lemon twist. Gin, pith, and a thin bitter film.",
+      "history": "Paul Harrington mixed the first Jasmine in 1993 at Townhouse Bar and Grill in Emeryville, California, for Matt Jasmin, a classmate who asked for something Harrington had never made. Harrington riffed on a Pegu Club he knew from Trader Vic's: Campari in place of the two bitters, lemon in place of lime, and a lemon twist. He misspelled Jasmin's name and the drink kept the extra e. It prints in Cocktail: The Drinks Bible for the 21st Century, which Harrington wrote with Laura Moorhead in 1998. This card is Harrington's pour: an ounce and a half of gin, three-quarters lemon, a quarter each of Campari and orange liqueur, coupe, lemon twist.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Jasmine", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-347" },
+        { "title": "VinePair, The Jasmine", "url": "https://vinepair.com/cocktail-recipe/the-jasmine/" }
+      ] },
     { "id": "rendezvous", "name": "Rendezvous", "method": "shaken", "family": "gin", "code": "1h,h,h,c", "serve": "c",
-      "build": [["gin","1h"],["maraschino","h"],["lime","h"]] },
+      "build": [["gin","1h"],["maraschino","h"],["lime","h"]],
+      "taste": "An ounce and a half of gin, half an ounce of maraschino, half an ounce of lime. The cherry liqueur is almond and pit as much as fruit, and it does all the sweetening. Equal maraschino and lime, so neither wins. Shaken, coupe. Gin, cherry stone, and a tart lime line.",
+      "history": "Diane Lapis and Anne Peck-Davis print a Rendezvous Cocktail in Cocktails Across America (2018), dated 1938 and tied to the Muehlebach Hotel in Kansas City: one ounce of gin, half an ounce of maraschino, half an ounce of lime. The hotel opened in 1915. A different modern drink of the same name is gin, Campari, and kirsch; that is not this pour. This card scales the 1938 hotel drink to an ounce and a half of gin against half an ounce each of maraschino and lime, shaken, coupe.",
+      "refs": [
+        { "title": "Diane Lapis and Anne Peck-Davis, Cocktails Across America (2018)", "url": "https://archive.org/details/cocktailsacrossa0000lapi" }
+      ] },
     { "id": "pendennis-club", "name": "Pendennis Club", "method": "shaken", "family": "gin", "code": "2,1,Q,2,cLw", "serve": "cLw",
-      "build": [["gin","2"],["apricot","1"],["lime","Q"],["peychauds","2"]] },
+      "build": [["gin","2"],["apricot","1"],["lime","Q"],["peychauds","2"]],
+      "taste": "Two ounces of gin against a full ounce of apricot liqueur, so the stone fruit is a third of the drink. Three-quarters lime is tart against the apricot; two dashes of Peychaud's pull cherry and anise through it. Shaken, coupe, lemon twist and a wheel. Pink, lime, and apricot.",
+      "history": "The Pendennis Club in Louisville, founded in 1881, gives the drink its name. Two recipes print under it. William T. Boothby's 1908 World's Drinks lists gin, apricot brandy, and French vermouth, no lime. Charles H. Baker's 1939 Gentleman's Companion calls it The Pendennis Club's Famous Special: gin, dry apricot brandy, lime or lemon, two dashes of Peychaud's, strained over a split kumquat. The club later lost the running story of who mixed it. This card is Baker's sour: two ounces of gin, one of apricot, three-quarters lime, two dashes of Peychaud's, shaken, with a lemon twist and a wheel and no kumquat.",
+      "refs": [
+        { "title": "Difford's Guide, Pendennis Club Special", "url": "https://www.diffordsguide.com/cocktails/recipe/1504/pendennis-club-special" },
+        { "title": "Toby Cecchini, The Secret Signature Cocktail of Louisville, Saveur", "url": "https://www.saveur.com/puzzling-pendennis-club-cocktail/" }
+      ] },
     { "id": "hat-tip", "name": "Hat Tip", "method": "shaken", "family": "gin", "code": "1h,Q,q,h,1b,c", "serve": "c",
-      "build": [["gin","1h"],["elderflower","Q"],["campari","q"],["lemon","h"],["simple","1b"]] },
+      "build": [["gin","1h"],["elderflower","Q"],["campari","q"],["lemon","h"],["simple","1b"]],
+      "taste": "An ounce and a half of gin, three-quarters elderflower, a quarter of Campari, half an ounce of lemon, a barspoon of simple. The elderflower is the sweet; Campari is a bitter pink film. Shaken, coupe. Floral gin, lemon pith, and a thin bitter edge.",
+      "history": "No first printing or named bartender turned up for the Hat Tip. Elderflower liqueur in this form dates to St-Germain, launched in 2007, so the combination is recent. This card shakes an ounce and a half of gin with three-quarters elderflower, a quarter of Campari, half an ounce of lemon, and a barspoon of simple, in a coupe.",
+      "refs": [] },
     { "id": "olivette", "name": "Olivette", "method": "shaken", "family": "gin", "code": "1,1,h,cO", "serve": "cO",
-      "build": [["gin","1"],["dry-vermouth","1"],["elderflower","h"]] },
+      "build": [["gin","1"],["dry-vermouth","1"],["elderflower","h"]],
+      "taste": "Equal ounces of gin and dry vermouth, a fifty-fifty Martini, with a half ounce of elderflower as the sweet. No juice, no bitters. Shaken, so it clouds a little. Coupe, olive. Floral gin, dry wine, and a brine finish.",
+      "history": "Harry Craddock's 1930 Savoy Cocktail Book prints an Olivette Cocktail of Plymouth gin, absinthe, orange bitters, and syrup, with an olive; that is not this drink. This card's Olivette is gin, dry vermouth, and elderflower, the formula St-Germain publishes as a house cocktail: equal gin and Noilly Prat, half an ounce of the liqueur, green olive. St-Germain itself dates to 2007. Dante in New York bottles a related Olivette Martini with both vodka and gin. This card shakes the St-Germain pour and keeps the olive.",
+      "refs": [
+        { "title": "St-Germain, Olivette", "url": "https://www.stgermainliqueur.com/us/en/cocktails/olivette/" },
+        { "title": "The Savoy Cocktail Book (1930), Olivette Cocktail", "url": "https://savoycocktaildatabase.com/cocktails/olivette-cocktail" }
+      ] },
 
     { "id": "margarita", "name": "Margarita", "method": "shaken", "family": "tequila", "code": "2,Q,Q,cS", "serve": "cS",
       "build": [["tequila","2"],["orange-liqueur","Q"],["lime","Q"]],
