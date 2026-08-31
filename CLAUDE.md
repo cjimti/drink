@@ -166,3 +166,7 @@ sitting on the brass fill has to flip with it.
 - Transcribe the paper menu faithfully, including its own typos —
   `Improved Coctail` is spelled that way on the card. Fix a recipe only
   when the user says to, not because a reference book disagrees.
+- If a transcribed amount looks way off — half the spirit every sibling
+  pours, a 1 oz Old-Fashioned — ask before writing notes around it. Do
+  not silently correct it, and do not treat an obvious typing error as
+  the card.

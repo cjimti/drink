@@ -101,22 +101,66 @@
         { "title": "Difford's Guide, Ritz Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/1677/ritz-cocktail" }
       ] },
 
-    { "id": "old-fashioned", "name": "Old-Fashioned", "method": "stirred", "family": "bourbon", "code": "1,1b,2,R", "serve": "R",
-      "build": [["bourbon","1"],["demerara","1b"],["angostura","2"]] },
+    { "id": "old-fashioned", "name": "Old-Fashioned", "method": "stirred", "family": "bourbon", "code": "2,1b,2,R", "serve": "R",
+      "build": [["bourbon","2"],["demerara","1b"],["angostura","2"]],
+      "taste": "Two ounces of bourbon, one barspoon of demerara, two dashes of Angostura. The sugar is a film, not a pour; the bitters are bark and clove against the corn. Rocks with ice, no orange, no cherry, no muddle. It sits.",
+      "history": "The cocktail itself is spirit, sugar, water, and bitters, defined in The Balance and Columbian Repository on 13 May 1806. By the 1870s bartenders were dressing the Whiskey Cocktail with curacao, maraschino, and absinthe; drinkers who wanted the older formula asked for an old-fashioned whiskey cocktail. Robert Hess and David Wondrich, in The Oxford Companion, reject the Pendennis Club origin: Chicago papers were already talking about old-fashioned cocktails in 1880, a year before the Louisville club was founded. This card pours two ounces of bourbon, one barspoon of demerara, and two dashes of Angostura, over ice. No fruit.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Old-Fashioned Cocktail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-377" },
+        { "title": "Difford's Guide, Old Fashioned cocktail history", "url": "https://www.diffordsguide.com/g/1198/old-fashioned-cocktail/history" }
+      ] },
     { "id": "boulevardier", "name": "Boulevardier", "method": "stirred", "family": "bourbon", "code": "1h,1,1,R", "serve": "R",
-      "build": [["bourbon","1h"],["campari","1"],["sweet-vermouth","1"]] },
+      "build": [["bourbon","1h"],["campari","1"],["sweet-vermouth","1"]],
+      "taste": "An ounce and a half of bourbon against a full ounce each of Campari and sweet vermouth. The whiskey leads, but not by much; Campari is nearly a third of the drink. Stirred, rocks with ice, no twist on this card. Bitter orange, grape, and corn whiskey, and the cube.",
+      "history": "The Boulevardier first appears in print in Harry MacElhone's 1927 Barflies and Cocktails, not in the main recipe list but in Arthur Moss's Cocktails Round Town essay, credited to Erskine Gwynne. Gwynne was an American in Paris who edited a monthly magazine of the same name from 1927 to 1932; Moss prints it as equal parts Campari, Italian vermouth, and bourbon. Ted Haigh notes that Americans had barely heard of Campari in 1927, and that the Negroni would not see print for another twenty years. This card keeps the bourbon and the rocks glass, yet it pours an ounce and a half of whiskey against an ounce each of Campari and sweet vermouth.",
+      "refs": [
+        { "title": "Imbibe, History Lesson: The Boulevardier", "url": "https://imbibemagazine.com/the-history-of-the-boulevardier-cocktail/" },
+        { "title": "Punch, In Search of the Ultimate Boulevardier", "url": "https://punchdrink.com/articles/ultimate-best-boulevardier-cocktail-recipe/" }
+      ] },
     { "id": "fancy-cocktail", "name": "Fancy Cocktail", "method": "stirred", "family": "bourbon", "code": "1h,q,1b,2,cl", "serve": "cl",
-      "build": [["bourbon","1h"],["orange-liqueur","q"],["demerara","1b"],["angostura","2"]] },
+      "build": [["bourbon","1h"],["orange-liqueur","q"],["demerara","1b"],["angostura","2"]],
+      "taste": "An ounce and a half of bourbon, a quarter ounce of orange liqueur, one barspoon of demerara, two dashes of Angostura. The orange liqueur is peel and a little sugar, not a third of the glass. Stirred, coupe, lemon twist. It is an Old-Fashioned with curacao in the sugar slot, served up.",
+      "history": "Jerry Thomas prints the Fancy Brandy Cocktail and Fancy Gin Cocktail in the 1862 Bar-Tender's Guide as the plain Cocktail strained into a fancy wine-glass, lemon on the rim and a piece of peel thrown on top. Wayne Curtis, in Imbibe, notes that the difference is mostly the glass. Thomas's later Improved Cocktail is the one that adds maraschino and absinthe; this card is the older fancy, whiskey with a splash of orange liqueur rather than those. This card pours an ounce and a half of bourbon, a quarter of orange liqueur, a barspoon of demerara, two dashes of Angostura, coupe, lemon.",
+      "refs": [
+        { "title": "Imbibe, Mixopedia: Fancy Drinks", "url": "https://imbibemagazine.com/mixopedia-fancy-drinks/" }
+      ] },
     { "id": "manhattan", "name": "Manhattan", "method": "stirred", "family": "bourbon", "code": "2,1,2,cc", "serve": "cc",
-      "build": [["bourbon","2"],["sweet-vermouth","1"],["angostura","2"]] },
+      "build": [["bourbon","2"],["sweet-vermouth","1"],["angostura","2"]],
+      "taste": "Two ounces of bourbon to one of sweet vermouth, so the whiskey leads. Two dashes of Angostura sit under the vermouth's grape and spice. Stirred, coupe, cherry. No rye heat, no lemon oil. Corn, bark, and the cherry at the bottom.",
+      "history": "The Manhattan is American whiskey, Italian vermouth, and bitters, first named in print in an 1882 Gotham Gossip column syndicated out of New York, and first given a full recipe in O.H. Byron's 1884 The Modern Bartenders' Guide. The Manhattan Club dinner for Samuel Tilden in 1874, later tied to Jennie Jerome, is a late story: she was in England with a month-old Winston Churchill. William F. Mulhall, writing in 1923, credited a man named Black who kept a place on Broadway; David Wondrich found George Black's Manhattan Inn near Houston Street in the 1870s. Early books call for rye or bourbon, often at equal parts. This card files under bourbon, pours two to one, two dashes of Angostura, coupe, cherry.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Manhattan Cocktail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-359" },
+        { "title": "Difford's Guide, Manhattan cocktail history", "url": "https://www.diffordsguide.com/g/1221/manhattan-cocktail/history" }
+      ] },
     { "id": "fancy-free", "name": "Fancy Free", "method": "stirred", "family": "bourbon", "code": "2,h,1,1,Ro", "serve": "Ro",
-      "build": [["bourbon","2"],["maraschino","h"],["angostura","1"],["orange-bitters","1"]] },
+      "build": [["bourbon","2"],["maraschino","h"],["angostura","1"],["orange-bitters","1"]],
+      "taste": "Two ounces of bourbon, half an ounce of maraschino in place of sugar. One dash of Angostura, one of orange bitters. The cherry liqueur is almond and pit as much as fruit. Stirred, rocks with ice, orange twist. It drinks as an Old-Fashioned with maraschino doing the sweetening.",
+      "history": "The Fancy Free first appears in Crosby Gaige's Cocktail Guide and Ladies' Companion, printed in 1941: a jigger of Fine Arts whiskey, two dashes of maraschino, a dash each of Angostura and orange bitters, shaken, strained into a sugar-rimmed cocktail glass. Gaige was a New York publisher and theatrical producer; Punch treats the naming as his. Revival bartenders, working from Milk & Honey spec sheets, dropped the sugar rim, stirred it, and poured it over ice with an orange twist. This card keeps the two ounces of bourbon, the half ounce of maraschino, one dash of each bitters, rocks, orange.",
+      "refs": [
+        { "title": "Punch, Bring Back the Fancy Free", "url": "https://punchdrink.com/articles/bring-back-the-fancy-free/" },
+        { "title": "Difford's Guide, Fancy Free", "url": "https://www.diffordsguide.com/cocktails/recipe/738/fancy-free" }
+      ] },
     { "id": "frisco", "name": "Frisco", "method": "stirred", "family": "bourbon", "code": "2,h,R", "serve": "R",
-      "build": [["bourbon","2"],["benedictine","h"]] },
+      "build": [["bourbon","2"],["benedictine","h"]],
+      "taste": "Two ounces of bourbon, half an ounce of Bénédictine, nothing else. Honey, baking spice, and herbs against the whiskey, no lemon to cut it. Stirred, rocks with ice, no twist on this card. It is a short, sweet, herbal whiskey.",
+      "history": "The Frisco first prints in William \"Cocktail Bill\" Boothby's 1934 The World's Drinks and How to Mix Them as three-quarters of a jigger of whisky and a quarter of Bénédictine, stirred on a lump of ice with a lemon twist and a water chaser. Lucius Beebe repeats it in 1946 as two ounces of bourbon and three-quarters of Bénédictine, up. David Embury, in 1948, allows lemon juice; later books split the drink into a Frisco and a Frisco Sour. This card keeps Boothby's two-ingredient whiskey and Bénédictine, on bourbon, over ice, no juice and no twist.",
+      "refs": [
+        { "title": "Difford's Guide, Frisco Sour", "url": "https://www.diffordsguide.com/cocktails/recipe/2417/frisco-sour" }
+      ] },
     { "id": "derby", "name": "Derby", "method": "stirred", "family": "bourbon", "code": "2,Q,h,h,cm", "serve": "cm",
-      "build": [["bourbon","2"],["lime","Q"],["sweet-vermouth","h"],["orange-liqueur","h"]] },
+      "build": [["bourbon","2"],["lime","Q"],["sweet-vermouth","h"],["orange-liqueur","h"]],
+      "taste": "Two ounces of bourbon against three-quarters of an ounce of lime, so the lime is loud. Half an ounce each of sweet vermouth and orange liqueur dress it: grape and peel, not enough to bury the citrus. Stirred, not shaken, despite the juice. Coupe, mint. Bourbon and lime sit in the same glass, cold but not aerated.",
+      "history": "At least three drinks share the name Derby. The gin-and-peach-bitters version is Harry MacElhone, 1926, later in the Savoy. This card is the bourbon one: lime, sweet vermouth, and orange curacao, which Ted Haigh reprints from Trader Vic's 1947 Bartender's Guide, one of three Derbies Vic listed. Vic's formula is a short pour of bourbon against a heavy lime, and it is shaken. This card keeps the lime, the vermouth, the orange liqueur, and the mint, yet it pours two ounces of bourbon and stirs the drink.",
+      "refs": [
+        { "title": "Serious Eats, The Derby", "url": "https://www.seriouseats.com/derby-cocktail-bourbon-vermouth-grand-marnier-lime-recipe" }
+      ] },
     { "id": "cock-n-bull-special", "name": "Cock 'n' Bull Special", "method": "stirred", "family": "bourbon", "code": "Q,Q,h,q,1,R", "serve": "R",
-      "build": [["bourbon","Q"],["benedictine","Q"],["cognac","h"],["orange-liqueur","q"],["angostura","1"]] },
+      "build": [["bourbon","Q"],["benedictine","Q"],["cognac","h"],["orange-liqueur","q"],["angostura","1"]],
+      "taste": "Three-quarters of an ounce of bourbon, three-quarters of Bénédictine, so the herbal liqueur is a full partner. Half an ounce of cognac, a quarter of orange liqueur, one dash of Angostura. Stirred, rocks with ice. Honey, orange peel, grape, corn, and bark, a small drink that sits.",
+      "history": "The Cock 'n' Bull Special is named for Jack Morgan's British-style pub on Hollywood's Sunset Strip, opened in 1937 and later the house of the Moscow Mule. Ted Saucier prints it in Bottom's Up (1951) as a courtesy of the Cock 'n Bull: half an ounce of brandy, three-quarters each of Bénédictine and bourbon, a quarter of Cointreau, stirred, poured over a cube in a large chilled champagne glass, orange twist. The drink therefore dates between the bar's opening and 1951. This card keeps those measures and adds a dash of Angostura, over ice in a rocks glass, no twist.",
+      "refs": [
+        { "title": "Difford's Guide, Cock N' Bull", "url": "https://www.diffordsguide.com/cocktails/recipe/30469/cock-n-bull" }
+      ] },
 
     { "id": "rosita", "name": "Rosita", "method": "stirred", "family": "tequila", "code": "1h,1,h,h,1,Ro", "serve": "Ro",
       "build": [["tequila","1h"],["campari","1"],["sweet-vermouth","h"],["dry-vermouth","h"],["angostura","1"]],
@@ -384,9 +428,20 @@
       "build": [["light-rum","2"],["elderflower","Q"],["lime","1"]] },
 
     { "id": "scofflaw", "name": "Scofflaw", "method": "shaken", "family": "rye", "code": "1,1,h,h,1,co", "serve": "co",
-      "build": [["rye","1"],["dry-vermouth","1"],["grenadine","h"],["lemon","h"],["orange-bitters","1"]] },
+      "build": [["rye","1"],["dry-vermouth","1"],["grenadine","h"],["lemon","h"],["orange-bitters","1"]],
+      "taste": "Equal ounces of rye and dry vermouth, so the wine is half the drink. Half an ounce of grenadine, half of lemon, one dash of orange bitters. Shaken, coupe, orange twist. The rye is spice, the grenadine pomegranate rather than candy, the lemon a sour cut through the dry vermouth.",
+      "history": "Delcevare King, a Massachusetts teetotaler, ran a 1924 contest for a word to shame drinkers who flouted Prohibition; Henry Irving Shaw and Kate L. Butler split the prize for \"scofflaw.\" The Chicago Tribune reported a Scofflaw cocktail at Maxim's in Paris on 21 January 1924: three parts rye, two parts French vermouth, a dash of lemon and of grenadine. Harry MacElhone claimed Jock at Harry's New York Bar invented it days later, with orange bitters and equal Canadian Club and French vermouth. Difford's notes the Tribune piece on Maxim's predates MacElhone's claim. This card is one to one rye to dry vermouth, half an ounce each of grenadine and lemon, one dash of orange bitters, shaken, coupe, orange.",
+      "refs": [
+        { "title": "Difford's Guide, Scofflaw", "url": "https://www.diffordsguide.com/cocktails/recipe/1755/scofflaw" }
+      ] },
     { "id": "harvest-sour", "name": "Harvest Sour", "method": "shaken", "family": "rye", "code": "1,1,Q,h,ccin", "serve": "ccin",
-      "build": [["rye","1"],["apple-brandy","1"],["lemon","Q"],["simple","h"],["egg-white",null]] },
+      "build": [["rye","1"],["apple-brandy","1"],["lemon","Q"],["simple","h"],["egg-white",null]],
+      "taste": "Equal ounces of rye and apple brandy, so neither is a modifier. Three-quarters of an ounce of lemon, half an ounce of simple, egg white. The foam is the texture; grated cinnamon on the coupe is the spice. Orchard, pepper, lemon, and a dry foam.",
+      "history": "The Harvest Sour is Sam Ross at Attaboy in New York, printed by Punch and dated by Difford's to around 2017: one ounce rye, one ounce applejack, three-quarters lemon, three-quarters simple, egg white, apple slice and cinnamon. Ross's other split-base drinks, the Paper Plane among them, are the parent method. A drink of this name does not appear in the pre-1970 manuals. This card keeps the equal rye and apple brandy, the lemon, the egg white, and the cinnamon. It pours half an ounce of simple rather than three-quarters, and it skips the apple slice.",
+      "refs": [
+        { "title": "Punch, Harvest Sour", "url": "https://punchdrink.com/recipes/harvest-sour/" },
+        { "title": "Difford's Guide, Harvest Sour", "url": "https://www.diffordsguide.com/cocktails/recipe/23034/harvest-sour" }
+      ] },
 
     { "id": "queen-elizabeth", "name": "Queen Elizabeth", "method": "shaken", "family": "vermouth", "code": "1h,Q,Q,c", "serve": "c",
       "build": [["dry-vermouth","1h"],["benedictine","Q"],["lime","Q"]] },
