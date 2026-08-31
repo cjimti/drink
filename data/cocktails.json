@@ -256,20 +256,61 @@
       ] },
 
     { "id": "bobby-burns", "name": "Bobby Burns", "method": "stirred", "family": "scotch", "code": "1h,1,h,cl", "serve": "cl",
-      "build": [["scotch","1h"],["sweet-vermouth","1"],["benedictine","h"]] },
+      "build": [["scotch","1h"],["sweet-vermouth","1"],["benedictine","h"]],
+      "taste": "An ounce and a half of scotch against a full ounce of sweet vermouth, so the grape sits nearly even with the malt. Half an ounce of Bénédictine is honey and herbs, a pour not a dash, enough to coat the drink. Stirred, coupe, lemon twist. Scotch first, then the liqueur's spice.",
+      "history": "The Bobby Burns is a Scotch Manhattan with Bénédictine. Harry Craddock prints it in The Savoy Cocktail Book in 1930 as equal Italian vermouth and Scotch whisky with three dashes of Bénédictine. Albert Stevens Crockett, a year later in Old Waldorf-Astoria Bar Days, lists a Robert Burns with absinthe and orange bitters, and says it may have been named for the poet or for a cigar salesman who bought at the old Waldorf bar. Earlier printings use Baby Burns (Bishop and Babcock, 1900) and Robert Burns (Grohusko, 1910). This card keeps Craddock's scotch, sweet vermouth, and Bénédictine, yet it pours an ounce and a half of whiskey, a full ounce of vermouth, and a half ounce of the liqueur.",
+      "refs": [
+        { "title": "Difford's Guide, Bobby Burns cocktail history", "url": "https://www.diffordsguide.com/encyclopedia/1075/cocktails/bobby-burns" },
+        { "title": "The Savoy Cocktail Book (1930), Bobby Burns", "url": "https://savoycocktaildatabase.com/cocktails/bobby-burns-cocktail/" }
+      ] },
     { "id": "affinity", "name": "Affinity", "method": "stirred", "family": "scotch", "code": "1h,Q,Q,2,clc", "serve": "clc",
-      "build": [["scotch","1h"],["sweet-vermouth","Q"],["dry-vermouth","Q"],["angostura","2"]] },
+      "build": [["scotch","1h"],["sweet-vermouth","Q"],["dry-vermouth","Q"],["angostura","2"]],
+      "taste": "An ounce and a half of scotch, then three-quarters each of sweet and dry vermouth, so the whiskey leads and the vermouths split. Two dashes of Angostura sit under both. Stirred, coupe, lemon and cherry. A Perfect Manhattan on scotch: malt, grape, and bark.",
+      "history": "The Affinity first appears in The New York Sun on 28 October 1907 as a Broadway cocktail of Scotch whisky, Italian vermouth, powdered sugar, and orange bitters. The version that stuck, equal French vermouth, Italian vermouth, and Scotch with aromatic bitters, prints in Jacob A. Didier's The Reminder in 1909, is repeated by Hugo Ensslin in 1917, and is the formula Harry Craddock puts in The Savoy Cocktail Book in 1930. This card keeps both vermouths and two dashes of Angostura, yet it pours an ounce and a half of scotch against three-quarters of each vermouth, so the whiskey leads.",
+      "refs": [
+        { "title": "Difford's Guide, Affinity", "url": "https://www.diffordsguide.com/cocktails/recipe/19/affinity" },
+        { "title": "The Savoy Cocktail Book (1930), Affinity Cocktail", "url": "https://savoycocktaildatabase.com/cocktails/affinity-cocktail/" }
+      ] },
     { "id": "rob-roy", "name": "Rob Roy", "method": "stirred", "family": "scotch", "code": "2,1,2,c", "serve": "c",
-      "build": [["scotch","2"],["sweet-vermouth","1"],["orange-bitters","2"]] },
+      "build": [["scotch","2"],["sweet-vermouth","1"],["orange-bitters","2"]],
+      "taste": "Two ounces of scotch to one of sweet vermouth, the Manhattan ratio. Two dashes of orange bitters, not Angostura, so peel rather than bark sits under the malt. Stirred, coupe, no garnish on the card. Leaner than a bourbon Manhattan, orange oil in the grape.",
+      "history": "The Rob Roy is a Scotch Manhattan, named for Reginald De Koven and Harry B. Smith's 1894 Broadway operetta about the Highland outlaw Robert Roy MacGregor. The Waldorf-Astoria, then on Fifth Avenue near Herald Square Theatre, is the usual credit; other writers point to the Fifth Avenue Hotel. David Wondrich found Henry A. Orphal at Duke's House in Hoboken, around 1895, swapping Scotch into a Manhattan for a whisky salesman who would not drink anything else. Early books often use orange bitters; later ones shift to Angostura. This card keeps two ounces of scotch, one of sweet vermouth, and two dashes of orange bitters, coupe.",
+      "refs": [
+        { "title": "Difford's Guide, Rob Roy", "url": "https://www.diffordsguide.com/cocktails/recipe/1681/rob-roy" },
+        { "title": "Punch, Rob Roy", "url": "https://punchdrink.com/recipes/rob-roy/" }
+      ] },
     { "id": "scotch-old-fashioned", "name": "Scotch Old-Fashioned", "method": "stirred", "family": "scotch", "code": "2,1b,1,1,R", "serve": "R",
-      "build": [["scotch","2"],["simple","1b"],["angostura","1"],["orange-bitters","1"]] },
+      "build": [["scotch","2"],["simple","1b"],["angostura","1"],["orange-bitters","1"]],
+      "taste": "Two ounces of scotch, one barspoon of simple, one dash of Angostura and one of orange bitters. The sugar is a film; peel and bark sit under the malt. Stirred, rocks with ice. Scotch first, then the two bitters against the whiskey.",
+      "history": "The cocktail is spirit, sugar, water, and bitters, defined in The Balance and Columbian Repository on 13 May 1806. By the 1870s bartenders were dressing the Whiskey Cocktail with curacao and absinthe; drinkers who wanted the older formula asked for an old-fashioned whiskey cocktail. Scotch is one of the spirits that definition already allowed. This card pours two ounces of scotch, one barspoon of simple, one dash of Angostura and one of orange bitters, over ice. No fruit.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Old-Fashioned Cocktail", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-377" },
+        { "title": "Difford's Guide, Old Fashioned cocktail history", "url": "https://www.diffordsguide.com/g/1198/old-fashioned-cocktail/history" }
+      ] },
     { "id": "automobile", "name": "Automobile", "method": "stirred", "family": "scotch", "code": "Q,Q,Q,2,cc", "serve": "cc",
-      "build": [["scotch","Q"],["gin","Q"],["sweet-vermouth","Q"],["orange-bitters","2"]] },
+      "build": [["scotch","Q"],["gin","Q"],["sweet-vermouth","Q"],["orange-bitters","2"]],
+      "taste": "Three-quarters of an ounce each of scotch, gin, and sweet vermouth, so none of the three wins. Two dashes of orange bitters keep peel in the mix. Stirred, coupe, cherry. Juniper against malt, grape in the middle. A short equal-parts drink: two and a quarter ounces before the ice.",
+      "history": "Jacques Straub prints an Auto Cocktail in 1914 Drinks as equal French vermouth, Tom gin, and Scotch whiskey, shaken. Frank Meier, at the Ritz Bar in Paris, prints the Automobile in The Artistry of Mixing Drinks in 1934: a dash of orange bitters and one-third each of Italian vermouth, gin, and Scotch whisky, stirred. This card follows Meier. It pours three-quarters of an ounce each of scotch, gin, and sweet vermouth, two dashes of orange bitters, coupe, cherry.",
+      "refs": [
+        { "title": "Difford's Guide, Automobile", "url": "https://www.diffordsguide.com/cocktails/recipe/15692/automobile" },
+        { "title": "1914 Drinks by Jacques Straub, p. 18", "url": "https://euvs-vintage-cocktail-books.cld.bz/1914-Drinks/18/" }
+      ] },
 
     { "id": "country-club", "name": "Country Club", "method": "stirred", "family": "light-rum", "code": "1h,1,h,1,cl", "serve": "cl",
-      "build": [["light-rum","1h"],["dry-vermouth","1"],["orange-liqueur","h"],["orange-bitters","1"]] },
+      "build": [["light-rum","1h"],["dry-vermouth","1"],["orange-liqueur","h"],["orange-bitters","1"]],
+      "taste": "An ounce and a half of light rum against a full ounce of dry vermouth, nearly even. Half an ounce of orange liqueur is peel and sugar, and one dash of orange bitters sits under both. Stirred, coupe, lemon twist. Lean rum, dry grape, candied orange.",
+      "history": "Albert Stevens Crockett prints the Country Club in the 1935 Old Waldorf-Astoria Bar Book as half Bacardi, half French vermouth, and a dash of orange curaçao, among the amendments to the old Waldorf list. William T. Boothby's 1934 World Drinks has a different Country Club, whiskey with orange bitters in a bar glass. The Savoy Country Club Cooler is French vermouth, grenadine, and soda, a different drink. This card keeps Crockett's light rum, dry vermouth, and orange liqueur, yet it pours an ounce and a half of rum, a full ounce of vermouth, a half ounce of orange liqueur, and a dash of orange bitters, coupe, lemon.",
+      "refs": [
+        { "title": "1935 Old Waldorf-Astoria Bar Book, p. 128", "url": "https://euvs-vintage-cocktail-books.cld.bz/1935-Old-Waldorf-Astoria-Bar-Book/128/" }
+      ] },
     { "id": "yacht-club", "name": "Yacht Club", "method": "stirred", "family": "light-rum", "code": "2,1,q,c", "serve": "c",
-      "build": [["light-rum","2"],["sweet-vermouth","1"],["apricot","q"]] },
+      "build": [["light-rum","2"],["sweet-vermouth","1"],["apricot","q"]],
+      "taste": "Two ounces of light rum to one of sweet vermouth, a Manhattan ratio on cane. A quarter ounce of apricot liqueur is stone fruit, not a dash. Stirred, coupe, no twist on the card. Rum first, then grape, then a thin apricot film.",
+      "history": "A Yacht Club Cocktail of rum, Italian vermouth, and apricot prints in the 1948 Ron Daiquiri Coctelera booklet from Havana: two-thirds Daiquiri rum, one-third Italian vermouth, a dash of apricot brandy, stirred. David Embury includes a Yacht Club of the same bones in The Fine Art of Mixing Drinks the same year; Difford's adapts that printing. This card keeps the two-to-one rum and sweet vermouth and puts a quarter ounce of apricot liqueur in place of the dash.",
+      "refs": [
+        { "title": "1948 Ron Daiquiri Coctelera, Yacht Club Cocktail", "url": "https://euvs-vintage-cocktail-books.cld.bz/1948-Ron-Daiquiri-Coctelera-Cocktail-Book-Habana-Cuba/16/" },
+        { "title": "Difford's Guide, Yacht Club", "url": "https://www.diffordsguide.com/cocktails/recipe/2111/yacht-club" }
+      ] },
 
     { "id": "tipsy-coachman", "name": "Tipsy Coachman", "method": "stirred", "family": "vodka", "code": "1h,Q,1,Rl", "serve": "Rl",
       "build": [["vodka","1h"],["benedictine","Q"],["angostura","1"]],
@@ -525,7 +566,12 @@
       ] },
 
     { "id": "mickie-walker", "name": "Mickie Walker", "method": "shaken", "family": "scotch", "code": "1h,h,h,h,cc", "serve": "cc",
-      "build": [["scotch","1h"],["sweet-vermouth","h"],["grenadine","h"],["lemon","h"]] },
+      "build": [["scotch","1h"],["sweet-vermouth","h"],["grenadine","h"],["lemon","h"]],
+      "taste": "An ounce and a half of scotch, then a half ounce each of sweet vermouth, grenadine, and lemon. The lemon and pomegranate are real pours, not dashes, so the drink is shaken and pink. Coupe, cherry. Scotch, grape, and a sour pomegranate cut.",
+      "history": "Harry Craddock prints the Mickie Walker Cocktail in The Savoy Cocktail Book in 1930: one dash grenadine, one dash lemon juice, a quarter Italian vermouth, three-quarters Scotch whisky, shaken. The spelling is Craddock's; the name tracks Edward Patrick \"Mickey\" Walker, the New Jersey boxer who took the welterweight title in 1922 and the middleweight in 1926. The 1937 UKBG Approved Cocktails repeats Craddock's dashes. This card keeps the name Mickie Walker and the four ingredients, yet it pours a half ounce each of vermouth, grenadine, and lemon against an ounce and a half of scotch.",
+      "refs": [
+        { "title": "The Savoy Cocktail Book (1930), p. 104", "url": "https://euvs-vintage-cocktail-books.cld.bz/1930-The-Savoy-Cocktail-Book/104/" }
+      ] },
 
     { "id": "daiquiri", "name": "Daiquiri", "method": "shaken", "family": "light-rum", "code": "2,Q,h,c", "serve": "c",
       "build": [["light-rum","2"],["lime","Q"],["simple","h"]] },
@@ -563,9 +609,21 @@
       ] },
 
     { "id": "queen-elizabeth", "name": "Queen Elizabeth", "method": "shaken", "family": "vermouth", "code": "1h,Q,Q,c", "serve": "c",
-      "build": [["dry-vermouth","1h"],["benedictine","Q"],["lime","Q"]] },
+      "build": [["dry-vermouth","1h"],["benedictine","Q"],["lime","Q"]],
+      "taste": "An ounce and a half of dry vermouth, three-quarters of Bénédictine, three-quarters of lime. No base spirit. The liqueur is honey and herbs; the lime matches it, so the drink is tart as well as sweet. Shaken, coupe. Vermouth and Bénédictine, then pith.",
+      "history": "Queen Elizabeth is a crowded name. This card is the vermouth one: dry vermouth, Bénédictine, and lime, with no gin and no brandy. David Wondrich found the formula in a Bénédictine advertisement in the February 1935 Esquire, billed as the prize-winning recipe in a nationwide cocktail contest. Difford's Guide credits Herbert L. Quick, head bartender at the Benjamin Franklin Hotel in Philadelphia in 1934, who named it for his wife, not the monarch. Other Queen Elizabeths in the manuals are gin drinks, or brandy and sweet vermouth. This card pours an ounce and a half of dry vermouth and three-quarters each of Bénédictine and lime.",
+      "refs": [
+        { "title": "Esquire, Queen Elizabeth (David Wondrich)", "url": "https://www.esquire.com/food-drink/drinks/recipes/a3687/queen-elizabeth-drink-recipe/" },
+        { "title": "Difford's Guide, Queen Elizabeth Wine", "url": "https://www.diffordsguide.com/cocktails/recipe/14241/queen-elizabeth-wine" }
+      ] },
     { "id": "dry-vermouth-sour", "name": "Dry Vermouth Sour", "method": "shaken", "family": "vermouth", "code": "2,Q,h,c", "serve": "c",
-      "build": [["dry-vermouth","2"],["lemon","Q"],["simple","h"],["egg-white",null]] }
+      "build": [["dry-vermouth","2"],["lemon","Q"],["simple","h"],["egg-white",null]],
+      "taste": "Two ounces of dry vermouth, three-quarters lemon, half an ounce of simple, egg white. The foam is the texture; the vermouth is the spirit, so the sour is grape and lemon under a dry foam. Shaken, coupe. A short sour with a dry cap.",
+      "history": "A drink called Dry Vermouth Sour does not appear under that name in the pre-1970 manuals, nor in Difford's, Punch, or Imbibe. The parent is the sour itself: spirit, citrus, and sugar, printed by Jerry Thomas in 1862, with egg white common in American sours by the 1940s. Vermouth as a base is older still; J. Haney's 1869 Steward and Barkeeper's Manual already has a Vermuth Cocktail, and Harry Johnson's 1882 manual dresses vermouth with gum, bitters, and maraschino. This card puts two ounces of dry vermouth through the sour template: three-quarters lemon, half an ounce of simple, egg white, coupe.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The sour", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-422" },
+        { "title": "Difford's Guide, Vermouth Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/5639/vermouth-cocktail" }
+      ] }
 
   ]
 }
