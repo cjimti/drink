@@ -409,15 +409,44 @@
         { "title": "Scout Magazine, We've Been Making the Vancouver Cocktail Wrong", "url": "https://scoutmagazine.ca/weve-been-making-the-vancouver-cocktail-wrong-for-15-years/" }
       ] },
     { "id": "martini", "name": "Martini", "method": "stirred", "family": "gin", "code": "2,1,1,cl", "serve": "cl",
-      "build": [["gin","2"],["dry-vermouth","1"],["orange-bitters","1"]] },
+      "build": [["gin","2"],["dry-vermouth","1"],["orange-bitters","1"]],
+      "taste": "Two ounces of gin to one of dry vermouth, so the wine is a third of the drink, not a rinse. One dash of orange bitters is peel in the glass. Stirred, coupe, lemon twist. It drinks wet and cold: juniper, then the vermouth's wormwood and grape, then a thin orange film.",
+      "history": "The first gin-and-vermouth drinks print in 1883 newspaper copy from Cleveland and Chicago, still called Manhattans, then as Martinez in O.H. Byron's 1884 The Modern Bartender's Guide and as Martini in Harry Johnson's 1888 Bartenders' Manual: Old Tom, sweet vermouth, curaçao, gum, and bitters. The Dry Martini, French vermouth and a drier gin, is named in New York by 1896 and is the dominant version by 1900. Two-to-one gin to vermouth appears in the late 1890s and is standard by the 1910s; orange bitters stay until the 1940s, then drop as the ratio marches past five-to-one. This card keeps the wet 2:1, one dash of orange bitters, coupe, lemon.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Martini", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-361" },
+        { "title": "Difford's Guide, Martini cocktail history", "url": "https://www.diffordsguide.com/g/1121/martini/martini-history" }
+      ] },
     { "id": "villa-straylight", "name": "Villa Straylight", "method": "stirred", "family": "gin", "code": "2,1,h,1b,c", "serve": "c",
-      "build": [["gin","2"],["dry-vermouth","1"],["orange-liqueur","h"],["absinthe","1b"]] },
+      "build": [["gin","2"],["dry-vermouth","1"],["orange-liqueur","h"],["absinthe","1b"]],
+      "taste": "Two ounces of gin to one of dry vermouth, the wet Martini on this card, then a half ounce of orange liqueur as candied peel, and a barspoon of absinthe in the mix, not a rinse. The anise is a pour you can taste, laid over the orange. Stirred, coupe, no garnish. Wet gin, peel, and wormwood.",
+      "history": "Villa Straylight does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. It is a house drink on this card, named for the Tessier-Ashpool villa at the end of Freeside in William Gibson's 1984 Neuromancer. The build is this card's wet Martini, two ounces of gin to one of dry vermouth, plus a half ounce of orange liqueur and a barspoon of absinthe in the mix. Harry Johnson's 1888 Martini already carried orange curaçao; the absinthe is the Tuxedo's anise, poured rather than rinsed. Coupe, no garnish.",
+      "refs": [
+        { "title": "Difford's Guide, Martini cocktail history", "url": "https://www.diffordsguide.com/g/1121/martini/martini-history" },
+        { "title": "Difford's Guide, Tuxedo cocktail and its many variations", "url": "https://www.diffordsguide.com/encyclopedia/1511/cocktails/tuxedo-cocktail-and-its-many-variations" }
+      ] },
     { "id": "casino", "name": "Casino", "method": "stirred", "family": "gin", "code": "2,h,2,Rc", "serve": "Rc",
-      "build": [["gin","2"],["maraschino","h"],["orange-bitters","2"]] },
+      "build": [["gin","2"],["maraschino","h"],["orange-bitters","2"]],
+      "taste": "Two ounces of gin, a half ounce of maraschino, two dashes of orange bitters. The cherry liqueur is almond and pit as much as fruit, and it does the sweetening; there is no lemon. Stirred. Rocks with ice and a cherry. It sits: gin first, then a cherry film, and the cube.",
+      "history": "Jacob A. Didier prints the Casino in 1909 The Reminder: two dashes each of maraschino, orange bitters, and lemon juice, a drink of Tom gin, stirred, cherry. Hugo R. Ensslin copies it almost verbatim in 1916 Recipes for Mixed Drinks, and Harry Craddock repeats it in the 1930 Savoy Cocktail Book. David Embury, in 1948, swaps orange juice for the bitters and tells you to mix it like an Aviation. This card drops the lemon, pours a half ounce of maraschino rather than dashes, keeps two dashes of orange bitters, and serves it over ice in a rocks glass with a cherry.",
+      "refs": [
+        { "title": "Difford's Guide, Casino", "url": "https://www.diffordsguide.com/cocktails/recipe/2332/casino" },
+        { "title": "The Savoy Cocktail Book (1930), Casino Cocktail", "url": "https://savoycocktaildatabase.com/cocktails/casino-cocktail" }
+      ] },
     { "id": "dry-orange-martini", "name": "Dry Orange Martini", "method": "stirred", "family": "gin", "code": "2,Q,q,2,c", "serve": "c",
-      "build": [["gin","2"],["dry-vermouth","Q"],["orange-liqueur","q"],["orange-bitters","2"]] },
+      "build": [["gin","2"],["dry-vermouth","Q"],["orange-liqueur","q"],["orange-bitters","2"]],
+      "taste": "Two ounces of gin, three-quarters of dry vermouth, a quarter ounce of orange liqueur, two dashes of orange bitters. The vermouth still leads the dressing; the liqueur is peel and a little sugar, not a third of the drink. Stirred, coupe. Drier than this card's Martini, with candied orange instead of a twist.",
+      "history": "Wayne Collins built the Dry Orange Martini in 2003 for Maxxium UK: two ounces of gin, three-quarters of dry vermouth, a quarter of orange liqueur, two dashes of orange bitters. Collins was a London bartender who ran Mixxit, Maxxium's training programme, and later put the White Negroni into wider print. The parent is the Dry Martini; Harry Johnson's 1888 Martini already carried orange curaçao, which later books dropped as the drink dried out. This card keeps Collins's measures and the coupe.",
+      "refs": [
+        { "title": "Difford's Guide, Dry Orange Martini", "url": "https://www.diffordsguide.com/cocktails/recipe/678/dry-orange-martini" }
+      ] },
     { "id": "tuxedo-2", "name": "Tuxedo #2", "method": "stirred", "family": "gin", "code": "2,Q,q,3,r,co", "serve": "co",
-      "build": [["gin","2"],["dry-vermouth","Q"],["maraschino","q"],["orange-bitters","3"],["absinthe","r"]] },
+      "build": [["gin","2"],["dry-vermouth","Q"],["maraschino","q"],["orange-bitters","3"],["absinthe","r"]],
+      "taste": "Two ounces of gin against three-quarters of dry vermouth, so the gin leads. A quarter ounce of maraschino is cherry pit and almond, and three dashes of orange bitters is a lot of peel. The absinthe is a rinse, a thin anise film on the glass rather than a pour. Stirred, coupe, orange twist. A dressed Martini, gin first, then cherry, peel, and wormwood.",
+      "history": "Harry Johnson prints the Tuxedo in his 1900 Bartenders' Manual: equal Old Tom and French vermouth, dashes of maraschino, absinthe, and orange bitters. The name is the Tuxedo Club in Tuxedo Park, New York, opened in 1886. Harry Craddock, in the 1930 Savoy Cocktail Book, splits the family: his No. 1 is gin, dry vermouth, lemon peel, and absinthe; his No. 2 is Johnson's original with dry gin in place of Old Tom. This card's Tuxedo #2 keeps the maraschino, the orange bitters, and the absinthe, yet it pours two ounces of gin to three-quarters of vermouth, a quarter of maraschino, three dashes of bitters, and an absinthe rinse, coupe, orange.",
+      "refs": [
+        { "title": "Difford's Guide, Tuxedo cocktail and its many variations", "url": "https://www.diffordsguide.com/encyclopedia/1511/cocktails/tuxedo-cocktail-and-its-many-variations" },
+        { "title": "The Savoy Cocktail Book (1930), Tuxedo Cocktail (No. 2)", "url": "https://savoycocktaildatabase.com/cocktails/tuxedo-cocktail-no-2/" }
+      ] },
 
     { "id": "duplex", "name": "Duplex", "method": "stirred", "family": "vermouth", "code": "1h,1h,2,co", "serve": "co",
       "build": [["sweet-vermouth","1h"],["dry-vermouth","1h"],["orange-bitters","2"]] },
@@ -570,15 +599,44 @@
       ] },
 
     { "id": "gimlet", "name": "Gimlet", "method": "shaken", "family": "gin", "code": "2,Q,h,c", "serve": "c",
-      "build": [["gin","2"],["lime","Q"],["simple","h"]] },
+      "build": [["gin","2"],["lime","Q"],["simple","h"]],
+      "taste": "Two ounces of gin against three-quarters of lime, so the lime is loud, then a half ounce of simple. Shaken, coupe. The lime is fresh and tart; the syrup is a thin coat of sugar, enough to take the edge. Juniper under citrus.",
+      "history": "Lauchlan Rose of Edinburgh patented an alcohol-free lime cordial in 1867, the same year the Merchant Shipping Act required British ships to carry lime juice against scurvy. Officers mixing gin with Rose's is the navy story; a gimlet is also a barrel tap. The first named print is Harry MacElhone's 1922 Harry's ABC of Mixing Cocktails: equal parts Plymouth gin and Rose's, \"a very popular beverage in the Navy.\" Rear-Admiral Sir Thomas Desmond Gimlette is sometimes credited; his Times obituary does not mention the drink. This card pours two ounces of gin, three-quarters of fresh lime, and a half ounce of simple, coupe.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, A Gimlet", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-324" },
+        { "title": "Difford's Guide, Gimlet (Difford's recipe)", "url": "https://www.diffordsguide.com/cocktails/recipe/831/gimlet-diffords-recipe" }
+      ] },
     { "id": "french-75", "name": "French 75", "method": "shaken", "family": "gin", "code": "1h,1,h,3,Rl", "serve": "Rl",
-      "build": [["gin","1h"],["lemon","1"],["simple","h"],["champagne","3"]] },
+      "build": [["gin","1h"],["lemon","1"],["simple","h"],["champagne","3"]],
+      "taste": "An ounce and a half of gin against a full ounce of lemon, so the citrus is a real pour, then a half ounce of simple and three ounces of Champagne. Shaken, then the wine. Rocks with ice and a lemon twist, not a flute. The lemon stays loud over the bubbles; the cube melts into it.",
+      "history": "The name is the French 75-millimetre field gun of the First World War. The first drink so called, reported by O. O. McIntyre in the Washington Herald in 1915, is gin, applejack, grenadine, and lemon; Robert Vermeire, in 1922, credits Henry Tépé of Henry's Bar in Paris. The gin, lemon, sugar, and Champagne formula first prints in Judge Jr's 1927 Here's How, in a tall glass: if you use club soda, you have a Tom Collins. Harry Craddock repeats it in the 1930 Savoy Cocktail Book, poured over cracked ice. The flute is later. This card keeps the gin and the ice, yet it pours a full ounce of lemon and three of Champagne into a rocks glass with a lemon twist.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The French 75", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-317" },
+        { "title": "Difford's Guide, French 75 cocktail history", "url": "https://www.diffordsguide.com/encyclopedia/1267/cocktails/french-75-cocktail-history" }
+      ] },
     { "id": "bennett", "name": "Bennett", "method": "shaken", "family": "gin", "code": "1h,Q,h,2,c", "serve": "c",
-      "build": [["gin","1h"],["lime","Q"],["simple","h"],["angostura","2"]] },
+      "build": [["gin","1h"],["lime","Q"],["simple","h"],["angostura","2"]],
+      "taste": "An ounce and a half of gin against three-quarters of lime, a half ounce of simple, two dashes of Angostura. The bitters are bark and clove under the lime. Shaken, coupe. Lime, juniper, and a bitter finish. A Gimlet with spice, not honey.",
+      "history": "Robert Vermeire prints the Bennett in 1922 Cocktails: How to Mix Them: two-sixths of a gill of Old Tom, one-sixth fresh lime, two dashes of Angostura, no sugar. \"This cocktail, which is very popular in Chili, is called after the well-known and popular landowner and millionaire of that country.\" Nakata Seizo repeats it in Japan in 1926; Jimmy of Ciro's London does the same in 1930. The Chilean namesake is not further identified. This card adds a half ounce of simple, pours an ounce and a half of gin and three-quarters of lime, two dashes of Angostura, coupe.",
+      "refs": [
+        { "title": "Difford's Guide, Bennett Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/3655/bennett-cocktail" }
+      ] },
     { "id": "gin-sour", "name": "Gin Sour", "method": "shaken", "family": "gin", "code": "2,Q,h,Rl", "serve": "Rl",
-      "build": [["gin","2"],["lemon","Q"],["simple","h"],["egg-white",null]] },
+      "build": [["gin","2"],["lemon","Q"],["simple","h"],["egg-white",null]],
+      "taste": "Two ounces of gin, three-quarters of lemon, a half ounce of simple, and egg white. The white is foam and a silk coat; the lemon is tart underneath. Shaken, rocks with ice, lemon twist. It sits: gin, citrus, and a head that lasts while the cube melts.",
+      "history": "Jerry Thomas prints the Gin Sour in 1862 How to Mix Drinks as the Gin Fix without the fruit: sugar, water, lemon, gin, in a small bar glass. A sour is a punch for one. The first record of the name is an 1856 list at Mart Ackermann's Saloon in Toronto. Egg white is later; Eddie Clark's 1947 King Cocktail and the 1955 UKBG guide treat it as optional, not original. This card pours two ounces of gin, three-quarters of lemon, a half ounce of simple, and egg white, over ice with a lemon twist.",
+      "refs": [
+        { "title": "Difford's Guide, History of sour cocktails", "url": "https://www.diffordsguide.com/g/1133/sour-cocktails/history" },
+        { "title": "Jerry Thomas, Bar-Tender's Guide (1862), p. 59", "url": "https://euvs-vintage-cocktail-books.cld.bz/1862-Bar-Tender-s-Guide-price-1-50-by-Jerry-Thomas/59/" }
+      ] },
     { "id": "bees-knees", "name": "Bee's Knees", "method": "shaken", "family": "gin", "code": "2,Q,Q,c", "serve": "c",
-      "build": [["gin","2"],["lemon","Q"],["honey-syrup","Q"]] },
+      "build": [["gin","2"],["lemon","Q"],["honey-syrup","Q"]],
+      "taste": "Two ounces of gin, three-quarters of lemon, three-quarters of honey syrup, so the honey is a full partner to the citrus. Shaken, coupe. The honey is floral and thick where simple would be thin; the lemon keeps it tart. Gin, pith, and a coat of honey.",
+      "history": "The Bee's Knees first prints in 1929, twice. Cocktails de Paris credits Frank Meier, head bartender at the Hotel Ritz in Paris from 1921; Meier reprints it in his 1936 The Artistry of Mixing Drinks. A Brooklyn Standard Union piece of 23 April 1929, cited by Jared Brown and Anistatia Miller, ascribes the drink to Mrs. J.J. Brown of Denver and Paris, Margaret Brown of the Titanic. David Embury, in 1948, calls the equal-parts gin, lemon, and honey a pernicious Prohibition recipe meant to cover vile gin, and dries it out. Both claims stay in print. This card pours two ounces of gin and three-quarters each of lemon and honey syrup, coupe.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, Bee's Knees", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-248" },
+        { "title": "Epicurious, Bee's Knees", "url": "https://www.epicurious.com/recipes/food/views/bees-knees" }
+      ] },
     { "id": "pegu-club", "name": "Pegu Club", "method": "shaken", "family": "gin", "code": "1Q,Q,h,1,1,c", "serve": "c",
       "build": [["gin","1Q"],["orange-liqueur","Q"],["lime","h"],["angostura","1"],["orange-bitters","1"]] },
     { "id": "white-lady", "name": "White Lady", "method": "shaken", "family": "gin", "code": "1h,Q,Q,1b,c", "serve": "c",
