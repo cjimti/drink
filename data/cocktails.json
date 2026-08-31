@@ -1,9 +1,8 @@
 {
   "menu": {
-    "house": "Fern Street",
-    "number": "110",
+    "title": "drink",
     "tagline": "Classic Cocktails",
-    "source": "FERNST.pdf, the printed menu"
+    "source": "transcribed from the printed card"
   },
   "methods": [
     { "id": "stirred", "label": "Stirred", "blurb": "Spirit only. Stir on ice until cold, strain, no dilution past that." },

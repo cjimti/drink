@@ -1,4 +1,4 @@
-/* drink.shoephone — the Fern Street menu.
+/* drink.shoephone — the cocktail menu.
 
    Two ideas carry the whole app.
 
@@ -42,6 +42,13 @@
   }
 
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+  /* Escape first, then promote `backticked` spans to mono. Case carries
+     meaning in this notation, and a proportional face makes l/L and o/O
+     a guess. */
+  function lit(s) {
+    return esc(s).replace(/`([^`]+)`/g, '<code class="lit">$1</code>');
+  }
 
   /* ── the decoder ───────────────────────────────────────── */
 
@@ -235,17 +242,37 @@
     return html + '</div>';
   }
 
+  /* With the shelf filter on, this stops being a filtered list and starts
+     being a menu — so it gets a masthead, a count, and a way onto paper. */
+  function renderMasthead(n) {
+    var bottles = stocked().length;
+    return '<div class="tonight">' +
+      '<div class="tonight__k">Your menu</div>' +
+      '<div class="tonight__n">' + n + '</div>' +
+      '<div class="tonight__of">' + (n === 1 ? 'drink' : 'drinks') + ' you can pour tonight</div>' +
+      '<p class="tonight__note">Everything the ' + plural(bottles, 'bottle', 'bottles') +
+        ' on your shelf will make, in full, with nothing missing.</p>' +
+      '<div class="tonight__acts">' +
+        '<button class="btn" data-print="1">Print or save as PDF</button>' +
+        '<button class="btn" data-pourable="1">Show all ' + data.menu.cocktails.length + '</button>' +
+      '</div></div>';
+  }
+
   function renderMenu() {
     var held = have;
     var showShelf = stocked().length > 0;
     var list = data.menu.cocktails.filter(function (d) { return matches(d, held); });
 
     if (!list.length) {
-      $('#menu-body').innerHTML = '<p class="empty">Nothing on the menu matches that.</p>';
+      $('#menu-body').innerHTML =
+        (filter.pourable
+          ? '<p class="empty">Nothing yet. Stock a few more bottles on the Bar tab ' +
+            'and the menu fills in.</p>'
+          : '<p class="empty">Nothing on the menu matches that.</p>');
       return;
     }
 
-    var html = '';
+    var html = filter.pourable ? renderMasthead(list.length) : '';
 
     data.menu.methods.forEach(function (m) {
       var inMethod = list.filter(function (d) { return d.method === m.id; });
@@ -328,9 +355,17 @@
              'Sort by what each unopened one would add and the menu grows fastest.';
     }
 
+    /* The count is only worth reading if it leads to the list it counts,
+       so the whole figure is the way through to that menu. */
+    var figure = '<div class="tally__n">' + can + '</div>' +
+      '<div class="tally__of">drinks you can pour · of ' + total + '</div>';
+
     var html = '<div class="tally">' +
-      '<div class="tally__n">' + can + '</div>' +
-      '<div class="tally__of">drinks you can pour · of ' + total + '</div>' +
+      (can
+        ? '<button class="tally__hit" data-seemenu="1">' + figure +
+            '<span class="tally__cta">See the menu <span aria-hidden="true">&rarr;</span></span>' +
+          '</button>'
+        : figure) +
       '<p class="tally__note">' + esc(note) + '</p>' +
       '<div class="tally__acts">' +
         '<button class="btn" data-bar="all">Stock everything</button>' +
@@ -384,8 +419,25 @@
 
   function renderKey() {
     var n = data.notation;
+    var sys = n.system;
 
-    var html = '<p class="key__lead">' + esc(n.note) + '</p>' +
+    var html = '<div class="sys">' +
+      '<h1 class="sys__name">' + esc(sys.name) + '</h1>' +
+      '<div class="sys__tag">' + esc(sys.tagline) + '</div>' +
+      '<p class="sys__lead">' + esc(sys.lead) + '</p>' +
+      '</div>' +
+
+      '<h2 class="key__h">How it works</h2>' +
+      '<ol class="rules">' + sys.principles.map(function (r) {
+        return '<li class="rule">' +
+          '<div class="rule__h">' + esc(r.h) + '</div>' +
+          '<p class="rule__t">' + lit(r.t) + '</p>' +
+          '</li>';
+      }).join('') + '</ol>' +
+      '<p class="sys__foot">' + esc(sys.footnote) + '</p>' +
+
+      '<h2 class="key__h">Reading order</h2>' +
+      '<p class="key__lead key__lead--tight">' + esc(n.note) + '</p>' +
 
       '<h2 class="key__h">Ounces</h2>' +
       '<p class="key__sub">Lowercase is small, uppercase is large — <em>q</em> is a quarter, <em>Q</em> is three quarters.</p>' +
@@ -413,10 +465,9 @@
     });
 
     html += '<p class="colophon">' +
-      esc(data.menu.menu.house + ' ' + data.menu.menu.number + ' — ' +
-          data.menu.cocktails.length + ' drinks, ' + data.bar.ingredients.length +
-          ' ingredients. Every code here is the one printed on the paper menu; ' +
-          'the recipes are generated from it, so the two cannot drift apart.') +
+      esc(data.menu.cocktails.length + ' drinks, ' + data.bar.ingredients.length +
+          ' ingredients. Every code here is the one from the printed card; the ' +
+          'recipes are generated from it, so the two cannot drift apart.') +
       '</p>';
 
     $('#key-body').innerHTML = html;
@@ -450,7 +501,6 @@
     } else {
       badge.hidden = true;
     }
-    $('#topbar-meta').textContent = data.menu.cocktails.length + ' drinks';
   }
 
   function repaintMenu() {
@@ -459,7 +509,8 @@
   }
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-drink],[data-method],[data-family],[data-pourable],[data-clear],[data-bottle],[data-bar]');
+    var t = e.target.closest('[data-drink],[data-method],[data-family],[data-pourable],' +
+      '[data-clear],[data-bottle],[data-bar],[data-seemenu],[data-print]');
     if (!t) return;
 
     if (t.dataset.drink) {
@@ -477,6 +528,16 @@
     }
 
     if (t.dataset.pourable) { filter.pourable = !filter.pourable; repaintMenu(); return; }
+
+    /* Jump from the count on the Bar tab to the menu it is counting. */
+    if (t.dataset.seemenu) {
+      filter = { method: 'all', family: null, pourable: true, q: '' };
+      repaintMenu();
+      location.hash = '#menu';
+      return;
+    }
+
+    if (t.dataset.print) { window.print(); return; }
 
     if (t.dataset.clear) {
       filter = { method: 'all', family: null, pourable: false, q: '' };
@@ -545,9 +606,39 @@
     $('#loading').textContent = 'Could not load the menu. ' + err;
   });
 
+  /* Service worker: production only, and actively evicted anywhere else.
+
+     A worker registered on http://localhost:8000 owns that whole origin,
+     and every static site here serves './', 'index.html' and
+     'assets/app.js' from it. So a worker installed by one project will
+     answer for the next one, cache-first, and keep answering after the
+     dev server is dead — a page that loads with nothing listening on the
+     port is the tell.
+
+     Skipping registration is not enough to undo that: the stale worker
+     is already serving the old app.js, so the guard never gets to run.
+     Off https, this actively unregisters whatever is there, drops the
+     caches, and reloads once into a clean origin. */
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js').catch(function () { /* offline is a bonus */ });
-    });
+    if (location.protocol === 'https:') {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function () { /* offline is a bonus */ });
+      });
+    } else {
+      navigator.serviceWorker.getRegistrations().then(function (regs) {
+        if (!regs.length) return null;
+        return Promise.all(regs.map(function (r) { return r.unregister(); }))
+          .then(function () { return caches.keys(); })
+          .then(function (keys) {
+            return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+          })
+          .then(function () {
+            /* Only reload if a worker was actually answering for us. The
+               next load finds no registration and falls straight through,
+               so this cannot loop. */
+            if (navigator.serviceWorker.controller) location.reload();
+          });
+      }).catch(function () { /* nothing to clean up */ });
+    }
   }
 })();

@@ -5,6 +5,20 @@
    invalidates the old cache. Shell assets are cache-first, data is
    network-first with a cached fallback. */
 
+/* Dev safety net. A worker that got installed on http://localhost is
+   squatting on an origin every static site here shares, and it will keep
+   answering cache-first long after the server that served it is gone.
+   If this ever wakes up off https, it takes itself out. */
+if (self.location.protocol !== 'https:') {
+  self.registration.unregister()
+    .then(function () { return caches.keys(); })
+    .then(function (keys) {
+      return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+    })
+    .then(function () { return self.clients.matchAll({ type: 'window' }); })
+    .then(function (cs) { cs.forEach(function (c) { c.navigate(c.url); }); });
+}
+
 var VERSION = '__BUILD__';
 var CACHE = 'drink-' + VERSION;
 

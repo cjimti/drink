@@ -1,48 +1,180 @@
 {
+  "system": {
+    "name": "Barline",
+    "tagline": "A notation for cocktails",
+    "lead": "Barline writes down what changes and leaves out what you already know. It never names an ingredient — the ingredient line does that. What is left is quantity, order and service, which turns out to be all a code needs to carry.",
+    "principles": [
+      {
+        "h": "The list is the score",
+        "t": "Ingredients read top to bottom, base spirit first, and the code reads left to right in the same order. Position is the only thing binding a number to a bottle, so the two are never reordered apart."
+      },
+      {
+        "h": "Context sets the unit",
+        "t": "A bare number is ounces beside a spirit and dashes beside bitters. Nothing marks which, because the bottle already told you. Same reason `r` is a rinse in an amount slot and a glass at the end."
+      },
+      {
+        "h": "Case does the work of extra letters",
+        "t": "Rather than invent a second letter, one initial carries both halves of a pair — so there is less to memorise, not more. Where two garnishes want the same letter, lowercase is the one you reach for more often: `l` lemon, `L` lime; `s` sugar, `S` salt; `o` orange, `O` olive. Where it is a matter of degree, uppercase is the larger: `q` a quarter, `Q` three quarters; `r` a bare rocks glass, `R` one with ice."
+      },
+      {
+        "h": "The last token is service",
+        "t": "Glass first, then whatever garnishes it, packed together and read as one word rather than letter by letter. `ccin` is a coupe with grated cinnamon, not `c` and `i` and `n`."
+      },
+      {
+        "h": "Silence is a default",
+        "t": "Egg white carries no measure because there is only one sensible amount, and a number there would be noise. Anything the drink assumes, the code leaves out."
+      }
+    ],
+    "footnote": "The nearest relative is figured bass, where a composer writes the bass note and a few numbers for the intervals above it and the player fills in the harmony from what they already know. Same bargain: write the figures, trust the reader."
+  },
   "note": "The house shorthand. Codes read left to right in build order, base spirit first, and end with one token for glass plus garnish. Everything is contextual — a bare number is ounces next to a spirit and dashes next to bitters.",
-
   "amounts": [
-    { "code": "2",  "label": "2 oz",     "oz": 2,    "gloss": "a bare number is ounces" },
-    { "code": "1",  "label": "1 oz",     "oz": 1 },
-    { "code": "Q",  "label": "3/4 oz",   "oz": 0.75 },
-    { "code": "h",  "label": "1/2 oz",   "oz": 0.5 },
-    { "code": "q",  "label": "1/4 oz",   "oz": 0.25 },
-    { "code": "1h", "label": "1 1/2 oz", "oz": 1.5,  "gloss": "whole number, then the fraction" },
-    { "code": "1q", "label": "1 1/4 oz", "oz": 1.25 },
-    { "code": "1Q", "label": "1 3/4 oz", "oz": 1.75 },
-    { "code": "2h", "label": "2 1/2 oz", "oz": 2.5 }
+    {
+      "code": "2",
+      "label": "2 oz",
+      "oz": 2,
+      "gloss": "a bare number is ounces"
+    },
+    {
+      "code": "1",
+      "label": "1 oz",
+      "oz": 1
+    },
+    {
+      "code": "Q",
+      "label": "3/4 oz",
+      "oz": 0.75
+    },
+    {
+      "code": "h",
+      "label": "1/2 oz",
+      "oz": 0.5
+    },
+    {
+      "code": "q",
+      "label": "1/4 oz",
+      "oz": 0.25
+    },
+    {
+      "code": "1h",
+      "label": "1 1/2 oz",
+      "oz": 1.5,
+      "gloss": "whole number, then the fraction"
+    },
+    {
+      "code": "1q",
+      "label": "1 1/4 oz",
+      "oz": 1.25
+    },
+    {
+      "code": "1Q",
+      "label": "1 3/4 oz",
+      "oz": 1.75
+    },
+    {
+      "code": "2h",
+      "label": "2 1/2 oz",
+      "oz": 2.5
+    }
   ],
-
   "counts": [
-    { "code": "d",  "label": "1 dash",      "gloss": "1d and d are the same" },
-    { "code": "3",  "label": "3 dashes",    "gloss": "next to bitters, a bare number is dashes" },
-    { "code": "b",  "label": "1 barspoon",  "gloss": "1b and b are the same" },
-    { "code": "2b", "label": "2 barspoons" },
-    { "code": "r",  "label": "rinse",       "gloss": "in an amount slot: coat the glass and dump" }
+    {
+      "code": "d",
+      "label": "1 dash",
+      "gloss": "1d and d are the same"
+    },
+    {
+      "code": "3",
+      "label": "3 dashes",
+      "gloss": "next to bitters, a bare number is dashes"
+    },
+    {
+      "code": "b",
+      "label": "1 barspoon",
+      "gloss": "1b and b are the same"
+    },
+    {
+      "code": "2b",
+      "label": "2 barspoons"
+    },
+    {
+      "code": "r",
+      "label": "rinse",
+      "gloss": "in an amount slot: coat the glass and dump"
+    }
   ],
-
   "glasses": [
-    { "code": "c", "label": "Coupe",  "gloss": "coupe or Nick & Nora, no ice" },
-    { "code": "r", "label": "Rocks",  "gloss": "rocks glass, no ice" },
-    { "code": "R", "label": "Rocks, iced", "gloss": "one large cube, or cubes, depending on the drink" }
+    {
+      "code": "c",
+      "label": "Coupe",
+      "gloss": "coupe or Nick & Nora, no ice"
+    },
+    {
+      "code": "r",
+      "label": "Rocks",
+      "gloss": "rocks glass, no ice"
+    },
+    {
+      "code": "R",
+      "label": "Rocks, iced",
+      "gloss": "one large cube, or cubes, depending on the drink"
+    }
   ],
-
   "garnishes": [
-    { "code": "c",   "label": "Cherry" },
-    { "code": "l",   "label": "Lemon twist" },
-    { "code": "L",   "label": "Lime twist" },
-    { "code": "Lw",  "label": "Lime wheel" },
-    { "code": "o",   "label": "Orange twist" },
-    { "code": "fo",  "label": "Flamed orange twist" },
-    { "code": "O",   "label": "Olive" },
-    { "code": "s",   "label": "Sugar rim" },
-    { "code": "S",   "label": "Salt rim" },
-    { "code": "m",   "label": "Mint" },
-    { "code": "a",   "label": "Apple fan" },
-    { "code": "cin", "label": "Grated cinnamon" },
-    { "code": "3",   "label": "3 drops of bitters", "gloss": "dropped on the foam of a sour" }
+    {
+      "code": "c",
+      "label": "Cherry"
+    },
+    {
+      "code": "l",
+      "label": "Lemon twist"
+    },
+    {
+      "code": "L",
+      "label": "Lime twist"
+    },
+    {
+      "code": "Lw",
+      "label": "Lime wheel"
+    },
+    {
+      "code": "o",
+      "label": "Orange twist"
+    },
+    {
+      "code": "fo",
+      "label": "Flamed orange twist"
+    },
+    {
+      "code": "O",
+      "label": "Olive"
+    },
+    {
+      "code": "s",
+      "label": "Sugar rim"
+    },
+    {
+      "code": "S",
+      "label": "Salt rim"
+    },
+    {
+      "code": "m",
+      "label": "Mint"
+    },
+    {
+      "code": "a",
+      "label": "Apple fan"
+    },
+    {
+      "code": "cin",
+      "label": "Grated cinnamon"
+    },
+    {
+      "code": "3",
+      "label": "3 drops of bitters",
+      "gloss": "dropped on the foam of a sour"
+    }
   ],
-
   "examples": [
     {
       "name": "Pedro Martinez",

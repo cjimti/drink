@@ -1,7 +1,7 @@
 {
-  "name": "Fern Street 110",
+  "name": "drink.shoephone",
   "short_name": "Drink",
-  "description": "The Fern Street cocktail menu. 108 classics from one small bar.",
+  "description": "108 classic cocktails from one small bar.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

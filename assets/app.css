@@ -104,20 +104,28 @@ a { color: inherit; text-decoration: none; }
 .topbar__name {
   font-family: var(--display);
   font-weight: 800;
-  font-size: 12.5px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
+  font-size: 17px;
+  letter-spacing: .07em;
+  text-transform: lowercase;
   white-space: nowrap;
 }
 
-.topbar__meta {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .06em;
-  color: var(--muted);
+/* Back to the rest of shoephone. Sits quiet — it is a way out, not a
+   destination the menu is competing with. */
+.topbar__home {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: .13em;
   text-transform: uppercase;
+  color: var(--muted);
   white-space: nowrap;
 }
+.topbar__home:hover { color: var(--bone); }
+.topbar__out { width: 9px; height: 9px; flex: none; }
 
 /* ── Layout ───────────────────────────────────────────────── */
 
@@ -399,7 +407,79 @@ a { color: inherit; text-decoration: none; }
   font-style: italic;
 }
 
+/* ── The generated menu ───────────────────────────────────── */
+
+.tonight {
+  padding: 26px 0 4px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.tonight__k {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.tonight__n {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 54px;
+  line-height: 1;
+  letter-spacing: -.02em;
+  margin-top: 8px;
+}
+
+.tonight__of {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 7px;
+}
+
+.tonight__note {
+  margin: 11px 0 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+  max-width: 46ch;
+}
+
+.tonight__acts { display: flex; gap: 8px; margin: 15px 0 20px; flex-wrap: wrap; }
+
 /* ── Bar ──────────────────────────────────────────────────── */
+
+.tally__hit {
+  display: block;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+}
+
+.tally__cta {
+  display: inline-block;
+  margin-top: 11px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--brass);
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 2px;
+}
+
 
 .tally {
   padding: 26px 0 20px;
@@ -523,6 +603,99 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
 }
 
+/* ── Key: the notation, named ─────────────────────────────── */
+
+.sys { padding: 30px 0 4px; }
+
+.sys__name {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.sys__tag {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-top: 11px;
+}
+
+.sys__lead {
+  margin: 14px 0 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+.rules {
+  list-style: none;
+  counter-reset: rule;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.rule {
+  counter-increment: rule;
+  position: relative;
+  padding: 13px 0 13px 34px;
+  border-bottom: 1px solid var(--hair);
+}
+.rule:last-child { border-bottom: 0; }
+
+.rule::before {
+  content: counter(rule);
+  position: absolute;
+  left: 0;
+  top: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--brass);
+}
+
+.rule__h {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.rule__t {
+  margin: 5px 0 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 54ch;
+}
+
+.lit {
+  font-family: var(--mono);
+  font-size: .92em;
+  color: var(--bone);
+  background: var(--sunk);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.sys__foot {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  background: var(--sunk);
+  border-left: 2px solid var(--brass);
+  font-size: 13.5px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
 /* ── Key ──────────────────────────────────────────────────── */
 
 .key__lead {
@@ -533,6 +706,8 @@ a { color: inherit; text-decoration: none; }
   max-width: 52ch;
 }
 .key__lead em { color: var(--bone); font-style: italic; }
+
+.key__lead--tight { padding-top: 6px; font-size: 14.5px; }
 
 .key__h {
   font-family: var(--display);
@@ -682,4 +857,43 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: no-preference) {
   .recipe { animation: unfold .16s ease-out; }
   @keyframes unfold { from { opacity: 0; transform: translateY(-3px); } }
+}
+
+/* ── Print ────────────────────────────────────────────────────
+   The point of the shelf filter is a menu you can hand someone, so it
+   has to survive contact with paper. Force the light palette — a phone
+   theme must never decide how much toner this costs — drop every piece
+   of app chrome, and let the card layout carry it. */
+
+@media print {
+  :root {
+    --ground: #FFFFFF;
+    --sunk: #FFFFFF;
+    --bone: #000000;
+    --muted: #333333;
+    --faint: #666666;
+    --rule: #000000;
+    --hair: #CCCCCC;
+    --brass: #000000;
+    --on-brass: #FFFFFF;
+  }
+
+  .topbar, .tabbar, .filters, .tonight__acts, .tally__acts,
+  .drink__missing, .loading { display: none !important; }
+
+  body { padding: 0; font-size: 11pt; }
+  .view { max-width: none; padding: 0; }
+
+  .tonight { border-bottom: 3px solid #000; padding-top: 0; }
+  .tonight__n { font-size: 34pt; }
+
+  /* Never split a drink across a page break. */
+  .drink, .method, .tonight { break-inside: avoid; }
+  .family, .method__title { break-after: avoid; }
+  .method { padding-top: 20pt; }
+
+  .drink.is-pourable .drink__name { color: #000; }
+  .drink__head { padding: 7pt 0; }
+
+  a[href]::after { content: ""; }
 }

@@ -1,8 +1,11 @@
-# drink.shoephone.net — Fern Street 110
+# drink.shoephone.net
 
 The house cocktail menu, as a web app instead of a printed card. 108
 classics, two methods, one small bar. No build step, no framework, no
 database — everything renders from three JSON files.
+
+Sibling of [eat.shoephone.net](https://eat.shoephone.net), and built the
+same way.
 
 Live at **[drink.shoephone.net](https://drink.shoephone.net)**.
 
@@ -24,6 +27,11 @@ That number is frequently surprising. From gin, bourbon, both vermouths,
 two bitters and the staples you can pour 14 drinks; the best next bottle
 is not a spirit at all but orange liqueur, at +9.
 
+**Turns the shelf into a menu.** The count on the Bar tab is a way in,
+not a statistic — tapping it opens the list it counts, formatted as a
+menu with its own masthead. It prints, so the thing you hand a guest can
+be regenerated from whatever is actually on the shelf that night.
+
 **Filters the way you choose a drink.** Stirred or shaken, then by any
 spirit or modifier, then by what the shelf can actually support.
 
@@ -38,19 +46,30 @@ spirit or modifier, then by what the shelf can actually support.
 | `data/bar.json` | Every bottle any drink can call for. |
 | `data/notation.json` | The shorthand key, and what the decoder reads from. |
 | `scripts/check_menu.py` | Regenerates each code from its build and refuses a mismatch. |
+| `scripts/check_assets.py` | Missing files, and ids `app.js` reaches for that nothing renders. |
 
 ## Working on it
 
 ```sh
-make serve     # http://localhost:8000 — no-store, so edits show up
+make serve     # http://localhost:8010 — no-store, so edits show up
 make verify    # the whole pipeline
 make icons     # redraw the home-screen PNG
 ```
 
 `make verify` is the only gate. It parses every JSON file, syntax-checks
 the two scripts the browser loads, confirms every asset `index.html` asks
-for exists, and — the one that matters — checks that all 108 shorthand
-codes still agree with the recipes they stand for.
+for exists and every element id `app.js` reaches for is real, and — the
+one that matters — checks that all 108 shorthand codes still agree with
+the recipes they stand for.
+
+The service worker registers in production only, and off https the app
+actively unregisters any worker it finds. A worker owns an *origin*, not
+a project — every static site here serves `./`, `index.html` and
+`assets/app.js`, so one left on `localhost:8000` will answer for the next
+project that runs there, cache-first, with no server needed. This repo
+serves on **8010** so the origins never overlap. If a page ever loads
+with nothing listening on the port, that is what you are looking at;
+`make unstick` prints the manual recovery.
 
 Push to `main` and the workflow deploys.
 

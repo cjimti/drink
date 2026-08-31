@@ -1,7 +1,9 @@
-# drink.shoephone.net — the Fern Street menu
+# drink.shoephone.net
 
-Static site for one home bar's cocktail list. No build step, no
-framework, no database. Everything renders from three JSON files.
+Static site for one home bar's cocktail list. Sibling of
+eat.shoephone.net, built the same way and sharing its conventions. No
+build step, no framework, no database. Everything renders from three
+JSON files.
 
 This file is the working context. Read it before touching the menu.
 
@@ -87,6 +89,14 @@ none reads `in 12`, greyed, and that is the honest answer.
 This is the feature the site exists for. If it ever gets slow, memoise
 it — do not replace it with a usage count.
 
+The count is also the way in. Tapping it opens the Menu tab with the
+shelf filter on, where the same list renders with a masthead and a print
+button. A number that does not lead to the list it counts is trivia, so
+if the tally ever stops being a button, that is a regression.
+
+The print stylesheet forces the light palette outright. What theme a
+phone happens to be in must never decide how much toner a menu costs.
+
 ## Design
 
 The printed menu is pure black and white: a heavy rule under a
@@ -112,8 +122,26 @@ sitting on the brass fill has to flip with it.
 
 ## Conventions
 
-- Commit straight to `main`. No PR branches.
-- `make verify` before every commit. It is the whole pipeline.
+- **Never commit, push, or deploy unless asked in that message.** Build,
+  run `make verify`, then stop and show the diff. Enabling Pages, running
+  `gh api` writes, and re-running a failed deploy are all the same
+  category: not yours to decide.
+- `make verify` before showing work. It is the whole pipeline.
+- **A service worker owns an origin, not a project.** Every static site
+  in this workspace serves `./`, `index.html` and `assets/app.js`, so a
+  worker registered on `http://localhost:8000` will answer for whichever
+  project runs there next, cache-first, and go on answering after that
+  dev server is gone. This repo serves on **8010** for that reason — one
+  port per project, so the origins never overlap.
+- **Declining to register is not a fix.** A worker already installed
+  keeps serving the old `app.js`, so a guard added later never executes.
+  Off https, `app.js` actively unregisters and drops caches, and `sw.js`
+  takes itself out if it ever wakes up off https. `check_assets.py`
+  fails the build if either safeguard goes missing.
+- Symptom to recognise: the page loads, or shows stale content, with
+  nothing listening on the port. Check `lsof -nP -iTCP:<port>` before
+  believing anything the browser shows you. `make unstick` prints the
+  manual recovery.
 - Keep it dependency-free. Vanilla JS, no bundler, no package.json.
 - Transcribe the paper menu faithfully, including its own typos —
   `Improved Coctail` is spelled that way on the card. Fix a recipe only
