@@ -407,6 +407,11 @@ a { color: inherit; text-decoration: none; }
   font-style: italic;
 }
 
+/* Not "nothing here" but "your filters disagree" — it gets a way out. */
+.empty--clash { padding: 38px 0; }
+.empty--clash p { margin: 0 auto 15px; max-width: 34ch; }
+.empty--clash b { color: var(--brass); font-style: normal; }
+
 /* ── The generated menu ───────────────────────────────────── */
 
 .tonight {

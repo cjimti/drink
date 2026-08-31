@@ -242,6 +242,41 @@
     return html + '</div>';
   }
 
+  /* An empty list has more than one cause, and saying the wrong one sends
+     people to the Bar tab to fix a shelf that was never the problem. Work
+     out which filter is actually doing the excluding and say so. */
+  function renderEmpty(held) {
+    var canNow = pourableCount(held);
+
+    if (filter.pourable && canNow > 0) {
+      /* Each clause is a full predicate, so they read as a sentence
+         however many of them there happen to be. */
+      var blocking = [];
+      if (filter.family) {
+        blocking.push('use ' + ((ing[filter.family] || {}).short || filter.family));
+      }
+      if (filter.method !== 'all') blocking.push('are ' + filter.method);
+      if (filter.q) blocking.push('match “' + filter.q + '”');
+
+      return '<div class="empty empty--clash">' +
+        '<p>You can pour <b>' + canNow + '</b> ' +
+          (canNow === 1 ? 'drink' : 'drinks') + ' with what is on the shelf, but ' +
+          (blocking.length
+            ? 'none of them ' + esc(blocking.join(', nor ')) + '.'
+            : 'none of them match the other filters.') +
+        '</p>' +
+        '<button class="btn" data-clearothers="1">Drop the other filters</button>' +
+        '</div>';
+    }
+
+    if (filter.pourable) {
+      return '<p class="empty">Nothing yet. Stock a few more bottles on the ' +
+             'Bar tab and the menu fills in.</p>';
+    }
+
+    return '<p class="empty">Nothing on the menu matches that.</p>';
+  }
+
   /* With the shelf filter on, this stops being a filtered list and starts
      being a menu — so it gets a masthead, a count, and a way onto paper. */
   function renderMasthead(n) {
@@ -264,11 +299,7 @@
     var list = data.menu.cocktails.filter(function (d) { return matches(d, held); });
 
     if (!list.length) {
-      $('#menu-body').innerHTML =
-        (filter.pourable
-          ? '<p class="empty">Nothing yet. Stock a few more bottles on the Bar tab ' +
-            'and the menu fills in.</p>'
-          : '<p class="empty">Nothing on the menu matches that.</p>');
+      $('#menu-body').innerHTML = renderEmpty(held);
       return;
     }
 
@@ -323,9 +354,15 @@
         '" data-family="' + esc(i.id) + '">' + esc(i.short) + '</button>';
     });
 
+    /* Carry the shelf count on the control itself. The Bar tab shows the
+       same number, and the two disagreeing with no explanation is exactly
+       how this filter looked broken. */
+    var canNow = stocked().length ? pourableCount(held) : null;
+
     html += '</div><div class="chips">' +
       '<button class="chip chip--pour' + (filter.pourable ? ' is-on' : '') +
-        '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + 'What I can pour</button>' +
+        '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + 'What I can pour' +
+        (canNow === null ? '' : ' · ' + canNow) + '</button>' +
       (filter.family || filter.q || filter.method !== 'all' || filter.pourable
         ? '<button class="chip" data-clear="1">Clear</button>' : '') +
       '</div>' +
@@ -483,6 +520,12 @@
     document.querySelectorAll('.tab').forEach(function (t) {
       t.classList.toggle('is-active', t.dataset.view === view);
     });
+    /* Every view repaints on the way in. The menu depends on the shelf,
+       and the shelf is edited on another tab — rendering it once at boot
+       and again only when a filter is touched leaves it frozen at
+       whatever the bar looked like earlier, still claiming nothing is
+       pourable while the badge says otherwise. */
+    if (view === 'menu') repaintMenu();
     if (view === 'bar') renderBar();
     if (view === 'key') renderKey();
     window.scrollTo(0, 0);
@@ -510,7 +553,7 @@
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-drink],[data-method],[data-family],[data-pourable],' +
-      '[data-clear],[data-bottle],[data-bar],[data-seemenu],[data-print]');
+      '[data-clear],[data-clearothers],[data-bottle],[data-bar],[data-seemenu],[data-print]');
     if (!t) return;
 
     if (t.dataset.drink) {
@@ -538,6 +581,13 @@
     }
 
     if (t.dataset.print) { window.print(); return; }
+
+    /* Keep the shelf filter, drop whatever else was excluding things. */
+    if (t.dataset.clearothers) {
+      filter = { method: 'all', family: null, pourable: true, q: '' };
+      repaintMenu();
+      return;
+    }
 
     if (t.dataset.clear) {
       filter = { method: 'all', family: null, pourable: false, q: '' };
