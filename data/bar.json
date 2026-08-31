@@ -1,0 +1,50 @@
+{
+  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand.",
+  "kinds": [
+    { "id": "base",     "label": "Base spirits",  "blurb": "Ten bottles carry the whole menu." },
+    { "id": "vermouth", "label": "Vermouth",      "blurb": "Two bottles. Refrigerate them." },
+    { "id": "modifier", "label": "Modifiers",     "blurb": "Where the range actually comes from." },
+    { "id": "bitters",  "label": "Bitters",       "blurb": "Measured in dashes." },
+    { "id": "syrup",    "label": "Syrups",        "blurb": "Made at home, keeps for weeks." },
+    { "id": "juice",    "label": "Juice",         "blurb": "Squeezed to order. Never bottled." },
+    { "id": "other",    "label": "Other",         "blurb": "" }
+  ],
+  "ingredients": [
+    { "id": "gin",           "name": "Gin",                 "short": "gin",         "kind": "base" },
+    { "id": "bourbon",       "name": "Bourbon",             "short": "bourbon",     "kind": "base" },
+    { "id": "rye",           "name": "Rye",                 "short": "rye",         "kind": "base" },
+    { "id": "scotch",        "name": "Scotch",              "short": "scotch",      "kind": "base" },
+    { "id": "cognac",        "name": "Cognac",              "short": "cognac",      "kind": "base" },
+    { "id": "apple-brandy",  "name": "Apple brandy",        "short": "apple",       "kind": "base" },
+    { "id": "aged-rum",      "name": "Aged rum",            "short": "aged rum",    "kind": "base" },
+    { "id": "light-rum",     "name": "Light rum",           "short": "light rum",   "kind": "base" },
+    { "id": "tequila",       "name": "Tequila",             "short": "tequila",     "kind": "base" },
+    { "id": "vodka",         "name": "Vodka",               "short": "vodka",       "kind": "base" },
+
+    { "id": "sweet-vermouth", "name": "Sweet vermouth",     "short": "sweet verm.", "kind": "vermouth" },
+    { "id": "dry-vermouth",   "name": "Dry vermouth",       "short": "dry verm.",   "kind": "vermouth" },
+
+    { "id": "campari",        "name": "Campari",            "short": "Campari",     "kind": "modifier" },
+    { "id": "maraschino",     "name": "Maraschino liqueur", "short": "maraschino",  "kind": "modifier" },
+    { "id": "orange-liqueur", "name": "Orange liqueur",     "short": "orange liq.", "kind": "modifier" },
+    { "id": "benedictine",    "name": "Bénédictine",        "short": "Bénédictine", "kind": "modifier" },
+    { "id": "apricot",        "name": "Apricot liqueur",    "short": "apricot",     "kind": "modifier" },
+    { "id": "elderflower",    "name": "Elderflower liqueur","short": "elderflower", "kind": "modifier" },
+    { "id": "absinthe",       "name": "Absinthe",           "short": "absinthe",    "kind": "modifier" },
+    { "id": "champagne",      "name": "Champagne",          "short": "Champagne",   "kind": "modifier" },
+
+    { "id": "angostura",      "name": "Angostura bitters",  "short": "Angostura",   "kind": "bitters", "unit": "dash" },
+    { "id": "orange-bitters", "name": "Orange bitters",     "short": "orange bitt.","kind": "bitters", "unit": "dash" },
+    { "id": "peychauds",      "name": "Peychaud's bitters", "short": "Peychaud's",  "kind": "bitters", "unit": "dash" },
+
+    { "id": "simple",         "name": "Simple syrup",       "short": "simple",      "kind": "syrup",  "staple": true },
+    { "id": "demerara",       "name": "Demerara syrup",     "short": "demerara",    "kind": "syrup",  "staple": true },
+    { "id": "honey-syrup",    "name": "Honey syrup",        "short": "honey",       "kind": "syrup",  "staple": true },
+    { "id": "grenadine",      "name": "Grenadine",          "short": "grenadine",   "kind": "syrup",  "staple": true },
+
+    { "id": "lemon",          "name": "Lemon juice",        "short": "lemon",       "kind": "juice",  "staple": true },
+    { "id": "lime",           "name": "Lime juice",         "short": "lime",        "kind": "juice",  "staple": true },
+
+    { "id": "egg-white",      "name": "Egg white",          "short": "egg white",   "kind": "other",  "unit": "none", "staple": true }
+  ]
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>drink.shoephone — Fern Street 110</title>
+<meta name="description" content="The Fern Street cocktail menu. 108 classics from one small bar.">
+<meta name="theme-color" content="#0B0B0A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Drink">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="topbar__brand" href="#menu">
+    <svg class="topbar__mark" viewBox="0 0 40 40" aria-hidden="true">
+      <rect width="40" height="40" rx="2"/>
+      <path d="M13 11h14l-5.4 8.4v7.4h4.1v1.9h-11.4v-1.9h4.1v-7.4z"/>
+    </svg>
+    <span class="topbar__name">Fern Street</span>
+  </a>
+  <div class="topbar__meta" id="topbar-meta">&nbsp;</div>
+</header>
+
+<main id="main">
+
+  <section class="view" id="view-menu" aria-label="Menu">
+    <div id="filters"></div>
+    <div id="menu-body"></div>
+  </section>
+
+  <section class="view" id="view-bar" hidden aria-label="The bar">
+    <div id="bar-body"></div>
+  </section>
+
+  <section class="view" id="view-key" hidden aria-label="Notation key">
+    <div id="key-body"></div>
+  </section>
+
+  <p class="loading" id="loading">Pouring…</p>
+
+</main>
+
+<nav class="tabbar" aria-label="Sections">
+  <a class="tab is-active" href="#menu" data-view="menu">
+    <span class="tab__glyph tab__glyph--menu" aria-hidden="true"></span>
+    <span class="tab__label">Menu</span>
+  </a>
+  <a class="tab" href="#bar" data-view="bar">
+    <span class="tab__glyph tab__glyph--bar" aria-hidden="true"></span>
+    <span class="tab__label">Bar</span>
+    <span class="tab__count" id="tab-count" hidden></span>
+  </a>
+  <a class="tab" href="#key" data-view="key">
+    <span class="tab__glyph tab__glyph--key" aria-hidden="true"></span>
+    <span class="tab__label">Key</span>
+  </a>
+</nav>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

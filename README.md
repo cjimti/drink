@@ -1,1 +1,76 @@
-# drink
+# drink.shoephone.net — Fern Street 110
+
+The house cocktail menu, as a web app instead of a printed card. 108
+classics, two methods, one small bar. No build step, no framework, no
+database — everything renders from three JSON files.
+
+Live at **[drink.shoephone.net](https://drink.shoephone.net)**.
+
+## What it does that paper cannot
+
+**Decodes the shorthand.** Every drink carries the house code exactly as
+printed — `2,1,q,3,10,2b,R` — and tapping it spells the drink out in
+ounces, dashes, glass and garnish. The codes are contextual, so the
+decoder reads each amount against the ingredient it belongs to: a bare
+`2` is two ounces of rye and two dashes of Angostura.
+
+**Answers "what can I actually make?"** The Bar tab is a shelf
+inventory. Tick the bottles you own and the menu marks what is pourable,
+what is one bottle short, and which bottle it is. The whole point of
+this bar is range from few bottles, so every unopened bottle shows what
+it would add — in drinks unlocked, not drinks it merely appears in.
+
+That number is frequently surprising. From gin, bourbon, both vermouths,
+two bitters and the staples you can pour 14 drinks; the best next bottle
+is not a spirit at all but orange liqueur, at +9.
+
+**Filters the way you choose a drink.** Stirred or shaken, then by any
+spirit or modifier, then by what the shelf can actually support.
+
+## Layout
+
+| Path | What it is |
+|------|-----------|
+| `index.html` | The whole shell. Three tabs, no router beyond the hash. |
+| `assets/app.js` | Decoder, filters, and the marginal-gain engine. |
+| `assets/app.css` | Every colour is a token, defined twice — dark and light. |
+| `data/cocktails.json` | The menu. Each drink carries both a `code` and a `build`. |
+| `data/bar.json` | Every bottle any drink can call for. |
+| `data/notation.json` | The shorthand key, and what the decoder reads from. |
+| `scripts/check_menu.py` | Regenerates each code from its build and refuses a mismatch. |
+
+## Working on it
+
+```sh
+make serve     # http://localhost:8000 — no-store, so edits show up
+make verify    # the whole pipeline
+make icons     # redraw the home-screen PNG
+```
+
+`make verify` is the only gate. It parses every JSON file, syntax-checks
+the two scripts the browser loads, confirms every asset `index.html` asks
+for exists, and — the one that matters — checks that all 108 shorthand
+codes still agree with the recipes they stand for.
+
+Push to `main` and the workflow deploys.
+
+## Adding a drink
+
+Add one object to `cocktails` in `data/cocktails.json`:
+
+```json
+{ "id": "red-hook", "name": "Red Hook", "method": "stirred",
+  "family": "rye", "code": "2,h,h,cc", "serve": "cc",
+  "build": [["rye","2"],["sweet-vermouth","h"],["maraschino","h"]] }
+```
+
+`code` and `build` are two hands writing the same drink, which is exactly
+why the checker compares them. Write the code as it appears on the paper
+menu, spell the build out, and let `make verify` catch the disagreement.
+
+Ingredients that take no measure (egg white) get `null`. An ingredient
+poured on top rather than into the shaker — the bitters in a `c3` sour —
+gets a third element, `"g"`, so it counts toward what the drink needs
+without appearing among the comma-separated amounts.
+
+Any new bottle goes in `data/bar.json` first, or the checker rejects it.

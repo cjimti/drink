@@ -1,0 +1,15 @@
+{
+  "name": "Fern Street 110",
+  "short_name": "Drink",
+  "description": "The Fern Street cocktail menu. 108 classics from one small bar.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B0B0A",
+  "theme_color": "#0B0B0A",
+  "icons": [
+    { "src": "assets/icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

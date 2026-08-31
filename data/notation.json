@@ -1,0 +1,72 @@
+{
+  "note": "The house shorthand. Codes read left to right in build order, base spirit first, and end with one token for glass plus garnish. Everything is contextual — a bare number is ounces next to a spirit and dashes next to bitters.",
+
+  "amounts": [
+    { "code": "2",  "label": "2 oz",     "oz": 2,    "gloss": "a bare number is ounces" },
+    { "code": "1",  "label": "1 oz",     "oz": 1 },
+    { "code": "Q",  "label": "3/4 oz",   "oz": 0.75 },
+    { "code": "h",  "label": "1/2 oz",   "oz": 0.5 },
+    { "code": "q",  "label": "1/4 oz",   "oz": 0.25 },
+    { "code": "1h", "label": "1 1/2 oz", "oz": 1.5,  "gloss": "whole number, then the fraction" },
+    { "code": "1q", "label": "1 1/4 oz", "oz": 1.25 },
+    { "code": "1Q", "label": "1 3/4 oz", "oz": 1.75 },
+    { "code": "2h", "label": "2 1/2 oz", "oz": 2.5 }
+  ],
+
+  "counts": [
+    { "code": "d",  "label": "1 dash",      "gloss": "1d and d are the same" },
+    { "code": "3",  "label": "3 dashes",    "gloss": "next to bitters, a bare number is dashes" },
+    { "code": "b",  "label": "1 barspoon",  "gloss": "1b and b are the same" },
+    { "code": "2b", "label": "2 barspoons" },
+    { "code": "r",  "label": "rinse",       "gloss": "in an amount slot: coat the glass and dump" }
+  ],
+
+  "glasses": [
+    { "code": "c", "label": "Coupe",  "gloss": "coupe or Nick & Nora, no ice" },
+    { "code": "r", "label": "Rocks",  "gloss": "rocks glass, no ice" },
+    { "code": "R", "label": "Rocks, iced", "gloss": "one large cube, or cubes, depending on the drink" }
+  ],
+
+  "garnishes": [
+    { "code": "c",   "label": "Cherry" },
+    { "code": "l",   "label": "Lemon twist" },
+    { "code": "L",   "label": "Lime twist" },
+    { "code": "Lw",  "label": "Lime wheel" },
+    { "code": "o",   "label": "Orange twist" },
+    { "code": "fo",  "label": "Flamed orange twist" },
+    { "code": "O",   "label": "Olive" },
+    { "code": "s",   "label": "Sugar rim" },
+    { "code": "S",   "label": "Salt rim" },
+    { "code": "m",   "label": "Mint" },
+    { "code": "a",   "label": "Apple fan" },
+    { "code": "cin", "label": "Grated cinnamon" },
+    { "code": "3",   "label": "3 drops of bitters", "gloss": "dropped on the foam of a sour" }
+  ],
+
+  "examples": [
+    {
+      "name": "Pedro Martinez",
+      "code": "2,1,q,3,10,2b,R",
+      "lines": [
+        "2      2 oz aged rum",
+        "1      1 oz sweet vermouth",
+        "q      1/4 oz maraschino liqueur",
+        "3      3 dashes orange bitters",
+        "10     10 dashes Angostura bitters",
+        "2b     2 barspoons absinthe",
+        "R      rocks glass, iced"
+      ]
+    },
+    {
+      "name": "Whiskey Sour",
+      "code": "2,Q,h,Rcl",
+      "lines": [
+        "2      2 oz bourbon",
+        "Q      3/4 oz lemon juice",
+        "h      1/2 oz demerara syrup",
+        "—      egg white takes no measure",
+        "Rcl    rocks glass iced, cherry and lemon"
+      ]
+    }
+  ]
+}
