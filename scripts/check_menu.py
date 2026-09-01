@@ -45,6 +45,11 @@ COCKTAIL_KEYS = {
     "taste", "history", "refs",
 }
 REF_KEYS = {"title", "url"}
+INGREDIENT_KEYS = {
+    "id", "name", "short", "kind", "unit", "staple", "shelf", "notes",
+}
+NOTES_KEYS = {"parts", "copy"}
+PART_KEYS = {"amt", "item"}
 HTML = re.compile(r"<[^>]+>")
 MD_LINK = re.compile(r"\[[^\]]+\]\([^)]+\)")
 
@@ -81,6 +86,48 @@ def split_garnish(rest, codes):
         else:
             return None
     return out
+
+
+def check_ingredient_notes(i, errs):
+    """Optional house recipe on a bottle. The row still ticks the shelf."""
+    who = i.get("id", "<no id>")
+    extra = sorted(set(i) - INGREDIENT_KEYS)
+    for k in extra:
+        errs.append(f"bar {who}: unknown key {k!r}")
+
+    notes = i.get("notes")
+    if notes is None:
+        return
+    if not isinstance(notes, dict):
+        errs.append(f"bar {who}: notes must be an object")
+        return
+    extra = sorted(set(notes) - NOTES_KEYS)
+    for k in extra:
+        errs.append(f"bar {who}: notes unknown key {k!r}")
+
+    copy = notes.get("copy")
+    if not isinstance(copy, str) or not copy.strip():
+        errs.append(f"bar {who}: notes.copy must be a non-empty string")
+    elif HTML.search(copy):
+        errs.append(f"bar {who}: notes.copy contains HTML")
+
+    if "parts" not in notes:
+        return
+    parts = notes["parts"]
+    if not isinstance(parts, list) or not parts:
+        errs.append(f"bar {who}: notes.parts must be a non-empty array")
+        return
+    for n, p in enumerate(parts):
+        if not isinstance(p, dict):
+            errs.append(f"bar {who}: notes.parts[{n}] is not an object")
+            continue
+        extra = sorted(set(p) - PART_KEYS)
+        for k in extra:
+            errs.append(f"bar {who}: notes.parts[{n}] unknown key {k!r}")
+        for field in ("amt", "item"):
+            val = p.get(field)
+            if not isinstance(val, str) or not val.strip():
+                errs.append(f"bar {who}: notes.parts[{n}].{field} must be a non-empty string")
 
 
 def check_notes(d, who, errs):
@@ -141,6 +188,8 @@ def main():
     gbottle = garnish_bottles(notation)
 
     errs = []
+    for i in bar["ingredients"]:
+        check_ingredient_notes(i, errs)
     for code, ingredient in sorted(gbottle.items()):
         if ingredient not in stocked:
             errs.append(f"notation: garnish {code!r} calls for {ingredient!r}, "

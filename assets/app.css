@@ -779,21 +779,43 @@ a { color: inherit; text-decoration: none; }
   color: var(--faint);
 }
 
-.bottle {
+.bottle { border-bottom: 1px solid var(--hair); }
+
+.bottle__row {
+  display: flex;
+  align-items: stretch;
+}
+
+/* The box is the only stock control. Padding after it is the old gap
+   between box and name, and also makes the tap target bigger than 17px. */
+.bottle__stock {
+  flex: none;
   display: flex;
   align-items: center;
-  gap: 12px;
-  width: 100%;
   appearance: none;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--hair);
+  padding: 11px 12px 11px 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.bottle__hit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  appearance: none;
+  background: transparent;
+  border: 0;
   color: inherit;
   font: inherit;
   text-align: left;
   padding: 11px 0;
   cursor: pointer;
 }
+.bottle:not(.has-note) .bottle__hit { padding-right: 44px; cursor: default; }
 
 .bottle__box {
   flex: none;
@@ -831,6 +853,43 @@ a { color: inherit; text-decoration: none; }
   font-size: 11px;
   color: var(--faint);
   white-space: nowrap;
+}
+
+.bottle__more {
+  flex: none;
+  width: 44px;
+  align-self: stretch;
+  position: relative;
+  color: var(--faint);
+}
+.bottle.is-open .bottle__more { color: var(--brass); }
+.bottle__more::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -5px 0 0 -4px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+.bottle.is-open .bottle__more::after {
+  margin-top: -2px;
+  transform: rotate(225deg);
+}
+
+.bottle__note {
+  padding: 2px 0 16px 29px;
+}
+
+.bottle__copy {
+  margin: 10px 0 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.55;
 }
 
 /* ── Key: the notation, named ─────────────────────────────── */
@@ -1104,7 +1163,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .recipe { animation: unfold .16s ease-out; }
+  .recipe, .bottle__note { animation: unfold .16s ease-out; }
   @keyframes unfold { from { opacity: 0; transform: translateY(-3px); } }
 
   /* Only when the number actually went up. A tick on every repaint is
@@ -1134,7 +1193,7 @@ a { color: inherit; text-decoration: none; }
   }
 
   .topbar, .tabbar, .filters, .tonight__acts, .tally__acts,
-  .drink__missing, .loading,
+  .drink__missing, .loading, .bottle__more,
   .recipe-tabs, .recipe-panel--taste, .recipe-panel--history, .recipe-panel--kin,
   .recipe-copy, .recipe-refs, .drink__glass { display: none !important; }
 

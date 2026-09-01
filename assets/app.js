@@ -35,6 +35,7 @@
 
   var have = {};         /* id -> true, what is on the shelf */
   var open = {};         /* id -> true, which recipes are expanded */
+  var noteOpen = {};     /* id -> true, which bottle notes are expanded */
   var recipePane = {};   /* id -> recipe|taste|history|kin; resets on open */
   var glassMarkup = {};  /* art id -> inline svg */
 
@@ -643,6 +644,71 @@
 
   /* ── bar view ──────────────────────────────────────────── */
 
+  /* The checkbox ticks the shelf. The rest of the row reveals notes
+     when the bottle has them, and does nothing when it does not. */
+  function bottleHasNotes(i) {
+    return !!(i.notes && (i.notes.copy || (i.notes.parts && i.notes.parts.length)));
+  }
+
+  function renderBottleNote(i, shown) {
+    var n = i.notes;
+    var html = '<div class="bottle__note" id="note-' + esc(i.id) + '"' +
+      (shown ? '' : ' hidden') + '>';
+    if (n.parts && n.parts.length) {
+      n.parts.forEach(function (p) {
+        html += '<div class="pour">' +
+          '<div class="pour__amt">' + esc(p.amt) + '</div>' +
+          '<div class="pour__ing">' + esc(p.item) + '</div>' +
+          '</div>';
+      });
+    }
+    if (n.copy) {
+      html += '<p class="bottle__copy">' + esc(n.copy) + '</p>';
+    }
+    return html + '</div>';
+  }
+
+  function renderBottleStat(on, gain, uses) {
+    return on
+      ? '<span class="bottle__in">in ' + uses + '</span>'
+      : '<span class="bottle__gain' + (gain ? '' : ' bottle__gain--flat') + '">' +
+          (gain ? '+' + gain : 'in ' + uses) + '</span>';
+  }
+
+  function renderBottle(i, held, gain, uses) {
+    var on = !!held[i.id];
+    var hasNote = bottleHasNotes(i);
+    var shown = !!(hasNote && noteOpen[i.id]);
+    var name = i.shelf || i.name;
+    var html = '<div class="bottle' + (on ? ' is-on' : '') +
+      (shown ? ' is-open' : '') + (hasNote ? ' has-note' : '') + '">' +
+      '<div class="bottle__row">' +
+      '<button type="button" class="bottle__stock" data-bottle="' + esc(i.id) + '"' +
+        ' aria-pressed="' + (on ? 'true' : 'false') + '"' +
+        ' aria-label="' + esc(name) + '">' +
+        '<span class="bottle__box"></span>' +
+      '</button>';
+    if (hasNote) {
+      var how = (i.notes.parts && i.notes.parts.length) ? 'How to make ' : 'Notes on ';
+      html += '<button type="button" class="bottle__hit" data-note="' + esc(i.id) + '"' +
+        ' aria-expanded="' + (shown ? 'true' : 'false') + '"' +
+        ' aria-controls="note-' + esc(i.id) + '"' +
+        ' aria-label="' + esc(how + name) + '">' +
+        '<span class="bottle__name">' + esc(name) + '</span>' +
+        renderBottleStat(on, gain, uses) +
+        '<span class="bottle__more" aria-hidden="true"></span>' +
+        '</button>';
+    } else {
+      html += '<div class="bottle__hit">' +
+        '<span class="bottle__name">' + esc(name) + '</span>' +
+        renderBottleStat(on, gain, uses) +
+        '</div>';
+    }
+    html += '</div>';
+    if (hasNote) html += renderBottleNote(i, shown);
+    return html + '</div>';
+  }
+
   /* The running order of the shelf, worked out once on the way into the
      tab and then held.
 
@@ -718,15 +784,7 @@
       }).sort(function (a, b) {
         return barOrder[a.i.id] - barOrder[b.i.id];
       }).forEach(function (r) {
-        var on = !!held[r.i.id];
-        html += '<button class="bottle' + (on ? ' is-on' : '') + '" data-bottle="' + esc(r.i.id) + '">' +
-          '<span class="bottle__box"></span>' +
-          '<span class="bottle__name">' + esc(r.i.shelf || r.i.name) + '</span>' +
-          (on
-            ? '<span class="bottle__in">in ' + r.uses + '</span>'
-            : '<span class="bottle__gain' + (r.gain ? '' : ' bottle__gain--flat') + '">' +
-                (r.gain ? '+' + r.gain : 'in ' + r.uses) + '</span>') +
-          '</button>';
+        html += renderBottle(r.i, held, r.gain, r.uses);
       });
 
       html += '</section>';
@@ -879,7 +937,7 @@
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
-      '[data-pourable],[data-clear],[data-clearothers],[data-bottle],[data-bar],[data-seemenu],' +
+      '[data-pourable],[data-clear],[data-clearothers],[data-bottle],[data-note],[data-bar],[data-seemenu],' +
       '[data-print],[data-kin],[data-see-pattern]');
     if (!t) return;
 
@@ -960,6 +1018,20 @@
     if (t.dataset.clear) {
       filter = emptyFilter();
       repaintMenu();
+      return;
+    }
+
+    if (t.dataset.note) {
+      var nid = t.dataset.note;
+      if (noteOpen[nid]) delete noteOpen[nid];
+      else noteOpen[nid] = true;
+      var bottle = t.closest('.bottle');
+      if (!bottle) return;
+      var shown = !!noteOpen[nid];
+      bottle.classList.toggle('is-open', shown);
+      t.setAttribute('aria-expanded', shown ? 'true' : 'false');
+      var pane = bottle.querySelector('.bottle__note');
+      if (pane) pane.hidden = !shown;
       return;
     }
 

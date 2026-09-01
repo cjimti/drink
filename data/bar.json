@@ -1,11 +1,11 @@
 {
-  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand, `shelf` overrides the name where the bottle and the pour want different words for the same thing. Garnish is stocked like anything else \u2014 the letter lives in the serve token, and notation.json says which bottle it calls for \u2014 but it is optional, so it never decides whether a drink can be poured.",
+  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand, `shelf` overrides the name where the bottle and the pour want different words for the same thing, `notes` is a house recipe for making that bottle \u2014 the checkbox ticks the shelf, the rest of the row reveals the notes when there are any. Garnish is stocked like anything else \u2014 the letter lives in the serve token, and notation.json says which bottle it calls for \u2014 but it is optional, so it never decides whether a drink can be poured.",
   "kinds": [
     { "id": "base",     "label": "Base spirits",  "blurb": "Ten bottles carry the whole menu." },
     { "id": "vermouth", "label": "Vermouth",      "blurb": "Two bottles. Refrigerate them." },
     { "id": "modifier", "label": "Modifiers",     "blurb": "Where the range actually comes from." },
     { "id": "bitters",  "label": "Bitters",       "blurb": "Measured in dashes." },
-    { "id": "syrup",    "label": "Syrups",        "blurb": "Made at home, keeps for weeks." },
+    { "id": "syrup",    "label": "Syrups",        "blurb": "Made at home. Weigh everything \u2014 a kitchen scale is required. Three to four weeks in the fridge, sealed." },
     { "id": "juice",    "label": "Citrus",        "blurb": "Squeezed to order. The peel is the garnish." },
     { "id": "garnish",  "label": "Garnish",       "blurb": "The tail of every code. Optional, so it is never counted against a drink." },
     { "id": "other",    "label": "Other",         "blurb": "" }
@@ -38,10 +38,43 @@
     { "id": "orange-bitters", "name": "Orange bitters",     "short": "orange bitt.","kind": "bitters", "unit": "dash" },
     { "id": "peychauds",      "name": "Peychaud's bitters", "short": "Peychaud's",  "kind": "bitters", "unit": "dash" },
 
-    { "id": "simple",         "name": "Simple syrup",       "short": "simple",      "kind": "syrup",  "staple": true },
-    { "id": "demerara",       "name": "Demerara syrup",     "short": "demerara",    "kind": "syrup",  "staple": true },
-    { "id": "honey-syrup",    "name": "Honey syrup",        "short": "honey",       "kind": "syrup",  "staple": true },
-    { "id": "grenadine",      "name": "Grenadine",          "short": "grenadine",   "kind": "syrup",  "staple": true },
+    { "id": "simple",         "name": "Simple syrup",       "short": "simple",      "kind": "syrup",  "staple": true,
+      "notes": {
+        "parts": [
+          { "amt": "300 g", "item": "white sugar" },
+          { "amt": "150 g", "item": "water" }
+        ],
+        "copy": "Weigh both into a small pot. Bring to a simmer over medium-high heat (180\u2013205\u00b0F), stirring constantly so the sugar does not caramelize or burn. Once the sugar is dissolved, turn off the heat and let cool."
+      }
+    },
+    { "id": "demerara",       "name": "Demerara syrup",     "short": "demerara",    "kind": "syrup",  "staple": true,
+      "notes": {
+        "parts": [
+          { "amt": "300 g", "item": "demerara sugar (cubes or chunks)" },
+          { "amt": "150 g", "item": "water" }
+        ],
+        "copy": "Weigh both into a small pot. Bring to a simmer over medium-high heat (180\u2013205\u00b0F), stirring constantly so the sugar does not caramelize or burn. Once the cubes have dissolved, turn off the heat and let cool."
+      }
+    },
+    { "id": "honey-syrup",    "name": "Honey syrup",        "short": "honey",       "kind": "syrup",  "staple": true,
+      "notes": {
+        "parts": [
+          { "amt": "350 g", "item": "honey" },
+          { "amt": "175 g", "item": "water" }
+        ],
+        "copy": "Weigh both into a small pot over medium-high heat. Stir until the honey is fully dissolved. Turn off the heat and let cool."
+      }
+    },
+    { "id": "grenadine",      "name": "Grenadine",          "short": "grenadine",   "kind": "syrup",  "staple": true,
+      "notes": {
+        "parts": [
+          { "amt": "300 g", "item": "pomegranate juice (Pom)" },
+          { "amt": "300 g", "item": "white sugar" },
+          { "amt": "2 g",   "item": "orange flower water" }
+        ],
+        "copy": "Weigh half the juice and all the sugar into a small pot. Bring to a simmer over medium-high heat, stirring constantly until the sugar is dissolved. Turn off the heat and let cool. Stir in the rest of the juice and the orange flower water."
+      }
+    },
 
     { "id": "lemon",          "name": "Lemon juice",        "short": "lemon",       "kind": "juice",  "staple": true, "shelf": "Lemons" },
     { "id": "lime",           "name": "Lime juice",         "short": "lime",        "kind": "juice",  "staple": true, "shelf": "Limes" },
