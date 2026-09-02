@@ -9,6 +9,7 @@
       "members": [
         "martini",
         "manhattan",
+        "racquet-club",
         "rob-roy",
         "saratoga",
         "dry-orange-martini",
@@ -17,6 +18,7 @@
         "fitchett",
         "journalist",
         "the-slope",
+        "1910",
         "affinity",
         "country-club",
         "metropole",
@@ -30,14 +32,18 @@
         "tuxedo-2",
         "vodka-martini",
         "bobby-burns",
+        "hanky-panky",
         "palace-hotel",
         "red-hook",
         "so-so-cocktail",
+        "bijou",
         "wiffin",
         "olivette",
         "villa-straylight",
+        "telling-phoebe",
         "burnt-fuselage",
         "claridge",
+        "newark",
         "cocktail-de-la-louisiane"
       ]
     },
@@ -57,6 +63,7 @@
         "twelve-mile-limit",
         "jack-rose",
         "mickie-walker",
+        "caipirinha",
         "buster-brown",
         "gin-sour",
         "harvest-sour",
@@ -67,6 +74,7 @@
         "stan-lee",
         "winter-daiquiri",
         "bennett",
+        "pey-le",
         "stingless-bee",
         "scofflaw",
         "dry-vermouth-sour"
@@ -82,14 +90,18 @@
         "katinka",
         "lani-honi",
         "hat-tip",
+        "ace-of-clubs",
         "kings-jubilee",
         "margarita",
+        "mezcal-margarita",
         "rendezvous",
         "elderflower-daiquiri",
         "lemon-drop",
         "jasmine",
         "man-o-war",
         "derby",
+        "final-ward",
+        "last-word",
         "southern-point",
         "whiskey-daisy",
         "fine-and-dandy",
@@ -112,11 +124,14 @@
       "namesake": "negroni",
       "members": [
         "negroni",
+        "cin-cyn",
         "old-pal",
+        "brazilian-negroni",
         "boulevardier",
         "lucien-gaudin",
         "quill",
-        "rosita"
+        "rosita",
+        "little-italy"
       ]
     },
     {
@@ -128,6 +143,8 @@
         "old-fashioned",
         "rum-old-fashioned",
         "scotch-old-fashioned",
+        "toronto",
+        "cornerstone",
         "improved-cocktail",
         "sazerac"
       ]
@@ -142,11 +159,16 @@
         "monte-carlo",
         "tipsy-coachman",
         "casino",
+        "el-camino",
         "fancy-free",
         "one-chance-fancy",
         "cock-n-bull-special",
+        "physically-forgotten",
         "frisco",
-        "dempsey"
+        "alexander",
+        "brandy-alexander",
+        "dempsey",
+        "campari-alexander"
       ]
     },
     {
@@ -156,6 +178,7 @@
       "namesake": "duplex",
       "members": [
         "duplex",
+        "bamboo",
         "vermouth-panache",
         "diplomat",
         "tip-top",
@@ -170,7 +193,8 @@
       "members": [
         "french-75",
         "air-mail",
-        "queen-bee"
+        "queen-bee",
+        "fernet-and-ginger"
       ]
     }
   ],
@@ -199,16 +223,16 @@
           "why": "gin and dry vermouth for aged rum and sweet vermouth"
         },
         {
+          "id": "racquet-club",
+          "why": "gin and dry vermouth for aged rum and sweet vermouth"
+        },
+        {
           "id": "rob-roy",
           "why": "scotch for aged rum"
         },
         {
           "id": "saratoga",
           "why": "rye and cognac for aged rum"
-        },
-        {
-          "id": "villa-straylight",
-          "why": "gin and dry vermouth for aged rum and sweet vermouth"
         }
       ]
     },
@@ -222,6 +246,14 @@
         {
           "id": "scotch-old-fashioned",
           "why": "scotch and simple syrup for aged rum and demerara syrup"
+        },
+        {
+          "id": "toronto",
+          "why": "rye for aged rum"
+        },
+        {
+          "id": "cornerstone",
+          "why": "cachaça and grenadine for aged rum and demerara syrup"
         },
         {
           "id": "improved-cocktail",
@@ -239,6 +271,10 @@
         {
           "id": "bobby-burns",
           "why": "scotch and sweet vermouth for gin, apple brandy, and dry vermouth"
+        },
+        {
+          "id": "hanky-panky",
+          "why": "sweet vermouth for dry vermouth"
         },
         {
           "id": "palace-hotel",
@@ -263,10 +299,6 @@
         {
           "id": "red-hook",
           "why": "rye and sweet vermouth for gin, apple brandy, and dry vermouth"
-        },
-        {
-          "id": "automobile",
-          "why": "scotch and sweet vermouth for apple brandy and dry vermouth"
         }
       ]
     },
@@ -286,6 +318,10 @@
           "why": "with maraschino liqueur"
         },
         {
+          "id": "el-camino",
+          "why": "mezcal and rye for apple brandy and gin"
+        },
+        {
           "id": "fancy-free",
           "why": "bourbon for apple brandy and gin"
         },
@@ -300,10 +336,6 @@
         {
           "id": "tipsy-coachman",
           "why": "vodka for apple brandy and gin"
-        },
-        {
-          "id": "cock-n-bull-special",
-          "why": "bourbon and cognac for apple brandy and gin"
         }
       ]
     },
@@ -352,6 +384,10 @@
           "why": "gin for cognac"
         },
         {
+          "id": "newark",
+          "why": "apple brandy and sweet vermouth for cognac and dry vermouth"
+        },
+        {
           "id": "palace-hotel",
           "why": "sweet vermouth for dry vermouth"
         },
@@ -360,30 +396,30 @@
           "why": "gin and elderflower liqueur for cognac and orange liqueur"
         },
         {
+          "id": "telling-phoebe",
+          "why": "scotch and sweet vermouth for cognac and dry vermouth"
+        },
+        {
           "id": "bobby-burns",
           "why": "scotch and sweet vermouth for cognac and dry vermouth"
         },
         {
-          "id": "country-club",
-          "why": "light rum for cognac"
+          "id": "bijou",
+          "why": "gin and sweet vermouth for cognac and dry vermouth"
         },
         {
-          "id": "red-hook",
-          "why": "rye and sweet vermouth for cognac and dry vermouth"
-        },
-        {
-          "id": "so-so-cocktail",
-          "why": "gin and apple brandy for cognac"
-        },
-        {
-          "id": "vancouver",
-          "why": "gin and Bénédictine for cognac and orange liqueur"
+          "id": "1910",
+          "why": "sweet vermouth and maraschino liqueur for dry vermouth and orange liqueur"
         }
       ]
     },
     "palace-hotel": {
       "pattern": "martini",
       "kin": [
+        {
+          "id": "hanky-panky",
+          "why": "gin and Fernet for cognac and orange liqueur"
+        },
         {
           "id": "corpse-reviver-1",
           "why": "with apple brandy"
@@ -411,10 +447,6 @@
         {
           "id": "affinity",
           "why": "scotch for cognac"
-        },
-        {
-          "id": "metropole",
-          "why": "dry vermouth for sweet vermouth"
         }
       ]
     },
@@ -438,6 +470,10 @@
           "why": "gin for cognac"
         },
         {
+          "id": "1910",
+          "why": "sweet vermouth for dry vermouth"
+        },
+        {
           "id": "country-club",
           "why": "light rum for cognac"
         },
@@ -448,10 +484,6 @@
         {
           "id": "martini",
           "why": "gin for cognac"
-        },
-        {
-          "id": "rob-roy",
-          "why": "scotch and sweet vermouth for cognac and dry vermouth"
         }
       ]
     },
@@ -541,6 +573,14 @@
           "why": "scotch and simple syrup for bourbon and demerara syrup"
         },
         {
+          "id": "toronto",
+          "why": "rye for bourbon"
+        },
+        {
+          "id": "cornerstone",
+          "why": "cachaça and grenadine for bourbon and demerara syrup"
+        },
+        {
           "id": "improved-cocktail",
           "why": "rye and simple syrup for bourbon and demerara syrup"
         },
@@ -554,12 +594,24 @@
       "pattern": "negroni",
       "kin": [
         {
+          "id": "brazilian-negroni",
+          "why": "cachaça for bourbon"
+        },
+        {
           "id": "negroni",
           "why": "gin for bourbon"
         },
         {
+          "id": "cin-cyn",
+          "why": "gin and Cynar for bourbon and Campari"
+        },
+        {
           "id": "old-pal",
           "why": "rye and dry vermouth for bourbon and sweet vermouth"
+        },
+        {
+          "id": "little-italy",
+          "why": "rye and Cynar for bourbon and Campari"
         },
         {
           "id": "lucien-gaudin",
@@ -591,6 +643,10 @@
           "why": "gin and maraschino liqueur for bourbon and orange liqueur"
         },
         {
+          "id": "el-camino",
+          "why": "mezcal, rye, and Bénédictine for bourbon and orange liqueur"
+        },
+        {
           "id": "fancy-free",
           "why": "maraschino liqueur for orange liqueur"
         },
@@ -603,12 +659,8 @@
           "why": "with cognac and Bénédictine"
         },
         {
-          "id": "frisco",
-          "why": "Bénédictine for orange liqueur"
-        },
-        {
-          "id": "dempsey",
-          "why": "apple brandy, gin, and grenadine for bourbon and demerara syrup"
+          "id": "physically-forgotten",
+          "why": "gin and maraschino liqueur for bourbon and orange liqueur"
         }
       ]
     },
@@ -617,6 +669,10 @@
       "kin": [
         {
           "id": "martini",
+          "why": "gin and dry vermouth for bourbon and sweet vermouth"
+        },
+        {
+          "id": "racquet-club",
           "why": "gin and dry vermouth for bourbon and sweet vermouth"
         },
         {
@@ -642,10 +698,6 @@
         {
           "id": "fitchett",
           "why": "gin for bourbon"
-        },
-        {
-          "id": "journalist",
-          "why": "gin for bourbon"
         }
       ]
     },
@@ -655,6 +707,10 @@
         {
           "id": "casino",
           "why": "gin for bourbon"
+        },
+        {
+          "id": "el-camino",
+          "why": "mezcal, rye, and Bénédictine for bourbon and maraschino liqueur"
         },
         {
           "id": "monte-carlo",
@@ -677,12 +733,8 @@
           "why": "Bénédictine and orange liqueur for maraschino liqueur"
         },
         {
-          "id": "frisco",
-          "why": "Bénédictine for maraschino liqueur"
-        },
-        {
-          "id": "dempsey",
-          "why": "apple brandy and gin for bourbon"
+          "id": "physically-forgotten",
+          "why": "gin for bourbon"
         }
       ]
     },
@@ -692,6 +744,10 @@
         {
           "id": "casino",
           "why": "gin and maraschino liqueur for bourbon and Bénédictine"
+        },
+        {
+          "id": "el-camino",
+          "why": "mezcal and rye for bourbon"
         },
         {
           "id": "fancy-free",
@@ -716,10 +772,6 @@
         {
           "id": "cock-n-bull-special",
           "why": "with cognac and orange liqueur"
-        },
-        {
-          "id": "dempsey",
-          "why": "apple brandy and gin for bourbon"
         }
       ]
     },
@@ -739,6 +791,10 @@
           "why": "tequila for bourbon"
         },
         {
+          "id": "mezcal-margarita",
+          "why": "mezcal for bourbon"
+        },
+        {
           "id": "whiskey-daisy",
           "why": "lemon juice for lime juice"
         },
@@ -751,12 +807,8 @@
           "why": "vodka and lemon juice for bourbon and lime juice"
         },
         {
-          "id": "kings-jubilee",
-          "why": "light rum and lemon juice for bourbon and lime juice"
-        },
-        {
-          "id": "rendezvous",
-          "why": "gin and maraschino liqueur for bourbon and orange liqueur"
+          "id": "ace-of-clubs",
+          "why": "aged rum and crème de cacao for bourbon and orange liqueur"
         }
       ]
     },
@@ -780,20 +832,20 @@
           "why": "gin and maraschino liqueur for bourbon, cognac, Bénédictine, and orange liqueur"
         },
         {
+          "id": "el-camino",
+          "why": "mezcal and rye for bourbon and cognac"
+        },
+        {
           "id": "fancy-free",
           "why": "maraschino liqueur for Bénédictine and orange liqueur"
         },
         {
+          "id": "physically-forgotten",
+          "why": "gin and maraschino liqueur for bourbon, cognac, Bénédictine, and orange liqueur"
+        },
+        {
           "id": "one-chance-fancy",
           "why": "tequila for bourbon and cognac"
-        },
-        {
-          "id": "frisco",
-          "why": "without cognac and orange liqueur"
-        },
-        {
-          "id": "dempsey",
-          "why": "apple brandy and gin for bourbon and cognac"
         }
       ]
     },
@@ -805,12 +857,24 @@
           "why": "bourbon for tequila"
         },
         {
+          "id": "brazilian-negroni",
+          "why": "cachaça for tequila"
+        },
+        {
+          "id": "cin-cyn",
+          "why": "gin and Cynar for tequila and Campari"
+        },
+        {
           "id": "negroni",
           "why": "gin for tequila"
         },
         {
           "id": "old-pal",
           "why": "rye for tequila"
+        },
+        {
+          "id": "little-italy",
+          "why": "rye and Cynar for tequila and Campari"
         },
         {
           "id": "lucien-gaudin",
@@ -830,6 +894,10 @@
           "why": "gin and maraschino liqueur for tequila and orange liqueur"
         },
         {
+          "id": "el-camino",
+          "why": "mezcal, rye, and Bénédictine for tequila and orange liqueur"
+        },
+        {
           "id": "fancy-free",
           "why": "bourbon and maraschino liqueur for tequila and orange liqueur"
         },
@@ -846,16 +914,12 @@
           "why": "vodka and Bénédictine for tequila and orange liqueur"
         },
         {
+          "id": "physically-forgotten",
+          "why": "gin and maraschino liqueur for tequila and orange liqueur"
+        },
+        {
           "id": "frisco",
           "why": "bourbon and Bénédictine for tequila and orange liqueur"
-        },
-        {
-          "id": "cock-n-bull-special",
-          "why": "bourbon and cognac for tequila"
-        },
-        {
-          "id": "dempsey",
-          "why": "apple brandy and gin for tequila"
         }
       ]
     },
@@ -863,8 +927,16 @@
       "pattern": "negroni",
       "kin": [
         {
+          "id": "cin-cyn",
+          "why": "gin and sweet vermouth for rye and dry vermouth"
+        },
+        {
           "id": "negroni",
           "why": "gin and sweet vermouth for rye and dry vermouth"
+        },
+        {
+          "id": "brazilian-negroni",
+          "why": "cachaça and sweet vermouth for rye and dry vermouth"
         },
         {
           "id": "boulevardier",
@@ -881,6 +953,10 @@
         {
           "id": "rosita",
           "why": "tequila for rye"
+        },
+        {
+          "id": "little-italy",
+          "why": "sweet vermouth and Cynar for dry vermouth and Campari"
         }
       ]
     },
@@ -893,6 +969,10 @@
         },
         {
           "id": "martini",
+          "why": "gin and dry vermouth for rye, cognac, and sweet vermouth"
+        },
+        {
+          "id": "racquet-club",
           "why": "gin and dry vermouth for rye, cognac, and sweet vermouth"
         },
         {
@@ -914,10 +994,6 @@
         {
           "id": "automobile",
           "why": "scotch and gin for rye and cognac"
-        },
-        {
-          "id": "vieux-carre",
-          "why": "with Bénédictine"
         }
       ]
     },
@@ -931,6 +1007,10 @@
         {
           "id": "casino",
           "why": "gin and maraschino liqueur for rye and Bénédictine"
+        },
+        {
+          "id": "el-camino",
+          "why": "with mezcal"
         },
         {
           "id": "fancy-free",
@@ -949,12 +1029,8 @@
           "why": "bourbon and cognac for rye"
         },
         {
-          "id": "frisco",
-          "why": "bourbon for rye"
-        },
-        {
-          "id": "dempsey",
-          "why": "apple brandy and gin for rye"
+          "id": "physically-forgotten",
+          "why": "gin and maraschino liqueur for rye and Bénédictine"
         }
       ]
     },
@@ -976,6 +1052,14 @@
         {
           "id": "scotch-old-fashioned",
           "why": "scotch for rye"
+        },
+        {
+          "id": "toronto",
+          "why": "Fernet and demerara syrup for maraschino liqueur and simple syrup"
+        },
+        {
+          "id": "cornerstone",
+          "why": "cachaça and Fernet for rye and maraschino liqueur"
         }
       ]
     },
@@ -997,6 +1081,14 @@
         {
           "id": "scotch-old-fashioned",
           "why": "scotch for rye"
+        },
+        {
+          "id": "toronto",
+          "why": "demerara syrup for simple syrup"
+        },
+        {
+          "id": "cornerstone",
+          "why": "cachaça and grenadine for rye and simple syrup"
         }
       ]
     },
@@ -1020,6 +1112,10 @@
           "why": "scotch and Bénédictine for rye and maraschino liqueur"
         },
         {
+          "id": "telling-phoebe",
+          "why": "scotch, Fernet, and Bénédictine for rye and maraschino liqueur"
+        },
+        {
           "id": "so-so-cocktail",
           "why": "gin, apple brandy, and dry vermouth for rye and sweet vermouth"
         },
@@ -1029,10 +1125,6 @@
         },
         {
           "id": "olivette",
-          "why": "gin and dry vermouth for rye and sweet vermouth"
-        },
-        {
-          "id": "villa-straylight",
           "why": "gin and dry vermouth for rye and sweet vermouth"
         }
       ]
@@ -1098,16 +1190,16 @@
           "why": "gin and dry vermouth for rye and sweet vermouth"
         },
         {
+          "id": "racquet-club",
+          "why": "gin and dry vermouth for rye and sweet vermouth"
+        },
+        {
           "id": "rob-roy",
           "why": "scotch for rye"
         },
         {
           "id": "fitchett",
           "why": "gin and Bénédictine for rye and apricot liqueur"
-        },
-        {
-          "id": "automobile",
-          "why": "scotch and gin for rye"
         }
       ]
     },
@@ -1131,6 +1223,10 @@
           "why": "gin and dry vermouth for rye, cognac, and sweet vermouth"
         },
         {
+          "id": "1910",
+          "why": "mezcal and maraschino liqueur for rye and Bénédictine"
+        },
+        {
           "id": "country-club",
           "why": "light rum and dry vermouth for rye, cognac, and sweet vermouth"
         },
@@ -1141,10 +1237,6 @@
         {
           "id": "manhattan",
           "why": "bourbon for rye and cognac"
-        },
-        {
-          "id": "martini",
-          "why": "gin and dry vermouth for rye, cognac, and sweet vermouth"
         }
       ]
     },
@@ -1152,8 +1244,16 @@
       "pattern": "martini",
       "kin": [
         {
+          "id": "bijou",
+          "why": "gin and Chartreuse for rye and Bénédictine"
+        },
+        {
           "id": "vancouver",
           "why": "gin and dry vermouth for rye and sweet vermouth"
+        },
+        {
+          "id": "1910",
+          "why": "mezcal, cognac, and maraschino liqueur for rye and Bénédictine"
         },
         {
           "id": "country-club",
@@ -1174,14 +1274,6 @@
         {
           "id": "journalist",
           "why": "gin and orange liqueur for rye and Bénédictine"
-        },
-        {
-          "id": "automobile",
-          "why": "scotch and gin for rye"
-        },
-        {
-          "id": "vieux-carre",
-          "why": "with cognac"
         }
       ]
     },
@@ -1197,6 +1289,10 @@
           "why": "gin and dry vermouth for scotch and sweet vermouth"
         },
         {
+          "id": "telling-phoebe",
+          "why": "with Fernet"
+        },
+        {
           "id": "yacht-club",
           "why": "light rum and apricot liqueur for scotch and Bénédictine"
         },
@@ -1209,16 +1305,12 @@
           "why": "gin and dry vermouth for scotch and sweet vermouth"
         },
         {
-          "id": "palace-hotel",
-          "why": "cognac and orange liqueur for scotch and Bénédictine"
+          "id": "hanky-panky",
+          "why": "gin and Fernet for scotch and Bénédictine"
         },
         {
-          "id": "red-hook",
-          "why": "rye and maraschino liqueur for scotch and Bénédictine"
-        },
-        {
-          "id": "so-so-cocktail",
-          "why": "gin, apple brandy, and dry vermouth for scotch and sweet vermouth"
+          "id": "newark",
+          "why": "apple brandy, Fernet, and maraschino liqueur for scotch and Bénédictine"
         }
       ]
     },
@@ -1242,6 +1334,10 @@
           "why": "gin for scotch"
         },
         {
+          "id": "1910",
+          "why": "mezcal and cognac for scotch"
+        },
+        {
           "id": "country-club",
           "why": "light rum for scotch"
         },
@@ -1252,10 +1348,6 @@
         {
           "id": "martini",
           "why": "gin for scotch"
-        },
-        {
-          "id": "rob-roy",
-          "why": "orange bitters for Angostura"
         }
       ]
     },
@@ -1268,6 +1360,10 @@
         },
         {
           "id": "martini",
+          "why": "gin and dry vermouth for scotch and sweet vermouth"
+        },
+        {
+          "id": "racquet-club",
           "why": "gin and dry vermouth for scotch and sweet vermouth"
         },
         {
@@ -1289,10 +1385,6 @@
         {
           "id": "vieux-carre",
           "why": "rye and cognac for scotch"
-        },
-        {
-          "id": "fitchett",
-          "why": "gin for scotch"
         }
       ]
     },
@@ -1306,6 +1398,14 @@
         {
           "id": "rum-old-fashioned",
           "why": "aged rum and demerara syrup for scotch and simple syrup"
+        },
+        {
+          "id": "toronto",
+          "why": "rye and demerara syrup for scotch and simple syrup"
+        },
+        {
+          "id": "cornerstone",
+          "why": "cachaça and grenadine for scotch and simple syrup"
         },
         {
           "id": "improved-cocktail",
@@ -1329,6 +1429,10 @@
           "why": "with Bénédictine"
         },
         {
+          "id": "bijou",
+          "why": "with Chartreuse"
+        },
+        {
           "id": "journalist",
           "why": "with dry vermouth and lemon juice"
         },
@@ -1337,19 +1441,15 @@
           "why": "dry vermouth for sweet vermouth"
         },
         {
+          "id": "1910",
+          "why": "mezcal and cognac for scotch and gin"
+        },
+        {
           "id": "country-club",
           "why": "light rum and dry vermouth for scotch, gin, and sweet vermouth"
         },
         {
           "id": "dry-orange-martini",
-          "why": "dry vermouth for sweet vermouth"
-        },
-        {
-          "id": "manhattan",
-          "why": "bourbon for scotch and gin"
-        },
-        {
-          "id": "martini",
           "why": "dry vermouth for sweet vermouth"
         }
       ]
@@ -1357,6 +1457,10 @@
     "country-club": {
       "pattern": "martini",
       "kin": [
+        {
+          "id": "1910",
+          "why": "mezcal, cognac, and sweet vermouth for light rum and dry vermouth"
+        },
         {
           "id": "dry-orange-martini",
           "why": "gin for light rum"
@@ -1384,10 +1488,6 @@
         {
           "id": "martinez",
           "why": "gin and maraschino liqueur for light rum and orange liqueur"
-        },
-        {
-          "id": "vieux-carre",
-          "why": "rye, cognac, and sweet vermouth for light rum and dry vermouth"
         }
       ]
     },
@@ -1411,6 +1511,10 @@
           "why": "vodka and dry vermouth for light rum and sweet vermouth"
         },
         {
+          "id": "hanky-panky",
+          "why": "gin and Fernet for light rum and apricot liqueur"
+        },
+        {
           "id": "palace-hotel",
           "why": "cognac and orange liqueur for light rum and apricot liqueur"
         },
@@ -1419,12 +1523,8 @@
           "why": "gin, apple brandy, and dry vermouth for light rum and sweet vermouth"
         },
         {
-          "id": "dry-orange-martini",
-          "why": "gin and dry vermouth for light rum and sweet vermouth"
-        },
-        {
-          "id": "manhattan",
-          "why": "bourbon for light rum"
+          "id": "telling-phoebe",
+          "why": "scotch, Fernet, and Bénédictine for light rum and apricot liqueur"
         }
       ]
     },
@@ -1448,6 +1548,10 @@
           "why": "gin and maraschino liqueur for vodka and Bénédictine"
         },
         {
+          "id": "el-camino",
+          "why": "mezcal and rye for vodka"
+        },
+        {
           "id": "fancy-free",
           "why": "bourbon and maraschino liqueur for vodka and Bénédictine"
         },
@@ -1456,12 +1560,8 @@
           "why": "tequila and orange liqueur for vodka and Bénédictine"
         },
         {
-          "id": "frisco",
-          "why": "bourbon for vodka"
-        },
-        {
-          "id": "dempsey",
-          "why": "apple brandy and gin for vodka"
+          "id": "physically-forgotten",
+          "why": "gin and maraschino liqueur for vodka and Bénédictine"
         }
       ]
     },
@@ -1497,8 +1597,8 @@
           "why": "gin for vodka"
         },
         {
-          "id": "manhattan",
-          "why": "bourbon and sweet vermouth for vodka and dry vermouth"
+          "id": "hanky-panky",
+          "why": "gin and sweet vermouth for vodka and dry vermouth"
         }
       ]
     },
@@ -1506,12 +1606,20 @@
       "pattern": "negroni",
       "kin": [
         {
+          "id": "cin-cyn",
+          "why": "Cynar for Campari"
+        },
+        {
           "id": "negroni",
           "why": "without absinthe"
         },
         {
           "id": "old-pal",
           "why": "rye and dry vermouth for gin and sweet vermouth"
+        },
+        {
+          "id": "brazilian-negroni",
+          "why": "cachaça for gin"
         },
         {
           "id": "boulevardier",
@@ -1524,6 +1632,10 @@
         {
           "id": "rosita",
           "why": "tequila for gin"
+        },
+        {
+          "id": "little-italy",
+          "why": "rye and Cynar for gin and Campari"
         }
       ]
     },
@@ -1531,8 +1643,16 @@
       "pattern": "negroni",
       "kin": [
         {
+          "id": "cin-cyn",
+          "why": "Cynar for Campari"
+        },
+        {
           "id": "old-pal",
           "why": "rye and dry vermouth for gin and sweet vermouth"
+        },
+        {
+          "id": "brazilian-negroni",
+          "why": "cachaça for gin"
         },
         {
           "id": "boulevardier",
@@ -1549,6 +1669,10 @@
         {
           "id": "rosita",
           "why": "tequila for gin"
+        },
+        {
+          "id": "little-italy",
+          "why": "rye and Cynar for gin and Campari"
         }
       ]
     },
@@ -1558,6 +1682,10 @@
         {
           "id": "burnt-fuselage",
           "why": "cognac for gin"
+        },
+        {
+          "id": "newark",
+          "why": "apple brandy and sweet vermouth for gin and dry vermouth"
         },
         {
           "id": "villa-straylight",
@@ -1572,26 +1700,30 @@
           "why": "elderflower liqueur for apricot liqueur and orange liqueur"
         },
         {
+          "id": "telling-phoebe",
+          "why": "scotch and sweet vermouth for gin and dry vermouth"
+        },
+        {
           "id": "bobby-burns",
           "why": "scotch and sweet vermouth for gin and dry vermouth"
         },
         {
-          "id": "country-club",
-          "why": "light rum for gin"
-        },
-        {
-          "id": "palace-hotel",
-          "why": "cognac and sweet vermouth for gin and dry vermouth"
-        },
-        {
-          "id": "red-hook",
-          "why": "rye and sweet vermouth for gin and dry vermouth"
+          "id": "bijou",
+          "why": "sweet vermouth and Chartreuse for dry vermouth, apricot liqueur, and orange liqueur"
         }
       ]
     },
     "lucien-gaudin": {
       "pattern": "negroni",
       "kin": [
+        {
+          "id": "brazilian-negroni",
+          "why": "cachaça and sweet vermouth for gin and dry vermouth"
+        },
+        {
+          "id": "cin-cyn",
+          "why": "sweet vermouth and Cynar for dry vermouth and Campari"
+        },
         {
           "id": "negroni",
           "why": "sweet vermouth for dry vermouth"
@@ -1603,6 +1735,10 @@
         {
           "id": "boulevardier",
           "why": "bourbon and sweet vermouth for gin and dry vermouth"
+        },
+        {
+          "id": "little-italy",
+          "why": "rye and sweet vermouth for gin and dry vermouth"
         },
         {
           "id": "quill",
@@ -1630,6 +1766,10 @@
           "why": "cognac for gin"
         },
         {
+          "id": "1910",
+          "why": "mezcal and cognac for gin"
+        },
+        {
           "id": "country-club",
           "why": "light rum and orange liqueur for gin and maraschino liqueur"
         },
@@ -1644,10 +1784,6 @@
         {
           "id": "manhattan",
           "why": "bourbon for gin"
-        },
-        {
-          "id": "martini",
-          "why": "without sweet vermouth and maraschino liqueur"
         }
       ]
     },
@@ -1663,6 +1799,10 @@
           "why": "sweet vermouth for dry vermouth"
         },
         {
+          "id": "racquet-club",
+          "why": "crème de cacao for Bénédictine"
+        },
+        {
           "id": "dry-orange-martini",
           "why": "orange liqueur for Bénédictine"
         },
@@ -1675,22 +1815,22 @@
           "why": "cognac for gin"
         },
         {
+          "id": "1910",
+          "why": "mezcal, cognac, and sweet vermouth for gin and dry vermouth"
+        },
+        {
           "id": "country-club",
           "why": "light rum and orange liqueur for gin and Bénédictine"
-        },
-        {
-          "id": "journalist",
-          "why": "orange liqueur for Bénédictine"
-        },
-        {
-          "id": "manhattan",
-          "why": "bourbon and sweet vermouth for gin and dry vermouth"
         }
       ]
     },
     "journalist": {
       "pattern": "martini",
       "kin": [
+        {
+          "id": "1910",
+          "why": "mezcal, cognac, and maraschino liqueur for gin and orange liqueur"
+        },
         {
           "id": "country-club",
           "why": "light rum for gin"
@@ -1718,10 +1858,6 @@
         {
           "id": "martinez",
           "why": "maraschino liqueur for orange liqueur"
-        },
-        {
-          "id": "affinity",
-          "why": "scotch for gin"
         }
       ]
     },
@@ -1735,6 +1871,14 @@
         {
           "id": "dry-orange-martini",
           "why": "orange liqueur for Bénédictine"
+        },
+        {
+          "id": "racquet-club",
+          "why": "crème de cacao for Bénédictine"
+        },
+        {
+          "id": "1910",
+          "why": "mezcal, cognac, and sweet vermouth for gin and dry vermouth"
         },
         {
           "id": "country-club",
@@ -1751,14 +1895,6 @@
         {
           "id": "vieux-carre",
           "why": "rye, cognac, and sweet vermouth for gin and dry vermouth"
-        },
-        {
-          "id": "manhattan",
-          "why": "bourbon and sweet vermouth for gin and dry vermouth"
-        },
-        {
-          "id": "martini",
-          "why": "without Bénédictine"
         }
       ]
     },
@@ -1815,8 +1951,16 @@
           "why": "dry vermouth for sweet vermouth"
         },
         {
+          "id": "bijou",
+          "why": "Chartreuse for Bénédictine"
+        },
+        {
           "id": "vieux-carre",
           "why": "rye and cognac for gin"
+        },
+        {
+          "id": "1910",
+          "why": "mezcal, cognac, and maraschino liqueur for gin and Bénédictine"
         },
         {
           "id": "country-club",
@@ -1825,14 +1969,6 @@
         {
           "id": "journalist",
           "why": "orange liqueur for Bénédictine"
-        },
-        {
-          "id": "dry-orange-martini",
-          "why": "dry vermouth and orange liqueur for sweet vermouth and Bénédictine"
-        },
-        {
-          "id": "manhattan",
-          "why": "bourbon for gin"
         }
       ]
     },
@@ -1842,6 +1978,10 @@
         {
           "id": "manhattan",
           "why": "bourbon and sweet vermouth for gin and dry vermouth"
+        },
+        {
+          "id": "racquet-club",
+          "why": "with crème de cacao"
         },
         {
           "id": "rob-roy",
@@ -1866,10 +2006,6 @@
         {
           "id": "vieux-carre",
           "why": "rye, cognac, and sweet vermouth for gin and dry vermouth"
-        },
-        {
-          "id": "fitchett",
-          "why": "sweet vermouth for dry vermouth"
         }
       ]
     },
@@ -1914,6 +2050,10 @@
       "pattern": "fancy",
       "kin": [
         {
+          "id": "el-camino",
+          "why": "mezcal, rye, and Bénédictine for gin and maraschino liqueur"
+        },
+        {
           "id": "fancy-free",
           "why": "bourbon for gin"
         },
@@ -1938,18 +2078,18 @@
           "why": "bourbon, cognac, Bénédictine, and orange liqueur for gin and maraschino liqueur"
         },
         {
-          "id": "frisco",
-          "why": "bourbon and Bénédictine for gin and maraschino liqueur"
-        },
-        {
-          "id": "dempsey",
-          "why": "with apple brandy and grenadine"
+          "id": "physically-forgotten",
+          "why": "with Cynar"
         }
       ]
     },
     "dry-orange-martini": {
       "pattern": "martini",
       "kin": [
+        {
+          "id": "racquet-club",
+          "why": "crème de cacao for orange liqueur"
+        },
         {
           "id": "vancouver",
           "why": "Bénédictine for orange liqueur"
@@ -1977,10 +2117,6 @@
         {
           "id": "martini",
           "why": "without orange liqueur"
-        },
-        {
-          "id": "rob-roy",
-          "why": "scotch and sweet vermouth for gin and dry vermouth"
         }
       ]
     },
@@ -2012,18 +2148,22 @@
           "why": "without maraschino liqueur and absinthe"
         },
         {
-          "id": "rob-roy",
-          "why": "scotch and sweet vermouth for gin and dry vermouth"
+          "id": "racquet-club",
+          "why": "crème de cacao for maraschino liqueur"
         },
         {
-          "id": "saratoga",
-          "why": "rye, cognac, and sweet vermouth for gin and dry vermouth"
+          "id": "rob-roy",
+          "why": "scotch and sweet vermouth for gin and dry vermouth"
         }
       ]
     },
     "duplex": {
       "pattern": "vermouth",
       "kin": [
+        {
+          "id": "bamboo",
+          "why": "sherry for sweet vermouth"
+        },
         {
           "id": "vermouth-panache",
           "why": "more sweet vermouth"
@@ -2045,6 +2185,10 @@
     "vermouth-panache": {
       "pattern": "vermouth",
       "kin": [
+        {
+          "id": "bamboo",
+          "why": "sherry for sweet vermouth"
+        },
         {
           "id": "duplex",
           "why": "less sweet vermouth"
@@ -2075,6 +2219,10 @@
           "why": "without maraschino liqueur"
         },
         {
+          "id": "bamboo",
+          "why": "sherry for sweet vermouth"
+        },
+        {
           "id": "chrysanthemum",
           "why": "Bénédictine for maraschino liqueur"
         },
@@ -2094,6 +2242,10 @@
         {
           "id": "diplomat",
           "why": "maraschino liqueur for Bénédictine"
+        },
+        {
+          "id": "bamboo",
+          "why": "with sherry"
         },
         {
           "id": "duplex",
@@ -2121,8 +2273,519 @@
           "why": "with absinthe"
         },
         {
+          "id": "bamboo",
+          "why": "with sherry"
+        },
+        {
           "id": "diplomat",
           "why": "maraschino liqueur for Bénédictine"
+        }
+      ]
+    },
+    "el-camino": {
+      "pattern": "fancy",
+      "kin": [
+        {
+          "id": "casino",
+          "why": "gin and maraschino liqueur for mezcal, rye, and Bénédictine"
+        },
+        {
+          "id": "fancy-free",
+          "why": "bourbon and maraschino liqueur for mezcal, rye, and Bénédictine"
+        },
+        {
+          "id": "monte-carlo",
+          "why": "Angostura for Peychaud's"
+        },
+        {
+          "id": "one-chance-fancy",
+          "why": "tequila and orange liqueur for mezcal, rye, and Bénédictine"
+        },
+        {
+          "id": "fancy-cocktail",
+          "why": "bourbon and orange liqueur for mezcal, rye, and Bénédictine"
+        },
+        {
+          "id": "tipsy-coachman",
+          "why": "vodka for mezcal and rye"
+        },
+        {
+          "id": "cock-n-bull-special",
+          "why": "bourbon and cognac for mezcal and rye"
+        },
+        {
+          "id": "physically-forgotten",
+          "why": "gin and maraschino liqueur for mezcal, rye, and Bénédictine"
+        }
+      ]
+    },
+    "1910": {
+      "pattern": "martini",
+      "kin": [
+        {
+          "id": "country-club",
+          "why": "light rum and dry vermouth for mezcal, cognac, and sweet vermouth"
+        },
+        {
+          "id": "vancouver",
+          "why": "gin and dry vermouth for mezcal, cognac, and sweet vermouth"
+        },
+        {
+          "id": "fitchett",
+          "why": "gin and Bénédictine for mezcal, cognac, and maraschino liqueur"
+        },
+        {
+          "id": "journalist",
+          "why": "gin and orange liqueur for mezcal, cognac, and maraschino liqueur"
+        },
+        {
+          "id": "automobile",
+          "why": "scotch and gin for mezcal and cognac"
+        },
+        {
+          "id": "ford-cocktail",
+          "why": "gin and dry vermouth for mezcal, cognac, and sweet vermouth"
+        },
+        {
+          "id": "martinez",
+          "why": "gin for mezcal and cognac"
+        },
+        {
+          "id": "vieux-carre",
+          "why": "rye and Bénédictine for mezcal and maraschino liqueur"
+        }
+      ]
+    },
+    "brazilian-negroni": {
+      "pattern": "negroni",
+      "kin": [
+        {
+          "id": "boulevardier",
+          "why": "bourbon for cachaça"
+        },
+        {
+          "id": "negroni",
+          "why": "gin for cachaça"
+        },
+        {
+          "id": "cin-cyn",
+          "why": "gin and Cynar for cachaça and Campari"
+        },
+        {
+          "id": "old-pal",
+          "why": "rye and dry vermouth for cachaça and sweet vermouth"
+        },
+        {
+          "id": "lucien-gaudin",
+          "why": "gin and dry vermouth for cachaça and sweet vermouth"
+        },
+        {
+          "id": "little-italy",
+          "why": "rye and Cynar for cachaça and Campari"
+        },
+        {
+          "id": "quill",
+          "why": "gin for cachaça"
+        },
+        {
+          "id": "rosita",
+          "why": "tequila for cachaça"
+        }
+      ]
+    },
+    "cornerstone": {
+      "pattern": "old-fashioned",
+      "kin": [
+        {
+          "id": "toronto",
+          "why": "rye and demerara syrup for cachaça and grenadine"
+        },
+        {
+          "id": "old-fashioned",
+          "why": "bourbon and demerara syrup for cachaça and grenadine"
+        },
+        {
+          "id": "rum-old-fashioned",
+          "why": "aged rum and demerara syrup for cachaça and grenadine"
+        },
+        {
+          "id": "scotch-old-fashioned",
+          "why": "scotch and simple syrup for cachaça and grenadine"
+        },
+        {
+          "id": "improved-cocktail",
+          "why": "rye and maraschino liqueur for cachaça and Fernet"
+        },
+        {
+          "id": "sazerac",
+          "why": "rye and simple syrup for cachaça and grenadine"
+        }
+      ]
+    },
+    "newark": {
+      "pattern": "martini",
+      "kin": [
+        {
+          "id": "burnt-fuselage",
+          "why": "cognac and dry vermouth for apple brandy and sweet vermouth"
+        },
+        {
+          "id": "claridge",
+          "why": "gin and dry vermouth for apple brandy and sweet vermouth"
+        },
+        {
+          "id": "olivette",
+          "why": "gin and dry vermouth for apple brandy and sweet vermouth"
+        },
+        {
+          "id": "telling-phoebe",
+          "why": "scotch and Bénédictine for apple brandy and maraschino liqueur"
+        },
+        {
+          "id": "bobby-burns",
+          "why": "scotch and Bénédictine for apple brandy, Fernet, and maraschino liqueur"
+        },
+        {
+          "id": "bijou",
+          "why": "gin and Chartreuse for apple brandy, Fernet, and maraschino liqueur"
+        },
+        {
+          "id": "1910",
+          "why": "mezcal and cognac for apple brandy"
+        },
+        {
+          "id": "country-club",
+          "why": "light rum and dry vermouth for apple brandy and sweet vermouth"
+        }
+      ]
+    },
+    "toronto": {
+      "pattern": "old-fashioned",
+      "kin": [
+        {
+          "id": "old-fashioned",
+          "why": "bourbon for rye"
+        },
+        {
+          "id": "rum-old-fashioned",
+          "why": "aged rum for rye"
+        },
+        {
+          "id": "scotch-old-fashioned",
+          "why": "scotch and simple syrup for rye and demerara syrup"
+        },
+        {
+          "id": "cornerstone",
+          "why": "cachaça and grenadine for rye and demerara syrup"
+        },
+        {
+          "id": "improved-cocktail",
+          "why": "maraschino liqueur and simple syrup for Fernet and demerara syrup"
+        },
+        {
+          "id": "sazerac",
+          "why": "simple syrup for demerara syrup"
+        }
+      ]
+    },
+    "little-italy": {
+      "pattern": "negroni",
+      "kin": [
+        {
+          "id": "cin-cyn",
+          "why": "gin for rye"
+        },
+        {
+          "id": "boulevardier",
+          "why": "bourbon and Campari for rye and Cynar"
+        },
+        {
+          "id": "brazilian-negroni",
+          "why": "cachaça and Campari for rye and Cynar"
+        },
+        {
+          "id": "lucien-gaudin",
+          "why": "gin and dry vermouth for rye and sweet vermouth"
+        },
+        {
+          "id": "negroni",
+          "why": "gin and Campari for rye and Cynar"
+        },
+        {
+          "id": "old-pal",
+          "why": "dry vermouth and Campari for sweet vermouth and Cynar"
+        },
+        {
+          "id": "rosita",
+          "why": "tequila and Campari for rye and Cynar"
+        },
+        {
+          "id": "quill",
+          "why": "gin and Campari for rye and Cynar"
+        }
+      ]
+    },
+    "telling-phoebe": {
+      "pattern": "martini",
+      "kin": [
+        {
+          "id": "bobby-burns",
+          "why": "without Fernet"
+        },
+        {
+          "id": "burnt-fuselage",
+          "why": "cognac and dry vermouth for scotch and sweet vermouth"
+        },
+        {
+          "id": "claridge",
+          "why": "gin and dry vermouth for scotch and sweet vermouth"
+        },
+        {
+          "id": "newark",
+          "why": "apple brandy and maraschino liqueur for scotch and Bénédictine"
+        },
+        {
+          "id": "olivette",
+          "why": "gin and dry vermouth for scotch and sweet vermouth"
+        },
+        {
+          "id": "red-hook",
+          "why": "rye and maraschino liqueur for scotch, Fernet, and Bénédictine"
+        },
+        {
+          "id": "yacht-club",
+          "why": "light rum and apricot liqueur for scotch, Fernet, and Bénédictine"
+        },
+        {
+          "id": "vancouver",
+          "why": "gin and dry vermouth for scotch and sweet vermouth"
+        }
+      ]
+    },
+    "hanky-panky": {
+      "pattern": "martini",
+      "kin": [
+        {
+          "id": "palace-hotel",
+          "why": "cognac and orange liqueur for gin and Fernet"
+        },
+        {
+          "id": "bobby-burns",
+          "why": "scotch and Bénédictine for gin and Fernet"
+        },
+        {
+          "id": "so-so-cocktail",
+          "why": "dry vermouth for sweet vermouth"
+        },
+        {
+          "id": "yacht-club",
+          "why": "light rum and apricot liqueur for gin and Fernet"
+        },
+        {
+          "id": "olivette",
+          "why": "dry vermouth and elderflower liqueur for sweet vermouth and Fernet"
+        },
+        {
+          "id": "affinity",
+          "why": "scotch for gin"
+        },
+        {
+          "id": "metropole",
+          "why": "cognac and dry vermouth for gin and sweet vermouth"
+        },
+        {
+          "id": "ford-cocktail",
+          "why": "dry vermouth and Bénédictine for sweet vermouth and Fernet"
+        }
+      ]
+    },
+    "racquet-club": {
+      "pattern": "martini",
+      "kin": [
+        {
+          "id": "manhattan",
+          "why": "bourbon and sweet vermouth for gin and dry vermouth"
+        },
+        {
+          "id": "martini",
+          "why": "without crème de cacao"
+        },
+        {
+          "id": "rob-roy",
+          "why": "scotch and sweet vermouth for gin and dry vermouth"
+        },
+        {
+          "id": "saratoga",
+          "why": "rye, cognac, and sweet vermouth for gin and dry vermouth"
+        },
+        {
+          "id": "dry-orange-martini",
+          "why": "orange liqueur for crème de cacao"
+        },
+        {
+          "id": "ford-cocktail",
+          "why": "Bénédictine for crème de cacao"
+        },
+        {
+          "id": "vancouver",
+          "why": "Bénédictine for crème de cacao"
+        },
+        {
+          "id": "automobile",
+          "why": "sweet vermouth for dry vermouth"
+        }
+      ]
+    },
+    "bijou": {
+      "pattern": "martini",
+      "kin": [
+        {
+          "id": "fitchett",
+          "why": "Bénédictine for Chartreuse"
+        },
+        {
+          "id": "automobile",
+          "why": "with scotch"
+        },
+        {
+          "id": "1910",
+          "why": "mezcal, cognac, and maraschino liqueur for gin and Chartreuse"
+        },
+        {
+          "id": "country-club",
+          "why": "light rum and dry vermouth for gin and sweet vermouth"
+        },
+        {
+          "id": "vancouver",
+          "why": "dry vermouth and Bénédictine for sweet vermouth and Chartreuse"
+        },
+        {
+          "id": "journalist",
+          "why": "orange liqueur for Chartreuse"
+        },
+        {
+          "id": "burnt-fuselage",
+          "why": "cognac and dry vermouth for gin and sweet vermouth"
+        },
+        {
+          "id": "claridge",
+          "why": "dry vermouth, apricot liqueur, and orange liqueur for sweet vermouth and Chartreuse"
+        }
+      ]
+    },
+    "cin-cyn": {
+      "pattern": "negroni",
+      "kin": [
+        {
+          "id": "negroni",
+          "why": "Campari for Cynar"
+        },
+        {
+          "id": "old-pal",
+          "why": "rye and dry vermouth for gin and sweet vermouth"
+        },
+        {
+          "id": "little-italy",
+          "why": "rye for gin"
+        },
+        {
+          "id": "brazilian-negroni",
+          "why": "cachaça and Campari for gin and Cynar"
+        },
+        {
+          "id": "boulevardier",
+          "why": "bourbon and Campari for gin and Cynar"
+        },
+        {
+          "id": "lucien-gaudin",
+          "why": "dry vermouth and Campari for sweet vermouth and Cynar"
+        },
+        {
+          "id": "quill",
+          "why": "Campari for Cynar"
+        },
+        {
+          "id": "rosita",
+          "why": "tequila and Campari for gin and Cynar"
+        }
+      ]
+    },
+    "physically-forgotten": {
+      "pattern": "fancy",
+      "kin": [
+        {
+          "id": "fancy-cocktail",
+          "why": "bourbon and orange liqueur for gin and maraschino liqueur"
+        },
+        {
+          "id": "monte-carlo",
+          "why": "rye and Bénédictine for gin and maraschino liqueur"
+        },
+        {
+          "id": "tipsy-coachman",
+          "why": "vodka and Bénédictine for gin and maraschino liqueur"
+        },
+        {
+          "id": "casino",
+          "why": "without Cynar"
+        },
+        {
+          "id": "el-camino",
+          "why": "mezcal, rye, and Bénédictine for gin and maraschino liqueur"
+        },
+        {
+          "id": "fancy-free",
+          "why": "bourbon for gin"
+        },
+        {
+          "id": "cock-n-bull-special",
+          "why": "bourbon, cognac, Bénédictine, and orange liqueur for gin and maraschino liqueur"
+        },
+        {
+          "id": "one-chance-fancy",
+          "why": "tequila and orange liqueur for gin and maraschino liqueur"
+        }
+      ]
+    },
+    "bamboo": {
+      "pattern": "vermouth",
+      "kin": [
+        {
+          "id": "duplex",
+          "why": "sweet vermouth for sherry"
+        },
+        {
+          "id": "vermouth-panache",
+          "why": "sweet vermouth for sherry"
+        },
+        {
+          "id": "diplomat",
+          "why": "sweet vermouth for sherry"
+        },
+        {
+          "id": "tip-top",
+          "why": "with Bénédictine"
+        },
+        {
+          "id": "chrysanthemum",
+          "why": "with Bénédictine and absinthe"
+        }
+      ]
+    },
+    "fernet-and-ginger": {
+      "pattern": "sparkling",
+      "kin": [
+        {
+          "id": "french-75",
+          "why": "Champagne for ginger beer"
+        },
+        {
+          "id": "air-mail",
+          "why": "Champagne for ginger beer"
+        },
+        {
+          "id": "queen-bee",
+          "why": "elderflower liqueur and Champagne for Fernet and ginger beer"
         }
       ]
     },
@@ -2150,16 +2813,16 @@
           "why": "gin and simple syrup for aged rum and demerara syrup"
         },
         {
+          "id": "pey-le",
+          "why": "cachaça, lemon juice, and grapefruit juice for aged rum and lime juice"
+        },
+        {
           "id": "daiquiri",
           "why": "light rum and simple syrup for aged rum and demerara syrup"
         },
         {
           "id": "gimlet",
           "why": "gin and simple syrup for aged rum and demerara syrup"
-        },
-        {
-          "id": "santiago",
-          "why": "light rum and grenadine for aged rum and demerara syrup"
         }
       ]
     },
@@ -2173,6 +2836,10 @@
         {
           "id": "queen-bee",
           "why": "vodka and lemon juice for aged rum and lime juice"
+        },
+        {
+          "id": "fernet-and-ginger",
+          "why": "ginger beer for Champagne"
         }
       ]
     },
@@ -2328,6 +2995,14 @@
       "pattern": "daisy",
       "kin": [
         {
+          "id": "final-ward",
+          "why": "rye, Chartreuse, and maraschino liqueur for apple brandy, elderflower liqueur, and orange liqueur"
+        },
+        {
+          "id": "last-word",
+          "why": "gin and lime juice for apple brandy and lemon juice"
+        },
+        {
           "id": "lani-honi",
           "why": "light rum and Bénédictine for apple brandy, elderflower liqueur, and orange liqueur"
         },
@@ -2350,14 +3025,6 @@
         {
           "id": "kings-jubilee",
           "why": "light rum and maraschino liqueur for apple brandy, elderflower liqueur, and orange liqueur"
-        },
-        {
-          "id": "rendezvous",
-          "why": "gin and lime juice for apple brandy and lemon juice"
-        },
-        {
-          "id": "fine-and-dandy",
-          "why": "gin for apple brandy"
         }
       ]
     },
@@ -2377,6 +3044,10 @@
           "why": "gin and elderflower liqueur for cognac and orange liqueur"
         },
         {
+          "id": "ace-of-clubs",
+          "why": "aged rum and lime juice for cognac and lemon juice"
+        },
+        {
           "id": "kings-jubilee",
           "why": "light rum and maraschino liqueur for cognac and orange liqueur"
         },
@@ -2385,16 +3056,12 @@
           "why": "tequila and lime juice for cognac and lemon juice"
         },
         {
+          "id": "mezcal-margarita",
+          "why": "mezcal and lime juice for cognac and lemon juice"
+        },
+        {
           "id": "rendezvous",
           "why": "gin and lime juice for cognac and lemon juice"
-        },
-        {
-          "id": "elderflower-daiquiri",
-          "why": "light rum and lime juice for cognac and lemon juice"
-        },
-        {
-          "id": "lemon-drop",
-          "why": "vodka for cognac"
         }
       ]
     },
@@ -2426,12 +3093,12 @@
           "why": "gin and lime juice for bourbon and lemon juice"
         },
         {
-          "id": "daiquiri",
-          "why": "light rum and lime juice for bourbon and lemon juice"
+          "id": "pey-le",
+          "why": "cachaça and honey syrup for bourbon and demerara syrup"
         },
         {
-          "id": "gimlet",
-          "why": "gin and lime juice for bourbon and lemon juice"
+          "id": "daiquiri",
+          "why": "light rum and lime juice for bourbon and lemon juice"
         }
       ]
     },
@@ -2533,16 +3200,16 @@
           "why": "light rum, gin, and grenadine for bourbon and simple syrup"
         },
         {
+          "id": "pey-le",
+          "why": "cachaça, lemon juice, and grapefruit juice for bourbon and lime juice"
+        },
+        {
           "id": "daiquiri",
           "why": "light rum for bourbon"
         },
         {
           "id": "gimlet",
           "why": "gin for bourbon"
-        },
-        {
-          "id": "santiago",
-          "why": "light rum and grenadine for bourbon and simple syrup"
         }
       ]
     },
@@ -2562,6 +3229,10 @@
           "why": "tequila and lime juice for bourbon and lemon juice"
         },
         {
+          "id": "mezcal-margarita",
+          "why": "mezcal and lime juice for bourbon and lemon juice"
+        },
+        {
           "id": "derby",
           "why": "lime juice for lemon juice"
         },
@@ -2576,10 +3247,6 @@
         {
           "id": "kings-jubilee",
           "why": "light rum and maraschino liqueur for bourbon and orange liqueur"
-        },
-        {
-          "id": "rendezvous",
-          "why": "gin and lime juice for bourbon and lemon juice"
         }
       ]
     },
@@ -2599,6 +3266,14 @@
           "why": "tequila and lime juice for bourbon and lemon juice"
         },
         {
+          "id": "mezcal-margarita",
+          "why": "mezcal and lime juice for bourbon and lemon juice"
+        },
+        {
+          "id": "ace-of-clubs",
+          "why": "aged rum and lime juice for bourbon and lemon juice"
+        },
+        {
           "id": "elderflower-daiquiri",
           "why": "light rum and lime juice for bourbon and lemon juice"
         },
@@ -2609,14 +3284,6 @@
         {
           "id": "lemon-drop",
           "why": "vodka for bourbon"
-        },
-        {
-          "id": "hat-tip",
-          "why": "gin and elderflower liqueur for bourbon and orange liqueur"
-        },
-        {
-          "id": "kings-jubilee",
-          "why": "light rum and maraschino liqueur for bourbon and orange liqueur"
         }
       ]
     },
@@ -2673,6 +3340,14 @@
           "why": "tequila and lime juice for vodka and lemon juice"
         },
         {
+          "id": "mezcal-margarita",
+          "why": "mezcal and lime juice for vodka and lemon juice"
+        },
+        {
+          "id": "ace-of-clubs",
+          "why": "aged rum and lime juice for vodka and lemon juice"
+        },
+        {
           "id": "derby",
           "why": "bourbon and lime juice for vodka and lemon juice"
         },
@@ -2683,14 +3358,6 @@
         {
           "id": "katinka",
           "why": "lime juice and apricot liqueur for lemon juice and orange liqueur"
-        },
-        {
-          "id": "man-o-war",
-          "why": "bourbon for vodka"
-        },
-        {
-          "id": "hat-tip",
-          "why": "gin and elderflower liqueur for vodka and orange liqueur"
         }
       ]
     },
@@ -2718,16 +3385,16 @@
           "why": "tequila and orange liqueur for vodka and apricot liqueur"
         },
         {
+          "id": "mezcal-margarita",
+          "why": "mezcal and orange liqueur for vodka and apricot liqueur"
+        },
+        {
+          "id": "ace-of-clubs",
+          "why": "aged rum and crème de cacao for vodka and apricot liqueur"
+        },
+        {
           "id": "jasmine",
           "why": "gin and lemon juice for vodka and lime juice"
-        },
-        {
-          "id": "lani-honi",
-          "why": "light rum and lemon juice for vodka and lime juice"
-        },
-        {
-          "id": "elderflower-daiquiri",
-          "why": "light rum and elderflower liqueur for vodka and apricot liqueur"
         }
       ]
     },
@@ -2741,6 +3408,10 @@
         {
           "id": "french-75",
           "why": "gin and simple syrup for vodka and honey syrup"
+        },
+        {
+          "id": "fernet-and-ginger",
+          "why": "Fernet and ginger beer for elderflower liqueur and Champagne"
         }
       ]
     },
@@ -2791,6 +3462,10 @@
         {
           "id": "queen-bee",
           "why": "vodka and honey syrup for gin and simple syrup"
+        },
+        {
+          "id": "fernet-and-ginger",
+          "why": "ginger beer for Champagne"
         }
       ]
     },
@@ -2814,6 +3489,10 @@
           "why": "aged rum and demerara syrup for gin and simple syrup"
         },
         {
+          "id": "pey-le",
+          "why": "cachaça, lemon juice, and grapefruit juice for gin and lime juice"
+        },
+        {
           "id": "stan-lee",
           "why": "grenadine for simple syrup"
         },
@@ -2824,10 +3503,6 @@
         {
           "id": "daiquiri",
           "why": "light rum for gin"
-        },
-        {
-          "id": "gimlet",
-          "why": "without Angostura"
         }
       ]
     },
@@ -3044,12 +3719,12 @@
           "why": "tequila and lime juice for gin and lemon juice"
         },
         {
-          "id": "derby",
-          "why": "bourbon and lime juice for gin and lemon juice"
+          "id": "mezcal-margarita",
+          "why": "mezcal and lime juice for gin and lemon juice"
         },
         {
-          "id": "elderflower-daiquiri",
-          "why": "light rum and lime juice for gin and lemon juice"
+          "id": "derby",
+          "why": "bourbon and lime juice for gin and lemon juice"
         }
       ]
     },
@@ -3081,12 +3756,12 @@
           "why": "tequila and orange liqueur for gin and maraschino liqueur"
         },
         {
-          "id": "whiskey-daisy",
-          "why": "bourbon and lemon juice for gin and lime juice"
+          "id": "mezcal-margarita",
+          "why": "mezcal and orange liqueur for gin and maraschino liqueur"
         },
         {
-          "id": "derby",
-          "why": "bourbon and orange liqueur for gin and maraschino liqueur"
+          "id": "whiskey-daisy",
+          "why": "bourbon and lemon juice for gin and lime juice"
         }
       ]
     },
@@ -3110,20 +3785,20 @@
           "why": "cognac and lemon juice for gin and lime juice"
         },
         {
+          "id": "ace-of-clubs",
+          "why": "aged rum and crème de cacao for gin and apricot liqueur"
+        },
+        {
           "id": "margarita",
           "why": "tequila and orange liqueur for gin and apricot liqueur"
         },
         {
+          "id": "mezcal-margarita",
+          "why": "mezcal and orange liqueur for gin and apricot liqueur"
+        },
+        {
           "id": "elderflower-daiquiri",
           "why": "light rum and elderflower liqueur for gin and apricot liqueur"
-        },
-        {
-          "id": "lemon-drop",
-          "why": "vodka and lemon juice for gin and lime juice"
-        },
-        {
-          "id": "sidecar",
-          "why": "cognac and lemon juice for gin and lime juice"
         }
       ]
     },
@@ -3155,12 +3830,12 @@
           "why": "tequila and lime juice for gin and lemon juice"
         },
         {
-          "id": "lani-honi",
-          "why": "light rum and Bénédictine for gin and elderflower liqueur"
+          "id": "mezcal-margarita",
+          "why": "mezcal and lime juice for gin and lemon juice"
         },
         {
-          "id": "elderflower-daiquiri",
-          "why": "light rum and lime juice for gin and lemon juice"
+          "id": "ace-of-clubs",
+          "why": "aged rum and lime juice for gin and lemon juice"
         }
       ]
     },
@@ -3184,26 +3859,34 @@
           "why": "apricot liqueur and orange liqueur for elderflower liqueur"
         },
         {
+          "id": "newark",
+          "why": "apple brandy and sweet vermouth for gin and dry vermouth"
+        },
+        {
+          "id": "telling-phoebe",
+          "why": "scotch and sweet vermouth for gin and dry vermouth"
+        },
+        {
+          "id": "hanky-panky",
+          "why": "sweet vermouth and Fernet for dry vermouth and elderflower liqueur"
+        },
+        {
           "id": "palace-hotel",
           "why": "cognac and sweet vermouth for gin and dry vermouth"
-        },
-        {
-          "id": "so-so-cocktail",
-          "why": "with apple brandy and grenadine"
-        },
-        {
-          "id": "yacht-club",
-          "why": "light rum and sweet vermouth for gin and dry vermouth"
-        },
-        {
-          "id": "country-club",
-          "why": "light rum and orange liqueur for gin and elderflower liqueur"
         }
       ]
     },
     "margarita": {
       "pattern": "daisy",
       "kin": [
+        {
+          "id": "mezcal-margarita",
+          "why": "mezcal for tequila"
+        },
+        {
+          "id": "ace-of-clubs",
+          "why": "aged rum and crème de cacao for tequila and orange liqueur"
+        },
         {
           "id": "elderflower-daiquiri",
           "why": "light rum and elderflower liqueur for tequila and orange liqueur"
@@ -3227,14 +3910,6 @@
         {
           "id": "man-o-war",
           "why": "bourbon and lemon juice for tequila and lime juice"
-        },
-        {
-          "id": "sidecar",
-          "why": "cognac and lemon juice for tequila and lime juice"
-        },
-        {
-          "id": "hat-tip",
-          "why": "gin and lemon juice for tequila and lime juice"
         }
       ]
     },
@@ -3262,16 +3937,16 @@
           "why": "gin and simple syrup for tequila and grenadine"
         },
         {
+          "id": "pey-le",
+          "why": "cachaça, lemon juice, and grapefruit juice for tequila and lime juice"
+        },
+        {
           "id": "bees-knees",
           "why": "gin and lemon juice for tequila and lime juice"
         },
         {
           "id": "gold-rush",
           "why": "bourbon and lemon juice for tequila and lime juice"
-        },
-        {
-          "id": "honeysuckle",
-          "why": "light rum and honey syrup for tequila and grenadine"
         }
       ]
     },
@@ -3529,8 +4204,8 @@
           "why": "simple syrup for grenadine"
         },
         {
-          "id": "santiago",
-          "why": "without gin"
+          "id": "pey-le",
+          "why": "cachaça, lemon juice, and grapefruit juice for light rum, gin, and lime juice"
         }
       ]
     },
@@ -3546,6 +4221,14 @@
           "why": "cognac and orange liqueur for light rum and Bénédictine"
         },
         {
+          "id": "final-ward",
+          "why": "rye, Chartreuse, and maraschino liqueur for light rum and Bénédictine"
+        },
+        {
+          "id": "last-word",
+          "why": "gin and lime juice for light rum and lemon juice"
+        },
+        {
           "id": "southern-point",
           "why": "apple brandy, elderflower liqueur, and orange liqueur for light rum and Bénédictine"
         },
@@ -3558,16 +4241,8 @@
           "why": "gin and elderflower liqueur for light rum and Bénédictine"
         },
         {
-          "id": "rendezvous",
-          "why": "gin and lime juice for light rum and lemon juice"
-        },
-        {
-          "id": "margarita",
-          "why": "tequila and lime juice for light rum and lemon juice"
-        },
-        {
-          "id": "elderflower-daiquiri",
-          "why": "lime juice and elderflower liqueur for lemon juice and Bénédictine"
+          "id": "ace-of-clubs",
+          "why": "aged rum and lime juice for light rum and lemon juice"
         }
       ]
     },
@@ -3640,8 +4315,8 @@
           "why": "tequila and lime juice for light rum and lemon juice"
         },
         {
-          "id": "whiskey-daisy",
-          "why": "bourbon and orange liqueur for light rum and maraschino liqueur"
+          "id": "mezcal-margarita",
+          "why": "mezcal and lime juice for light rum and lemon juice"
         }
       ]
     },
@@ -3694,6 +4369,14 @@
           "why": "tequila and orange liqueur for light rum and elderflower liqueur"
         },
         {
+          "id": "mezcal-margarita",
+          "why": "mezcal and orange liqueur for light rum and elderflower liqueur"
+        },
+        {
+          "id": "ace-of-clubs",
+          "why": "aged rum and crème de cacao for light rum and elderflower liqueur"
+        },
+        {
           "id": "whiskey-daisy",
           "why": "bourbon and lemon juice for light rum and lime juice"
         },
@@ -3708,14 +4391,6 @@
         {
           "id": "katinka",
           "why": "vodka and apricot liqueur for light rum and elderflower liqueur"
-        },
-        {
-          "id": "man-o-war",
-          "why": "bourbon and lemon juice for light rum and lime juice"
-        },
-        {
-          "id": "hat-tip",
-          "why": "gin and lemon juice for light rum and lime juice"
         }
       ]
     },
@@ -3735,6 +4410,10 @@
           "why": "bourbon and demerara syrup for rye and grenadine"
         },
         {
+          "id": "pey-le",
+          "why": "cachaça and honey syrup for rye and grenadine"
+        },
+        {
           "id": "mexican-firing-squad",
           "why": "tequila and lime juice for rye and lemon juice"
         },
@@ -3749,10 +4428,6 @@
         {
           "id": "jack-rose",
           "why": "apple brandy and lime juice for rye and lemon juice"
-        },
-        {
-          "id": "stan-lee",
-          "why": "light rum, gin, and lime juice for rye and lemon juice"
         }
       ]
     },
@@ -3801,6 +4476,14 @@
           "why": "sweet vermouth and orange liqueur for dry vermouth and Bénédictine"
         },
         {
+          "id": "final-ward",
+          "why": "lemon juice, Chartreuse, and maraschino liqueur for lime juice and Bénédictine"
+        },
+        {
+          "id": "last-word",
+          "why": "Chartreuse and maraschino liqueur for Bénédictine"
+        },
+        {
           "id": "southern-point",
           "why": "lemon juice, elderflower liqueur, and orange liqueur for lime juice and Bénédictine"
         },
@@ -3819,14 +4502,6 @@
         {
           "id": "katinka",
           "why": "apricot liqueur for Bénédictine"
-        },
-        {
-          "id": "sidecar",
-          "why": "lemon juice and orange liqueur for lime juice and Bénédictine"
-        },
-        {
-          "id": "hat-tip",
-          "why": "lemon juice and elderflower liqueur for lime juice and Bénédictine"
         }
       ]
     },
@@ -3862,8 +4537,341 @@
           "why": "lime juice for lemon juice"
         },
         {
+          "id": "pey-le",
+          "why": "honey syrup for simple syrup"
+        }
+      ]
+    },
+    "mezcal-margarita": {
+      "pattern": "daisy",
+      "kin": [
+        {
+          "id": "margarita",
+          "why": "tequila for mezcal"
+        },
+        {
+          "id": "ace-of-clubs",
+          "why": "aged rum and crème de cacao for mezcal and orange liqueur"
+        },
+        {
+          "id": "elderflower-daiquiri",
+          "why": "light rum and elderflower liqueur for mezcal and orange liqueur"
+        },
+        {
+          "id": "lemon-drop",
+          "why": "vodka and lemon juice for mezcal and lime juice"
+        },
+        {
+          "id": "whiskey-daisy",
+          "why": "bourbon and lemon juice for mezcal and lime juice"
+        },
+        {
+          "id": "derby",
+          "why": "bourbon for mezcal"
+        },
+        {
+          "id": "katinka",
+          "why": "vodka and apricot liqueur for mezcal and orange liqueur"
+        },
+        {
+          "id": "man-o-war",
+          "why": "bourbon and lemon juice for mezcal and lime juice"
+        }
+      ]
+    },
+    "caipirinha": {
+      "pattern": "sour",
+      "kin": [
+        {
           "id": "daiquiri",
-          "why": "lime juice for lemon juice"
+          "why": "light rum for cachaça"
+        },
+        {
+          "id": "gimlet",
+          "why": "gin for cachaça"
+        },
+        {
+          "id": "santiago",
+          "why": "light rum for cachaça"
+        },
+        {
+          "id": "the-rum-drink",
+          "why": "light rum for cachaça"
+        },
+        {
+          "id": "bees-knees",
+          "why": "gin and lemon juice for cachaça and lime juice"
+        },
+        {
+          "id": "gold-rush",
+          "why": "bourbon and lemon juice for cachaça and lime juice"
+        },
+        {
+          "id": "honeysuckle",
+          "why": "light rum for cachaça"
+        },
+        {
+          "id": "twelve-mile-limit",
+          "why": "light rum, rye, cognac, and lemon juice for cachaça and lime juice"
+        }
+      ]
+    },
+    "pey-le": {
+      "pattern": "sour",
+      "kin": [
+        {
+          "id": "bennett",
+          "why": "gin and lime juice for cachaça, lemon juice, and grapefruit juice"
+        },
+        {
+          "id": "expat",
+          "why": "bourbon and lime juice for cachaça, lemon juice, and grapefruit juice"
+        },
+        {
+          "id": "mexican-firing-squad",
+          "why": "tequila and lime juice for cachaça, lemon juice, and grapefruit juice"
+        },
+        {
+          "id": "winter-daiquiri",
+          "why": "aged rum and lime juice for cachaça, lemon juice, and grapefruit juice"
+        },
+        {
+          "id": "buster-brown",
+          "why": "bourbon and demerara syrup for cachaça and honey syrup"
+        },
+        {
+          "id": "stan-lee",
+          "why": "light rum, gin, and lime juice for cachaça, lemon juice, and grapefruit juice"
+        },
+        {
+          "id": "jack-rose",
+          "why": "apple brandy and lime juice for cachaça, lemon juice, and grapefruit juice"
+        },
+        {
+          "id": "stingless-bee",
+          "why": "tequila and lime juice for cachaça and grapefruit juice"
+        }
+      ]
+    },
+    "ace-of-clubs": {
+      "pattern": "daisy",
+      "kin": [
+        {
+          "id": "margarita",
+          "why": "tequila and orange liqueur for aged rum and crème de cacao"
+        },
+        {
+          "id": "mezcal-margarita",
+          "why": "mezcal and orange liqueur for aged rum and crème de cacao"
+        },
+        {
+          "id": "elderflower-daiquiri",
+          "why": "light rum and elderflower liqueur for aged rum and crème de cacao"
+        },
+        {
+          "id": "lemon-drop",
+          "why": "vodka and lemon juice for aged rum and lime juice"
+        },
+        {
+          "id": "sidecar",
+          "why": "cognac and lemon juice for aged rum and lime juice"
+        },
+        {
+          "id": "katinka",
+          "why": "vodka and apricot liqueur for aged rum and crème de cacao"
+        },
+        {
+          "id": "man-o-war",
+          "why": "bourbon and lemon juice for aged rum and lime juice"
+        },
+        {
+          "id": "hat-tip",
+          "why": "gin and lemon juice for aged rum and lime juice"
+        }
+      ]
+    },
+    "brandy-alexander": {
+      "pattern": "fancy",
+      "kin": [
+        {
+          "id": "alexander",
+          "why": "gin for cognac"
+        },
+        {
+          "id": "campari-alexander",
+          "why": "with Campari"
+        },
+        {
+          "id": "cock-n-bull-special",
+          "why": "Bénédictine and orange liqueur for crème de cacao and cream"
+        },
+        {
+          "id": "tipsy-coachman",
+          "why": "vodka and Bénédictine for cognac, crème de cacao, and cream"
+        },
+        {
+          "id": "frisco",
+          "why": "bourbon and Bénédictine for cognac, crème de cacao, and cream"
+        },
+        {
+          "id": "monte-carlo",
+          "why": "rye and Bénédictine for cognac, crème de cacao, and cream"
+        },
+        {
+          "id": "physically-forgotten",
+          "why": "gin and maraschino liqueur for cognac, crème de cacao, and cream"
+        },
+        {
+          "id": "casino",
+          "why": "gin and maraschino liqueur for cognac, crème de cacao, and cream"
+        }
+      ]
+    },
+    "final-ward": {
+      "pattern": "daisy",
+      "kin": [
+        {
+          "id": "last-word",
+          "why": "gin and lime juice for rye and lemon juice"
+        },
+        {
+          "id": "southern-point",
+          "why": "apple brandy, elderflower liqueur, and orange liqueur for rye, Chartreuse, and maraschino liqueur"
+        },
+        {
+          "id": "lani-honi",
+          "why": "light rum and Bénédictine for rye, Chartreuse, and maraschino liqueur"
+        },
+        {
+          "id": "sidecar",
+          "why": "cognac and orange liqueur for rye, Chartreuse, and maraschino liqueur"
+        },
+        {
+          "id": "katinka",
+          "why": "vodka and lime juice for rye and lemon juice"
+        },
+        {
+          "id": "hat-tip",
+          "why": "gin and elderflower liqueur for rye, Chartreuse, and maraschino liqueur"
+        },
+        {
+          "id": "honeymoon",
+          "why": "apple brandy, Bénédictine, and orange liqueur for rye, Chartreuse, and maraschino liqueur"
+        },
+        {
+          "id": "kings-jubilee",
+          "why": "light rum for rye"
+        }
+      ]
+    },
+    "alexander": {
+      "pattern": "fancy",
+      "kin": [
+        {
+          "id": "brandy-alexander",
+          "why": "cognac for gin"
+        },
+        {
+          "id": "campari-alexander",
+          "why": "with Campari"
+        },
+        {
+          "id": "cock-n-bull-special",
+          "why": "bourbon, cognac, Bénédictine, and orange liqueur for gin, crème de cacao, and cream"
+        },
+        {
+          "id": "tipsy-coachman",
+          "why": "vodka and Bénédictine for gin, crème de cacao, and cream"
+        },
+        {
+          "id": "frisco",
+          "why": "bourbon and Bénédictine for gin, crème de cacao, and cream"
+        },
+        {
+          "id": "monte-carlo",
+          "why": "rye and Bénédictine for gin, crème de cacao, and cream"
+        },
+        {
+          "id": "physically-forgotten",
+          "why": "maraschino liqueur for crème de cacao and cream"
+        },
+        {
+          "id": "casino",
+          "why": "maraschino liqueur for crème de cacao and cream"
+        }
+      ]
+    },
+    "campari-alexander": {
+      "pattern": "fancy",
+      "kin": [
+        {
+          "id": "alexander",
+          "why": "with gin"
+        },
+        {
+          "id": "brandy-alexander",
+          "why": "with cognac"
+        },
+        {
+          "id": "cock-n-bull-special",
+          "why": "Bénédictine and orange liqueur for crème de cacao and cream"
+        },
+        {
+          "id": "physically-forgotten",
+          "why": "maraschino liqueur and Cynar for crème de cacao, cream, and Campari"
+        },
+        {
+          "id": "tipsy-coachman",
+          "why": "Bénédictine for crème de cacao and cream"
+        },
+        {
+          "id": "frisco",
+          "why": "Bénédictine for crème de cacao and cream"
+        },
+        {
+          "id": "fancy-cocktail",
+          "why": "orange liqueur for crème de cacao and cream"
+        },
+        {
+          "id": "monte-carlo",
+          "why": "Bénédictine for crème de cacao and cream"
+        }
+      ]
+    },
+    "last-word": {
+      "pattern": "daisy",
+      "kin": [
+        {
+          "id": "final-ward",
+          "why": "rye and lemon juice for gin and lime juice"
+        },
+        {
+          "id": "southern-point",
+          "why": "apple brandy and lemon juice for gin and lime juice"
+        },
+        {
+          "id": "lani-honi",
+          "why": "light rum and lemon juice for gin and lime juice"
+        },
+        {
+          "id": "sidecar",
+          "why": "cognac and lemon juice for gin and lime juice"
+        },
+        {
+          "id": "katinka",
+          "why": "vodka and apricot liqueur for gin, Chartreuse, and maraschino liqueur"
+        },
+        {
+          "id": "hat-tip",
+          "why": "lemon juice and elderflower liqueur for lime juice, Chartreuse, and maraschino liqueur"
+        },
+        {
+          "id": "honeymoon",
+          "why": "apple brandy and lemon juice for gin and lime juice"
+        },
+        {
+          "id": "kings-jubilee",
+          "why": "light rum and lemon juice for gin and lime juice"
         }
       ]
     }

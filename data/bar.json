@@ -87,13 +87,13 @@
         { "id": "reyka",                   "name": "Reyka Vodka",                                                "price": 20, "tier": "elevated" }
       ]
     },
-    { "id": "mezcal",        "name": "Mezcal",              "short": "mezcal",      "kind": "base", "catalog": true,
+    { "id": "mezcal",        "name": "Mezcal",              "short": "mezcal",      "kind": "base",
       "bottles": [
         { "id": "madre-espadin",           "name": "Madre Mezcal Espad\u00edn 86 Proof",                            "price": 35, "tier": "solid" },
         { "id": "banhez-espadin-barril",   "name": "Banhez Espad\u00edn Barril Mezcal",                             "price": 45, "tier": "elevated" }
       ]
     },
-    { "id": "cachaca",       "name": "Cacha\u00e7a",            "short": "cacha\u00e7a",     "kind": "base", "catalog": true,
+    { "id": "cachaca",       "name": "Cacha\u00e7a",            "short": "cacha\u00e7a",     "kind": "base",
       "bottles": [
         { "id": "leblon",                  "name": "Leblon Cacha\u00e7a",                                          "price": 25, "tier": "solid" },
         { "id": "novo-fogo-silver",        "name": "Novo Fogo Silver Cacha\u00e7a",                                 "price": 30, "tier": "solid" }
@@ -153,13 +153,15 @@
       ]
     },
     { "id": "champagne",      "name": "Champagne",          "short": "Champagne",   "kind": "modifier" },
-    { "id": "chartreuse",     "name": "Chartreuse",         "short": "Chartreuse",  "kind": "modifier", "catalog": true,
+    { "id": "ginger-beer",    "name": "Ginger beer",        "short": "ginger beer", "kind": "modifier" },
+    { "id": "cream",          "name": "Cream",              "short": "cream",       "kind": "modifier" },
+    { "id": "chartreuse",     "name": "Chartreuse",         "short": "Chartreuse",  "kind": "modifier",
       "bottles": [
         { "id": "green-chartreuse",        "name": "Green Chartreuse",                                           "price": 70, "tier": "excellent" },
         { "id": "yellow-chartreuse",       "name": "Yellow Chartreuse",                                          "price": 70, "tier": "excellent" }
       ]
     },
-    { "id": "cynar",          "name": "Cynar",              "short": "Cynar",       "kind": "modifier", "catalog": true,
+    { "id": "cynar",          "name": "Cynar",              "short": "Cynar",       "kind": "modifier",
       "bottles": [
         { "id": "cynar-bottle",            "name": "Cynar 33 Proof",                                             "price": 30, "tier": "excellent" },
         { "id": "averna",                  "name": "Averna Amaro",                                               "price": 35, "tier": "alternatives" },
@@ -168,17 +170,17 @@
         { "id": "sfumato",                 "name": "Cappelletti Amaro Sfumato Rabarbaro",                        "price": 25, "tier": "alternatives" }
       ]
     },
-    { "id": "sherry",         "name": "Sherry",             "short": "sherry",      "kind": "modifier", "catalog": true,
+    { "id": "sherry",         "name": "Sherry",             "short": "sherry",      "kind": "modifier",
       "bottles": [
         { "id": "lustau-los-arcos",        "name": "Lustau Amontillado Los Arcos",                               "price": 20, "tier": "solid" }
       ]
     },
-    { "id": "fernet",         "name": "Fernet",             "short": "Fernet",      "kind": "modifier", "catalog": true,
+    { "id": "fernet",         "name": "Fernet",             "short": "Fernet",      "kind": "modifier",
       "bottles": [
         { "id": "fernet-branca",           "name": "Fernet-Branca",                                              "price": 30, "tier": "exceptional" }
       ]
     },
-    { "id": "creme-de-cacao", "name": "Cr\u00e8me de cacao",     "short": "cacao",       "kind": "modifier", "catalog": true,
+    { "id": "creme-de-cacao", "name": "Cr\u00e8me de cacao",     "short": "cacao",       "kind": "modifier",
       "bottles": [
         { "id": "drillaud-cacao",          "name": "Drillaud Cr\u00e8me de Cacao Dark Chocolate Liqueur",           "price": 20, "tier": "solid" }
       ]
@@ -228,6 +230,7 @@
 
     { "id": "lemon",          "name": "Lemon juice",        "short": "lemon",       "kind": "juice",  "staple": true, "shelf": "Lemons" },
     { "id": "lime",           "name": "Lime juice",         "short": "lime",        "kind": "juice",  "staple": true, "shelf": "Limes" },
+    { "id": "grapefruit",     "name": "Grapefruit juice",   "short": "grapefruit",  "kind": "juice",  "shelf": "Grapefruits" },
 
     { "id": "cherry",        "name": "Cocktail cherries",   "short": "cherries",    "kind": "garnish", "staple": true },
     { "id": "orange",        "name": "Oranges",             "short": "orange",      "kind": "garnish", "staple": true },

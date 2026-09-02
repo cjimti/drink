@@ -16,10 +16,13 @@
     { "id": "rye",          "label": "Rye" },
     { "id": "scotch",       "label": "Scotch" },
     { "id": "light-rum",    "label": "Light Rum" },
+    { "id": "cachaca",      "label": "Cachaça" },
     { "id": "tequila",      "label": "Tequila" },
+    { "id": "mezcal",       "label": "Mezcal" },
     { "id": "vodka",        "label": "Vodka" },
     { "id": "gin",          "label": "Gin" },
-    { "id": "vermouth",     "label": "Vermouth" }
+    { "id": "vermouth",     "label": "Vermouth" },
+    { "id": "fernet",       "label": "Fernet" }
   ],
 
   "cocktails": [
@@ -489,6 +492,127 @@
         { "title": "Old Waldorf Bar Days (1931), p. 167", "url": "https://euvs-vintage-cocktail-books.cld.bz/1931-Ol-Waldorf-Astoria-Bar-Days-by-Albert-Stevens-Crockett/167/" }
       ] },
 
+    { "id": "el-camino", "name": "El Camino", "method": "stirred", "family": "mezcal", "code": "1,1,h,4,Ro", "serve": "Ro",
+      "build": [["mezcal","1"],["rye","1"],["benedictine","h"],["peychauds","4"]],
+      "taste": "Equal ounces of mezcal and rye, so smoke and pepper share the glass. Half an ounce of Bénédictine is honey and baking spice. Four dashes of Peychaud's pull anise and cherry through both spirits. Stirred, rocks with ice, orange twist.",
+      "history": "The El Camino is the house cocktail of the Chestnut Club in Santa Monica, on the list since the bar opened in 2014. Imbibe printed the spec: equal mezcal and rye, half an ounce of Bénédictine, four dashes of Peychaud's, over a large cube with an orange twist. It drinks as a split-base Fancy, smoke against rye heat, the liqueur in the sugar slot. This card keeps that pour.",
+      "refs": [
+        { "title": "Kindred Cocktails, The El Camino", "url": "https://kindredcocktails.com/cocktail/el-camino-0" },
+        { "title": "Difford's Guide, El Camino", "url": "https://www.diffordsguide.com/cocktails/recipe/13511/el-camino" }
+      ] },
+    { "id": "1910", "name": "1910", "method": "stirred", "family": "mezcal", "code": "Q,Q,1,h,2,co", "serve": "co",
+      "build": [["mezcal","Q"],["cognac","Q"],["sweet-vermouth","1"],["maraschino","h"],["peychauds","2"]],
+      "taste": "Three-quarters each of mezcal and cognac, a full ounce of sweet vermouth, so the wine leads. Half an ounce of maraschino is cherry and almond. Two dashes of Peychaud's. Stirred, coupe, orange twist. A smoky Martinez, grape and pit.",
+      "history": "Ezra Star built the 1910 at Drink in Boston around 2014, named for the year the Mexican Revolution began and as a nod to the bar's 1919, a rum Manhattan named for the Molasses Flood. Punch prints three-quarters each mezcal and cognac, a half ounce of maraschino, an ounce of Punt e Mes, two dashes of Peychaud's, orange twist. It is a Martinez with smoke and grape brandy in place of gin. This card keeps those measures on sweet vermouth.",
+      "refs": [
+        { "title": "Punch, 1910", "url": "https://punchdrink.com/recipes/1910/" },
+        { "title": "Difford's Guide, 1910", "url": "https://www.diffordsguide.com/cocktails/recipe/4834/1910" }
+      ] },
+
+    { "id": "brazilian-negroni", "name": "Brazilian Negroni", "method": "stirred", "family": "cachaca", "code": "1q,Q,Q,Ro", "serve": "Ro",
+      "build": [["cachaca","1q"],["campari","Q"],["sweet-vermouth","Q"]],
+      "taste": "An ounce and a quarter of cachaça against three-quarters each of Campari and sweet vermouth. The cane spirit leads a little; Campari is still a third of the drink. Stirred, rocks with ice, orange twist. A Negroni in sugarcane, grassy and bitter orange.",
+      "history": "Swap gin for cachaça in a Negroni and the drink is a Brazilian Negroni, a substitution that spread with cachaça's craft revival in the 2000s. Difford's and later books print it as a Negroni ratio on cachaça. This card pours an ounce and a quarter of cachaça against three-quarters each of Campari and sweet vermouth, over ice with an orange twist, so the cane leads the way the Boulevardier lets bourbon lead.",
+      "refs": [
+        { "title": "Difford's Guide, Negroni", "url": "https://www.diffordsguide.com/cocktails/recipe/1328/negroni" }
+      ] },
+    { "id": "cornerstone", "name": "Cornerstone", "method": "stirred", "family": "cachaca", "code": "1h,h,q,2,co", "serve": "co",
+      "build": [["cachaca","1h"],["grenadine","h"],["fernet","q"],["orange-bitters","2"]],
+      "taste": "An ounce and a half of cachaça, half an ounce of grenadine, a quarter of Fernet. The pomegranate is the sugar; the Fernet is mint and bitter against the cane. Two dashes of orange bitters are peel. Stirred, coupe, orange twist.",
+      "history": "Brett Adams and Jacob Grier print the Cornerstone in Raising the Bar (2022), in the Fernet chapter: an ounce and a half of cachaça, half an ounce of grenadine, a quarter of Fernet, two dashes of orange bitters, orange twist. A drink of this name does not appear in the pre-1970 manuals. It drinks as an Old-Fashioned on cane spirit, grenadine in the sugar slot, Fernet as the bitter. This card keeps that pour.",
+      "refs": [
+        { "title": "Willamette Week, Raising the Bar", "url": "https://www.wweek.com/drink/2023/03/29/a-new-book-by-two-local-mixologists-tells-you-how-to-stock-your-bar-cart-one-bottle-at-a-time/" }
+      ] },
+
+    { "id": "newark", "name": "Newark", "method": "stirred", "family": "apple-brandy", "code": "1,1,h,h,c", "serve": "c",
+      "build": [["apple-brandy","1"],["sweet-vermouth","1"],["fernet","h"],["maraschino","h"]],
+      "taste": "Equal ounces of apple brandy and sweet vermouth, a fifty-fifty Manhattan on orchard. Half an ounce of Fernet, half an ounce of maraschino, so mint and cherry sit against the apple. Stirred, coupe, no twist.",
+      "history": "Jim Meehan prints the Newark in The PDT Cocktail Book (2011), credited to bartender Jim Kearns: equal Laird's apple brandy and sweet vermouth, a quarter ounce each of Fernet-Branca and maraschino, orange twist. It is a Red Hook with apple brandy in place of rye and Fernet in place of some of the maraschino. This card keeps the equal apple and vermouth, yet it pours a half ounce each of Fernet and maraschino, and it skips the twist.",
+      "refs": [
+        { "title": "Punch, Newark", "url": "https://punchdrink.com/recipes/newark/" },
+        { "title": "Difford's Guide, Newark", "url": "https://www.diffordsguide.com/cocktails/recipe/3175/newark" }
+      ] },
+
+    { "id": "toronto", "name": "Toronto", "method": "stirred", "family": "rye", "code": "2,q,1b,2,Ro", "serve": "Ro",
+      "build": [["rye","2"],["fernet","q"],["demerara","1b"],["angostura","2"]],
+      "taste": "Two ounces of rye, a quarter ounce of Fernet, one barspoon of demerara, two dashes of Angostura. The Fernet is mint and bitter against the whiskey; the sugar is a film. Stirred, rocks with ice, orange twist. An Old-Fashioned with Fernet in the glass.",
+      "history": "Robert Vermeire prints a Fernet Cocktail in Cocktails: How to Mix Them (1922), equal Fernet and cognac or rye, and notes that Canadians of Toronto appreciated it. David Embury, in The Fine Art of Mixing Drinks (1948), names it the Toronto: Canadian whisky, a quarter ounce of Fernet, sugar, Angostura. Modern specs keep two ounces of rye and a quarter of Fernet. This card pours that, with a barspoon of demerara and two dashes of Angostura, over ice with an orange twist.",
+      "refs": [
+        { "title": "Punch, Toronto", "url": "https://punchdrink.com/recipes/toronto/" },
+        { "title": "Difford's Guide, Toronto", "url": "https://www.diffordsguide.com/cocktails/recipe/2040/toronto" }
+      ] },
+    { "id": "little-italy", "name": "Little Italy", "method": "stirred", "family": "rye", "code": "2,Q,h,cc", "serve": "cc",
+      "build": [["rye","2"],["sweet-vermouth","Q"],["cynar","h"]],
+      "taste": "Two ounces of rye to three-quarters of sweet vermouth, so the whiskey leads. Half an ounce of Cynar is artichoke bitter in the Campari slot. Stirred, coupe, cherry. A rye Negroni, leaner, no gin.",
+      "history": "Audrey Saunders built the Little Italy at Pegu Club in New York in 2005: two ounces of rye, three-quarters sweet vermouth, half an ounce of Cynar, cherry. It is a Manhattan with Cynar in place of bitters, or a rye Negroni with the gin dropped. Robert Simonson treats it as a modern classic. This card keeps Saunders's pour and the cherry.",
+      "refs": [
+        { "title": "Punch, Little Italy", "url": "https://punchdrink.com/recipes/little-italy/" },
+        { "title": "Difford's Guide, Little Italy", "url": "https://www.diffordsguide.com/cocktails/recipe/3083/little-italy" }
+      ] },
+
+    { "id": "telling-phoebe", "name": "Telling Phoebe", "method": "stirred", "family": "scotch", "code": "1h,Q,h,h,cc", "serve": "cc",
+      "build": [["scotch","1h"],["sweet-vermouth","Q"],["fernet","h"],["benedictine","h"]],
+      "taste": "An ounce and a half of scotch, three-quarters of sweet vermouth, half an ounce each of Fernet and Bénédictine. The whiskey leads a Rob Roy; Fernet is mint against peat, Bénédictine honey and spice. Stirred, coupe, cherry.",
+      "history": "Chantal Tseng built Telling Phoebe as a homage to R.O. Kwon's novel The Incendiaries, for one of her literary cocktail nights. Brett Adams and Jacob Grier print it in Raising the Bar (2022): an ounce and a half of scotch, three-quarters sweet vermouth, half an ounce each of Fernet and Bénédictine, cherry. It drinks as a Rob Roy with Fernet and Bénédictine splitting the bitter-sweet slot. This card keeps that pour.",
+      "refs": [
+        { "title": "Cocktail Virgin Slut, Telling Phoebe", "url": "https://cocktailvirgin.blogspot.com/2023/09/telling-phoebe.html" }
+      ] },
+
+    { "id": "hanky-panky", "name": "Hanky Panky", "method": "stirred", "family": "gin", "code": "1h,1h,1b,co", "serve": "co",
+      "build": [["gin","1h"],["sweet-vermouth","1h"],["fernet","1b"]],
+      "taste": "Equal ounces and a half of gin and sweet vermouth, a fifty-fifty Martinez ratio. One barspoon of Fernet is mint and bitter, enough to taste, not enough to own the drink. Stirred, coupe, orange twist.",
+      "history": "Ada Coleman created the Hanky Panky at the Savoy's American Bar in London, where she was head bartender from 1903 to 1926. Harry Craddock prints it in the 1930 Savoy Cocktail Book, credited to her: equal Italian vermouth and gin, two dashes of Fernet-Branca, orange peel. The story attached is actor Charles Hawtrey asking her for something with a punch, and naming the result. This card keeps the equal gin and sweet vermouth, pours a barspoon of Fernet, coupe, orange.",
+      "refs": [
+        { "title": "Difford's Guide, Hanky Panky", "url": "https://www.diffordsguide.com/cocktails/recipe/930/hanky-panky-cocktail" },
+        { "title": "The Savoy Cocktail Book (1930), Hanky Panky Cocktail", "url": "https://euvs-vintage-cocktail-books.cld.bz/1930-The-Savoy-Cocktail-Book/80/" }
+      ] },
+    { "id": "racquet-club", "name": "Racquet Club", "method": "stirred", "family": "gin", "code": "2,1,1b,2,cl", "serve": "cl",
+      "build": [["gin","2"],["dry-vermouth","1"],["creme-de-cacao","1b"],["orange-bitters","2"]],
+      "taste": "Two ounces of gin to one of dry vermouth, a dry Martini ratio. One barspoon of crème de cacao is chocolate as a film. Two dashes of orange bitters are peel. Stirred, coupe, lemon twist. Gin, dry wine, and a thin cocoa finish.",
+      "history": "Hugo R. Ensslin prints a Racquet Club Cocktail in Recipes for Mixed Drinks (1916/1917): gin, French vermouth, orange bitters. Harry Craddock's Savoy keeps gin and French vermouth with orange bitters and a lemon. Later specs put a barspoon of crème de cacao in the dressing, chocolate against the dry gin. This card pours two ounces of gin, one of dry vermouth, a barspoon of cacao, two dashes of orange bitters, lemon twist.",
+      "refs": [
+        { "title": "Difford's Guide, Racquet Club", "url": "https://www.diffordsguide.com/cocktails/recipe/1618/racquet-club-cocktail" }
+      ] },
+    { "id": "bijou", "name": "Bijou", "method": "stirred", "family": "gin", "code": "1,1,1,1,Rl", "serve": "Rl",
+      "build": [["gin","1"],["chartreuse","1"],["sweet-vermouth","1"],["orange-bitters","1"]],
+      "taste": "Equal ounces of gin, green Chartreuse, and sweet vermouth, so the herbal liqueur is a third of the drink. One dash of orange bitters is peel. Stirred, rocks with ice, lemon twist. Gin, Chartreuse, and grape, and the cube.",
+      "history": "Harry Johnson prints the Bijou in his 1900 Bartender's Manual as equal Plymouth gin, green Chartreuse, and sweet vermouth, a dash of orange bitters, a cherry, and a lemon twist, the name from the French for jewel, the three liquids standing for diamond, emerald, and ruby. Johnson claimed it; David Wondrich notes it may be older. Most later books serve it up. This card keeps the equal parts and the orange bitters, and pours it over ice with a lemon twist.",
+      "refs": [
+        { "title": "Difford's Guide, Bijou", "url": "https://www.diffordsguide.com/cocktails/recipe/224/bijou-cocktail" },
+        { "title": "Imbibe, Bijou Cocktail", "url": "https://imbibemagazine.com/recipe/bijou-cocktail/" }
+      ] },
+    { "id": "cin-cyn", "name": "Cin-Cyn", "method": "stirred", "family": "gin", "code": "1,1,1,Ro", "serve": "Ro",
+      "build": [["gin","1"],["cynar","1"],["sweet-vermouth","1"]],
+      "taste": "Equal ounces of gin, Cynar, and sweet vermouth, so the artichoke amaro is a third of the drink. Stirred, rocks with ice, orange twist. A Negroni with Cynar in the Campari slot, softer bitter, still orange.",
+      "history": "Cin-Cyn is a play on cin-cin, the Italian toast, and on Cynar. It is a Negroni with Cynar in place of Campari, equal parts, over ice with an orange twist. Difford's treats it as a sweeter, less bitter Negroni riff. A drink of this name does not appear in the pre-1970 manuals; it belongs to the amaro revival of the 2000s. This card keeps the equal parts and the rocks glass.",
+      "refs": [
+        { "title": "Difford's Guide, Cin-Cyn", "url": "https://www.diffordsguide.com/cocktails/recipe/5458/cin-cyn" }
+      ] },
+    { "id": "physically-forgotten", "name": "Physically Forgotten", "method": "stirred", "family": "gin", "code": "1h,Q,h,2,cl", "serve": "cl",
+      "build": [["gin","1h"],["cynar","Q"],["maraschino","h"],["orange-bitters","2"]],
+      "taste": "An ounce and a half of gin, three-quarters of Cynar, half an ounce of maraschino. The gin leads; artichoke bitter and cherry liqueur split the rest. Two dashes of orange bitters. Stirred, coupe, lemon twist.",
+      "history": "Alise Moffatt built Physically Forgotten at Shift Drinks in Portland, Oregon. Brett Adams and Jacob Grier print it in Raising the Bar (2022): an ounce and a half of gin, three-quarters Cynar, half an ounce of maraschino, two dashes of orange bitters, lemon twist. It drinks as a Martinez with Cynar in the vermouth slot. This card keeps that pour.",
+      "refs": [
+        { "title": "Cocktail Virgin Slut, Physically Forgotten", "url": "https://cocktailvirgin.blogspot.com/2023/09/physically-forgotten.html" }
+      ] },
+
+    { "id": "bamboo", "name": "Bamboo", "method": "stirred", "family": "vermouth", "code": "1h,1h,d,2,cOl", "serve": "cOl",
+      "build": [["sherry","1h"],["dry-vermouth","1h"],["angostura","d"],["orange-bitters","2"]],
+      "taste": "Equal ounces and a half of dry sherry and dry vermouth, so there is no base spirit. One dash of Angostura, two of orange bitters. Stirred, coupe, olive and lemon twist. Nutty, dry wine, a little bark.",
+      "history": "Louis Eppinger is credited with the Bamboo at the Grand Hotel in Yokohama, sometime in the 1890s: equal sherry and dry vermouth, bitters, a twist. It appears in American books by 1908. David Wondrich, in Imbibe, treats it as the low-proof cousin of the Martini, sherry in the gin slot. This card pours equal ounces and a half, one dash of Angostura and two of orange bitters, coupe, olive and lemon.",
+      "refs": [
+        { "title": "Difford's Guide, Bamboo", "url": "https://www.diffordsguide.com/cocktails/recipe/196/bamboo-cocktail" },
+        { "title": "Imbibe, Bamboo Cocktail", "url": "https://imbibemagazine.com/recipe/bamboo-cocktail/" }
+      ] },
+
+    { "id": "fernet-and-ginger", "name": "Fernet and Ginger", "method": "stirred", "family": "fernet", "code": "1,4,RLw", "serve": "RLw",
+      "build": [["fernet","1"],["ginger-beer","4"]],
+      "taste": "One ounce of Fernet, four ounces of ginger beer, over ice. The ginger beer is the drink; the Fernet is mint and bitter through the spice. Lime squeezed in and dropped. A highball. It sits.",
+      "history": "Fernet and ginger beer is a bartender's highball, Fernet-Branca lengthened with ginger, a squeeze of lime. It does not appear under a fixed name in the pre-1970 manuals; it belongs to the Fernet-Branca cult that took hold in San Francisco bars in the 2000s and then everywhere else. Brett Adams and Jacob Grier print it in Raising the Bar (2022) as an ounce of Fernet and four of ginger beer, lime wedge in. This card keeps that pour, rocks with ice.",
+      "refs": [
+        { "title": "Punch, The Magic of Fernet-Branca Cocktails", "url": "https://punchdrink.com/articles/dark-magic-fernet-branca-hanky-panky-cocktail-recipe/" }
+      ] },
+
     { "id": "winter-daiquiri", "name": "Winter Daiquiri", "method": "shaken", "family": "aged-rum", "code": "2,1,h,2,c", "serve": "c",
       "build": [["aged-rum","2"],["lime","1"],["demerara","h"],["angostura","2"]],
       "taste": "Two ounces of aged rum against a full ounce of lime and only a half ounce of demerara: tart, brown sugar, barrel. Two dashes of Angostura pull clove and bark through the lime. Coupe.",
@@ -871,6 +995,81 @@
       "refs": [
         { "title": "The Oxford Companion to Spirits and Cocktails, The sour", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-422" },
         { "title": "Difford's Guide, Vermouth Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/5639/vermouth-cocktail" }
+      ] },
+
+    { "id": "mezcal-margarita", "name": "Mezcal Margarita", "method": "shaken", "family": "mezcal", "code": "2,Q,Q,rS", "serve": "rS",
+      "build": [["mezcal","2"],["orange-liqueur","Q"],["lime","Q"]],
+      "taste": "Two ounces of mezcal against three-quarters each of orange liqueur and lime. The mezcal is the drink; the orange and lime are equal and small, peel and acid around smoke. Shaken, rocks, no ice, salt rim. Short, same pour as the Margarita, different bottle.",
+      "history": "The Margarita's three ingredients take mezcal as readily as tequila. Difford's and later books print a Mezcal Margarita as the same sour with the agave swapped. This card keeps the house Margarita's two ounces of spirit and three-quarters each of orange liqueur and lime, and it pours it in a salt-rimmed rocks glass with no ice, as the recipe that landed here specified.",
+      "refs": [
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Margarita", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-360" },
+        { "title": "Difford's Guide, History of the Margarita cocktail", "url": "https://www.diffordsguide.com/g/1138/margarita-cocktail/origins-and-history" }
+      ] },
+
+    { "id": "caipirinha", "name": "Caipirinha", "method": "shaken", "family": "cachaca", "code": "2,3b,1h,R", "serve": "R",
+      "build": [["cachaca","2"],["sugar","3b"],["lime","1h"]],
+      "taste": "Two ounces of cachaça, three barspoons of sugar, an ounce and a half of lime, muddled and dumped with the ice. The lime is juice and hull. Grassy cane, pith, and sugar. Rocks with ice. It sits.",
+      "history": "The Caipirinha is Brazil's national cocktail: cachaça, lime, and sugar, muddled, ice dumped in. The name is a diminutive of caipira, a person from the countryside. It was a countryside drink before it was a bar drink; the twentieth century brought it to the cities and then to the IBA list. This card pours two ounces of cachaça, a tablespoon of sugar, and an ounce and a half of lime, shaken and dumped, no strain.",
+      "refs": [
+        { "title": "Difford's Guide, Caipirinha", "url": "https://www.diffordsguide.com/cocktails/recipe/334/caipirinha" },
+        { "title": "The Oxford Companion to Spirits and Cocktails, The Caipirinha", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-275" }
+      ] },
+    { "id": "pey-le", "name": "Pey-Lé", "method": "shaken", "family": "cachaca", "code": "1h,1,Q,h,h,c", "serve": "c",
+      "build": [["cachaca","1h"],["honey-syrup","1"],["lemon","Q"],["grapefruit","h"],["peychauds","h"]],
+      "taste": "An ounce and a half of cachaça, a full ounce of honey syrup, three-quarters lemon, half an ounce of grapefruit. Half an ounce of Peychaud's is a pour, not a dash, so anise and cherry run through the sour. Shaken, coupe. Cane, honey, and a lot of bitters.",
+      "history": "Brett Adams and Jacob Grier print Pey-Lé in Raising the Bar (2022): an ounce and a half of cachaça, an ounce of honey syrup, three-quarters lemon, half an ounce of grapefruit, and half an ounce of Peychaud's, shaken, coupe. The name is the bitters. A drink of this name does not appear in the pre-1970 manuals. This card keeps that pour, including the half ounce of Peychaud's.",
+      "refs": [
+        { "title": "Willamette Week, Raising the Bar", "url": "https://www.wweek.com/drink/2023/03/29/a-new-book-by-two-local-mixologists-tells-you-how-to-stock-your-bar-cart-one-bottle-at-a-time/" }
+      ] },
+
+    { "id": "ace-of-clubs", "name": "Ace of Clubs", "method": "shaken", "family": "aged-rum", "code": "2,1,Q,c", "serve": "c",
+      "build": [["aged-rum","2"],["creme-de-cacao","1"],["lime","Q"]],
+      "taste": "Two ounces of aged rum, a full ounce of crème de cacao, three-quarters of lime. The chocolate is a real pour against the rum; the lime cuts it. Shaken, coupe. A Daiquiri with cacao in the sugar slot.",
+      "history": "Esquire printed the Ace of Clubs in April 1939, as the house cocktail of a midtown Manhattan restaurant of that name, where Egidio Archimede Dellamazzacane, Eddie, took over the bar in 1938. David Wondrich reprints two ounces of golden rum, crème de cacao, and lime. The original used a full ounce of cacao; Wondrich cuts it. This card keeps two ounces of aged rum and three-quarters of lime, and it pours the full ounce of cacao.",
+      "refs": [
+        { "title": "Esquire, Ace of Clubs (David Wondrich)", "url": "https://www.esquire.com/food-drink/drinks/recipes/a3694/ace-of-clubs-drink-recipe/" },
+        { "title": "Difford's Guide, Ace Of Clubs Daiquiri", "url": "https://www.diffordsguide.com/cocktails/recipe/14/ace-of-clubs-daiquiri" }
+      ] },
+
+    { "id": "brandy-alexander", "name": "Brandy Alexander", "method": "shaken", "family": "cognac", "code": "1,1,1,c", "serve": "c",
+      "build": [["cognac","1"],["creme-de-cacao","1"],["cream","1"]],
+      "taste": "Equal ounces of cognac, crème de cacao, and cream, so chocolate and dairy are two thirds of the drink. Shaken, coupe. Grape brandy, cocoa, and a short cream sour with no citrus.",
+      "history": "The Alexander starts as a gin drink in Hugo Ensslin's 1916 Recipes for Mixed Drinks: equal gin, crème de cacao, and cream. The brandy version took over in the 1920s and 1930s; Harry Craddock prints a Brandy Alexander in the 1930 Savoy. It became the default Alexander. This card keeps the equal ounces of cognac, cacao, and cream, shaken, coupe, no dusting of nutmeg.",
+      "refs": [
+        { "title": "Difford's Guide, Brandy Alexander", "url": "https://www.diffordsguide.com/cocktails/recipe/306/brandy-alexander" },
+        { "title": "Punch, How to Use Crème de Cacao", "url": "https://punchdrink.com/articles/creme-de-cacao-liqueur-cocktail-recipes/" }
+      ] },
+
+    { "id": "final-ward", "name": "Final Ward", "method": "shaken", "family": "rye", "code": "Q,Q,Q,Q,c", "serve": "c",
+      "build": [["rye","Q"],["chartreuse","Q"],["maraschino","Q"],["lemon","Q"]],
+      "taste": "Equal three-quarters of rye, green Chartreuse, maraschino, and lemon. The Last Word on whiskey: herbal, cherry, and lemon against rye pepper. Shaken, coupe.",
+      "history": "Phil Ward built the Final Ward at Death & Co in New York in 2007, a Last Word with rye in place of gin and lemon in place of lime. Robert Simonson treats it as a modern classic. Equal parts, shaken, coupe, no garnish. This card keeps Ward's pour.",
+      "refs": [
+        { "title": "Punch, Final Ward", "url": "https://punchdrink.com/recipes/final-ward/" },
+        { "title": "Difford's Guide, Final Ward", "url": "https://www.diffordsguide.com/cocktails/recipe/2478/final-ward" }
+      ] },
+
+    { "id": "alexander", "name": "Alexander", "method": "shaken", "family": "gin", "code": "1,1,1,c", "serve": "c",
+      "build": [["gin","1"],["creme-de-cacao","1"],["cream","1"]],
+      "taste": "Equal ounces of gin, crème de cacao, and cream. The gin is the drink the Brandy Alexander forgot. Shaken, coupe. Juniper, cocoa, and cream.",
+      "history": "Hugo R. Ensslin prints the Alexander in Recipes for Mixed Drinks (1916): equal gin, crème de cacao, and sweet cream. The brandy version crowded it out. This card is Ensslin's original, one ounce each, shaken, coupe.",
+      "refs": [
+        { "title": "Difford's Guide, Alexander", "url": "https://www.diffordsguide.com/cocktails/recipe/48/alexander" }
+      ] },
+    { "id": "campari-alexander", "name": "Campari Alexander", "method": "shaken", "family": "gin", "code": "1,1,1,c", "serve": "c",
+      "build": [["campari","1"],["creme-de-cacao","1"],["cream","1"]],
+      "taste": "Equal ounces of Campari, crème de cacao, and cream. No base spirit. Bitter orange and chocolate under cream. Shaken, coupe. Pink, cocoa, and a bitter finish.",
+      "history": "Brett Adams and Jacob Grier print the Campari Alexander in Raising the Bar (2022): equal Campari, crème de cacao, and cream, shaken, coupe. It is Ensslin's Alexander with Campari in the gin slot. A drink of this name does not appear in the pre-1970 manuals. This card keeps the equal ounces.",
+      "refs": [
+        { "title": "Willamette Week, Raising the Bar", "url": "https://www.wweek.com/drink/2023/03/29/a-new-book-by-two-local-mixologists-tells-you-how-to-stock-your-bar-cart-one-bottle-at-a-time/" }
+      ] },
+    { "id": "last-word", "name": "Last Word", "method": "shaken", "family": "gin", "code": "Q,Q,Q,Q,cc", "serve": "cc",
+      "build": [["gin","Q"],["chartreuse","Q"],["maraschino","Q"],["lime","Q"]],
+      "taste": "Equal three-quarters of gin, green Chartreuse, maraschino, and lime. Each is a quarter of the drink. Herbal, cherry, and lime around the gin. Shaken, coupe, cherry.",
+      "history": "The Last Word is credited to the Detroit Athletic Club around 1915, and to Frank Fogarty, a vaudeville comedian, who took it to New York. Ted Saucier prints it in Bottoms Up (1951). It nearly vanished, then Murray Stenson put it on the list at Seattle's Zig Zag Café in 2003, and the equal-parts formula spread. This card keeps three-quarters each of gin, Chartreuse, maraschino, and lime, coupe, cherry.",
+      "refs": [
+        { "title": "Punch, Last Word", "url": "https://punchdrink.com/recipes/last-word/" },
+        { "title": "Difford's Guide, Last Word", "url": "https://www.diffordsguide.com/cocktails/recipe/1158/last-word" }
       ] }
 
   ]

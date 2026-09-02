@@ -53,6 +53,10 @@ OVERRIDE = {
     # vermouth, no bitters — the classifier has nothing to hang a
     # family on. It drinks as a Fancy: spirit and a sweetener, dressed.
     "dempsey": "fancy",
+    # A quarter ounce of Fernet reads as a liqueur pillar, so the
+    # classifier files a Fancy. It is an Old-Fashioned: rye, sugar,
+    # bitters, with Fernet in the bitter slot.
+    "toronto": "old-fashioned",
 }
 
 # Modifier bottles play four different jobs, and `kind: modifier` cannot
@@ -62,11 +66,18 @@ MOD_ROLE = {
     "campari": "bitter",
     "absinthe": "absinthe",
     "champagne": "sparkling",
+    "ginger-beer": "sparkling",
     "orange-liqueur": "liqueur",
     "maraschino": "liqueur",
     "benedictine": "liqueur",
     "apricot": "liqueur",
     "elderflower": "liqueur",
+    "chartreuse": "liqueur",
+    "fernet": "liqueur",
+    "creme-de-cacao": "liqueur",
+    "cream": "liqueur",
+    "cynar": "bitter",
+    "sherry": "vermouth",
 }
 
 KIND_ROLE = {
@@ -199,7 +210,7 @@ def say(ing):
     `Campari for Angostura`.
     """
     iid = ing["id"]
-    if iid in ("campari", "benedictine", "champagne"):
+    if iid in ("campari", "benedictine", "champagne", "fernet", "cynar", "chartreuse"):
         return ing["name"]
     if iid == "orange-bitters":
         return "orange bitters"
