@@ -779,6 +779,14 @@ a { color: inherit; text-decoration: none; }
   color: var(--faint);
 }
 
+.shelf__copy {
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .bottle { border-bottom: 1px solid var(--hair); }
 
 .bottle__row {
@@ -825,8 +833,10 @@ a { color: inherit; text-decoration: none; }
   border-radius: 2px;
   position: relative;
 }
-.bottle.is-on .bottle__box { background: var(--brass); border-color: var(--brass); }
-.bottle.is-on .bottle__box::after {
+.bottle.is-on > .bottle__row .bottle__box,
+.brand.is-on .bottle__box { background: var(--brass); border-color: var(--brass); }
+.bottle.is-on > .bottle__row .bottle__box::after,
+.brand.is-on .bottle__box::after {
   content: "";
   position: absolute;
   left: 5px; top: 1px;
@@ -890,6 +900,51 @@ a { color: inherit; text-decoration: none; }
   font-style: italic;
   color: var(--muted);
   line-height: 1.55;
+}
+
+.brands { padding-bottom: 6px; }
+
+.brands__tier {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 12px 0 2px;
+}
+.brands__tier:first-child { margin-top: 2px; }
+
+.brand { border-bottom: 1px solid var(--hair); }
+.brand:last-child { border-bottom: 0; }
+
+.brand__hit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.brand__name {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+}
+
+.brand__meta {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+  white-space: nowrap;
 }
 
 /* ── Key: the notation, named ─────────────────────────────── */
@@ -1193,7 +1248,7 @@ a { color: inherit; text-decoration: none; }
   }
 
   .topbar, .tabbar, .filters, .tonight__acts, .tally__acts,
-  .drink__missing, .loading, .bottle__more,
+  .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe-tabs, .recipe-panel--taste, .recipe-panel--history, .recipe-panel--kin,
   .recipe-copy, .recipe-refs, .drink__glass { display: none !important; }
 

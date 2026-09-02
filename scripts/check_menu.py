@@ -15,6 +15,11 @@ so the bottle it calls for counts as used. Whether a missing garnish stops
 you pouring is the app's question, not this one — here it only has to be a
 bottle something wants.
 
+`bottles` on an ingredient is the shopping list for that type. Brand ids
+are unique across the bar. `catalog` marks a type that is on the shopping
+list before any drink calls for it — those still need bottles, or they
+are the same quiet drift the unused-ingredient check is for.
+
 Taste, history, and refs are optional until the research tickets finish.
 If they are present they have to be the right shape, and a fourth invention
 on a cocktail object is a fail.
@@ -47,9 +52,15 @@ COCKTAIL_KEYS = {
 REF_KEYS = {"title", "url"}
 INGREDIENT_KEYS = {
     "id", "name", "short", "kind", "unit", "staple", "shelf", "notes",
+    "bottles", "catalog",
 }
 NOTES_KEYS = {"parts", "copy"}
 PART_KEYS = {"amt", "item"}
+BOTTLE_KEYS = {"id", "name", "size", "price", "tier"}
+BOTTLE_TIERS = {
+    "solid", "elevated", "excellent", "exceptional", "alternatives",
+}
+SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 HTML = re.compile(r"<[^>]+>")
 MD_LINK = re.compile(r"\[[^\]]+\]\([^)]+\)")
 
@@ -95,6 +106,10 @@ def check_ingredient_notes(i, errs):
     for k in extra:
         errs.append(f"bar {who}: unknown key {k!r}")
 
+    catalog = i.get("catalog")
+    if catalog is not None and catalog is not True:
+        errs.append(f"bar {who}: catalog must be true if present")
+
     notes = i.get("notes")
     if notes is None:
         return
@@ -128,6 +143,61 @@ def check_ingredient_notes(i, errs):
             val = p.get(field)
             if not isinstance(val, str) or not val.strip():
                 errs.append(f"bar {who}: notes.parts[{n}].{field} must be a non-empty string")
+
+
+def check_ingredient_bottles(i, errs, seen_brands):
+    """Optional shopping list. Brand ids are unique across the whole bar."""
+    who = i.get("id", "<no id>")
+    bottles = i.get("bottles")
+    catalog = i.get("catalog") is True
+
+    if catalog and not bottles:
+        errs.append(f"bar {who}: catalog ingredient has no bottles")
+
+    if bottles is None:
+        return
+    if not isinstance(bottles, list) or not bottles:
+        errs.append(f"bar {who}: bottles must be a non-empty array")
+        return
+
+    for n, b in enumerate(bottles):
+        loc = f"bar {who}: bottles[{n}]"
+        if not isinstance(b, dict):
+            errs.append(f"{loc} is not an object")
+            continue
+        extra = sorted(set(b) - BOTTLE_KEYS)
+        for k in extra:
+            errs.append(f"{loc} unknown key {k!r}")
+
+        bid = b.get("id")
+        if not isinstance(bid, str) or not SLUG.fullmatch(bid):
+            errs.append(f"{loc}.id is not a slug")
+        elif bid == who:
+            errs.append(f"{loc}.id {bid!r} collides with the ingredient")
+        elif bid in seen_brands:
+            errs.append(f"{loc}.id {bid!r} is reused")
+        else:
+            seen_brands.add(bid)
+
+        name = b.get("name")
+        if not isinstance(name, str) or not name.strip():
+            errs.append(f"{loc}.name must be a non-empty string")
+        elif HTML.search(name):
+            errs.append(f"{loc}.name contains HTML")
+
+        tier = b.get("tier")
+        if tier not in BOTTLE_TIERS:
+            errs.append(f"{loc}.tier {tier!r} is not a known tier")
+
+        if "size" in b:
+            size = b["size"]
+            if not isinstance(size, str) or not size.strip():
+                errs.append(f"{loc}.size must be a non-empty string")
+
+        if "price" in b:
+            price = b["price"]
+            if not isinstance(price, int) or isinstance(price, bool) or price < 0:
+                errs.append(f"{loc}.price must be a non-negative integer")
 
 
 def check_notes(d, who, errs):
@@ -188,8 +258,17 @@ def main():
     gbottle = garnish_bottles(notation)
 
     errs = []
+    copy = bar.get("bottles_copy")
+    if copy is not None:
+        if not isinstance(copy, str) or not copy.strip():
+            errs.append("bar: bottles_copy must be a non-empty string")
+        elif HTML.search(copy):
+            errs.append("bar: bottles_copy contains HTML")
+
+    seen_brands = set()
     for i in bar["ingredients"]:
         check_ingredient_notes(i, errs)
+        check_ingredient_bottles(i, errs, seen_brands)
     for code, ingredient in sorted(gbottle.items()):
         if ingredient not in stocked:
             errs.append(f"notation: garnish {code!r} calls for {ingredient!r}, "
@@ -252,8 +331,16 @@ def main():
         if rebuilt != d["code"]:
             errs.append(f"{who}: code {d['code']!r} but build spells {rebuilt!r}")
 
-    for i in sorted(stocked - used):
-        errs.append(f"bar: {i} is stocked but no drink calls for it")
+    by_id = {i["id"]: i for i in bar["ingredients"]}
+    for iid in sorted(stocked):
+        catalog = by_id[iid].get("catalog") is True
+        if iid in used:
+            if catalog:
+                errs.append(f"bar {iid}: catalog but a drink calls for it")
+            continue
+        if catalog:
+            continue
+        errs.append(f"bar: {iid} is stocked but no drink calls for it")
 
     for e in errs:
         print(f"  MENU  {e}")
@@ -263,8 +350,11 @@ def main():
     n = len(menu["cocktails"])
     st = sum(1 for d in menu["cocktails"] if d["method"] == "stirred")
     ng = sum(1 for i in bar["ingredients"] if i["kind"] == "garnish")
+    nb = sum(1 for i in bar["ingredients"] if i.get("bottles"))
+    nc = sum(1 for i in bar["ingredients"] if i.get("catalog") is True)
     print(f"  menu    {n} drinks ({st} stirred, {n - st} shaken), "
-          f"{len(stocked)} ingredients ({ng} garnish, "
+          f"{len(stocked)} ingredients ({ng} garnish, {nc} catalog, "
+          f"{nb} with bottles, {len(seen_brands)} brands, "
           f"{len(gbottle)} letters that call for one), every code checks out")
     return 0
 

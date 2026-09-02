@@ -84,12 +84,17 @@ Every bottle any drink can call for, grouped by `kind` for the shelf.
 the Bar tab where the bottle and the pour want different words for the
 same thing — one lemon is `Lemon juice` in a recipe and `Lemons` in a
 bowl. `notes` is optional: a house recipe for making that bottle
-(`parts` weighed amounts, `copy` the method). The checkbox ticks the
-shelf; the rest of the row reveals the notes, and does nothing when
-there are none. Homemade syrups are
+(`parts` weighed amounts, `copy` the method). `bottles` is the shopping
+list for that type, grouped by quality (`solid`, `elevated`, `excellent`,
+`exceptional`, `alternatives`). The checkbox ticks the shelf; the rest of
+the row reveals notes and the brand list when either is there, and does
+nothing when there is neither. Ticking a brand ticks the parent; the last
+brand unticked unticks it. An unknown bottle still ticks the parent on
+its own. Homemade syrups are
 weighed — a kitchen scale is required. The checker fails on a stocked ingredient no
 drink uses, and a garnish letter counts as use, so the bar cannot
-quietly drift.
+quietly drift. `catalog` is the exception: a type on the shopping list
+before any drink calls for it. Those still need bottles.
 
 ### `data/notation.json`
 

@@ -22,6 +22,7 @@
   'use strict';
 
   var STORE = 'drink.bar.v1';
+  var BRAND_STORE = 'drink.brands.v1';
 
   var FRACTION = { h: '1/2', q: '1/4', Q: '3/4' };
 
@@ -34,6 +35,7 @@
   var garnishBy = {};
 
   var have = {};         /* id -> true, what is on the shelf */
+  var own = {};          /* brand id -> true, which listed bottles you have */
   var open = {};         /* id -> true, which recipes are expanded */
   var noteOpen = {};     /* id -> true, which bottle notes are expanded */
   var recipePane = {};   /* id -> recipe|taste|history|kin; resets on open */
@@ -143,7 +145,38 @@
     try { localStorage.setItem(STORE, JSON.stringify(have)); } catch (e) { /* private mode */ }
   }
 
-  function stocked() { return Object.keys(have).filter(function (k) { return have[k]; }); }
+  function loadOwn() {
+    try { own = JSON.parse(localStorage.getItem(BRAND_STORE)) || {}; }
+    catch (e) { own = {}; }
+  }
+
+  function saveOwn() {
+    try { localStorage.setItem(BRAND_STORE, JSON.stringify(own)); } catch (e) { /* private mode */ }
+  }
+
+  function bottleHasBrands(i) {
+    return !!(i && i.bottles && i.bottles.length);
+  }
+
+  /* A listed brand is enough to stock the type. Unknown bottles still
+     tick the parent on their own, so this only turns a parent *on*. */
+  function syncHaveFromBrands() {
+    data.bar.ingredients.forEach(function (i) {
+      if (!bottleHasBrands(i)) return;
+      var any = i.bottles.some(function (b) { return own[b.id]; });
+      if (any) have[i.id] = true;
+    });
+  }
+
+  function clearBrandsFor(id) {
+    var i = ing[id];
+    if (!bottleHasBrands(i)) return;
+    i.bottles.forEach(function (b) { delete own[b.id]; });
+  }
+
+  function stocked() {
+    return Object.keys(have).filter(function (k) { return have[k] && ing[k]; });
+  }
 
   /* Two lists, because there are two different questions.
 
@@ -645,55 +678,113 @@
   /* ── bar view ──────────────────────────────────────────── */
 
   /* The checkbox ticks the shelf. The rest of the row reveals notes
-     when the bottle has them, and does nothing when it does not. */
+     and the shopping list when the bottle has either, and does
+     nothing when it does not. */
+  var TIER_ORDER = ['solid', 'elevated', 'excellent', 'exceptional', 'alternatives'];
+  var TIER_LABEL = {
+    solid: 'Solid',
+    elevated: 'Elevated',
+    excellent: 'Excellent',
+    exceptional: 'Exceptional',
+    alternatives: 'Alternatives'
+  };
+
   function bottleHasNotes(i) {
     return !!(i.notes && (i.notes.copy || (i.notes.parts && i.notes.parts.length)));
   }
 
-  function renderBottleNote(i, shown) {
-    var n = i.notes;
-    var html = '<div class="bottle__note" id="note-' + esc(i.id) + '"' +
-      (shown ? '' : ' hidden') + '>';
-    if (n.parts && n.parts.length) {
-      n.parts.forEach(function (p) {
-        html += '<div class="pour">' +
-          '<div class="pour__amt">' + esc(p.amt) + '</div>' +
-          '<div class="pour__ing">' + esc(p.item) + '</div>' +
+  function bottleHasPane(i) {
+    return bottleHasNotes(i) || bottleHasBrands(i);
+  }
+
+  function brandMeta(b) {
+    var bits = [];
+    if (b.size) bits.push(b.size);
+    if (b.price != null) bits.push('~$' + b.price);
+    return bits.join(' · ');
+  }
+
+  function renderBrands(i) {
+    var byTier = {};
+    i.bottles.forEach(function (b) {
+      (byTier[b.tier] || (byTier[b.tier] = [])).push(b);
+    });
+    var html = '<div class="brands">';
+    TIER_ORDER.forEach(function (tier) {
+      var list = byTier[tier];
+      if (!list) return;
+      html += '<h3 class="brands__tier">' + esc(TIER_LABEL[tier]) + '</h3>';
+      list.forEach(function (b) {
+        var on = !!own[b.id];
+        var meta = brandMeta(b);
+        html += '<div class="brand' + (on ? ' is-on' : '') + '">' +
+          '<button type="button" class="brand__hit" data-brand="' + esc(b.id) +
+            '" data-parent="' + esc(i.id) + '"' +
+            ' aria-pressed="' + (on ? 'true' : 'false') + '"' +
+            ' aria-label="' + esc(b.name) + '">' +
+            '<span class="bottle__box"></span>' +
+            '<span class="brand__name">' + esc(b.name) + '</span>' +
+            (meta ? '<span class="brand__meta">' + esc(meta) + '</span>' : '') +
+          '</button>' +
           '</div>';
       });
-    }
-    if (n.copy) {
-      html += '<p class="bottle__copy">' + esc(n.copy) + '</p>';
+    });
+    return html + '</div>';
+  }
+
+  function renderBottleNote(i, shown) {
+    var html = '<div class="bottle__note" id="note-' + esc(i.id) + '"' +
+      (shown ? '' : ' hidden') + '>';
+    if (bottleHasBrands(i)) html += renderBrands(i);
+    if (bottleHasNotes(i)) {
+      var n = i.notes;
+      if (n.parts && n.parts.length) {
+        n.parts.forEach(function (p) {
+          html += '<div class="pour">' +
+            '<div class="pour__amt">' + esc(p.amt) + '</div>' +
+            '<div class="pour__ing">' + esc(p.item) + '</div>' +
+            '</div>';
+        });
+      }
+      if (n.copy) {
+        html += '<p class="bottle__copy">' + esc(n.copy) + '</p>';
+      }
     }
     return html + '</div>';
   }
 
   function renderBottleStat(on, gain, uses) {
+    if (!uses) return '';
     return on
       ? '<span class="bottle__in">in ' + uses + '</span>'
       : '<span class="bottle__gain' + (gain ? '' : ' bottle__gain--flat') + '">' +
           (gain ? '+' + gain : 'in ' + uses) + '</span>';
   }
 
+  function revealLabel(i, name) {
+    if (bottleHasNotes(i) && i.notes.parts && i.notes.parts.length) return 'How to make ' + name;
+    if (bottleHasBrands(i)) return 'Bottles of ' + name;
+    return 'Notes on ' + name;
+  }
+
   function renderBottle(i, held, gain, uses) {
     var on = !!held[i.id];
-    var hasNote = bottleHasNotes(i);
-    var shown = !!(hasNote && noteOpen[i.id]);
+    var hasPane = bottleHasPane(i);
+    var shown = !!(hasPane && noteOpen[i.id]);
     var name = i.shelf || i.name;
     var html = '<div class="bottle' + (on ? ' is-on' : '') +
-      (shown ? ' is-open' : '') + (hasNote ? ' has-note' : '') + '">' +
+      (shown ? ' is-open' : '') + (hasPane ? ' has-note' : '') + '">' +
       '<div class="bottle__row">' +
       '<button type="button" class="bottle__stock" data-bottle="' + esc(i.id) + '"' +
         ' aria-pressed="' + (on ? 'true' : 'false') + '"' +
         ' aria-label="' + esc(name) + '">' +
         '<span class="bottle__box"></span>' +
       '</button>';
-    if (hasNote) {
-      var how = (i.notes.parts && i.notes.parts.length) ? 'How to make ' : 'Notes on ';
+    if (hasPane) {
       html += '<button type="button" class="bottle__hit" data-note="' + esc(i.id) + '"' +
         ' aria-expanded="' + (shown ? 'true' : 'false') + '"' +
         ' aria-controls="note-' + esc(i.id) + '"' +
-        ' aria-label="' + esc(how + name) + '">' +
+        ' aria-label="' + esc(revealLabel(i, name)) + '">' +
         '<span class="bottle__name">' + esc(name) + '</span>' +
         renderBottleStat(on, gain, uses) +
         '<span class="bottle__more" aria-hidden="true"></span>' +
@@ -705,7 +796,7 @@
         '</div>';
     }
     html += '</div>';
-    if (hasNote) html += renderBottleNote(i, shown);
+    if (hasPane) html += renderBottleNote(i, shown);
     return html + '</div>';
   }
 
@@ -775,7 +866,10 @@
       if (!rows.length) return;
 
       html += '<section class="shelf"><h2 class="shelf__h">' + esc(k.label) + '</h2>' +
-        (k.blurb ? '<p class="shelf__blurb">' + esc(k.blurb) + '</p>' : '');
+        (k.blurb ? '<p class="shelf__blurb">' + esc(k.blurb) + '</p>' : '') +
+        (k.id === 'base' && data.bar.bottles_copy
+          ? '<p class="shelf__copy">' + esc(data.bar.bottles_copy) + '</p>'
+          : '');
 
       /* Biggest unlock first, in the order frozen on the way in — a row
          never moves out from under the finger that just ticked it. */
@@ -937,7 +1031,7 @@
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
-      '[data-pourable],[data-clear],[data-clearothers],[data-bottle],[data-note],[data-bar],[data-seemenu],' +
+      '[data-pourable],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-seemenu],' +
       '[data-print],[data-kin],[data-see-pattern]');
     if (!t) return;
 
@@ -1035,9 +1129,31 @@
       return;
     }
 
+    if (t.dataset.brand) {
+      var brand = t.dataset.brand;
+      var parent = t.dataset.parent;
+      own[brand] = !own[brand];
+      if (!own[brand]) delete own[brand];
+      var parentIng = ing[parent];
+      var any = parentIng.bottles.some(function (b) { return own[b.id]; });
+      if (any) have[parent] = true;
+      else delete have[parent];
+      saveOwn();
+      saveHave();
+      var by = $('#main').scrollTop;
+      renderBar();
+      $('#main').scrollTop = by;
+      refreshCount();
+      return;
+    }
+
     if (t.dataset.bottle) {
       have[t.dataset.bottle] = !have[t.dataset.bottle];
-      if (!have[t.dataset.bottle]) delete have[t.dataset.bottle];
+      if (!have[t.dataset.bottle]) {
+        delete have[t.dataset.bottle];
+        clearBrandsFor(t.dataset.bottle);
+        saveOwn();
+      }
       saveHave();
       /* Every figure on the shelf is relative to what is stocked, so the
          whole list is rewritten. Put the scroll back where it was or the
@@ -1056,7 +1172,8 @@
 
     if (t.dataset.bar === 'none') {
       have = {};
-      saveHave(); barOrder = null; renderBar(); refreshCount(); return;
+      own = {};
+      saveHave(); saveOwn(); barOrder = null; renderBar(); refreshCount(); return;
     }
   });
 
@@ -1132,6 +1249,9 @@
 
     buildNeeds();
     loadHave();
+    loadOwn();
+    syncHaveFromBrands();
+    saveHave();
 
     $('#loading').hidden = true;
     repaintMenu();

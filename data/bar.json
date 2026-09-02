@@ -1,5 +1,6 @@
 {
-  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand, `shelf` overrides the name where the bottle and the pour want different words for the same thing, `notes` is a house recipe for making that bottle \u2014 the checkbox ticks the shelf, the rest of the row reveals the notes when there are any. Garnish is stocked like anything else \u2014 the letter lives in the serve token, and notation.json says which bottle it calls for \u2014 but it is optional, so it never decides whether a drink can be poured.",
+  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand, `shelf` overrides the name where the bottle and the pour want different words for the same thing, `notes` is a house recipe for making that bottle \u2014 the checkbox ticks the shelf, the rest of the row reveals the notes when there are any. `bottles` is the shopping list for that type, grouped by quality; ticking a brand ticks the parent, and the last brand unticked unticks it. `catalog` marks a type that is on the shopping list before any drink calls for it. Garnish is stocked like anything else \u2014 the letter lives in the serve token, and notation.json says which bottle it calls for \u2014 but it is optional, so it never decides whether a drink can be poured.",
+  "bottles_copy": "When it comes to base liquor, anything above excellent is made for sipping neat. This does not mean the quality of the bottles in the solid or elevated lists is poor, quite the opposite: staples like Four Roses Bourbon and Beefeater London Dry Gin are nearly perfect representations of their categories, but that kind of makes them boring for a neat sip, yet a solid foundation for a cocktail expecting their familiar flavor profile.",
   "kinds": [
     { "id": "base",     "label": "Base spirits",  "blurb": "Ten bottles carry the whole menu." },
     { "id": "vermouth", "label": "Vermouth",      "blurb": "Two bottles. Refrigerate them." },
@@ -11,28 +12,177 @@
     { "id": "other",    "label": "Other",         "blurb": "" }
   ],
   "ingredients": [
-    { "id": "gin",           "name": "Gin",                 "short": "gin",         "kind": "base" },
-    { "id": "bourbon",       "name": "Bourbon",             "short": "bourbon",     "kind": "base" },
-    { "id": "rye",           "name": "Rye",                 "short": "rye",         "kind": "base" },
-    { "id": "scotch",        "name": "Scotch",              "short": "scotch",      "kind": "base" },
-    { "id": "cognac",        "name": "Cognac",              "short": "cognac",      "kind": "base" },
-    { "id": "apple-brandy",  "name": "Apple brandy",        "short": "apple",       "kind": "base" },
-    { "id": "aged-rum",      "name": "Aged rum",            "short": "aged rum",    "kind": "base" },
-    { "id": "light-rum",     "name": "Light rum",           "short": "light rum",   "kind": "base" },
-    { "id": "tequila",       "name": "Tequila",             "short": "tequila",     "kind": "base" },
-    { "id": "vodka",         "name": "Vodka",               "short": "vodka",       "kind": "base" },
+    { "id": "gin",           "name": "Gin",                 "short": "gin",         "kind": "base",
+      "bottles": [
+        { "id": "beefeater",            "name": "Beefeater London Dry Gin",                         "size": "1.75L", "price": 35, "tier": "solid" },
+        { "id": "tanqueray",            "name": "Tanqueray London Dry Gin",                         "size": "1.75L", "price": 25, "tier": "solid" },
+        { "id": "fords",                "name": "Fords London Dry Gin",                             "size": "750ml", "price": 30, "tier": "elevated" },
+        { "id": "botanist",             "name": "The Botanist Islay Dry Gin",                       "size": "750ml", "price": 30, "tier": "elevated" },
+        { "id": "botanist-distillers",  "name": "The Botanist Islay Dry Gin Distillers Strength",   "size": "750ml", "price": 40, "tier": "elevated" },
+        { "id": "plymouth",             "name": "Plymouth Gin",                                     "size": "750ml", "price": 35, "tier": "elevated" },
+        { "id": "plymouth-navy",        "name": "Plymouth Navy Strength Gin (114 proof)",           "size": "750ml", "price": 40, "tier": "elevated" }
+      ]
+    },
+    { "id": "bourbon",       "name": "Bourbon",             "short": "bourbon",     "kind": "base",
+      "bottles": [
+        { "id": "four-roses-bourbon",      "name": "Four Roses Bourbon",                            "size": "1.75L", "price": 40, "tier": "solid" },
+        { "id": "buffalo-trace",           "name": "Buffalo Trace Kentucky Straight Bourbon Whiskey","size": "1.75L", "price": 40, "tier": "solid" },
+        { "id": "four-roses-small-batch",  "name": "Four Roses Small Batch Bourbon",                "size": "750ml", "price": 35, "tier": "elevated" },
+        { "id": "eagle-rare-10",           "name": "Eagle Rare 10 Year",                            "size": "750ml", "price": 50, "tier": "excellent" }
+      ]
+    },
+    { "id": "rye",           "name": "Rye",                 "short": "rye",         "kind": "base",
+      "bottles": [
+        { "id": "rittenhouse-100",         "name": "Rittenhouse Rye 100",                                        "price": 25, "tier": "solid" },
+        { "id": "wild-turkey-rye-101",     "name": "Wild Turkey Rye 101",                                        "price": 25, "tier": "solid" },
+        { "id": "old-forester-rye-100",    "name": "Old Forester Rye 100 Pf",                                    "price": 25, "tier": "solid" },
+        { "id": "high-west-double-rye",    "name": "High West Double Rye",                                       "price": 25, "tier": "solid" },
+        { "id": "sazerac-6-rye",           "name": "Sazerac 6 Yr Old Rye Whiskey Barrel Select",                 "price": 35, "tier": "elevated" }
+      ]
+    },
+    { "id": "scotch",        "name": "Scotch",              "short": "scotch",      "kind": "base",
+      "bottles": [
+        { "id": "monkey-shoulder",         "name": "Monkey Shoulder Blended Malt Scotch Whisky",                 "price": 30, "tier": "solid" },
+        { "id": "classic-laddie",          "name": "Bruichladdich The Classic Laddie Unpeated Islay Single Malt Scotch", "price": 45, "tier": "elevated" },
+        { "id": "aberlour-12",             "name": "Aberlour 12 Year Single Malt Scotch",                        "price": 60, "tier": "excellent" }
+      ]
+    },
+    { "id": "cognac",        "name": "Cognac",              "short": "cognac",      "kind": "base",
+      "bottles": [
+        { "id": "abk6-vsop",               "name": "ABK6 VSOP Cognac",                                           "price": 40, "tier": "solid" },
+        { "id": "ferrand-ambre",           "name": "Ferrand Ambre Cognac",                                       "price": 60, "tier": "elevated" }
+      ]
+    },
+    { "id": "apple-brandy",  "name": "Apple brandy",        "short": "apple",       "kind": "base",
+      "bottles": [
+        { "id": "lairds-100",              "name": "Laird's 100 Proof Apple Brandy",                             "price": 45, "tier": "solid" }
+      ]
+    },
+    { "id": "aged-rum",      "name": "Aged rum",            "short": "aged rum",    "kind": "base",
+      "bottles": [
+        { "id": "el-dorado-12",            "name": "El Dorado 12 YO Guyana",                                     "price": 45, "tier": "solid" }
+      ]
+    },
+    { "id": "light-rum",     "name": "Light rum",           "short": "light rum",   "kind": "base",
+      "bottles": [
+        { "id": "bacardi-superior",        "name": "Bacardi Superior Rum",                                       "price": 15, "tier": "solid" },
+        { "id": "flor-de-cana-4",          "name": "Flor de Ca\u00f1a 4 Year Rum Extra Seco",                       "price": 30, "tier": "elevated" }
+      ]
+    },
+    { "id": "tequila",       "name": "Tequila",             "short": "tequila",     "kind": "base",
+      "bottles": [
+        { "id": "cimarron-blanco",         "name": "Cimarron Blanco Tequila",                                    "price": 20, "tier": "solid" },
+        { "id": "el-tequileno-blanco",     "name": "El Tequile\u00f1o Blanco Tequila",                              "price": 20, "tier": "solid" },
+        { "id": "el-tesoro-blanco",        "name": "El Tesoro Blanco Tequila",                                   "price": 40, "tier": "elevated" },
+        { "id": "g4-blanco",               "name": "G4 Tequila Blanco",                                          "price": 40, "tier": "elevated" },
+        { "id": "el-tesoro-reposado",      "name": "El Tesoro Reposado Tequila",                                 "price": 50, "tier": "excellent" },
+        { "id": "don-fulano-blanco",       "name": "Don Fulano Blanco Tequila",                                  "price": 60, "tier": "excellent" }
+      ]
+    },
+    { "id": "vodka",         "name": "Vodka",               "short": "vodka",       "kind": "base",
+      "bottles": [
+        { "id": "skyy",                    "name": "SKYY Vodka",                                                 "price": 10, "tier": "solid" },
+        { "id": "titos",                   "name": "Tito's Handmade Vodka",                                      "price": 15, "tier": "solid" },
+        { "id": "ketel-one",               "name": "Ketel One",                                                  "price": 20, "tier": "elevated" },
+        { "id": "reyka",                   "name": "Reyka Vodka",                                                "price": 20, "tier": "elevated" }
+      ]
+    },
+    { "id": "mezcal",        "name": "Mezcal",              "short": "mezcal",      "kind": "base", "catalog": true,
+      "bottles": [
+        { "id": "madre-espadin",           "name": "Madre Mezcal Espad\u00edn 86 Proof",                            "price": 35, "tier": "solid" },
+        { "id": "banhez-espadin-barril",   "name": "Banhez Espad\u00edn Barril Mezcal",                             "price": 45, "tier": "elevated" }
+      ]
+    },
+    { "id": "cachaca",       "name": "Cacha\u00e7a",            "short": "cacha\u00e7a",     "kind": "base", "catalog": true,
+      "bottles": [
+        { "id": "leblon",                  "name": "Leblon Cacha\u00e7a",                                          "price": 25, "tier": "solid" },
+        { "id": "novo-fogo-silver",        "name": "Novo Fogo Silver Cacha\u00e7a",                                 "price": 30, "tier": "solid" }
+      ]
+    },
 
-    { "id": "sweet-vermouth", "name": "Sweet vermouth",     "short": "sweet verm.", "kind": "vermouth" },
-    { "id": "dry-vermouth",   "name": "Dry vermouth",       "short": "dry verm.",   "kind": "vermouth" },
+    { "id": "sweet-vermouth", "name": "Sweet vermouth",     "short": "sweet verm.", "kind": "vermouth",
+      "bottles": [
+        { "id": "dolin-rouge",             "name": "Dolin Vermouth de Chamb\u00e9ry Rouge",                         "price": 20, "tier": "solid" },
+        { "id": "carpano-antica",          "name": "Carpano Antica Formula Sweet Vermouth",                      "price": 30, "tier": "elevated" },
+        { "id": "cocchi-torino",           "name": "Cocchi Vermouth di Torino",                                  "price": 30, "tier": "elevated" }
+      ]
+    },
+    { "id": "dry-vermouth",   "name": "Dry vermouth",       "short": "dry verm.",   "kind": "vermouth",
+      "bottles": [
+        { "id": "noilly-prat-dry",         "name": "Noilly Prat Extra Dry Vermouth",                             "price": 20, "tier": "solid" },
+        { "id": "dolin-dry",               "name": "Dolin Vermouth de Chamb\u00e9ry Dry",                           "size": "750ml", "price": 20, "tier": "elevated" }
+      ]
+    },
 
-    { "id": "campari",        "name": "Campari",            "short": "Campari",     "kind": "modifier" },
-    { "id": "maraschino",     "name": "Maraschino liqueur", "short": "maraschino",  "kind": "modifier" },
-    { "id": "orange-liqueur", "name": "Orange liqueur",     "short": "orange liq.", "kind": "modifier" },
-    { "id": "benedictine",    "name": "Bénédictine",        "short": "Bénédictine", "kind": "modifier" },
-    { "id": "apricot",        "name": "Apricot liqueur",    "short": "apricot",     "kind": "modifier" },
-    { "id": "elderflower",    "name": "Elderflower liqueur","short": "elderflower", "kind": "modifier" },
-    { "id": "absinthe",       "name": "Absinthe",           "short": "absinthe",    "kind": "modifier" },
+    { "id": "campari",        "name": "Campari",            "short": "Campari",     "kind": "modifier",
+      "bottles": [
+        { "id": "campari-bottle",          "name": "Campari",                                                    "price": 30, "tier": "excellent" }
+      ]
+    },
+    { "id": "maraschino",     "name": "Maraschino liqueur", "short": "maraschino",  "kind": "modifier",
+      "bottles": [
+        { "id": "luxardo",                 "name": "Luxardo Maraschino Liqueur",                                 "price": 30, "tier": "excellent" }
+      ]
+    },
+    { "id": "orange-liqueur", "name": "Orange liqueur",     "short": "orange liq.", "kind": "modifier",
+      "bottles": [
+        { "id": "cointreau",               "name": "Cointreau",                                                  "price": 30, "tier": "solid" },
+        { "id": "ferrand-dry-curacao",     "name": "Ferrand Dry Cura\u00e7ao",                                      "price": 30, "tier": "solid" }
+      ]
+    },
+    { "id": "benedictine",    "name": "B\u00e9n\u00e9dictine",        "short": "B\u00e9n\u00e9dictine", "kind": "modifier",
+      "bottles": [
+        { "id": "benedictine-bottle",      "name": "B\u00e9n\u00e9dictine",                                            "price": 35, "tier": "excellent" }
+      ]
+    },
+    { "id": "apricot",        "name": "Apricot liqueur",    "short": "apricot",     "kind": "modifier",
+      "bottles": [
+        { "id": "drillaud-apricot",        "name": "Drillaud Apricot Liqueur",                                   "price": 20, "tier": "solid" }
+      ]
+    },
+    { "id": "elderflower",    "name": "Elderflower liqueur","short": "elderflower", "kind": "modifier",
+      "bottles": [
+        { "id": "st-germain",              "name": "St-Germain Elderflower Liqueur",                             "price": 25, "tier": "elevated" }
+      ]
+    },
+    { "id": "absinthe",       "name": "Absinthe",           "short": "absinthe",    "kind": "modifier",
+      "bottles": [
+        { "id": "lucid",                   "name": "Lucid Absinthe Superieure",                     "size": "375ml", "price": 40, "tier": "solid" },
+        { "id": "kubler",                  "name": "K\u00fcbler",                                      "size": "375ml", "price": 40, "tier": "solid" },
+        { "id": "st-george-verte",         "name": "St. George Absinthe Verte",                     "size": "750ml", "price": 65, "tier": "solid" }
+      ]
+    },
     { "id": "champagne",      "name": "Champagne",          "short": "Champagne",   "kind": "modifier" },
+    { "id": "chartreuse",     "name": "Chartreuse",         "short": "Chartreuse",  "kind": "modifier", "catalog": true,
+      "bottles": [
+        { "id": "green-chartreuse",        "name": "Green Chartreuse",                                           "price": 70, "tier": "excellent" },
+        { "id": "yellow-chartreuse",       "name": "Yellow Chartreuse",                                          "price": 70, "tier": "excellent" }
+      ]
+    },
+    { "id": "cynar",          "name": "Cynar",              "short": "Cynar",       "kind": "modifier", "catalog": true,
+      "bottles": [
+        { "id": "cynar-bottle",            "name": "Cynar 33 Proof",                                             "price": 30, "tier": "excellent" },
+        { "id": "averna",                  "name": "Averna Amaro",                                               "price": 35, "tier": "alternatives" },
+        { "id": "ramazzotti",              "name": "Ramazzotti Amaro",                                           "price": 35, "tier": "alternatives" },
+        { "id": "montenegro",              "name": "Amaro Montenegro",                                           "price": 40, "tier": "alternatives" },
+        { "id": "sfumato",                 "name": "Cappelletti Amaro Sfumato Rabarbaro",                        "price": 25, "tier": "alternatives" }
+      ]
+    },
+    { "id": "sherry",         "name": "Sherry",             "short": "sherry",      "kind": "modifier", "catalog": true,
+      "bottles": [
+        { "id": "lustau-los-arcos",        "name": "Lustau Amontillado Los Arcos",                               "price": 20, "tier": "solid" }
+      ]
+    },
+    { "id": "fernet",         "name": "Fernet",             "short": "Fernet",      "kind": "modifier", "catalog": true,
+      "bottles": [
+        { "id": "fernet-branca",           "name": "Fernet-Branca",                                              "price": 30, "tier": "exceptional" }
+      ]
+    },
+    { "id": "creme-de-cacao", "name": "Cr\u00e8me de cacao",     "short": "cacao",       "kind": "modifier", "catalog": true,
+      "bottles": [
+        { "id": "drillaud-cacao",          "name": "Drillaud Cr\u00e8me de Cacao Dark Chocolate Liqueur",           "price": 20, "tier": "solid" }
+      ]
+    },
 
     { "id": "angostura",      "name": "Angostura bitters",  "short": "Angostura",   "kind": "bitters", "unit": "dash" },
     { "id": "orange-bitters", "name": "Orange bitters",     "short": "orange bitt.","kind": "bitters", "unit": "dash" },
