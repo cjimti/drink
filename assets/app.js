@@ -42,6 +42,7 @@
   var glassMarkup = {};  /* art id -> inline svg */
 
   var filter = emptyFilter();
+  var searchTimer = null;
 
   function emptyFilter() {
     return { method: 'all', family: null, pattern: null, pourable: false, q: '' };
@@ -63,6 +64,28 @@
   }
 
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+  /* Named events for Google Tag Manager. The snippet in index.html
+     owns dataLayer; we only push. Each event is one thing a person
+     did, with the ids the reports will group by. Skip http so a
+     localhost session does not pollute production. In GTM, a GA4
+     Event tag that fires on these Custom Event names is enough —
+     the params ride along as event parameters. */
+  function track(name, params) {
+    if (location.protocol !== 'https:') return;
+    var payload = { event: name };
+    if (params) {
+      Object.keys(params).forEach(function (k) {
+        if (params[k] !== undefined && params[k] !== null) payload[k] = params[k];
+      });
+    }
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(payload);
+  }
+
+  function drinkName(id) {
+    return (cocktailBy[id] && cocktailBy[id].name) || id;
+  }
 
   /* Escape first, then promote `backticked` spans to mono. Case carries
      meaning in this notation, and a proportional face makes l/L and o/O
@@ -302,6 +325,12 @@
       panel.classList.toggle('is-on', on);
       panel.hidden = !on;
     });
+  }
+
+  function setRecipePane(id, pane, recipe) {
+    recipePane[id] = pane;
+    applyRecipePane(recipe, pane);
+    track('recipe_pane', { drink_id: id, drink_name: drinkName(id), pane: pane });
   }
 
   /* First pass of garnish art. Combinations we do not have a drawing
@@ -984,6 +1013,7 @@
     /* The shell is viewport-tall and #main is what scrolls, so the
        window has nowhere to go. */
     $('#main').scrollTop = 0;
+    track('view_tab', { tab: view });
   }
 
   function route() { show((location.hash || '#menu').slice(1)); }
@@ -1036,8 +1066,7 @@
     if (!t) return;
 
     if (t.dataset.recipeTab) {
-      recipePane[t.dataset.recipeFor] = t.dataset.recipeTab;
-      applyRecipePane(t.closest('.recipe'), t.dataset.recipeTab);
+      setRecipePane(t.dataset.recipeFor, t.dataset.recipeTab, t.closest('.recipe'));
       return;
     }
 
@@ -1046,9 +1075,11 @@
       if (open[id]) {
         delete open[id];
         delete recipePane[id];
+        track('drink_close', { drink_id: id, drink_name: drinkName(id) });
       } else {
         open[id] = true;
         recipePane[id] = 'recipe';
+        track('drink_open', { drink_id: id, drink_name: drinkName(id) });
       }
       renderMenu();
       return;
@@ -1057,23 +1088,33 @@
     if (t.dataset.method) {
       filter.method = t.dataset.method;
       if (filter.method !== 'families') filter.pattern = null;
+      track('filter', { filter_type: 'method', filter_value: filter.method });
       repaintMenu();
       return;
     }
 
     if (t.dataset.family) {
       filter.family = filter.family === t.dataset.family ? null : t.dataset.family;
+      track('filter', { filter_type: 'family', filter_value: filter.family || '' });
       repaintMenu();
       return;
     }
 
     if (t.dataset.pattern) {
       filter.pattern = filter.pattern === t.dataset.pattern ? null : t.dataset.pattern;
+      track('filter', { filter_type: 'pattern', filter_value: filter.pattern || '' });
       repaintMenu();
       return;
     }
 
     if (t.dataset.kin) {
+      var fromEl = t.closest('.drink');
+      var fromId = fromEl && fromEl.id ? fromEl.id.replace(/^drink-/, '') : '';
+      track('kin_follow', {
+        from_id: fromId,
+        drink_id: t.dataset.kin,
+        drink_name: drinkName(t.dataset.kin)
+      });
       revealDrink(t.dataset.kin);
       return;
     }
@@ -1083,34 +1124,47 @@
       filter.pattern = t.dataset.seePattern;
       filter.family = null;
       filter.q = '';
+      track('see_pattern', { pattern: t.dataset.seePattern });
       repaintMenu();
       $('#main').scrollTop = 0;
       return;
     }
 
-    if (t.dataset.pourable) { filter.pourable = !filter.pourable; repaintMenu(); return; }
+    if (t.dataset.pourable) {
+      filter.pourable = !filter.pourable;
+      track('filter', { filter_type: 'pourable', filter_value: filter.pourable ? 'on' : 'off' });
+      repaintMenu();
+      return;
+    }
 
     /* Jump from the count on the Bar tab to the menu it is counting. */
     if (t.dataset.seemenu) {
       filter = emptyFilter();
       filter.pourable = true;
+      track('see_pourable');
       repaintMenu();
       location.hash = '#menu';
       return;
     }
 
-    if (t.dataset.print) { window.print(); return; }
+    if (t.dataset.print) {
+      track('print_menu');
+      window.print();
+      return;
+    }
 
     /* Keep the shelf filter, drop whatever else was excluding things. */
     if (t.dataset.clearothers) {
       filter = emptyFilter();
       filter.pourable = true;
+      track('filter', { filter_type: 'clear', filter_value: 'others' });
       repaintMenu();
       return;
     }
 
     if (t.dataset.clear) {
       filter = emptyFilter();
+      track('filter', { filter_type: 'clear', filter_value: 'all' });
       repaintMenu();
       return;
     }
@@ -1126,6 +1180,7 @@
       t.setAttribute('aria-expanded', shown ? 'true' : 'false');
       var pane = bottle.querySelector('.bottle__note');
       if (pane) pane.hidden = !shown;
+      track('bar_note', { bottle_id: nid, open: shown });
       return;
     }
 
@@ -1144,6 +1199,7 @@
       renderBar();
       $('#main').scrollTop = by;
       refreshCount();
+      track('bar_brand', { brand_id: brand, bottle_id: parent, stocked: !!own[brand] });
       return;
     }
 
@@ -1162,18 +1218,23 @@
       renderBar();
       $('#main').scrollTop = y;
       refreshCount();
+      track('bar_stock', { bottle_id: t.dataset.bottle, stocked: !!have[t.dataset.bottle] });
       return;
     }
 
     if (t.dataset.bar === 'all') {
       data.bar.ingredients.forEach(function (i) { have[i.id] = true; });
-      saveHave(); barOrder = null; renderBar(); refreshCount(); return;
+      saveHave(); barOrder = null; renderBar(); refreshCount();
+      track('bar_bulk', { action: 'all' });
+      return;
     }
 
     if (t.dataset.bar === 'none') {
       have = {};
       own = {};
-      saveHave(); saveOwn(); barOrder = null; renderBar(); refreshCount(); return;
+      saveHave(); saveOwn(); barOrder = null; renderBar(); refreshCount();
+      track('bar_bulk', { action: 'none' });
+      return;
     }
   });
 
@@ -1190,8 +1251,7 @@
     else return;
     e.preventDefault();
     var ntab = list[next];
-    recipePane[ntab.dataset.recipeFor] = ntab.dataset.recipeTab;
-    applyRecipePane(ntab.closest('.recipe'), ntab.dataset.recipeTab);
+    setRecipePane(ntab.dataset.recipeFor, ntab.dataset.recipeTab, ntab.closest('.recipe'));
     ntab.focus();
   });
 
@@ -1205,6 +1265,11 @@
       var n = data.menu.cocktails.filter(function (d) { return matches(d, have); }).length;
       note.innerHTML = '<b>' + n + '</b> of ' + data.menu.cocktails.length + ' shown';
     }
+    if (searchTimer) clearTimeout(searchTimer);
+    searchTimer = setTimeout(function () {
+      searchTimer = null;
+      if (filter.q) track('search', { search_term: filter.q });
+    }, 700);
   });
 
   window.addEventListener('hashchange', route);
