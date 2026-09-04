@@ -5,6 +5,9 @@ iOS ignores an SVG apple-touch-icon, so the one raster we need is drawn
 here rather than kept as a binary nobody can diff. No dependencies — the
 mark is three rectangles and a glass, which is exactly what a hand-rolled
 PNG encoder can manage.
+
+The social card is a different job: it has to set type. scripts/make-og.py
+photographs the HTML card for that.
 """
 import struct
 import sys

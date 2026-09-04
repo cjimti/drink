@@ -3,3 +3,4 @@
 .env
 __pycache__/
 .claude/.last-verify-passed
+scripts/.font-cache/

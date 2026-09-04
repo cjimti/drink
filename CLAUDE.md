@@ -1,9 +1,7 @@
 # drink.shoephone.net
 
-Static site for one home bar's cocktail list. Sibling of
-eat.shoephone.net, built the same way and sharing its conventions. No
-build step, no framework, no database. Everything renders from three
-JSON files.
+Static site for one home bar's cocktail list. No build step, no
+framework, no database. Everything renders from three JSON files.
 
 This file is the working context. Read it before touching the menu.
 
@@ -119,9 +117,17 @@ onto the cocktail object — the generated file is the one source, and
 not match its build.
 
 Adding a drink means running `python3 scripts/kin.py` (or `make kin`)
-so the new one joins its family. A handful of drinks the ratio would
-misfile live as `OVERRIDE` at the top of the script; keep that list
-small.
+so the new one joins its family, then `make llms` so it appears in the
+agent dumps. `make verify` refuses a stale copy of either. A handful of
+drinks the ratio would misfile live as `OVERRIDE` at the top of the
+script; keep that list small.
+
+### Agent files
+
+`llms.txt` and `llms-full.txt` are generated from the same JSON the app
+reads. The first is the map (what this is, where the source lives, one
+line per drink). The second is the menu spelled out, so an agent does
+not have to run the decoder. Do not edit them by hand.
 
 ## The marginal-gain engine
 

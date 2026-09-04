@@ -1,0 +1,17 @@
+/* TEAM */
+
+Host: Craig Johnston
+Site: https://imti.co/
+Contact: https://imti.co/resume/
+From: one home bar.
+
+/* SITE */
+
+Language: English
+Doctype: HTML5
+Standards: HTML, CSS, JavaScript
+Software: a text editor and a printed card
+Source: https://github.com/cjimti/drink
+
+The menu is the card. The site decodes the house shorthand and asks
+the shelf what it can pour. No framework, no database, no build.

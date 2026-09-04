@@ -1,0 +1,10 @@
+# drink.shoephone.net
+#
+# The interactive menu is a single page. The drinks themselves live in
+# JSON, and a decoded markdown dump is at /llms-full.txt. Agents should
+# start at /llms.txt.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://drink.shoephone.net/sitemap.xml

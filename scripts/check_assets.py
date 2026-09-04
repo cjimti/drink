@@ -43,6 +43,24 @@ def check_ids(html, js):
     return dangling, len(wanted)
 
 
+WELL_KNOWN = [
+    "robots.txt",
+    "sitemap.xml",
+    "llms.txt",
+    "llms-full.txt",
+    "humans.txt",
+    "assets/og.png",
+]
+
+
+def check_well_known():
+    """Crawlers and agents look at well-known paths, not at index.html."""
+    missing = [p for p in WELL_KNOWN if not (ROOT / p).exists()]
+    for p in missing:
+        print(f"  MISSING {p}")
+    return missing
+
+
 def check_worker(js, sw):
     """A service worker must never be able to take over a dev origin.
 
@@ -85,11 +103,13 @@ def main():
     missing, n_refs = check_files(html)
     dangling, n_ids = check_ids(html, js)
     worker = check_worker(js, sw)
+    well = check_well_known()
 
-    if missing or dangling or worker:
+    if missing or dangling or worker or well:
         return 1
 
     print(f"  assets  {n_refs} local reference(s) resolve, {n_ids} element id(s) exist")
+    print(f"  well    {len(WELL_KNOWN)} crawler/agent file(s) present")
     print("  worker  registration guarded, eviction present in app.js and sw.js")
     return 0
 

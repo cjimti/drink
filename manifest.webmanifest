@@ -1,7 +1,7 @@
 {
   "name": "drink.shoephone",
   "short_name": "Drink",
-  "description": "108 classic cocktails from one small bar.",
+  "description": "The house cocktail menu from one small bar. Classic drinks in house shorthand, decoded, with a shelf that shows what you can pour.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

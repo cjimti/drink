@@ -160,6 +160,13 @@ a { color: inherit; text-decoration: none; }
   font-style: italic;
 }
 
+noscript.fallback {
+  padding: 24px var(--pad) 70px;
+  max-width: 36em;
+  color: var(--muted);
+}
+noscript.fallback a { color: var(--brass); }
+
 /* ── Filters ──────────────────────────────────────────────── */
 
 .filters {

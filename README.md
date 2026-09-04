@@ -1,11 +1,8 @@
 # drink.shoephone.net
 
-The house cocktail menu, as a web app instead of a printed card. 108
-classics, two methods, one small bar. No build step, no framework, no
-database — everything renders from three JSON files.
-
-Sibling of [eat.shoephone.net](https://eat.shoephone.net), and built the
-same way.
+The house cocktail menu, as a web app instead of a printed card. A
+hundred-odd classics, two methods, one small bar. No build step, no
+framework, no database — everything renders from three JSON files.
 
 Live at **[drink.shoephone.net](https://drink.shoephone.net)**.
 
@@ -55,6 +52,9 @@ family those drinks sit in.
 | `scripts/check_menu.py` | Regenerates each code from its build and refuses a mismatch. |
 | `scripts/kin.py` | Rebuilds `data/kin.json` from the builds. `--check` refuses a drift. |
 | `scripts/check_assets.py` | Missing files, and ids `app.js` reaches for that nothing renders. |
+| `llms.txt` | Map for agents: what this is, and a one-line index of every drink. |
+| `llms-full.txt` | The menu spelled out. Generated; `make verify` refuses a drift. |
+| `robots.txt` / `sitemap.xml` | Crawler entry. The sitemap is the one page. |
 
 ## Working on it
 
@@ -62,15 +62,16 @@ family those drinks sit in.
 make serve     # http://localhost:8010 — no-store, so edits show up
 make verify    # the whole pipeline
 make kin       # rebuild data/kin.json from the builds
-make icons     # redraw the home-screen PNG
+make llms      # rebuild llms.txt and llms-full.txt from the menu
+make icons     # redraw the home-screen PNG and the X/social card
 ```
 
 `make verify` is the only gate. It parses every JSON file, syntax-checks
 the two scripts the browser loads, confirms every asset `index.html` asks
 for exists and every element id `app.js` reaches for is real, and — the
-one that matters — checks that all 108 shorthand codes still agree with
-the recipes they stand for, and that `data/kin.json` still matches those
-builds.
+one that matters — checks that every shorthand code still agrees with
+the recipe it stands for, that `data/kin.json` still matches those
+builds, and that the agent dumps still match the menu.
 
 The service worker registers in production only, and off https the app
 actively unregisters any worker it finds. A worker owns an *origin*, not
@@ -97,8 +98,8 @@ Add one object to `cocktails` in `data/cocktails.json`:
 why the checker compares them. Write the code as it appears on the paper
 menu, spell the build out, and let `make verify` catch the disagreement.
 
-Then run `make kin` so the new drink joins its family in `data/kin.json`.
-Verify will fail on a stale copy.
+Then run `make kin` so the new drink joins its family, and `make llms`
+so it lands in the agent dumps. Verify will fail on a stale copy of either.
 
 Ingredients that take no measure (egg white) get `null`. An ingredient
 poured on top rather than into the shaker — the bitters in a `c3` sour —
