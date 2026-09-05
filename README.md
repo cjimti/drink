@@ -57,6 +57,7 @@ family those drinks sit in.
 | `llms.txt` | Map for agents: what this is, and a one-line index of every drink. |
 | `llms-full.txt` | The menu spelled out. Generated; `make verify` refuses a drift. |
 | `robots.txt` / `sitemap.xml` | Crawler entry. The sitemap is the one page. |
+| `worker/index.js` | Redirect-only: evicts the old `drink.shoephone.net` service worker, then 301s. |
 
 ## Working on it
 
@@ -84,7 +85,10 @@ serves on **8010** so the origins never overlap. If a page ever loads
 with nothing listening on the port, that is what you are looking at;
 `make unstick` prints the manual recovery.
 
-Push to `main` and the workflow deploys.
+Push to `main` and GitHub Pages deploys the site. That is the origin
+for fewbottles.com. `drink.shoephone.net` is a Cloudflare Worker that
+evicts the old service worker and 301s here — it does not serve the
+menu, and a content push does not need `wrangler`.
 
 ## Adding a drink
 
