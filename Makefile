@@ -1,4 +1,4 @@
-# drink.shoephone.net — no build step, so `verify` is the whole pipeline.
+# fewbottles.com — no build step, so `verify` is the whole pipeline.
 
 .DEFAULT_GOAL := verify
 .PHONY: verify check json syntax menu kin llms assets serve icons clean

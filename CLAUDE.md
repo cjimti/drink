@@ -1,4 +1,4 @@
-# drink.shoephone.net
+# fewbottles.com
 
 Static site for one home bar's cocktail list. No build step, no
 framework, no database. Everything renders from three JSON files.

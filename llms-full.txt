@@ -3,7 +3,7 @@
 > Classic drinks from one small home bar, decoded from the house
 > shorthand on the printed card.
 
-132 drinks, 74 stirred, 58 shaken, 48 ingredients. The interactive app is https://drink.shoephone.net/. This file is the same menu spelled out, so nothing has to run JavaScript.
+132 drinks, 74 stirred, 58 shaken, 48 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
 
 Barline reads left to right in build order, base spirit first, and
 ends with one token for glass plus garnish. A bare number is ounces

@@ -1,10 +1,11 @@
-# drink.shoephone.net
+# fewbottles.com
 
 The house cocktail menu, as a web app instead of a printed card. A
 hundred-odd classics, two methods, one small bar. No build step, no
 framework, no database — everything renders from three JSON files.
 
-Live at **[drink.shoephone.net](https://drink.shoephone.net)**.
+Live at **[fewbottles.com](https://fewbottles.com)**. `drink.shoephone.net`
+still opens the menu and sends you here.
 
 ## What it does that paper cannot
 

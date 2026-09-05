@@ -17,154 +17,154 @@ out). Ids are stable — never renamed, never reused.
 
 ## Start here
 
-- [The app](https://drink.shoephone.net/): interactive menu, Bar tab, and the Barline key
-- [Full menu](https://drink.shoephone.net/llms-full.txt): every drink decoded — amounts, glass, garnish, taste, history
-- [Cocktails JSON](https://drink.shoephone.net/data/cocktails.json): source of truth for the menu
-- [The bar](https://drink.shoephone.net/data/bar.json): every bottle a drink can call for
-- [Barline](https://drink.shoephone.net/data/notation.json): the shorthand table the decoder reads from
-- [Kin](https://drink.shoephone.net/data/kin.json): drinks of the same shape in different bottles
+- [The app](https://fewbottles.com/): interactive menu, Bar tab, and the Barline key
+- [Full menu](https://fewbottles.com/llms-full.txt): every drink decoded — amounts, glass, garnish, taste, history
+- [Cocktails JSON](https://fewbottles.com/data/cocktails.json): source of truth for the menu
+- [The bar](https://fewbottles.com/data/bar.json): every bottle a drink can call for
+- [Barline](https://fewbottles.com/data/notation.json): the shorthand table the decoder reads from
+- [Kin](https://fewbottles.com/data/kin.json): drinks of the same shape in different bottles
 
 ## Stirred
 
-- [Pedro Martinez](https://drink.shoephone.net/llms-full.txt): `2,1,q,3,10,2b,R` — Aged Rum; aged rum, sweet verm., maraschino, orange bitt., Angostura, absinthe
-- [Rum Old Fashioned](https://drink.shoephone.net/llms-full.txt): `2,1b,2,1,Ro` — Aged Rum; aged rum, demerara, Angostura, orange bitt.
-- [So So Cocktail](https://drink.shoephone.net/llms-full.txt): `1,1,h,h,cc` — Apple Brandy; gin, dry verm., apple, grenadine
-- [Dempsey](https://drink.shoephone.net/llms-full.txt): `1h,1h,h,q,c` — Apple Brandy; apple, gin, grenadine, absinthe
-- [Corpse Reviver No. 1](https://drink.shoephone.net/llms-full.txt): `1h,Q,Q,cc` — Apple Brandy; cognac, apple, sweet verm.
-- [Newark](https://drink.shoephone.net/llms-full.txt): `1,1,h,h,c` — Apple Brandy; apple, sweet verm., Fernet, maraschino
-- [Burnt Fuselage](https://drink.shoephone.net/llms-full.txt): `1,1,1,c` — Cognac; cognac, dry verm., orange liq.
-- [Palace Hotel](https://drink.shoephone.net/llms-full.txt): `1h,1h,1b,cl` — Cognac; cognac, sweet verm., orange liq.
-- [Metropole](https://drink.shoephone.net/llms-full.txt): `1h,1h,2,1,cc` — Cognac; cognac, dry verm., Peychaud's, orange bitt.
-- [Brandy Crusta](https://drink.shoephone.net/llms-full.txt): `2,q,q,q,2,Rl` — Cognac; cognac, maraschino, demerara, lemon, Angostura
-- [Ritz](https://drink.shoephone.net/llms-full.txt): `Q,h,q,q,3,cfo` — Cognac; cognac, maraschino, demerara, lemon, Angostura
-- [Old-Fashioned](https://drink.shoephone.net/llms-full.txt): `2,1b,2,R` — Bourbon; bourbon, demerara, Angostura
-- [Boulevardier](https://drink.shoephone.net/llms-full.txt): `1h,1,1,R` — Bourbon; bourbon, Campari, sweet verm.
-- [Fancy Cocktail](https://drink.shoephone.net/llms-full.txt): `1h,q,1b,2,cl` — Bourbon; bourbon, orange liq., demerara, Angostura
-- [Manhattan](https://drink.shoephone.net/llms-full.txt): `2,1,2,cc` — Bourbon; bourbon, sweet verm., Angostura
-- [Fancy Free](https://drink.shoephone.net/llms-full.txt): `2,h,1,1,Ro` — Bourbon; bourbon, maraschino, Angostura, orange bitt.
-- [Frisco](https://drink.shoephone.net/llms-full.txt): `2,h,R` — Bourbon; bourbon, Bénédictine
-- [Derby](https://drink.shoephone.net/llms-full.txt): `2,Q,h,h,cm` — Bourbon; bourbon, lime, sweet verm., orange liq.
-- [Cock 'n' Bull Special](https://drink.shoephone.net/llms-full.txt): `Q,Q,h,q,1,R` — Bourbon; bourbon, Bénédictine, cognac, orange liq., Angostura
-- [Old Pal](https://drink.shoephone.net/llms-full.txt): `1,1,1,1b,R` — Rye; rye, Campari, dry verm., demerara
-- [Saratoga](https://drink.shoephone.net/llms-full.txt): `1,1,1,2,cl` — Rye; rye, cognac, sweet verm., Angostura
-- [Monte Carlo](https://drink.shoephone.net/llms-full.txt): `1Q,h,1,R` — Rye; rye, Bénédictine, Angostura
-- [Improved Coctail](https://drink.shoephone.net/llms-full.txt): `2,1b,1b,1b,2,Rl` — Rye; rye, maraschino, absinthe, simple, Angostura
-- [Sazerac](https://drink.shoephone.net/llms-full.txt): `2,1b,4,r,r` — Rye; rye, simple, Peychaud's, absinthe
-- [Red Hook](https://drink.shoephone.net/llms-full.txt): `2,h,h,cc` — Rye; rye, sweet verm., maraschino
-- [Waldorf](https://drink.shoephone.net/llms-full.txt): `2,Q,q,2,cc` — Rye; rye, sweet verm., absinthe, Angostura
-- [The Slope](https://drink.shoephone.net/llms-full.txt): `2h,Q,q,1,cc` — Rye; rye, sweet verm., apricot, Angostura
-- [Vieux Carré](https://drink.shoephone.net/llms-full.txt): `Q,Q,Q,1b,1,1,Rl` — Rye; rye, cognac, sweet verm., Bénédictine, Angostura, Peychaud's
-- [Cocktail de la Louisiane](https://drink.shoephone.net/llms-full.txt): `Q,Q,Q,2b,3,clc` — Rye; rye, sweet verm., Bénédictine, absinthe, Peychaud's
-- [Toronto](https://drink.shoephone.net/llms-full.txt): `2,q,1b,2,Ro` — Rye; rye, Fernet, demerara, Angostura
-- [Little Italy](https://drink.shoephone.net/llms-full.txt): `2,Q,h,cc` — Rye; rye, sweet verm., Cynar
-- [Bobby Burns](https://drink.shoephone.net/llms-full.txt): `1h,1,h,cl` — Scotch; scotch, sweet verm., Bénédictine
-- [Affinity](https://drink.shoephone.net/llms-full.txt): `1h,Q,Q,2,clc` — Scotch; scotch, sweet verm., dry verm., Angostura
-- [Rob Roy](https://drink.shoephone.net/llms-full.txt): `2,1,2,c` — Scotch; scotch, sweet verm., orange bitt.
-- [Scotch Old-Fashioned](https://drink.shoephone.net/llms-full.txt): `2,1b,1,1,R` — Scotch; scotch, simple, Angostura, orange bitt.
-- [Automobile](https://drink.shoephone.net/llms-full.txt): `Q,Q,Q,2,cc` — Scotch; scotch, gin, sweet verm., orange bitt.
-- [Telling Phoebe](https://drink.shoephone.net/llms-full.txt): `1h,Q,h,h,cc` — Scotch; scotch, sweet verm., Fernet, Bénédictine
-- [Country Club](https://drink.shoephone.net/llms-full.txt): `1h,1,h,1,cl` — Light Rum; light rum, dry verm., orange liq., orange bitt.
-- [Yacht Club](https://drink.shoephone.net/llms-full.txt): `2,1,q,c` — Light Rum; light rum, sweet verm., apricot
-- [Brazilian Negroni](https://drink.shoephone.net/llms-full.txt): `1q,Q,Q,Ro` — Cachaça; cachaça, Campari, sweet verm.
-- [Cornerstone](https://drink.shoephone.net/llms-full.txt): `1h,h,q,2,co` — Cachaça; cachaça, grenadine, Fernet, orange bitt.
-- [Rosita](https://drink.shoephone.net/llms-full.txt): `1h,1,h,h,1,Ro` — Tequila; tequila, Campari, sweet verm., dry verm., Angostura
-- [One Chance Fancy](https://drink.shoephone.net/llms-full.txt): `2,q,q,2,Ro` — Tequila; tequila, orange liq., sweet verm., Angostura
-- [El Camino](https://drink.shoephone.net/llms-full.txt): `1,1,h,4,Ro` — Mezcal; mezcal, rye, Bénédictine, Peychaud's
-- [1910](https://drink.shoephone.net/llms-full.txt): `Q,Q,1,h,2,co` — Mezcal; mezcal, cognac, sweet verm., maraschino, Peychaud's
-- [Tipsy Coachman](https://drink.shoephone.net/llms-full.txt): `1h,Q,1,Rl` — Vodka; vodka, Bénédictine, Angostura
-- [Vodka Martini](https://drink.shoephone.net/llms-full.txt): `2,h,cl` — Vodka; vodka, dry verm.
-- [Quill](https://drink.shoephone.net/llms-full.txt): `1,1,1,q,co` — Gin; gin, Campari, sweet verm., absinthe
-- [Negroni](https://drink.shoephone.net/llms-full.txt): `1,1,1,R` — Gin; gin, Campari, sweet verm.
-- [Claridge](https://drink.shoephone.net/llms-full.txt): `1,1,h,h,c` — Gin; gin, dry verm., apricot, orange liq.
-- [Lucien Gaudin](https://drink.shoephone.net/llms-full.txt): `1,h,h,h,co` — Gin; gin, Campari, dry verm., orange liq.
-- [Martinez](https://drink.shoephone.net/llms-full.txt): `1h,1,h,q,1,1,co` — Gin; gin, sweet verm., dry verm., maraschino, orange bitt., Angostura
-- [Ford Cocktail](https://drink.shoephone.net/llms-full.txt): `1h,1h,q,2,co` — Gin; gin, dry verm., Bénédictine, orange bitt.
-- [Journalist](https://drink.shoephone.net/llms-full.txt): `1h,h,h,q,q,1,cl` — Gin; gin, sweet verm., dry verm., orange liq., lemon, Angostura
-- [Vancouver](https://drink.shoephone.net/llms-full.txt): `1h,Q,h,1,cO` — Gin; gin, dry verm., Bénédictine, orange bitt.
-- [Wiffin](https://drink.shoephone.net/llms-full.txt): `1h,Q,h,1d,cl` — Gin; gin, sweet verm., cognac, absinthe
-- [Fitchett](https://drink.shoephone.net/llms-full.txt): `1h,Q,q,1,cc` — Gin; gin, sweet verm., Bénédictine, orange bitt.
-- [Martini](https://drink.shoephone.net/llms-full.txt): `2,1,1,cl` — Gin; gin, dry verm., orange bitt.
-- [Villa Straylight](https://drink.shoephone.net/llms-full.txt): `2,1,h,1b,c` — Gin; gin, dry verm., orange liq., absinthe
-- [Casino](https://drink.shoephone.net/llms-full.txt): `2,h,2,Rc` — Gin; gin, maraschino, orange bitt.
-- [Dry Orange Martini](https://drink.shoephone.net/llms-full.txt): `2,Q,q,2,c` — Gin; gin, dry verm., orange liq., orange bitt.
-- [Tuxedo #2](https://drink.shoephone.net/llms-full.txt): `2,Q,q,3,r,co` — Gin; gin, dry verm., maraschino, orange bitt., absinthe
-- [Hanky Panky](https://drink.shoephone.net/llms-full.txt): `1h,1h,1b,co` — Gin; gin, sweet verm., Fernet
-- [Racquet Club](https://drink.shoephone.net/llms-full.txt): `2,1,1b,2,cl` — Gin; gin, dry verm., cacao, orange bitt.
-- [Bijou](https://drink.shoephone.net/llms-full.txt): `1,1,1,1,Rl` — Gin; gin, Chartreuse, sweet verm., orange bitt.
-- [Cin-Cyn](https://drink.shoephone.net/llms-full.txt): `1,1,1,Ro` — Gin; gin, Cynar, sweet verm.
-- [Physically Forgotten](https://drink.shoephone.net/llms-full.txt): `1h,Q,h,2,cl` — Gin; gin, Cynar, maraschino, orange bitt.
-- [Duplex](https://drink.shoephone.net/llms-full.txt): `1h,1h,2,co` — Vermouth; sweet verm., dry verm., orange bitt.
-- [Vermouth Panaché](https://drink.shoephone.net/llms-full.txt): `2,1,1,cl` — Vermouth; sweet verm., dry verm., orange bitt.
-- [Diplomat](https://drink.shoephone.net/llms-full.txt): `2,1,q,clc` — Vermouth; dry verm., sweet verm., maraschino
-- [Chrysanthemum](https://drink.shoephone.net/llms-full.txt): `2,h,2b,co` — Vermouth; dry verm., Bénédictine, absinthe
-- [Tip Top](https://drink.shoephone.net/llms-full.txt): `2,Q,2,cl` — Vermouth; dry verm., Bénédictine, orange bitt.
-- [Bamboo](https://drink.shoephone.net/llms-full.txt): `1h,1h,d,2,cOl` — Vermouth; sherry, dry verm., Angostura, orange bitt.
-- [Fernet and Ginger](https://drink.shoephone.net/llms-full.txt): `1,4,RLw` — Fernet; Fernet, ginger beer
+- [Pedro Martinez](https://fewbottles.com/llms-full.txt): `2,1,q,3,10,2b,R` — Aged Rum; aged rum, sweet verm., maraschino, orange bitt., Angostura, absinthe
+- [Rum Old Fashioned](https://fewbottles.com/llms-full.txt): `2,1b,2,1,Ro` — Aged Rum; aged rum, demerara, Angostura, orange bitt.
+- [So So Cocktail](https://fewbottles.com/llms-full.txt): `1,1,h,h,cc` — Apple Brandy; gin, dry verm., apple, grenadine
+- [Dempsey](https://fewbottles.com/llms-full.txt): `1h,1h,h,q,c` — Apple Brandy; apple, gin, grenadine, absinthe
+- [Corpse Reviver No. 1](https://fewbottles.com/llms-full.txt): `1h,Q,Q,cc` — Apple Brandy; cognac, apple, sweet verm.
+- [Newark](https://fewbottles.com/llms-full.txt): `1,1,h,h,c` — Apple Brandy; apple, sweet verm., Fernet, maraschino
+- [Burnt Fuselage](https://fewbottles.com/llms-full.txt): `1,1,1,c` — Cognac; cognac, dry verm., orange liq.
+- [Palace Hotel](https://fewbottles.com/llms-full.txt): `1h,1h,1b,cl` — Cognac; cognac, sweet verm., orange liq.
+- [Metropole](https://fewbottles.com/llms-full.txt): `1h,1h,2,1,cc` — Cognac; cognac, dry verm., Peychaud's, orange bitt.
+- [Brandy Crusta](https://fewbottles.com/llms-full.txt): `2,q,q,q,2,Rl` — Cognac; cognac, maraschino, demerara, lemon, Angostura
+- [Ritz](https://fewbottles.com/llms-full.txt): `Q,h,q,q,3,cfo` — Cognac; cognac, maraschino, demerara, lemon, Angostura
+- [Old-Fashioned](https://fewbottles.com/llms-full.txt): `2,1b,2,R` — Bourbon; bourbon, demerara, Angostura
+- [Boulevardier](https://fewbottles.com/llms-full.txt): `1h,1,1,R` — Bourbon; bourbon, Campari, sweet verm.
+- [Fancy Cocktail](https://fewbottles.com/llms-full.txt): `1h,q,1b,2,cl` — Bourbon; bourbon, orange liq., demerara, Angostura
+- [Manhattan](https://fewbottles.com/llms-full.txt): `2,1,2,cc` — Bourbon; bourbon, sweet verm., Angostura
+- [Fancy Free](https://fewbottles.com/llms-full.txt): `2,h,1,1,Ro` — Bourbon; bourbon, maraschino, Angostura, orange bitt.
+- [Frisco](https://fewbottles.com/llms-full.txt): `2,h,R` — Bourbon; bourbon, Bénédictine
+- [Derby](https://fewbottles.com/llms-full.txt): `2,Q,h,h,cm` — Bourbon; bourbon, lime, sweet verm., orange liq.
+- [Cock 'n' Bull Special](https://fewbottles.com/llms-full.txt): `Q,Q,h,q,1,R` — Bourbon; bourbon, Bénédictine, cognac, orange liq., Angostura
+- [Old Pal](https://fewbottles.com/llms-full.txt): `1,1,1,1b,R` — Rye; rye, Campari, dry verm., demerara
+- [Saratoga](https://fewbottles.com/llms-full.txt): `1,1,1,2,cl` — Rye; rye, cognac, sweet verm., Angostura
+- [Monte Carlo](https://fewbottles.com/llms-full.txt): `1Q,h,1,R` — Rye; rye, Bénédictine, Angostura
+- [Improved Coctail](https://fewbottles.com/llms-full.txt): `2,1b,1b,1b,2,Rl` — Rye; rye, maraschino, absinthe, simple, Angostura
+- [Sazerac](https://fewbottles.com/llms-full.txt): `2,1b,4,r,r` — Rye; rye, simple, Peychaud's, absinthe
+- [Red Hook](https://fewbottles.com/llms-full.txt): `2,h,h,cc` — Rye; rye, sweet verm., maraschino
+- [Waldorf](https://fewbottles.com/llms-full.txt): `2,Q,q,2,cc` — Rye; rye, sweet verm., absinthe, Angostura
+- [The Slope](https://fewbottles.com/llms-full.txt): `2h,Q,q,1,cc` — Rye; rye, sweet verm., apricot, Angostura
+- [Vieux Carré](https://fewbottles.com/llms-full.txt): `Q,Q,Q,1b,1,1,Rl` — Rye; rye, cognac, sweet verm., Bénédictine, Angostura, Peychaud's
+- [Cocktail de la Louisiane](https://fewbottles.com/llms-full.txt): `Q,Q,Q,2b,3,clc` — Rye; rye, sweet verm., Bénédictine, absinthe, Peychaud's
+- [Toronto](https://fewbottles.com/llms-full.txt): `2,q,1b,2,Ro` — Rye; rye, Fernet, demerara, Angostura
+- [Little Italy](https://fewbottles.com/llms-full.txt): `2,Q,h,cc` — Rye; rye, sweet verm., Cynar
+- [Bobby Burns](https://fewbottles.com/llms-full.txt): `1h,1,h,cl` — Scotch; scotch, sweet verm., Bénédictine
+- [Affinity](https://fewbottles.com/llms-full.txt): `1h,Q,Q,2,clc` — Scotch; scotch, sweet verm., dry verm., Angostura
+- [Rob Roy](https://fewbottles.com/llms-full.txt): `2,1,2,c` — Scotch; scotch, sweet verm., orange bitt.
+- [Scotch Old-Fashioned](https://fewbottles.com/llms-full.txt): `2,1b,1,1,R` — Scotch; scotch, simple, Angostura, orange bitt.
+- [Automobile](https://fewbottles.com/llms-full.txt): `Q,Q,Q,2,cc` — Scotch; scotch, gin, sweet verm., orange bitt.
+- [Telling Phoebe](https://fewbottles.com/llms-full.txt): `1h,Q,h,h,cc` — Scotch; scotch, sweet verm., Fernet, Bénédictine
+- [Country Club](https://fewbottles.com/llms-full.txt): `1h,1,h,1,cl` — Light Rum; light rum, dry verm., orange liq., orange bitt.
+- [Yacht Club](https://fewbottles.com/llms-full.txt): `2,1,q,c` — Light Rum; light rum, sweet verm., apricot
+- [Brazilian Negroni](https://fewbottles.com/llms-full.txt): `1q,Q,Q,Ro` — Cachaça; cachaça, Campari, sweet verm.
+- [Cornerstone](https://fewbottles.com/llms-full.txt): `1h,h,q,2,co` — Cachaça; cachaça, grenadine, Fernet, orange bitt.
+- [Rosita](https://fewbottles.com/llms-full.txt): `1h,1,h,h,1,Ro` — Tequila; tequila, Campari, sweet verm., dry verm., Angostura
+- [One Chance Fancy](https://fewbottles.com/llms-full.txt): `2,q,q,2,Ro` — Tequila; tequila, orange liq., sweet verm., Angostura
+- [El Camino](https://fewbottles.com/llms-full.txt): `1,1,h,4,Ro` — Mezcal; mezcal, rye, Bénédictine, Peychaud's
+- [1910](https://fewbottles.com/llms-full.txt): `Q,Q,1,h,2,co` — Mezcal; mezcal, cognac, sweet verm., maraschino, Peychaud's
+- [Tipsy Coachman](https://fewbottles.com/llms-full.txt): `1h,Q,1,Rl` — Vodka; vodka, Bénédictine, Angostura
+- [Vodka Martini](https://fewbottles.com/llms-full.txt): `2,h,cl` — Vodka; vodka, dry verm.
+- [Quill](https://fewbottles.com/llms-full.txt): `1,1,1,q,co` — Gin; gin, Campari, sweet verm., absinthe
+- [Negroni](https://fewbottles.com/llms-full.txt): `1,1,1,R` — Gin; gin, Campari, sweet verm.
+- [Claridge](https://fewbottles.com/llms-full.txt): `1,1,h,h,c` — Gin; gin, dry verm., apricot, orange liq.
+- [Lucien Gaudin](https://fewbottles.com/llms-full.txt): `1,h,h,h,co` — Gin; gin, Campari, dry verm., orange liq.
+- [Martinez](https://fewbottles.com/llms-full.txt): `1h,1,h,q,1,1,co` — Gin; gin, sweet verm., dry verm., maraschino, orange bitt., Angostura
+- [Ford Cocktail](https://fewbottles.com/llms-full.txt): `1h,1h,q,2,co` — Gin; gin, dry verm., Bénédictine, orange bitt.
+- [Journalist](https://fewbottles.com/llms-full.txt): `1h,h,h,q,q,1,cl` — Gin; gin, sweet verm., dry verm., orange liq., lemon, Angostura
+- [Vancouver](https://fewbottles.com/llms-full.txt): `1h,Q,h,1,cO` — Gin; gin, dry verm., Bénédictine, orange bitt.
+- [Wiffin](https://fewbottles.com/llms-full.txt): `1h,Q,h,1d,cl` — Gin; gin, sweet verm., cognac, absinthe
+- [Fitchett](https://fewbottles.com/llms-full.txt): `1h,Q,q,1,cc` — Gin; gin, sweet verm., Bénédictine, orange bitt.
+- [Martini](https://fewbottles.com/llms-full.txt): `2,1,1,cl` — Gin; gin, dry verm., orange bitt.
+- [Villa Straylight](https://fewbottles.com/llms-full.txt): `2,1,h,1b,c` — Gin; gin, dry verm., orange liq., absinthe
+- [Casino](https://fewbottles.com/llms-full.txt): `2,h,2,Rc` — Gin; gin, maraschino, orange bitt.
+- [Dry Orange Martini](https://fewbottles.com/llms-full.txt): `2,Q,q,2,c` — Gin; gin, dry verm., orange liq., orange bitt.
+- [Tuxedo #2](https://fewbottles.com/llms-full.txt): `2,Q,q,3,r,co` — Gin; gin, dry verm., maraschino, orange bitt., absinthe
+- [Hanky Panky](https://fewbottles.com/llms-full.txt): `1h,1h,1b,co` — Gin; gin, sweet verm., Fernet
+- [Racquet Club](https://fewbottles.com/llms-full.txt): `2,1,1b,2,cl` — Gin; gin, dry verm., cacao, orange bitt.
+- [Bijou](https://fewbottles.com/llms-full.txt): `1,1,1,1,Rl` — Gin; gin, Chartreuse, sweet verm., orange bitt.
+- [Cin-Cyn](https://fewbottles.com/llms-full.txt): `1,1,1,Ro` — Gin; gin, Cynar, sweet verm.
+- [Physically Forgotten](https://fewbottles.com/llms-full.txt): `1h,Q,h,2,cl` — Gin; gin, Cynar, maraschino, orange bitt.
+- [Duplex](https://fewbottles.com/llms-full.txt): `1h,1h,2,co` — Vermouth; sweet verm., dry verm., orange bitt.
+- [Vermouth Panaché](https://fewbottles.com/llms-full.txt): `2,1,1,cl` — Vermouth; sweet verm., dry verm., orange bitt.
+- [Diplomat](https://fewbottles.com/llms-full.txt): `2,1,q,clc` — Vermouth; dry verm., sweet verm., maraschino
+- [Chrysanthemum](https://fewbottles.com/llms-full.txt): `2,h,2b,co` — Vermouth; dry verm., Bénédictine, absinthe
+- [Tip Top](https://fewbottles.com/llms-full.txt): `2,Q,2,cl` — Vermouth; dry verm., Bénédictine, orange bitt.
+- [Bamboo](https://fewbottles.com/llms-full.txt): `1h,1h,d,2,cOl` — Vermouth; sherry, dry verm., Angostura, orange bitt.
+- [Fernet and Ginger](https://fewbottles.com/llms-full.txt): `1,4,RLw` — Fernet; Fernet, ginger beer
 
 ## Shaken
 
-- [Winter Daiquiri](https://drink.shoephone.net/llms-full.txt): `2,1,h,2,c` — Aged Rum; aged rum, lime, demerara, Angostura
-- [Air Mail](https://drink.shoephone.net/llms-full.txt): `1h,Q,Q,2,R` — Aged Rum; aged rum, lime, honey, Champagne
-- [Brass Rail](https://drink.shoephone.net/llms-full.txt): `1h,h,1,h,2,c3` — Aged Rum; aged rum, Bénédictine, lemon, simple, orange bitt., egg white, Angostura
-- [Ace of Clubs](https://drink.shoephone.net/llms-full.txt): `2,1,Q,c` — Aged Rum; aged rum, cacao, lime
-- [Jack Rose](https://drink.shoephone.net/llms-full.txt): `1h,Q,Q,c` — Apple Brandy; apple, lime, grenadine
-- [Pink Lady](https://drink.shoephone.net/llms-full.txt): `1h,Q,Q,h,cc` — Apple Brandy; gin, apple, lime, grenadine, egg white
-- [Honeymoon](https://drink.shoephone.net/llms-full.txt): `1q,1,1b,h,1,Ro` — Apple Brandy; apple, Bénédictine, orange liq., lemon, orange bitt.
-- [Southern Point](https://drink.shoephone.net/llms-full.txt): `Q,Q,Q,Q,ca` — Apple Brandy; apple, elderflower, orange liq., lemon
-- [Sidecar](https://drink.shoephone.net/llms-full.txt): `1h,1,Q,cs` — Cognac; cognac, orange liq., lemon
-- [Brandy Alexander](https://drink.shoephone.net/llms-full.txt): `1,1,1,c` — Cognac; cognac, cacao, cream
-- [Buster Brown](https://drink.shoephone.net/llms-full.txt): `2,Q,h,3,co` — Bourbon; bourbon, lemon, demerara, orange bitt.
-- [Gold Rush](https://drink.shoephone.net/llms-full.txt): `2,Q,Q,R` — Bourbon; bourbon, lemon, honey
-- [Whiskey Sour](https://drink.shoephone.net/llms-full.txt): `2,Q,h,Rcl` — Bourbon; bourbon, lemon, demerara, egg white
-- [Expat](https://drink.shoephone.net/llms-full.txt): `2,1,h,2,cm` — Bourbon; bourbon, lime, simple, Angostura
-- [Whiskey Daisy](https://drink.shoephone.net/llms-full.txt): `2,Q,q,1b,R` — Bourbon; bourbon, lemon, orange liq., simple
-- [Man o' War](https://drink.shoephone.net/llms-full.txt): `2,Q,h,h,cl` — Bourbon; bourbon, orange liq., sweet verm., lemon
-- [Little Honey](https://drink.shoephone.net/llms-full.txt): `1h,Q,h,h,q,Ro` — Bourbon; bourbon, elderflower, dry verm., lemon, honey, egg white
-- [Scofflaw](https://drink.shoephone.net/llms-full.txt): `1,1,h,h,1,co` — Rye; rye, dry verm., grenadine, lemon, orange bitt.
-- [Harvest Sour](https://drink.shoephone.net/llms-full.txt): `1,1,Q,h,ccin` — Rye; rye, apple, lemon, simple, egg white
-- [Final Ward](https://drink.shoephone.net/llms-full.txt): `Q,Q,Q,Q,c` — Rye; rye, Chartreuse, maraschino, lemon
-- [Mickie Walker](https://drink.shoephone.net/llms-full.txt): `1h,h,h,h,cc` — Scotch; scotch, sweet verm., grenadine, lemon
-- [Daiquiri](https://drink.shoephone.net/llms-full.txt): `2,Q,h,c` — Light Rum; light rum, lime, simple
-- [Honeysuckle](https://drink.shoephone.net/llms-full.txt): `2,Q,Q,c` — Light Rum; light rum, lime, honey
-- [Santiago](https://drink.shoephone.net/llms-full.txt): `2,Q,h,c` — Light Rum; light rum, lime, grenadine
-- [Stan Lee](https://drink.shoephone.net/llms-full.txt): `1h,Q,Q,h,1,c` — Light Rum; light rum, gin, lime, grenadine, Angostura
-- [Lani-Honi](https://drink.shoephone.net/llms-full.txt): `1q,1q,Q,R` — Light Rum; light rum, Bénédictine, lemon
-- [The Rum Drink](https://drink.shoephone.net/llms-full.txt): `2,Q,h,1b,c` — Light Rum; light rum, lime, simple, Campari
-- [King's Jubilee](https://drink.shoephone.net/llms-full.txt): `1h,h,h,cc` — Light Rum; light rum, maraschino, lemon
-- [Twelve Mile Limit](https://drink.shoephone.net/llms-full.txt): `1,h,h,h,h,c` — Light Rum; light rum, rye, cognac, grenadine, lemon
-- [Elderflower Daiquiri](https://drink.shoephone.net/llms-full.txt): `2,Q,1,c` — Light Rum; light rum, elderflower, lime
-- [Caipirinha](https://drink.shoephone.net/llms-full.txt): `2,3b,1h,R` — Cachaça; cachaça, sugar, lime
-- [Pey-Lé](https://drink.shoephone.net/llms-full.txt): `1h,1,Q,h,h,c` — Cachaça; cachaça, honey, lemon, grapefruit, Peychaud's
-- [Margarita](https://drink.shoephone.net/llms-full.txt): `2,Q,Q,cS` — Tequila; tequila, orange liq., lime
-- [Mexican Firing Squad](https://drink.shoephone.net/llms-full.txt): `2,Q,Q,2,cc` — Tequila; tequila, grenadine, lime, Angostura
-- [Vermouth-arita](https://drink.shoephone.net/llms-full.txt): `1h,1,h,h,Rc` — Tequila; tequila, sweet verm., orange liq., lime
-- [Stingless Bee](https://drink.shoephone.net/llms-full.txt): `2,Q,h,h,c3` — Tequila; tequila, honey, lime, lemon, egg white, Peychaud's
-- [Mezcal Margarita](https://drink.shoephone.net/llms-full.txt): `2,Q,Q,rS` — Mezcal; mezcal, orange liq., lime
-- [Lemon Drop](https://drink.shoephone.net/llms-full.txt): `2,Q,1,1b,cs` — Vodka; vodka, orange liq., lemon, simple
-- [Katinka](https://drink.shoephone.net/llms-full.txt): `1h,Q,h,c` — Vodka; vodka, apricot, lime
-- [Queen Bee](https://drink.shoephone.net/llms-full.txt): `Q,Q,Q,q,1,cl` — Vodka; vodka, elderflower, lemon, honey, Champagne
-- [Gimlet](https://drink.shoephone.net/llms-full.txt): `2,Q,h,c` — Gin; gin, lime, simple
-- [French 75](https://drink.shoephone.net/llms-full.txt): `1h,1,h,3,Rl` — Gin; gin, lemon, simple, Champagne
-- [Bennett](https://drink.shoephone.net/llms-full.txt): `1h,Q,h,2,c` — Gin; gin, lime, simple, Angostura
-- [Gin Sour](https://drink.shoephone.net/llms-full.txt): `2,Q,h,Rl` — Gin; gin, lemon, simple, egg white
-- [Bee's Knees](https://drink.shoephone.net/llms-full.txt): `2,Q,Q,c` — Gin; gin, lemon, honey
-- [Pegu Club](https://drink.shoephone.net/llms-full.txt): `1Q,Q,h,1,1,c` — Gin; gin, orange liq., lime, Angostura, orange bitt.
-- [White Lady](https://drink.shoephone.net/llms-full.txt): `1h,Q,Q,1b,c` — Gin; gin, orange liq., lemon, simple, egg white
-- [Fine and Dandy](https://drink.shoephone.net/llms-full.txt): `1h,Q,Q,1b,2,c` — Gin; gin, orange liq., lemon, simple, Angostura
-- [Jasmine](https://drink.shoephone.net/llms-full.txt): `1h,Q,q,q,cl` — Gin; gin, lemon, Campari, orange liq.
-- [Rendezvous](https://drink.shoephone.net/llms-full.txt): `1h,h,h,c` — Gin; gin, maraschino, lime
-- [Pendennis Club](https://drink.shoephone.net/llms-full.txt): `2,1,Q,2,cLw` — Gin; gin, apricot, lime, Peychaud's
-- [Hat Tip](https://drink.shoephone.net/llms-full.txt): `1h,Q,q,h,1b,c` — Gin; gin, elderflower, Campari, lemon, simple
-- [Olivette](https://drink.shoephone.net/llms-full.txt): `1,1,h,cO` — Gin; gin, dry verm., elderflower
-- [Alexander](https://drink.shoephone.net/llms-full.txt): `1,1,1,c` — Gin; gin, cacao, cream
-- [Campari Alexander](https://drink.shoephone.net/llms-full.txt): `1,1,1,c` — Gin; Campari, cacao, cream
-- [Last Word](https://drink.shoephone.net/llms-full.txt): `Q,Q,Q,Q,cc` — Gin; gin, Chartreuse, maraschino, lime
-- [Queen Elizabeth](https://drink.shoephone.net/llms-full.txt): `1h,Q,Q,c` — Vermouth; dry verm., Bénédictine, lime
-- [Dry Vermouth Sour](https://drink.shoephone.net/llms-full.txt): `2,Q,h,c` — Vermouth; dry verm., lemon, simple, egg white
+- [Winter Daiquiri](https://fewbottles.com/llms-full.txt): `2,1,h,2,c` — Aged Rum; aged rum, lime, demerara, Angostura
+- [Air Mail](https://fewbottles.com/llms-full.txt): `1h,Q,Q,2,R` — Aged Rum; aged rum, lime, honey, Champagne
+- [Brass Rail](https://fewbottles.com/llms-full.txt): `1h,h,1,h,2,c3` — Aged Rum; aged rum, Bénédictine, lemon, simple, orange bitt., egg white, Angostura
+- [Ace of Clubs](https://fewbottles.com/llms-full.txt): `2,1,Q,c` — Aged Rum; aged rum, cacao, lime
+- [Jack Rose](https://fewbottles.com/llms-full.txt): `1h,Q,Q,c` — Apple Brandy; apple, lime, grenadine
+- [Pink Lady](https://fewbottles.com/llms-full.txt): `1h,Q,Q,h,cc` — Apple Brandy; gin, apple, lime, grenadine, egg white
+- [Honeymoon](https://fewbottles.com/llms-full.txt): `1q,1,1b,h,1,Ro` — Apple Brandy; apple, Bénédictine, orange liq., lemon, orange bitt.
+- [Southern Point](https://fewbottles.com/llms-full.txt): `Q,Q,Q,Q,ca` — Apple Brandy; apple, elderflower, orange liq., lemon
+- [Sidecar](https://fewbottles.com/llms-full.txt): `1h,1,Q,cs` — Cognac; cognac, orange liq., lemon
+- [Brandy Alexander](https://fewbottles.com/llms-full.txt): `1,1,1,c` — Cognac; cognac, cacao, cream
+- [Buster Brown](https://fewbottles.com/llms-full.txt): `2,Q,h,3,co` — Bourbon; bourbon, lemon, demerara, orange bitt.
+- [Gold Rush](https://fewbottles.com/llms-full.txt): `2,Q,Q,R` — Bourbon; bourbon, lemon, honey
+- [Whiskey Sour](https://fewbottles.com/llms-full.txt): `2,Q,h,Rcl` — Bourbon; bourbon, lemon, demerara, egg white
+- [Expat](https://fewbottles.com/llms-full.txt): `2,1,h,2,cm` — Bourbon; bourbon, lime, simple, Angostura
+- [Whiskey Daisy](https://fewbottles.com/llms-full.txt): `2,Q,q,1b,R` — Bourbon; bourbon, lemon, orange liq., simple
+- [Man o' War](https://fewbottles.com/llms-full.txt): `2,Q,h,h,cl` — Bourbon; bourbon, orange liq., sweet verm., lemon
+- [Little Honey](https://fewbottles.com/llms-full.txt): `1h,Q,h,h,q,Ro` — Bourbon; bourbon, elderflower, dry verm., lemon, honey, egg white
+- [Scofflaw](https://fewbottles.com/llms-full.txt): `1,1,h,h,1,co` — Rye; rye, dry verm., grenadine, lemon, orange bitt.
+- [Harvest Sour](https://fewbottles.com/llms-full.txt): `1,1,Q,h,ccin` — Rye; rye, apple, lemon, simple, egg white
+- [Final Ward](https://fewbottles.com/llms-full.txt): `Q,Q,Q,Q,c` — Rye; rye, Chartreuse, maraschino, lemon
+- [Mickie Walker](https://fewbottles.com/llms-full.txt): `1h,h,h,h,cc` — Scotch; scotch, sweet verm., grenadine, lemon
+- [Daiquiri](https://fewbottles.com/llms-full.txt): `2,Q,h,c` — Light Rum; light rum, lime, simple
+- [Honeysuckle](https://fewbottles.com/llms-full.txt): `2,Q,Q,c` — Light Rum; light rum, lime, honey
+- [Santiago](https://fewbottles.com/llms-full.txt): `2,Q,h,c` — Light Rum; light rum, lime, grenadine
+- [Stan Lee](https://fewbottles.com/llms-full.txt): `1h,Q,Q,h,1,c` — Light Rum; light rum, gin, lime, grenadine, Angostura
+- [Lani-Honi](https://fewbottles.com/llms-full.txt): `1q,1q,Q,R` — Light Rum; light rum, Bénédictine, lemon
+- [The Rum Drink](https://fewbottles.com/llms-full.txt): `2,Q,h,1b,c` — Light Rum; light rum, lime, simple, Campari
+- [King's Jubilee](https://fewbottles.com/llms-full.txt): `1h,h,h,cc` — Light Rum; light rum, maraschino, lemon
+- [Twelve Mile Limit](https://fewbottles.com/llms-full.txt): `1,h,h,h,h,c` — Light Rum; light rum, rye, cognac, grenadine, lemon
+- [Elderflower Daiquiri](https://fewbottles.com/llms-full.txt): `2,Q,1,c` — Light Rum; light rum, elderflower, lime
+- [Caipirinha](https://fewbottles.com/llms-full.txt): `2,3b,1h,R` — Cachaça; cachaça, sugar, lime
+- [Pey-Lé](https://fewbottles.com/llms-full.txt): `1h,1,Q,h,h,c` — Cachaça; cachaça, honey, lemon, grapefruit, Peychaud's
+- [Margarita](https://fewbottles.com/llms-full.txt): `2,Q,Q,cS` — Tequila; tequila, orange liq., lime
+- [Mexican Firing Squad](https://fewbottles.com/llms-full.txt): `2,Q,Q,2,cc` — Tequila; tequila, grenadine, lime, Angostura
+- [Vermouth-arita](https://fewbottles.com/llms-full.txt): `1h,1,h,h,Rc` — Tequila; tequila, sweet verm., orange liq., lime
+- [Stingless Bee](https://fewbottles.com/llms-full.txt): `2,Q,h,h,c3` — Tequila; tequila, honey, lime, lemon, egg white, Peychaud's
+- [Mezcal Margarita](https://fewbottles.com/llms-full.txt): `2,Q,Q,rS` — Mezcal; mezcal, orange liq., lime
+- [Lemon Drop](https://fewbottles.com/llms-full.txt): `2,Q,1,1b,cs` — Vodka; vodka, orange liq., lemon, simple
+- [Katinka](https://fewbottles.com/llms-full.txt): `1h,Q,h,c` — Vodka; vodka, apricot, lime
+- [Queen Bee](https://fewbottles.com/llms-full.txt): `Q,Q,Q,q,1,cl` — Vodka; vodka, elderflower, lemon, honey, Champagne
+- [Gimlet](https://fewbottles.com/llms-full.txt): `2,Q,h,c` — Gin; gin, lime, simple
+- [French 75](https://fewbottles.com/llms-full.txt): `1h,1,h,3,Rl` — Gin; gin, lemon, simple, Champagne
+- [Bennett](https://fewbottles.com/llms-full.txt): `1h,Q,h,2,c` — Gin; gin, lime, simple, Angostura
+- [Gin Sour](https://fewbottles.com/llms-full.txt): `2,Q,h,Rl` — Gin; gin, lemon, simple, egg white
+- [Bee's Knees](https://fewbottles.com/llms-full.txt): `2,Q,Q,c` — Gin; gin, lemon, honey
+- [Pegu Club](https://fewbottles.com/llms-full.txt): `1Q,Q,h,1,1,c` — Gin; gin, orange liq., lime, Angostura, orange bitt.
+- [White Lady](https://fewbottles.com/llms-full.txt): `1h,Q,Q,1b,c` — Gin; gin, orange liq., lemon, simple, egg white
+- [Fine and Dandy](https://fewbottles.com/llms-full.txt): `1h,Q,Q,1b,2,c` — Gin; gin, orange liq., lemon, simple, Angostura
+- [Jasmine](https://fewbottles.com/llms-full.txt): `1h,Q,q,q,cl` — Gin; gin, lemon, Campari, orange liq.
+- [Rendezvous](https://fewbottles.com/llms-full.txt): `1h,h,h,c` — Gin; gin, maraschino, lime
+- [Pendennis Club](https://fewbottles.com/llms-full.txt): `2,1,Q,2,cLw` — Gin; gin, apricot, lime, Peychaud's
+- [Hat Tip](https://fewbottles.com/llms-full.txt): `1h,Q,q,h,1b,c` — Gin; gin, elderflower, Campari, lemon, simple
+- [Olivette](https://fewbottles.com/llms-full.txt): `1,1,h,cO` — Gin; gin, dry verm., elderflower
+- [Alexander](https://fewbottles.com/llms-full.txt): `1,1,1,c` — Gin; gin, cacao, cream
+- [Campari Alexander](https://fewbottles.com/llms-full.txt): `1,1,1,c` — Gin; Campari, cacao, cream
+- [Last Word](https://fewbottles.com/llms-full.txt): `Q,Q,Q,Q,cc` — Gin; gin, Chartreuse, maraschino, lime
+- [Queen Elizabeth](https://fewbottles.com/llms-full.txt): `1h,Q,Q,c` — Vermouth; dry verm., Bénédictine, lime
+- [Dry Vermouth Sour](https://fewbottles.com/llms-full.txt): `2,Q,h,c` — Vermouth; dry verm., lemon, simple, egg white
 
 ## Optional
 
-- [Kin patterns](https://drink.shoephone.net/data/kin.json): Martini, Sour, Daisy, Negroni, Old-Fashioned, Fancy, Vermouth, Sparkling
+- [Kin patterns](https://fewbottles.com/data/kin.json): Martini, Sour, Daisy, Negroni, Old-Fashioned, Fancy, Vermouth, Sparkling
 - [shoephone.net](https://shoephone.net/): the house
 - [Craig Johnston](https://imti.co/): who pours
 - [Source](https://github.com/cjimti/drink): the repository

@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-ORIGIN = "https://drink.shoephone.net"
+ORIGIN = "https://fewbottles.com"
 LLMS = ROOT / "llms.txt"
 FULL = ROOT / "llms-full.txt"
 
