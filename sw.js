@@ -1,4 +1,4 @@
-/* Offline shell for drink.shoephone. A phone propped against the back bar
+/* Offline shell for fewbottles.com. A phone propped against the back bar
    has no business needing signal to show a recipe.
 
    VERSION is stamped with the commit SHA at deploy time, so every push

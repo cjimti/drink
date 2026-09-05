@@ -1,4 +1,4 @@
-/* drink.shoephone — the cocktail menu.
+/* fewbottles.com — the cocktail menu.
 
    Two ideas carry the whole app.
 
@@ -1016,7 +1016,10 @@
     track('view_tab', { tab: view });
   }
 
-  function route() { show((location.hash || '#menu').slice(1)); }
+  function route() {
+    if (aboutDlg.open) aboutDlg.close();
+    show((location.hash || '#menu').slice(1));
+  }
 
   /* ── wiring ────────────────────────────────────────────── */
 
@@ -1270,6 +1273,36 @@
       searchTimer = null;
       if (filter.q) track('search', { search_term: filter.q });
     }, 700);
+  });
+
+  /* ── about ─────────────────────────────────────────────── */
+
+  var aboutDlg = $('#about');
+  var aboutBtn = $('#about-open');
+
+  function setAboutOpen(on) {
+    aboutBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+
+  aboutBtn.addEventListener('click', function () {
+    if (aboutDlg.open) {
+      aboutDlg.close();
+      return;
+    }
+    aboutDlg.showModal();
+    setAboutOpen(true);
+    track('about_open');
+  });
+
+  aboutDlg.addEventListener('close', function () {
+    setAboutOpen(false);
+    track('about_close');
+  });
+
+  aboutDlg.addEventListener('click', function (e) {
+    if (e.target === aboutDlg || e.target.closest('[data-about-close]')) {
+      aboutDlg.close();
+    }
   });
 
   window.addEventListener('hashchange', route);

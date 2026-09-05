@@ -26,7 +26,6 @@ W, H, S = 1200 * 2, 630 * 2, 2
 
 GROUND = (0x12, 0x12, 0x11)
 BONE = (0xFB, 0xF8, 0xF1)
-MUTED = (0xAD, 0xA7, 0x9C)
 BONE_HEX = "#FBF8F1"
 
 # The garnish matrix the decoder already knows. Same filenames as
@@ -41,10 +40,6 @@ FONTS = {
     "montserrat-800": (
         "Montserrat-ExtraBold.ttf",
         "https://raw.githubusercontent.com/JulietaUla/Montserrat/master/fonts/ttf/Montserrat-ExtraBold.ttf",
-    ),
-    "montserrat-600": (
-        "Montserrat-SemiBold.ttf",
-        "https://raw.githubusercontent.com/JulietaUla/Montserrat/master/fonts/ttf/Montserrat-SemiBold.ttf",
     ),
 }
 
@@ -139,19 +134,17 @@ def main():
     pad_x = 64 * S
     pad_y = 44 * S
     name_face = font(paths["montserrat-800"], 36 * S)
-    home_face = font(paths["montserrat-600"], 12 * S)
 
     mark_size = 36 * S
     mark(draw, pad_x, pad_y, mark_size)
     name_x = pad_x + mark_size + 14 * S
     name_y = pad_y + (mark_size - 36 * S) / 2 - 2 * S
-    tracked(draw, (name_x, name_y), "drink", name_face, BONE, 0.07 * 36 * S)
+    tracked(draw, (name_x, name_y), "fewbottles.com", name_face, BONE, 0.04 * 36 * S)
 
     rule_y = pad_y + mark_size + 16 * S
     draw.rectangle((pad_x, rule_y, pad_x + 72 * S, rule_y + 5 * S), fill=BONE)
 
     foot_y = H - 40 * S - 12 * S
-    tracked(draw, (pad_x, foot_y), "SHOEPHONE", home_face, MUTED, 0.13 * 12 * S)
 
     # Specimen plate. Raster large, crop to the ink, then sit every glass
     # in a row on a shared foot line so a twist does not lift the tumbler.

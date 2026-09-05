@@ -1,7 +1,7 @@
 {
-  "name": "drink.shoephone",
-  "short_name": "Drink",
-  "description": "The house cocktail menu from one small bar. Classic drinks in house shorthand, decoded, with a shelf that shows what you can pour.",
+  "name": "few bottles",
+  "short_name": "few bottles",
+  "description": "Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded, with a shelf that shows what you can pour.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

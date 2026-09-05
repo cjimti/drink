@@ -110,10 +110,10 @@ def write_llms(menu, bar, notation, kin):
     by_id = {i["id"]: i for i in bar["ingredients"]}
     families = {f["id"]: f["label"] for f in menu["families"]}
     lines = [
-        "# drink.shoephone",
+        "# few bottles",
         "",
-        "> The house cocktail menu from one small bar. Classic drinks in",
-        "> house shorthand, decoded in the browser, with a shelf that shows",
+        "> Cocktail maxxing on a budget. Classic drinks from a few bottles,",
+        "> in house shorthand, decoded in the browser, with a shelf that shows",
         "> what you can pour tonight.",
         "",
         "One person's shelf, pouring for guests and for himself. Two methods,",
@@ -166,7 +166,6 @@ def write_llms(menu, bar, notation, kin):
             + ", ".join(p["label"] for p in kin["patterns"])
         )
     lines += [
-        "- [shoephone.net](https://shoephone.net/): the house",
         "- [Craig Johnston](https://imti.co/): who pours",
         "- [Source](https://github.com/cjimti/drink): the repository",
         "",
@@ -188,7 +187,7 @@ def write_full(menu, bar, notation, kin):
             pattern_of[did] = row.get("pattern")
 
     lines = [
-        "# drink.shoephone — the cocktail menu",
+        "# few bottles — the cocktail menu",
         "",
         "> Classic drinks from one small home bar, decoded from the house",
         "> shorthand on the printed card.",

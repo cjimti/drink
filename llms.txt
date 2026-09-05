@@ -1,7 +1,7 @@
-# drink.shoephone
+# few bottles
 
-> The house cocktail menu from one small bar. Classic drinks in
-> house shorthand, decoded in the browser, with a shelf that shows
+> Cocktail maxxing on a budget. Classic drinks from a few bottles,
+> in house shorthand, decoded in the browser, with a shelf that shows
 > what you can pour tonight.
 
 One person's shelf, pouring for guests and for himself. Two methods,
@@ -165,6 +165,5 @@ out). Ids are stable — never renamed, never reused.
 ## Optional
 
 - [Kin patterns](https://fewbottles.com/data/kin.json): Martini, Sour, Daisy, Negroni, Old-Fashioned, Fancy, Vermouth, Sparkling
-- [shoephone.net](https://shoephone.net/): the house
 - [Craig Johnston](https://imti.co/): who pours
 - [Source](https://github.com/cjimti/drink): the repository

@@ -1,4 +1,4 @@
-# drink.shoephone — the cocktail menu
+# few bottles — the cocktail menu
 
 > Classic drinks from one small home bar, decoded from the house
 > shorthand on the printed card.
