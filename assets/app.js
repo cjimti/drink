@@ -52,6 +52,21 @@
   var shared = null;      /* { have, code } once a shared link has been opened; stays for the session */
   var printOpts = { icon: true, recipe: false, taste: false, history: false, barline: false };
 
+  /* WebKit has never paginated CSS multicol (WebKit bug 15546, open
+     since 2007), so every browser on iOS, and Safari on a Mac, prints the
+     two-column card as one long column. Those get the list cut in two by
+     hand and floated side by side, which every engine paginates. Chrome
+     and Firefox keep real columns: they balance per sheet and read down
+     the left then the right of each page, which a float cannot. */
+  var PRINT_SPLIT = (function () {
+    var ua = navigator.userAgent;
+    var ios = /iP(hone|ad|od)/.test(ua) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var safari = /AppleWebKit/.test(ua) &&
+      !/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS/.test(ua);
+    return ios || safari;
+  })();
+
   function emptyFilter() {
     /* pourable is My menu: the list gated by your shelf. shared is Shared
        menu: the same gate against the shelf someone sent. One at a time. */
@@ -1191,6 +1206,114 @@
       '</div></div>';
   }
 
+  /* The list as sections of rows, so it can be joined straight or cut
+     in two. A row's weight is a rough height in printed drink lines:
+     enough to find the middle without measuring paper. */
+  var HEAD_WEIGHT = { method: 2.6, family: 1.3 };
+
+  function drinkWeight() {
+    var w = 1;
+    if (printOpts.recipe) w += 2.6;
+    if (printOpts.taste) w += 1.2;
+    if (printOpts.history) w += 1.6;
+    return w;
+  }
+
+  function sectionHead(label, blurb) {
+    return '<h2 class="method__title">' + esc(label) + '</h2>' +
+      '<div class="method__rule"></div>' +
+      '<p class="method__blurb">' + esc(blurb) + '</p>';
+  }
+
+  function menuSections(list, held, showShelf) {
+    var secs = [];
+    var w = drinkWeight();
+
+    if (filter.method === 'families' && data.kin) {
+      data.kin.patterns.forEach(function (p) {
+        var inPat = p.members.map(function (id) { return cocktailBy[id]; })
+          .filter(function (d) { return d && list.indexOf(d) >= 0; });
+        if (!inPat.length) return;
+        var sec = { attrs: ' id="pattern-' + esc(p.id) + '"', head: sectionHead(p.label, p.blurb), rows: [] };
+        inPat.forEach(function (d) {
+          sec.rows.push({ html: renderDrink(d, held, showShelf), w: w, head: false });
+        });
+        secs.push(sec);
+      });
+      return secs;
+    }
+
+    data.menu.methods.forEach(function (m) {
+      var inMethod = list.filter(function (d) { return d.method === m.id; });
+      if (!inMethod.length) return;
+      var sec = { attrs: '', head: sectionHead(m.label, m.blurb), rows: [] };
+      data.menu.families.forEach(function (f) {
+        var inFamily = inMethod.filter(function (d) { return d.family === f.id; });
+        if (!inFamily.length) return;
+        sec.rows.push({ html: '<h3 class="family">' + esc(f.label) + '</h3>', w: HEAD_WEIGHT.family, head: true });
+        inFamily.forEach(function (d) {
+          sec.rows.push({ html: renderDrink(d, held, showShelf), w: w, head: false });
+        });
+      });
+      secs.push(sec);
+    });
+    return secs;
+  }
+
+  function joinSections(secs) {
+    return secs.map(function (s) {
+      return '<section class="method"' + s.attrs + '>' + s.head +
+        s.rows.map(function (r) { return r.html; }).join('') + '</section>';
+    }).join('');
+  }
+
+  /* Two floated columns, cut where the weights balance. The cut never
+     lands right after a heading, and a section that straddles it goes on
+     in the second column without repeating its title. On screen the two
+     halves simply stack, and the CSS hides the seam. */
+  function splitSections(secs) {
+    var rows = [];
+    secs.forEach(function (s, i) {
+      rows.push({ sec: i, open: true, html: '', w: HEAD_WEIGHT.method, head: true });
+      s.rows.forEach(function (r) { rows.push({ sec: i, open: false, html: r.html, w: r.w, head: r.head }); });
+    });
+
+    var total = 0;
+    rows.forEach(function (r) { total += r.w; });
+    var cut = rows.length;
+    var bestDiff = Infinity;
+    var run = 0;
+    for (var i = 0; i < rows.length; i++) {
+      run += rows[i].w;
+      if (rows[i].head) continue;
+      var diff = Math.abs(run - total / 2);
+      if (diff < bestDiff) { bestDiff = diff; cut = i + 1; }
+    }
+
+    function part(from, to) {
+      var html = '';
+      var openSec = -1;
+      for (var k = from; k < to; k++) {
+        var r = rows[k];
+        if (r.sec !== openSec) {
+          if (openSec >= 0) html += '</section>';
+          html += r.open
+            ? '<section class="method"' + secs[r.sec].attrs + '>' + secs[r.sec].head
+            : '<section class="method method--cont">';
+          openSec = r.sec;
+        }
+        html += r.html;
+      }
+      if (openSec >= 0) html += '</section>';
+      return html;
+    }
+
+    return '<div class="pcols">' +
+      '<div class="pcol">' + part(0, cut) + '</div>' +
+      '<div class="pcol">' + part(cut, rows.length) + '</div>' +
+      '</div>';
+  }
+
   function renderMenu() {
     var held = heldNow();
     var showShelf = stocked(held).length > 0;
@@ -1203,40 +1326,8 @@
     }
 
     var html = pre + (shelfGate() ? renderMasthead(list.length, held) : '');
-
-    if (filter.method === 'families' && data.kin) {
-      data.kin.patterns.forEach(function (p) {
-        var inPat = p.members.map(function (id) { return cocktailBy[id]; })
-          .filter(function (d) { return d && list.indexOf(d) >= 0; });
-        if (!inPat.length) return;
-        html += '<section class="method" id="pattern-' + esc(p.id) + '">' +
-          '<h2 class="method__title">' + esc(p.label) + '</h2>' +
-          '<div class="method__rule"></div>' +
-          '<p class="method__blurb">' + esc(p.blurb) + '</p>';
-        inPat.forEach(function (d) { html += renderDrink(d, held, showShelf); });
-        html += '</section>';
-      });
-    } else {
-      data.menu.methods.forEach(function (m) {
-        var inMethod = list.filter(function (d) { return d.method === m.id; });
-        if (!inMethod.length) return;
-
-        html += '<section class="method">' +
-          '<h2 class="method__title">' + esc(m.label) + '</h2>' +
-          '<div class="method__rule"></div>' +
-          '<p class="method__blurb">' + esc(m.blurb) + '</p>';
-
-        data.menu.families.forEach(function (f) {
-          var inFamily = inMethod.filter(function (d) { return d.family === f.id; });
-          if (!inFamily.length) return;
-
-          html += '<h3 class="family">' + esc(f.label) + '</h3>';
-          inFamily.forEach(function (d) { html += renderDrink(d, held, showShelf); });
-        });
-
-        html += '</section>';
-      });
-    }
+    var secs = menuSections(list, held, showShelf);
+    html += PRINT_SPLIT ? splitSections(secs) : joinSections(secs);
 
     html += '<div class="print-qr" aria-hidden="true">' +
       '<img src="assets/qr.svg" alt="">' +
@@ -2094,6 +2185,7 @@
     loadMenuTitle();
     loadPrintOpts();
     applyPrintFlags();
+    document.body.classList.toggle('is-print-split', PRINT_SPLIT);
     syncHaveFromBrands();
     saveHave();
     openSharedLink();

@@ -161,6 +161,16 @@ are on; Barline, when ticked, is its own sheet after the drinks, the
 same instructions as the Key tab. Kin never does. The named title is
 the letterspaced cap.
 
+The two columns are CSS multicol, which WebKit has never honoured on
+paper (WebKit bug 15546, open since 2007): every browser on iOS, and
+Safari on a Mac, would print one long column. So on WebKit `app.js`
+renders the list already cut in two — `PRINT_SPLIT` — as two floated
+halves balanced by a rough weight per row, and the screen CSS hides the
+seam. Chrome and Firefox keep real columns, which balance per sheet.
+Do not replace multicol with the split everywhere: a float pair reads
+down the whole left half and then the whole right, so on a two-sheet
+menu the order is wrong; multicol gets it right where it works.
+
 ## Sharing
 
 A menu leaves the phone as one number: `fewbottles.com/?s=281474976710655`.

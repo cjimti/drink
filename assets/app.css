@@ -399,6 +399,17 @@ noscript.fallback a { color: var(--brass); }
 }
 .method > .family:first-of-type { border-top: 0; padding-top: 0; margin-top: 22px; }
 
+/* On WebKit the list is already cut in two for paper (PRINT_SPLIT in
+   app.js). On screen the halves stack, so the seam has to vanish: a
+   continued section opens with no gap, and a family that happens to
+   lead it keeps the rule a mid-section family would have had. */
+.method--cont { padding-top: 0; }
+.method--cont > .family:first-of-type {
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+  margin-top: 30px;
+}
+
 /* Families view: drinks sit directly under the blurb, no spirit heading. */
 .method__blurb + .drink { margin-top: 16px; }
 
@@ -1550,6 +1561,15 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
     column-fill: balance;
   }
 
+  /* WebKit path (PRINT_SPLIT): two floats where columns would be. The
+     right-hand half starts level with the left, title or no title. */
+  body.is-print-split #menu-body { columns: auto; }
+  .pcols::after { content: ''; display: block; clear: both; }
+  .pcol { float: left; width: calc(50% - 11pt); }
+  .pcol + .pcol { float: right; }
+  .pcol > .method:first-child { padding-top: 0; }
+  .method--cont > .family:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+
   .tonight {
     column-span: all;
     border-bottom: 3px solid #000;
@@ -1650,6 +1670,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
 
   .print-qr {
     display: flex;
+    clear: both;
     column-span: all;
     justify-content: flex-end;
     align-items: center;
