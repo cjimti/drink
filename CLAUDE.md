@@ -140,9 +140,12 @@ This is the feature the site exists for. If it ever gets slow, memoise
 it — do not replace it with a usage count.
 
 The count is also the way in. Tapping it opens the Menu tab with the
-shelf filter on, where the same list renders with a masthead and a print
-button. A number that does not lead to the list it counts is trivia, so
-if the tally ever stops being a button, that is a regression.
+shelf filter on, where the same list renders with a Print menu reveal
+on it. Closed, that is a row; open, it is the card title, ticks for
+icon / recipe / taste / history / Barline, and the way onto paper.
+Empty title stays “Your menu”. A number that does not lead to the list
+it counts is trivia, so if the tally ever stops being a button, that is
+a regression.
 
 Same rule on a drink's Kin pane: the neighbour is a button that opens
 that drink, and the count of the family opens the Families view of the
@@ -151,6 +154,12 @@ regression.
 
 The print stylesheet forces the light palette outright. What theme a
 phone happens to be in must never decide how much toner a menu costs.
+Paper is US Letter (8.5 × 11), two columns, a small QR to
+fewbottles.com on the bottom of the sheet. The glass icon prints unless
+you turn it off. Recipe, taste, and history print only when their ticks
+are on; Barline, when ticked, is its own sheet after the drinks, the
+same instructions as the Key tab. Kin never does. The named title is
+the letterspaced cap.
 
 ## Families
 

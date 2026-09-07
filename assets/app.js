@@ -23,6 +23,8 @@
 
   var STORE = 'drink.bar.v1';
   var BRAND_STORE = 'drink.brands.v1';
+  var TITLE_STORE = 'drink.menuTitle.v1';
+  var PRINT_STORE = 'drink.print.v1';
 
   var FRACTION = { h: '1/2', q: '1/4', Q: '3/4' };
 
@@ -43,6 +45,9 @@
 
   var filter = emptyFilter();
   var searchTimer = null;
+  var menuTitle = '';     /* name on the printed card; empty is "Your menu" */
+  var printOpen = false;  /* Print menu reveal, session only */
+  var printOpts = { icon: true, recipe: false, taste: false, history: false, barline: false };
 
   function emptyFilter() {
     return { method: 'all', family: null, pattern: null, pourable: false, q: '' };
@@ -175,6 +180,59 @@
 
   function saveOwn() {
     try { localStorage.setItem(BRAND_STORE, JSON.stringify(own)); } catch (e) { /* private mode */ }
+  }
+
+  function loadMenuTitle() {
+    try {
+      menuTitle = (localStorage.getItem(TITLE_STORE) || '').replace(/\s+/g, ' ').trim();
+    } catch (e) { menuTitle = ''; }
+  }
+
+  function saveMenuTitle() {
+    try {
+      if (menuTitle) localStorage.setItem(TITLE_STORE, menuTitle);
+      else localStorage.removeItem(TITLE_STORE);
+    } catch (e) { /* private mode */ }
+  }
+
+  /* What actually prints. Empty stays "Your menu" so a nameless card
+     is still a card, not a blank rule. */
+  function cardTitle() {
+    var t = (menuTitle || '').replace(/\s+/g, ' ').trim();
+    return t || 'Your menu';
+  }
+
+  function syncPrintTitle() {
+    var el = document.querySelector('.tonight__print-title');
+    if (el) el.textContent = cardTitle();
+  }
+
+  function loadPrintOpts() {
+    try {
+      var o = JSON.parse(localStorage.getItem(PRINT_STORE) || 'null');
+      if (o && typeof o === 'object') {
+        printOpts.icon = o.icon !== false;
+        printOpts.recipe = !!o.recipe;
+        printOpts.taste = !!o.taste;
+        printOpts.history = !!o.history;
+        printOpts.barline = !!o.barline;
+      }
+    } catch (e) { /* private mode */ }
+  }
+
+  function savePrintOpts() {
+    try { localStorage.setItem(PRINT_STORE, JSON.stringify(printOpts)); }
+    catch (e) { /* private mode */ }
+  }
+
+  /* Body classes are what the print stylesheet keys off, so a tick
+     has to land before window.print, not on the next repaint. */
+  function applyPrintFlags() {
+    document.body.classList.toggle('is-print-icon', printOpts.icon !== false);
+    document.body.classList.toggle('is-print-recipe', !!printOpts.recipe);
+    document.body.classList.toggle('is-print-taste', !!printOpts.taste);
+    document.body.classList.toggle('is-print-history', !!printOpts.history);
+    document.body.classList.toggle('is-print-barline', !!printOpts.barline);
   }
 
   function bottleHasBrands(i) {
@@ -528,6 +586,26 @@
 
     html += '</span></button>';
     if (open[d.id]) html += renderRecipe(d, held);
+    html += renderPrintExtras(d, held);
+    return html + '</div>';
+  }
+
+  /* Paper-only blocks, always in the DOM so a tick can show them
+     without rewriting the list. Hidden on screen; body classes
+     decide which ones print. */
+  function renderPrintExtras(d, held) {
+    var html = '<div class="print-extras">';
+    html += '<div class="print-card print-card--recipe">' + renderPours(d, held) + '</div>';
+    if (d.taste) {
+      html += '<div class="print-card print-card--taste">' +
+        '<div class="print-card__k">Taste</div>' +
+        '<p class="recipe-copy">' + esc(d.taste) + '</p></div>';
+    }
+    if (d.history) {
+      html += '<div class="print-card print-card--history">' +
+        '<div class="print-card__k">History</div>' +
+        '<p class="recipe-copy">' + esc(d.history) + '</p></div>';
+    }
     return html + '</div>';
   }
 
@@ -573,18 +651,53 @@
   }
 
   /* With the shelf filter on, this stops being a filtered list and starts
-     being a menu — so it gets a masthead, a count, and a way onto paper. */
+     being a menu. Print menu is a reveal on that list: closed it is a
+     row, open it is the card title, the include ticks, and the way onto
+     paper. */
+  function printOptBtn(id, label) {
+    var on = !!printOpts[id];
+    return '<button type="button" class="tonight__opt' + (on ? ' is-on' : '') + '"' +
+      ' data-print-opt="' + id + '"' +
+      ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
+      '<span class="bottle__box"></span>' + esc(label) +
+      '</button>';
+  }
+
   function renderMasthead(n) {
     var bottles = stocked().length;
-    return '<div class="tonight">' +
-      '<div class="tonight__k">Your menu</div>' +
-      '<div class="tonight__n">' + n + '</div>' +
-      '<div class="tonight__of">' + (n === 1 ? 'drink' : 'drinks') + ' you can pour tonight</div>' +
-      '<p class="tonight__note">Everything the ' + plural(bottles, 'bottle', 'bottles') +
-        ' on your shelf will pour, in full. Garnish where you have it.</p>' +
-      '<div class="tonight__acts">' +
-        '<button class="btn" data-print="1">Print or save as PDF</button>' +
-        '<button class="btn" data-pourable="1">Show all ' + data.menu.cocktails.length + '</button>' +
+    var shown = printOpen;
+    return '<div class="tonight' + (shown ? ' is-open' : '') + '">' +
+      '<div class="tonight__print">' +
+        '<h1 class="tonight__print-title">' + esc(cardTitle()) + '</h1>' +
+        '<p class="tonight__print-of">' + n + ' ' +
+          (n === 1 ? 'drink' : 'drinks') + '</p>' +
+      '</div>' +
+      '<button type="button" class="tonight__hit" data-print-open="1"' +
+        ' aria-expanded="' + (shown ? 'true' : 'false') + '"' +
+        ' aria-controls="print-pane">' +
+        '<span class="tonight__k">Print menu</span>' +
+        '<span class="tonight__count">' + n + ' ' +
+          (n === 1 ? 'drink' : 'drinks') + '</span>' +
+        '<span class="bottle__more" aria-hidden="true"></span>' +
+      '</button>' +
+      '<div class="tonight__pane" id="print-pane"' + (shown ? '' : ' hidden') + '>' +
+        '<label class="tonight__field" for="menu-title">Card title</label>' +
+        '<input class="tonight__title" id="menu-title" type="text" maxlength="72" ' +
+          'placeholder="Home St. Bar" autocomplete="off" ' +
+          'spellcheck="true" enterkeyhint="done" value="' + esc(menuTitle) + '">' +
+        '<p class="tonight__note">Everything the ' + plural(bottles, 'bottle', 'bottles') +
+          ' on your shelf will pour, in full. Garnish where you have it.</p>' +
+        '<div class="tonight__opts">' +
+          printOptBtn('icon', 'Icon') +
+          printOptBtn('recipe', 'Recipe') +
+          printOptBtn('taste', 'Taste') +
+          printOptBtn('history', 'History') +
+          printOptBtn('barline', 'Barline') +
+        '</div>' +
+        '<div class="tonight__acts">' +
+          '<button class="btn" data-print="1">Print or save as PDF</button>' +
+          '<button class="btn" data-pourable="1">Show all ' + data.menu.cocktails.length + '</button>' +
+        '</div>' +
       '</div></div>';
   }
 
@@ -633,6 +746,12 @@
         html += '</section>';
       });
     }
+
+    html += '<div class="print-qr" aria-hidden="true">' +
+      '<img src="assets/qr.svg" alt="">' +
+      '<span>fewbottles.com</span>' +
+      '</div>';
+    html += renderPrintBarline();
 
     $('#menu-body').innerHTML = html;
   }
@@ -928,10 +1047,10 @@
     }).join('');
   }
 
-  function renderKey() {
+  /* Shared by the Key tab and the printed Barline sheet. */
+  function renderBarlineBody() {
     var n = data.notation;
     var sys = n.system;
-
     var html = '<div class="sys">' +
       '<h1 class="sys__name">' + esc(sys.name) + '</h1>' +
       '<div class="sys__tag">' + esc(sys.tagline) + '</div>' +
@@ -974,16 +1093,22 @@
         '<pre class="example__l">' + esc(ex.lines.join('\n')) + '</pre>' +
         '</div>';
     });
+    return html;
+  }
 
-    html += '<p class="colophon">' +
+  function renderPrintBarline() {
+    return '<div class="print-barline">' + renderBarlineBody() + '</div>';
+  }
+
+  function renderKey() {
+    $('#key-body').innerHTML = renderBarlineBody() +
+      '<p class="colophon">' +
       esc(data.menu.cocktails.length + ' drinks, ' + data.bar.ingredients.length +
           ' ingredients. Every code here is the one from the printed card; the ' +
           'recipes are generated from it, so the two cannot drift apart.') +
       '</p>' +
       '<p class="sign">© 2026 <a href="https://imti.co/resume/" ' +
         'rel="noopener">Craig Johnston</a></p>';
-
-    $('#key-body').innerHTML = html;
   }
 
   /* ── routing ───────────────────────────────────────────── */
@@ -1065,7 +1190,7 @@
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
       '[data-pourable],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-seemenu],' +
-      '[data-print],[data-kin],[data-see-pattern]');
+      '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern]');
     if (!t) return;
 
     if (t.dataset.recipeTab) {
@@ -1150,8 +1275,47 @@
       return;
     }
 
+    if (t.dataset.printOpen) {
+      printOpen = !printOpen;
+      var tonight = t.closest('.tonight');
+      if (!tonight) return;
+      tonight.classList.toggle('is-open', printOpen);
+      t.setAttribute('aria-expanded', printOpen ? 'true' : 'false');
+      var pane = tonight.querySelector('#print-pane');
+      if (pane) pane.hidden = !printOpen;
+      track('print_reveal', { open: printOpen });
+      return;
+    }
+
+    if (t.dataset.printOpt) {
+      var opt = t.dataset.printOpt;
+      printOpts[opt] = !printOpts[opt];
+      savePrintOpts();
+      applyPrintFlags();
+      t.classList.toggle('is-on', !!printOpts[opt]);
+      t.setAttribute('aria-pressed', printOpts[opt] ? 'true' : 'false');
+      track('print_opt', { opt: opt, on: !!printOpts[opt] });
+      return;
+    }
+
     if (t.dataset.print) {
-      track('print_menu');
+      /* The print dialog's header and the saved PDF name should be the
+         card, not the site. Restore after the dialog closes. */
+      var prevTitle = document.title;
+      document.title = cardTitle();
+      var restoreTitle = function () {
+        document.title = prevTitle;
+        window.removeEventListener('afterprint', restoreTitle);
+      };
+      window.addEventListener('afterprint', restoreTitle);
+      track('print_menu', {
+        named: cardTitle() !== 'Your menu',
+        icon: printOpts.icon !== false,
+        recipe: !!printOpts.recipe,
+        taste: !!printOpts.taste,
+        history: !!printOpts.history,
+        barline: !!printOpts.barline
+      });
       window.print();
       return;
     }
@@ -1242,6 +1406,12 @@
   });
 
   document.addEventListener('keydown', function (e) {
+    if (e.target.id === 'menu-title' && e.key === 'Enter') {
+      e.preventDefault();
+      e.target.blur();
+      return;
+    }
+
     var tab = e.target.closest('[data-recipe-tab]');
     if (!tab) return;
     var list = tab.parentNode.querySelectorAll('[data-recipe-tab]');
@@ -1258,7 +1428,22 @@
     ntab.focus();
   });
 
+  document.addEventListener('change', function (e) {
+    if (e.target.id !== 'menu-title') return;
+    menuTitle = e.target.value.replace(/\s+/g, ' ').trim();
+    e.target.value = menuTitle;
+    saveMenuTitle();
+    syncPrintTitle();
+  });
+
   document.addEventListener('input', function (e) {
+    if (e.target.id === 'menu-title') {
+      menuTitle = e.target.value;
+      saveMenuTitle();
+      syncPrintTitle();
+      return;
+    }
+
     if (e.target.id !== 'q') return;
     filter.q = e.target.value.trim().toLowerCase();
     /* Repaint the list but leave the field alone, or the caret jumps. */
@@ -1348,6 +1533,9 @@
     buildNeeds();
     loadHave();
     loadOwn();
+    loadMenuTitle();
+    loadPrintOpts();
+    applyPrintFlags();
     syncHaveFromBrands();
     saveHave();
 

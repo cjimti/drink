@@ -50,6 +50,7 @@ WELL_KNOWN = [
     "llms-full.txt",
     "humans.txt",
     "assets/og.png",
+    "assets/qr.svg",
 ]
 
 

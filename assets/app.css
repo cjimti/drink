@@ -718,37 +718,89 @@ noscript.fallback a { color: var(--brass); }
 /* ── The generated menu ───────────────────────────────────── */
 
 .tonight {
-  padding: 26px 0 4px;
   border-bottom: 1px solid var(--rule);
+}
+
+.tonight__hit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  padding: 14px 0;
+  cursor: pointer;
 }
 
 .tonight__k {
   font-family: var(--display);
   font-weight: 700;
-  font-size: 10px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--brass);
-}
-
-.tonight__n {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 54px;
-  line-height: 1;
-  letter-spacing: -.02em;
-  margin-top: 8px;
-}
-
-.tonight__of {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 11px;
+  font-size: 10.5px;
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-top: 7px;
 }
+.tonight.is-open .tonight__k { color: var(--brass); }
+
+.tonight__count {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--faint);
+}
+
+.tonight__pane { padding: 0 0 18px; }
+
+.tonight__field {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* The name that prints on the card. Looks like a heading you can type
+   into, not a search box — a hairline, no fill. */
+.tonight__title {
+  display: block;
+  width: 100%;
+  margin: 6px 0 0;
+  padding: 2px 0 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--bone);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: .04em;
+  line-height: 1.2;
+}
+.tonight__title::placeholder {
+  color: var(--faint);
+  font-weight: 700;
+  letter-spacing: .03em;
+}
+.tonight__title:focus,
+.tonight__title:focus-visible {
+  outline: none;
+  border-bottom-color: var(--brass);
+}
+
+/* Screen-hidden; the printed card's title and count. */
+.tonight__print { display: none; }
 
 .tonight__note {
   margin: 11px 0 0;
@@ -758,7 +810,41 @@ noscript.fallback a { color: var(--brass); }
   max-width: 46ch;
 }
 
-.tonight__acts { display: flex; gap: 8px; margin: 15px 0 20px; flex-wrap: wrap; }
+.tonight__opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: 14px;
+}
+
+.tonight__opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  padding: 7px 0;
+  cursor: pointer;
+}
+
+.tonight__acts { display: flex; gap: 8px; margin: 14px 0 4px; flex-wrap: wrap; }
+
+/* Paper-only recipe / taste / history under each drink. */
+.print-extras { display: none; }
+
+/* The QR lives in the menu view so any print of the list carries it.
+   Hidden on screen; print CSS pins it to the bottom of the sheet. */
+.print-qr { display: none; }
+
+/* Barline key, printed as its own sheet when the tick is on. */
+.print-barline { display: none; }
 
 /* ── Bar ──────────────────────────────────────────────────── */
 
@@ -927,9 +1013,11 @@ noscript.fallback a { color: var(--brass); }
   position: relative;
 }
 .bottle.is-on > .bottle__row .bottle__box,
-.brand.is-on .bottle__box { background: var(--brass); border-color: var(--brass); }
+.brand.is-on .bottle__box,
+.tonight__opt.is-on .bottle__box { background: var(--brass); border-color: var(--brass); }
 .bottle.is-on > .bottle__row .bottle__box::after,
-.brand.is-on .bottle__box::after {
+.brand.is-on .bottle__box::after,
+.tonight__opt.is-on .bottle__box::after {
   content: "";
   position: absolute;
   left: 5px; top: 1px;
@@ -965,7 +1053,8 @@ noscript.fallback a { color: var(--brass); }
   position: relative;
   color: var(--faint);
 }
-.bottle.is-open .bottle__more { color: var(--brass); }
+.bottle.is-open .bottle__more,
+.tonight.is-open .bottle__more { color: var(--brass); }
 .bottle__more::after {
   content: "";
   position: absolute;
@@ -978,7 +1067,8 @@ noscript.fallback a { color: var(--brass); }
   border-bottom: 1.5px solid currentColor;
   transform: rotate(45deg);
 }
-.bottle.is-open .bottle__more::after {
+.bottle.is-open .bottle__more::after,
+.tonight.is-open .bottle__more::after {
   margin-top: -2px;
   transform: rotate(225deg);
 }
@@ -1311,7 +1401,7 @@ noscript.fallback a { color: var(--brass); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .recipe, .bottle__note { animation: unfold .16s ease-out; }
+  .recipe, .bottle__note, .tonight__pane { animation: unfold .16s ease-out; }
   @keyframes unfold { from { opacity: 0; transform: translateY(-3px); } }
 
   /* Only when the number actually went up. A tick on every repaint is
@@ -1325,7 +1415,13 @@ noscript.fallback a { color: var(--brass); }
    The point of the shelf filter is a menu you can hand someone, so it
    has to survive contact with paper. Force the light palette — a phone
    theme must never decide how much toner this costs — drop every piece
-   of app chrome, and let the card layout carry it. */
+   of app chrome, and let the card layout carry it. US Letter, because
+   that is the paper a party menu is printed on. */
+
+@page {
+  size: letter portrait;
+  margin: 0.5in 0.55in 0.7in;
+}
 
 @media print {
   :root {
@@ -1340,23 +1436,27 @@ noscript.fallback a { color: var(--brass); }
     --on-brass: #FFFFFF;
   }
 
-  .topbar, .tabbar, .filters, .tonight__acts, .tally__acts, .about,
-  .drink__missing, .loading, .bottle__more, .shelf__copy,
-  .recipe-tabs, .recipe-panel--taste, .recipe-panel--history, .recipe-panel--kin,
-  .recipe-copy, .recipe-refs, .drink__glass { display: none !important; }
-
-  /* Taste may be selected on screen; paper is still the pour list. */
-  .recipe-panel--recipe { display: block !important; }
+  .topbar, .tabbar, .filters, .tonight__hit, .tonight__pane, .tonight__acts,
+  .tally__acts, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
+  .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
+  .recipe-panel--kin, .recipe-refs {
+    display: none !important;
+  }
 
   /* The app shell is a viewport-tall box with one internal scroller.
      On paper there is no viewport, so unwind it back to normal flow or
      the printer gets one screenful and nothing after it. */
-  body {
+  html, body {
     display: block;
     height: auto;
     overflow: visible;
     padding: 0;
-    font-size: 11pt;
+    width: auto;
+    background: #FFFFFF;
+    color: #000000;
+    font-size: 10pt;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
   #main {
     overflow: visible;
@@ -1366,16 +1466,221 @@ noscript.fallback a { color: var(--brass); }
   .tally { position: static; }
   .view { max-width: none; padding: 0; }
 
-  .tonight { border-bottom: 3px solid #000; padding-top: 0; }
-  .tonight__n { font-size: 34pt; }
+  /* Two columns, newspaper fill. The card title spans both; drinks
+     run down the left then the right. */
+  #menu-body {
+    columns: 2;
+    column-gap: 22pt;
+    column-fill: balance;
+  }
 
-  /* Never split a drink across a page break. */
-  .drink, .method, .tonight { break-inside: avoid; }
+  .tonight {
+    column-span: all;
+    border-bottom: 3px solid #000;
+    padding: 0 0 10pt;
+    margin-bottom: 8pt;
+    break-inside: avoid;
+  }
+  .tonight__print { display: block; }
+  .tonight__print-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18pt;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.15;
+    color: #000;
+  }
+  .tonight__print-of {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 8pt;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #333;
+    margin: 6pt 0 0;
+  }
+
+  /* Never split a drink. Method sections may continue across a
+     column or a sheet. Hairline under each drink comes off; one
+     extra line of space sits after the last thing in the drink —
+     the line, or recipe / taste / history if those printed. */
+  .drink {
+    break-inside: avoid;
+    border-bottom: 0;
+    padding-bottom: 12pt;
+  }
   .family, .method__title { break-after: avoid; }
-  .method { padding-top: 20pt; }
+  .method { padding-top: 12pt; }
+  .method__title { font-size: 13pt; }
+  .method__rule { width: 56px; height: 5px; margin: 8pt 0 6pt; }
+  .method__blurb { font-size: 8.5pt; }
+  .family { font-size: 10pt; margin: 12pt 0 2pt; padding-top: 8pt; }
 
   .drink.is-pourable .drink__name { color: #000; }
-  .drink__text { padding: 7pt 0; }
+  .drink__name { font-size: 8.5pt; }
+  .drink__code { font-size: 7.5pt; }
+  .drink__line { font-size: 8.5pt; }
+  .drink__text { padding: 5pt 0; }
+
+  .drink__glass { display: none; }
+  body.is-print-icon .drink__glass {
+    display: flex;
+    color: #000;
+    flex: 0 0 2.2em;
+    padding: 1pt 0;
+  }
+
+  body.is-print-recipe .print-extras,
+  body.is-print-taste .print-extras,
+  body.is-print-history .print-extras { display: block; }
+
+  .print-card { display: none; margin-top: 4pt; }
+  body.is-print-recipe .print-card--recipe,
+  body.is-print-taste .print-card--taste,
+  body.is-print-history .print-card--history { display: block; }
+
+  .print-card__k {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 7pt;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin: 5pt 0 2pt;
+  }
+  .print-card .recipe-copy {
+    display: block;
+    font-size: 8pt;
+    line-height: 1.35;
+    color: #000;
+    margin: 0;
+  }
+  .print-card .pour {
+    grid-template-columns: 5.2em 1fr;
+    padding: 2.5pt 0;
+    gap: 0 8px;
+  }
+  .print-card .pour__amt { font-size: 8pt; }
+  .print-card .pour__ing { font-size: 8.5pt; }
+  .print-card .serve {
+    margin-top: 6pt;
+    padding: 6pt 8pt;
+    background: transparent;
+    border-left: 2px solid #000;
+  }
+  .print-card .serve__row { font-size: 8pt; }
+  .print-card .serve__k { width: 48px; font-size: 7pt; }
+
+  .print-qr {
+    display: flex;
+    column-span: all;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 7pt;
+    margin-top: 14pt;
+    padding-top: 8pt;
+    break-inside: avoid;
+    break-before: avoid;
+  }
+  .print-qr img {
+    display: block;
+    width: 36pt;
+    height: 36pt;
+  }
+  .print-qr span {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 7pt;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #000;
+  }
+
+  body.is-print-barline .print-barline {
+    display: block;
+    column-span: all;
+    break-before: page;
+    columns: 2;
+    column-gap: 22pt;
+    column-fill: balance;
+  }
+  .print-barline .sys {
+    column-span: all;
+    padding: 0 0 8pt;
+    border-bottom: 3px solid #000;
+    margin-bottom: 8pt;
+  }
+  .print-barline .sys__name {
+    font-size: 18pt;
+    letter-spacing: .16em;
+  }
+  .print-barline .sys__tag {
+    color: #000;
+    margin-top: 6pt;
+    font-size: 8pt;
+  }
+  .print-barline .sys__lead {
+    font-size: 9pt;
+    max-width: none;
+    margin-top: 8pt;
+    color: #333;
+  }
+  .print-barline .key__h {
+    font-size: 9pt;
+    margin: 12pt 0 2pt;
+    padding-top: 8pt;
+  }
+  .print-barline .key__h:first-of-type { margin-top: 0; }
+  .print-barline .key__sub,
+  .print-barline .key__lead {
+    font-size: 8pt;
+    max-width: none;
+    padding-top: 0;
+  }
+  .print-barline .rule {
+    padding: 6pt 0 6pt 22pt;
+    break-inside: avoid;
+  }
+  .print-barline .rule::before {
+    top: 7pt;
+    font-size: 8pt;
+    color: #000;
+  }
+  .print-barline .rule__h { font-size: 8pt; }
+  .print-barline .rule__t {
+    font-size: 8pt;
+    max-width: none;
+    color: #333;
+  }
+  .print-barline .sys__foot { display: none; }
+  .print-barline .def {
+    grid-template-columns: 28pt 72pt 1fr;
+    padding: 2.5pt 0;
+    gap: 0 8pt;
+    break-inside: avoid;
+  }
+  .print-barline .def__c {
+    font-size: 8pt;
+    color: #000;
+  }
+  .print-barline .def__l { font-size: 8pt; }
+  .print-barline .def__g { font-size: 7.5pt; color: #666; }
+  .print-barline .example {
+    margin-top: 8pt;
+    padding: 8pt;
+    background: transparent;
+    border-left: 2px solid #000;
+    break-inside: avoid;
+  }
+  .print-barline .example__n { font-size: 8pt; }
+  .print-barline .example__c { font-size: 8pt; color: #000; margin: 3pt 0 6pt; }
+  .print-barline .example__l { font-size: 7.5pt; line-height: 1.55; color: #333; }
+  .print-barline .lit {
+    background: transparent;
+    color: #000;
+    padding: 0;
+  }
 
   /* On screen the code reads at full strength. On paper it goes back to
      the printed card, where the shorthand sits small and grey in the

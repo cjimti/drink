@@ -27,9 +27,11 @@ two bitters and the staples you can pour 14 drinks; the best next bottle
 is not a spirit at all but orange liqueur, at +9.
 
 **Turns the shelf into a menu.** The count on the Bar tab is a way in,
-not a statistic — tapping it opens the list it counts, formatted as a
-menu with its own masthead. It prints, so the thing you hand a guest can
-be regenerated from whatever is actually on the shelf that night.
+not a statistic — tapping it opens the list it counts. Print menu is a
+reveal on that list: name the card, keep the glass icon or drop it,
+tick recipe / taste / history if you want them on paper, and add a
+Barline sheet if a guest needs the key. Two columns on letter, a QR
+back to the site.
 
 **Filters the way you choose a drink.** Stirred or shaken, then by any
 spirit or modifier, then by what the shelf can actually support.
