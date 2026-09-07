@@ -212,6 +212,22 @@ body), and the native share sheet where there is one. The QR encoder is
 the standard written small — byte mode, level M — and is checked against
 a reference library module for module; do not swap it for a CDN.
 
+**One drink shares the same way.** A drink has its own address,
+`fewbottles.com/#drink/<id>`, and the Share tab — last in the recipe
+strip, after Kin — is the same card at a smaller size: the QR for
+somebody standing in front of you with their own phone, the link for a
+thread. A cocktail id is a stable key precisely because these links live
+in other people's messages, exactly like a shelf bit.
+
+Opening `#drink/<id>` is a **way in, not state.** It shows the Menu with
+that drink expanded and centred, dropping any filter that would hide it,
+and then replaces the hash with `#menu` so the tab bar keeps working and
+the back button does not bounce. An id nothing answers to opens the Menu
+and says nothing. A kin link lands on the Kin pane, because that is the
+pane you were reading; a drink link lands on the recipe, because
+somebody sent you a drink. Nothing else writes the address: tapping a
+row in the list does not.
+
 Opening a shared link is **reading, not adopting**. The sender's shelf is
 held in memory for the session and the list opens gated on it, with a
 banner over the top. The chip row then carries two menus: My menu is
@@ -259,6 +275,52 @@ hex outside those two blocks is a bug — it will be wrong in one theme.
 `--on-brass` exists because brass goes dark in light mode, so text
 sitting on the brass fill has to flip with it.
 
+## The gate
+
+`make verify` is the whole pipeline, and there is no build step for it to
+hide behind. It runs, in order:
+
+- `json` — every data file and the manifest parse.
+- `syntax` — `node --check` on `app.js` and `sw.js`, `py_compile` on
+  every script.
+- `lint` — `check_code.py` and `check_style.py`, below.
+- `test` — `test_checks.py` breaks every rule on purpose and fails if a
+  checker sleeps through it. A linter nobody has seen fail passes
+  everything.
+- `menu` — codes match builds, `kin.json` matches the builds, the agent
+  dumps match the menu.
+- `assets` — every file `index.html` asks for exists, every id the app
+  reaches for is rendered, the worker safeguards are still in place.
+
+**`scripts/check_code.py`** is the linter this repo has instead of eslint,
+because there is no `package.json` and there is not going to be one. It
+measures every function — JavaScript and Python alike — for length,
+cyclomatic complexity, nesting and argument count, and it fails on the
+foot-guns a static site cannot afford: `eval`, a `console.log` shipped to
+somebody's phone, a radix-less `parseInt`, `==`, a bare `except`, a
+mutable default. `scripts/jslex.py` is what lets it tell code from a
+string, a comment or a regex without a parser from npm.
+
+Five functions are already over the line and live in `BUDGET` at the top
+of the file with the reason. **A budget entry is a ceiling, not a pass:**
+it holds a function at exactly today's size, so it can shrink and never
+grow, and an entry naming a function that no longer exists fails too.
+When the delegated click handler needs a new branch, the branch calls a
+named function; it does not grow the handler.
+
+**`scripts/check_style.py`** enforces this file: a literal colour outside
+the token blocks, a colour token with no light counterpart, a shadow, a
+font stack that is not one of the three tokens, an `<img>` with no `alt`,
+a control with no accessible name, a duplicate id, an `aria-controls`
+pointing at nothing. It also holds the three contracts the app would
+otherwise break silently — a `track()` parameter missing from
+`TRACK_KEYS`, a click branch whose `data-` attribute is missing from the
+delegation selector (a dead button, on the device you did not test), and
+the shelf code read with anything but `BigInt`.
+
+Adding a check is cheap and adding a case to `test_checks.py` beside it
+is the price. Do not raise a limit to make a new function fit.
+
 ## Conventions
 
 - **Never commit, push, or deploy unless asked in that message.** Build,
@@ -266,6 +328,31 @@ sitting on the brass fill has to flip with it.
   `gh api` writes, and re-running a failed deploy are all the same
   category: not yours to decide.
 - `make verify` before showing work. It is the whole pipeline.
+- **Adversarially review your own diff before you call it done.** After
+  `make verify` passes and before the diff goes up, read the change back
+  as somebody trying to break it, not as the person who wrote it. A green
+  pipeline says the rules you thought of are unbroken; it says nothing
+  about the ones you did not. Walk the change once for each of:
+
+  - **The empty and the enormous.** No shelf, one bottle, every bottle. A
+    drink with no taste, no history, no kin. A menu title of nothing and
+    a menu title of two hundred characters. First visit, and a visit with
+    stale `localStorage` from three versions ago.
+  - **The other three renderings.** Light as well as dark, 390px as well
+    as 1280, and print preview whenever the Menu list is touched. A rule
+    that reads fine on screen can cost a page of toner.
+  - **The paths that are not the happy one.** Offline with the worker
+    serving, a clipboard that says no, `navigator.share` absent, a hash
+    naming a drink that does not exist, a shared code with a retired bit.
+  - **What the change quietly assumes.** Every id, bit and `data-`
+    attribute is a stable key somebody may already hold a link to. Ask
+    what breaks for the person who saved a link last week.
+  - **The claim you are about to make.** If you are going to write "this
+    works", name what you actually ran. Anything you did not check is
+    said out loud in the summary, not left for review to find.
+
+  Fix what this turns up, then run `make verify` again. Report what the
+  pass found — including "nothing" — rather than leaving it implied.
 - **A service worker owns an origin, not a project.** Every static site
   in this workspace serves `./`, `index.html` and `assets/app.js`, so a
   worker registered on `http://localhost:8000` will answer for whichever

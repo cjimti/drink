@@ -769,7 +769,7 @@
 
   /* The grid as an SVG, one path, a two-module quiet zone, drawn in
      currentColor so the pane decides the ink. */
-  function qrSvg(text) {
+  function qrSvg(text, label) {
     var grid = qrMatrix(text);
     if (!grid) return '';
     var size = grid.length;
@@ -786,7 +786,8 @@
     }
     var box = size + pad * 2;
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + box + ' ' + box + '"' +
-      ' shape-rendering="crispEdges" role="img" aria-label="QR code for this menu">' +
+      ' shape-rendering="crispEdges" role="img" aria-label="' +
+        esc(label || 'QR code for this menu') + '">' +
       '<path fill="currentColor" d="' + d + '"/></svg>';
   }
 
@@ -848,6 +849,22 @@
   function dropSharedLink() {
     try { history.replaceState(null, '', location.pathname + location.hash); }
     catch (e) { /* file:// */ }
+  }
+
+  /* Say what just happened, then go back to saying what the button does.
+     The label to revert to is passed in rather than read off the button:
+     a second tap while it still reads "Copied" would otherwise stick. */
+  function flashLabel(el, said, back) {
+    el.textContent = said;
+    setTimeout(function () { el.textContent = back; }, 1600);
+  }
+
+  /* One drink, addressable: fewbottles.com/#drink/<id>. A hash never
+     reaches the server and the worker matches navigations ignoring the
+     query, so a drink link opens offline from the cached shell like any
+     other address here. */
+  function drinkUrl(id) {
+    return location.origin + location.pathname + '#drink/' + id;
   }
 
   /* Fallback for a clipboard that says no: leave the link selected. */
@@ -1020,7 +1037,7 @@
     if (d.taste) panes.push({ id: 'taste', label: 'Taste' });
     if (d.history) panes.push({ id: 'history', label: 'History' });
     if (data.kin) panes.push({ id: 'kin', label: 'Kin' });
-    if (panes.length === 1) return '';
+    panes.push({ id: 'share', label: 'Share' });
 
     var html = '<div class="recipe-tabs" role="tablist" aria-label="' +
       esc(d.name) + '">';
@@ -1087,14 +1104,37 @@
     return html + '</div>';
   }
 
+  /* One drink, to give away. The same card as the shelf's Share menu,
+     because it is the same act in a smaller frame: the QR is for someone
+     standing in front of you holding their own phone, the link is for a
+     thread. Both open this drink, expanded, wherever they land. */
+  function renderDrinkShare(d) {
+    var url = drinkUrl(d.id);
+    var qr = qrSvg(url, 'QR code for the ' + d.name);
+    return '<p class="recipe-copy">Scan it, or send the link. Either one ' +
+        'opens this drink on their phone \u2014 no app, nothing to install.</p>' +
+      '<div class="share">' +
+        (qr ? '<div class="share__qr">' + qr + '</div>' : '') +
+        '<div class="share__side">' +
+          '<p class="share__url">' + esc(url.replace(/^https?:\/\//, '')) + '</p>' +
+          '<div class="tonight__acts">' +
+            '<button type="button" class="btn" data-drink-link="' +
+              esc(d.id) + '">Copy link</button>' +
+            '<a class="btn" href="sms:?&body=' +
+              encodeURIComponent(d.name + ' ' + url) + '"' +
+              ' data-drink-sms="' + esc(d.id) + '">Send by text</a>' +
+            (navigator.share
+              ? '<button type="button" class="btn" data-drink-share="' +
+                  esc(d.id) + '">Share\u2026</button>'
+              : '') +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
   function renderRecipe(d, held) {
-    var html = '<div class="recipe">';
-    var extra = !!(d.taste || d.history || data.kin);
-
-    if (!extra) return html + renderPours(d, held) + '</div>';
-
     var current = paneOf(d);
-    html += renderRecipeTabs(d, current);
+    var html = '<div class="recipe">' + renderRecipeTabs(d, current);
     html += renderPanel(d, 'recipe', current, renderPours(d, held));
     if (d.taste) {
       html += renderPanel(d, 'taste', current,
@@ -1105,6 +1145,7 @@
         '<p class="recipe-copy">' + esc(d.history) + '</p>' + renderRefs(d.refs));
     }
     if (data.kin) html += renderPanel(d, 'kin', current, renderKin(d));
+    html += renderPanel(d, 'share', current, renderDrinkShare(d));
     return html + '</div>';
   }
 
@@ -1987,17 +2028,38 @@
     track('view_tab', { tab: view });
   }
 
+  /* #drink/<id> is a way in, not state. It opens the Menu with that drink
+     expanded and then takes itself back out of the address, so the tab
+     bar keeps working and the back button does not bounce between the
+     drink and the menu it is already showing. An id nothing answers to
+     opens the Menu and says nothing. */
+  var DRINK_HASH = /^#drink\/([a-z0-9-]+)$/;
+
   function route() {
     if (aboutDlg.open) aboutDlg.close();
-    show((location.hash || '#menu').slice(1));
+    var deep = DRINK_HASH.exec(location.hash);
+    if (!deep) {
+      show((location.hash || '#menu').slice(1));
+      return;
+    }
+    show('menu');
+    revealDrink(deep[1], 'recipe');
+    try {
+      history.replaceState(null, '',
+        location.pathname + location.search + '#menu');
+    } catch (e) { /* file:// */ }
   }
 
   /* ── wiring ────────────────────────────────────────────── */
 
   /* Open a drink and put it on screen. If the current filters hide it,
      drop whatever is hiding it — a kin link that does not lead to the
-     drink it names is trivia. */
-  function revealDrink(id) {
+     drink it names is trivia.
+
+     A kin link lands on Kin, because that is the pane you were reading.
+     A drink link lands on the recipe, because somebody sent you a drink,
+     so the caller says which. */
+  function revealDrink(id, pane) {
     var d = cocktailBy[id];
     if (!d) return;
     if (!matches(d, heldNow())) {
@@ -2011,7 +2073,7 @@
     }
     open = {};
     open[id] = true;
-    recipePane[id] = data.kin ? 'kin' : 'recipe';
+    recipePane[id] = pane || (data.kin ? 'kin' : 'recipe');
     repaintMenu();
     var el = document.getElementById('drink-' + id);
     if (el) el.scrollIntoView({ block: 'center' });
@@ -2033,12 +2095,103 @@
     renderMenu();
   }
 
+  /* Everything that puts a link somewhere else: the shelf out of the
+     Share pane, and one drink out of its recipe. These live here rather
+     than in the click delegate because the delegate is a switch, and a
+     switch that grows bodies stops being readable. Returns true when it
+     handled the click. */
+  function shareAction(t) {
+    if (t.dataset.shareCopy) {
+      var url = shareUrl(shelfCode(heldNow()));
+      var said = function () { flashLabel(t, 'Copied', 'Copy link'); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(said, function () { selectShareUrl(t); });
+      } else {
+        selectShareUrl(t);
+      }
+      track('share_copy');
+      return true;
+    }
+
+    /* The anchor does the work; this only counts it. */
+    if (t.dataset.shareSms) {
+      track('share_sms');
+      return true;
+    }
+
+    if (t.dataset.shareNative) {
+      navigator.share({ title: shareTitle(), url: shareUrl(shelfCode(heldNow())) })
+        .catch(function () { /* dismissed */ });
+      track('share_native');
+      return true;
+    }
+
+    if (t.dataset.shareAdopt) {
+      if (!shared) return true;
+      have = {};
+      Object.keys(shared.have).forEach(function (k) { have[k] = true; });
+      own = {};
+      saveHave(); saveOwn();
+      track('share_adopt', { bottles: stocked().length });
+      shared = null;
+      dropSharedLink();
+      filter = emptyFilter();
+      filter.pourable = true;
+      barOrder = null;
+      refreshCount();
+      repaintMenu();
+      $('#main').scrollTop = 0;
+      return true;
+    }
+
+    return drinkAction(t);
+  }
+
+  function countDrinkLink(id, action) {
+    track('drink_link', {
+      drink_id: id, drink_name: drinkName(id), action: action
+    });
+    return true;
+  }
+
+  /* The same three acts on one drink instead of on the whole shelf. The
+     clipboard fallback is the shelf's, and here it is a real answer
+     rather than a shrug: the address is on screen in the Share pane, so
+     failing to copy it leaves it selected. */
+  function drinkAction(t) {
+    if (t.dataset.drinkLink) {
+      var id = t.dataset.drinkLink;
+      var said = function () { flashLabel(t, 'Copied', 'Copy link'); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(drinkUrl(id))
+          .then(said, function () { selectShareUrl(t); });
+      } else {
+        selectShareUrl(t);
+      }
+      return countDrinkLink(id, 'copy');
+    }
+
+    if (t.dataset.drinkShare) {
+      navigator.share({
+        title: drinkName(t.dataset.drinkShare),
+        url: drinkUrl(t.dataset.drinkShare)
+      }).catch(function () { /* dismissed */ });
+      return countDrinkLink(t.dataset.drinkShare, 'share');
+    }
+
+    /* The sms: anchor does the work; this only counts it. */
+    if (t.dataset.drinkSms) return countDrinkLink(t.dataset.drinkSms, 'sms');
+
+    return false;
+  }
+
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
       '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-shelf],[data-seemenu],' +
       '[data-next-jump],[data-next-see],' +
       '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
       '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
+      '[data-drink-link],[data-drink-share],[data-drink-sms],' +
       '[data-share-adopt],[data-intro-open],[data-intro-dismiss]');
     if (!t) return;
 
@@ -2191,51 +2344,7 @@
       return;
     }
 
-    if (t.dataset.shareCopy) {
-      var url = shareUrl(shelfCode(heldNow()));
-      var said = function () {
-        t.textContent = 'Copied';
-        setTimeout(function () { t.textContent = 'Copy link'; }, 1600);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(said, function () { selectShareUrl(t); });
-      } else {
-        selectShareUrl(t);
-      }
-      track('share_copy');
-      return;
-    }
-
-    /* The anchor does the work; this only counts it. */
-    if (t.dataset.shareSms) {
-      track('share_sms');
-      return;
-    }
-
-    if (t.dataset.shareNative) {
-      navigator.share({ title: shareTitle(), url: shareUrl(shelfCode(heldNow())) })
-        .catch(function () { /* dismissed */ });
-      track('share_native');
-      return;
-    }
-
-    if (t.dataset.shareAdopt) {
-      if (!shared) return;
-      have = {};
-      Object.keys(shared.have).forEach(function (k) { have[k] = true; });
-      own = {};
-      saveHave(); saveOwn();
-      track('share_adopt', { bottles: stocked().length });
-      shared = null;
-      dropSharedLink();
-      filter = emptyFilter();
-      filter.pourable = true;
-      barOrder = null;
-      refreshCount();
-      repaintMenu();
-      $('#main').scrollTop = 0;
-      return;
-    }
+    if (shareAction(t)) return;
 
     if (t.dataset.printOpt) {
       var opt = t.dataset.printOpt;

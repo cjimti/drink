@@ -152,8 +152,11 @@ def write_llms(menu, bar, notation, kin):
             for d in in_family:
                 line = ingredient_line(d, by_id)
                 fam = families.get(d["family"], d["family"])
+                # Each drink links to its own address on the site, not
+                # to the dump: #drink/<id> opens that drink expanded.
                 lines.append(
-                    f"- [{d['name']}]({ORIGIN}/llms-full.txt): `{d['code']}` — {fam}; {line}"
+                    f"- [{d['name']}]({ORIGIN}/#drink/{d['id']}): "
+                    f"`{d['code']}` — {fam}; {line}"
                 )
         lines.append("")
     lines += [
