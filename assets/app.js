@@ -95,10 +95,29 @@
      did, with the ids the reports will group by. Skip http so a
      localhost session does not pollute production. In GTM, a GA4
      Event tag that fires on these Custom Event names is enough —
-     the params ride along as event parameters. */
+     the params ride along as event parameters.
+
+     The dataLayer is a merged model, not a payload per event: a key
+     left out of a push keeps its last value, so a share_copy after a
+     drink_open would still carry that drink's id. Every push therefore
+     resets every key any event can send. undefined clears a key from
+     the model; null does not, GA4 would send it. TRACK_KEYS is the
+     whole set — a new parameter goes here or it goes stale, and the
+     container's regex and variables need the new name too. */
+  var TRACK_KEYS = [
+    'tab',
+    'drink_id', 'drink_name', 'pane', 'from_id',
+    'filter_type', 'filter_value', 'search_term', 'pattern',
+    'bottle_id', 'brand_id', 'stocked', 'open', 'action',
+    'bottles', 'drinks',
+    'named', 'icon', 'recipe', 'taste', 'history', 'barline',
+    'opt', 'on'
+  ];
+
   function track(name, params) {
     if (location.protocol !== 'https:') return;
     var payload = { event: name };
+    TRACK_KEYS.forEach(function (k) { payload[k] = undefined; });
     if (params) {
       Object.keys(params).forEach(function (k) {
         if (params[k] !== undefined && params[k] !== null) payload[k] = params[k];
