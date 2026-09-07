@@ -121,6 +121,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </svg>
     <span class="topbar__name">fewbottles.com</span>
   </a>
+  <nav class="topbar__tabs" aria-label="Sections">
+    <a class="toptab is-active" href="#menu" data-view="menu">Menu</a>
+    <a class="toptab" href="#bar" data-view="bar">Bar<span class="toptab__count" id="top-count" hidden></span></a>
+    <a class="toptab" href="#key" data-view="key">Key</a>
+  </nav>
   <button type="button" class="topbar__about" id="about-open"
           aria-haspopup="dialog" aria-controls="about" aria-expanded="false">
     About
@@ -152,8 +157,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <main id="main">
 
   <section class="view" id="view-menu" aria-label="Menu">
-    <div id="filters"></div>
-    <div id="menu-body"></div>
+    <div class="menu-main">
+      <div id="filters"></div>
+      <div id="menu-body"></div>
+    </div>
+    <aside class="menu-aside" id="menu-aside" hidden aria-label="Open drink"></aside>
   </section>
 
   <section class="view" id="view-bar" hidden aria-label="The bar">

@@ -70,6 +70,11 @@
     return ios || safari;
   })();
 
+  /* Wide enough for the list and the open recipe to sit side by side.
+     Below this the app is the phone column it has always been, and the
+     recipe unfolds under the row it belongs to. */
+  var WIDE = window.matchMedia('(min-width: 900px)');
+
   function emptyFilter() {
     /* pourable is My menu: the list gated by your shelf. shared is Shared
        menu: the same gate against the shelf someone sent. One at a time. */
@@ -1149,19 +1154,15 @@
     return html + '</div>';
   }
 
-  function renderDrink(d, held, showShelf) {
+  /* Name, code, ingredient line, and whatever the shelf has to say about
+     them. A row is one of these behind a button and the wide-screen aside
+     is the same block above the recipe, so a drink is described once. */
+  function renderDrinkText(d, held, showShelf) {
     var missing = missingFor(d, held);
-    var cls = 'drink';
-    if (showShelf) cls += missing.length ? ' is-short' : ' is-pourable';
-
-    var html = '<div class="' + cls + '" id="drink-' + esc(d.id) + '">' +
-      '<button class="drink__head" data-drink="' + esc(d.id) + '" ' +
-        'aria-expanded="' + (open[d.id] ? 'true' : 'false') + '">' +
-        renderGlass(d.serve) +
-        '<span class="drink__text">' +
-        '<span class="drink__name">' + esc(d.name) + '</span>' +
-        '<span class="drink__code">' + esc(d.code) + '</span>' +
-        '<span class="drink__line">' + esc(ingredientLine(d)) + '</span>';
+    var html = '<span class="drink__text">' +
+      '<span class="drink__name">' + esc(d.name) + '</span>' +
+      '<span class="drink__code">' + esc(d.code) + '</span>' +
+      '<span class="drink__line">' + esc(ingredientLine(d)) + '</span>';
 
     if (showShelf && missing.length) {
       html += '<span class="drink__missing">Need ' + esc(missing.map(function (m) {
@@ -1179,9 +1180,25 @@
         }).join(', ')) + '</span>';
       }
     }
+    return html + '</span>';
+  }
 
-    html += '</span></button>';
-    if (open[d.id]) html += renderRecipe(d, held);
+  function renderDrink(d, held, showShelf) {
+    var missing = missingFor(d, held);
+    var cls = 'drink';
+    if (showShelf) cls += missing.length ? ' is-short' : ' is-pourable';
+    if (open[d.id]) cls += ' is-open';
+
+    var html = '<div class="' + cls + '" id="drink-' + esc(d.id) + '">' +
+      '<button class="drink__head" data-drink="' + esc(d.id) + '" ' +
+        'aria-expanded="' + (open[d.id] ? 'true' : 'false') + '">' +
+        renderGlass(d.serve) + renderDrinkText(d, held, showShelf) +
+      '</button>';
+
+    /* On a wide screen the recipe reads in the aside beside the list, so
+       the row stays a row. Paper is not a viewport — the print blocks go
+       in either way, which is what actually prints. */
+    if (open[d.id] && !WIDE.matches) html += renderRecipe(d, held);
     html += renderPrintExtras(d, held);
     return html + '</div>';
   }
@@ -1460,11 +1477,39 @@
       '</div>';
   }
 
+  /* The open drink, beside the list instead of inside it. Same pieces a
+     row is made of, over the same recipe. The placeholder is there so the
+     column keeps its width and the list does not reflow every time a
+     drink opens and closes. */
+  function renderAside(held, showShelf) {
+    var el = $('#menu-aside');
+    el.hidden = !WIDE.matches;
+    if (!WIDE.matches) { el.innerHTML = ''; return; }
+
+    var id = Object.keys(open).filter(function (k) {
+      return cocktailBy[k] && matches(cocktailBy[k], held);
+    }).pop();
+    /* One aside holds one drink. Anything else left open — from a phone
+       width, where the list has always let you unfold several — would put
+       a brass rule on rows this column is not answering to. */
+    if (id) { open = {}; open[id] = true; }
+    if (!id) {
+      el.removeAttribute('data-open-drink');
+      el.innerHTML = '<p class="menu-aside__none">Tap a drink.</p>';
+      return;
+    }
+    var d = cocktailBy[id];
+    el.setAttribute('data-open-drink', d.id);
+    el.innerHTML = '<div class="menu-aside__head">' + renderGlass(d.serve) +
+      renderDrinkText(d, held, showShelf) + '</div>' + renderRecipe(d, held);
+  }
+
   function renderMenu() {
     var held = heldNow();
     var showShelf = stocked(held).length > 0;
     var list = data.menu.cocktails.filter(function (d) { return matches(d, held); });
     var pre = viewingShared() ? renderSharedBanner(held) : '';
+    renderAside(held, showShelf);
 
     if (!list.length) {
       $('#menu-body').innerHTML = pre + renderEmpty(held);
@@ -1925,13 +1970,13 @@
   /* ── key view ──────────────────────────────────────────── */
 
   function defs(rows) {
-    return rows.map(function (r) {
+    return '<div class="defs">' + rows.map(function (r) {
       return '<div class="def">' +
         '<div class="def__c">' + esc(r.code) + '</div>' +
         '<div class="def__l">' + esc(r.label) + '</div>' +
         (r.gloss ? '<div class="def__g">' + esc(r.gloss) + '</div>' : '') +
         '</div>';
-    }).join('');
+    }).join('') + '</div>';
   }
 
   /* Shared by the Key tab and the printed Barline sheet. */
@@ -1971,7 +2016,8 @@
       '<p class="key__sub">Whatever letters follow the glass. Case matters — <em>l</em> is lemon, <em>L</em> is lime.</p>' +
       defs(n.garnishes) +
 
-      '<h2 class="key__h">Reading one straight through</h2>';
+      '<h2 class="key__h">Reading one straight through</h2>' +
+      '<div class="examples">';
 
     n.examples.forEach(function (ex) {
       html += '<div class="example">' +
@@ -1980,7 +2026,7 @@
         '<pre class="example__l">' + esc(ex.lines.join('\n')) + '</pre>' +
         '</div>';
     });
-    return html;
+    return html + '</div>';
   }
 
   function renderPrintBarline() {
@@ -2005,7 +2051,7 @@
   function show(view) {
     if (VIEWS.indexOf(view) < 0) view = 'menu';
     VIEWS.forEach(function (v) { $('#view-' + v).hidden = v !== view; });
-    document.querySelectorAll('.tab').forEach(function (t) {
+    document.querySelectorAll('.tab, .toptab').forEach(function (t) {
       t.classList.toggle('is-active', t.dataset.view === view);
     });
     /* Every view repaints on the way in. The menu depends on the shelf,
@@ -2079,15 +2125,16 @@
     if (el) el.scrollIntoView({ block: 'center' });
   }
 
+  /* The same figure on the phone tab bar and on the wide-screen top bar.
+     One of the two is always hidden, and a badge that disagrees with the
+     Bar tab is how the pourable filter last looked broken. */
   function refreshCount() {
     var can = pourableCount(have);
-    var badge = $('#tab-count');
-    if (stocked().length) {
-      badge.textContent = can;
-      badge.hidden = false;
-    } else {
-      badge.hidden = true;
-    }
+    var on = stocked().length > 0;
+    [$('#tab-count'), $('#top-count')].forEach(function (badge) {
+      if (on) badge.textContent = can;
+      badge.hidden = !on;
+    });
   }
 
   function repaintMenu() {
@@ -2147,6 +2194,34 @@
     return drinkAction(t);
   }
 
+  /* Which drink a click came out of. Inside the list that is the row it
+     sits in; in the wide-screen aside the recipe has been lifted out of
+     its row, so the aside says which drink it is holding. */
+  /* A row unfolds its recipe under it. On a wide screen the recipe is
+     read in the aside instead, and there is only one of those, so opening
+     one drink closes the rest. On a phone the list has always let you
+     leave several open, and nothing below 900px changes. */
+  function toggleDrink(id) {
+    if (open[id]) {
+      delete open[id];
+      delete recipePane[id];
+      track('drink_close', { drink_id: id, drink_name: drinkName(id) });
+    } else {
+      if (WIDE.matches) { open = {}; recipePane = {}; }
+      open[id] = true;
+      recipePane[id] = 'recipe';
+      track('drink_open', { drink_id: id, drink_name: drinkName(id) });
+    }
+    renderMenu();
+  }
+
+  function fromDrinkId(t) {
+    var row = t.closest('.drink');
+    if (row && row.id) return row.id.replace(/^drink-/, '');
+    var aside = t.closest('[data-open-drink]');
+    return aside ? aside.getAttribute('data-open-drink') : '';
+  }
+
   function countDrinkLink(id, action) {
     track('drink_link', {
       drink_id: id, drink_name: drinkName(id), action: action
@@ -2185,6 +2260,115 @@
     return false;
   }
 
+  /* Every figure on the shelf is relative to what is stocked, so a tick
+     rewrites the whole list. Put the scroll back where it was, or the row
+     you just ticked leaves the screen under your finger. */
+  function repaintBar(keepScroll) {
+    var y = $('#main').scrollTop;
+    renderBar();
+    if (keepScroll) $('#main').scrollTop = y;
+    refreshCount();
+  }
+
+  /* Reveal a bottle's notes and its shopping list. The checkbox ticks the
+     shelf; this is the rest of the row. */
+  function noteAction(t) {
+    var id = t.dataset.note;
+    if (noteOpen[id]) delete noteOpen[id];
+    else noteOpen[id] = true;
+    var bottle = t.closest('.bottle');
+    if (!bottle) return true;
+    var shown = !!noteOpen[id];
+    bottle.classList.toggle('is-open', shown);
+    t.setAttribute('aria-expanded', shown ? 'true' : 'false');
+    var pane = bottle.querySelector('.bottle__note');
+    if (pane) pane.hidden = !shown;
+    track('bar_note', { bottle_id: id, open: shown });
+    return true;
+  }
+
+  /* Ticking a listed brand ticks the type it belongs to; unticking the
+     last one unticks it again. An unknown bottle still ticks the type on
+     its own, which is what the row's own checkbox is for. */
+  function brandAction(t) {
+    var brand = t.dataset.brand;
+    var parent = t.dataset.parent;
+    own[brand] = !own[brand];
+    if (!own[brand]) delete own[brand];
+    if (ing[parent].bottles.some(function (b) { return own[b.id]; })) have[parent] = true;
+    else delete have[parent];
+    saveOwn();
+    saveHave();
+    repaintBar(true);
+    track('bar_brand', { brand_id: brand, bottle_id: parent, stocked: !!own[brand] });
+    return true;
+  }
+
+  function bottleAction(t) {
+    var id = t.dataset.bottle;
+    have[id] = !have[id];
+    if (!have[id]) {
+      delete have[id];
+      clearBrandsFor(id);
+      saveOwn();
+    }
+    saveHave();
+    repaintBar(true);
+    track('bar_stock', { bottle_id: id, stocked: !!have[id] });
+    return true;
+  }
+
+  /* Arriving at a shelf and adding to one are two different moves. From
+     nothing there is no order worth keeping, so let the new best buys
+     come up. On a shelf someone has already built, re-sorting throws
+     every row somewhere else and a tap that only ever ticks on reads as a
+     tap that wiped the lot. Hold the order and the scroll, and only the
+     ticks and the figures move. */
+  function shelfAction(t) {
+    var preset = (data.bar.shelves || []).filter(function (p) {
+      return p.id === t.dataset.shelf;
+    })[0];
+    if (!preset) return true;
+    var wasEmpty = !stocked().length;
+    preset.ingredients.forEach(function (id) { if (ing[id]) have[id] = true; });
+    saveHave();
+    if (wasEmpty) barOrder = null;
+    repaintBar(!wasEmpty);
+    track('bar_preset', {
+      action: preset.id,
+      bottles: stocked().length,
+      drinks: pourableCount(have)
+    });
+    return true;
+  }
+
+  /* Everything that edits the shelf, out of the switch and into one
+     place, because the delegate is a switch and a switch that grows
+     bodies stops being readable. */
+  function barAction(t) {
+    if (t.dataset.note) return noteAction(t);
+    if (t.dataset.brand) return brandAction(t);
+    if (t.dataset.bottle) return bottleAction(t);
+    if (t.dataset.shelf) return shelfAction(t);
+
+    /* Stocking everything says nothing about which brands are on the
+       shelf, so the brand ticks stand. Clearing the shelf clears them. */
+    if (t.dataset.bar === 'all') {
+      data.bar.ingredients.forEach(function (i) { have[i.id] = true; });
+      saveHave();
+    } else if (t.dataset.bar === 'none') {
+      have = {};
+      own = {};
+      saveHave(); saveOwn();
+    } else {
+      return false;
+    }
+    barOrder = null;
+    repaintBar(false);
+    track('bar_bulk', { action: t.dataset.bar });
+    return true;
+  }
+
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
       '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-shelf],[data-seemenu],' +
@@ -2201,17 +2385,7 @@
     }
 
     if (t.dataset.drink) {
-      var id = t.dataset.drink;
-      if (open[id]) {
-        delete open[id];
-        delete recipePane[id];
-        track('drink_close', { drink_id: id, drink_name: drinkName(id) });
-      } else {
-        open[id] = true;
-        recipePane[id] = 'recipe';
-        track('drink_open', { drink_id: id, drink_name: drinkName(id) });
-      }
-      renderMenu();
+      toggleDrink(t.dataset.drink);
       return;
     }
 
@@ -2238,10 +2412,8 @@
     }
 
     if (t.dataset.kin) {
-      var fromEl = t.closest('.drink');
-      var fromId = fromEl && fromEl.id ? fromEl.id.replace(/^drink-/, '') : '';
       track('kin_follow', {
-        from_id: fromId,
+        from_id: fromDrinkId(t),
         drink_id: t.dataset.kin,
         drink_name: drinkName(t.dataset.kin)
       });
@@ -2396,100 +2568,7 @@
       return;
     }
 
-    if (t.dataset.note) {
-      var nid = t.dataset.note;
-      if (noteOpen[nid]) delete noteOpen[nid];
-      else noteOpen[nid] = true;
-      var bottle = t.closest('.bottle');
-      if (!bottle) return;
-      var shown = !!noteOpen[nid];
-      bottle.classList.toggle('is-open', shown);
-      t.setAttribute('aria-expanded', shown ? 'true' : 'false');
-      var pane = bottle.querySelector('.bottle__note');
-      if (pane) pane.hidden = !shown;
-      track('bar_note', { bottle_id: nid, open: shown });
-      return;
-    }
-
-    if (t.dataset.brand) {
-      var brand = t.dataset.brand;
-      var parent = t.dataset.parent;
-      own[brand] = !own[brand];
-      if (!own[brand]) delete own[brand];
-      var parentIng = ing[parent];
-      var any = parentIng.bottles.some(function (b) { return own[b.id]; });
-      if (any) have[parent] = true;
-      else delete have[parent];
-      saveOwn();
-      saveHave();
-      var by = $('#main').scrollTop;
-      renderBar();
-      $('#main').scrollTop = by;
-      refreshCount();
-      track('bar_brand', { brand_id: brand, bottle_id: parent, stocked: !!own[brand] });
-      return;
-    }
-
-    if (t.dataset.bottle) {
-      have[t.dataset.bottle] = !have[t.dataset.bottle];
-      if (!have[t.dataset.bottle]) {
-        delete have[t.dataset.bottle];
-        clearBrandsFor(t.dataset.bottle);
-        saveOwn();
-      }
-      saveHave();
-      /* Every figure on the shelf is relative to what is stocked, so the
-         whole list is rewritten. Put the scroll back where it was or the
-         row you just ticked leaves the screen. */
-      var y = $('#main').scrollTop;
-      renderBar();
-      $('#main').scrollTop = y;
-      refreshCount();
-      track('bar_stock', { bottle_id: t.dataset.bottle, stocked: !!have[t.dataset.bottle] });
-      return;
-    }
-
-    if (t.dataset.shelf) {
-      var preset = (data.bar.shelves || []).filter(function (p) {
-        return p.id === t.dataset.shelf;
-      })[0];
-      if (!preset) return;
-      /* Arriving at a shelf and adding to one are two different moves.
-         From nothing there is no order worth keeping, so let the new best
-         buys come up. On a shelf someone has already built, re-sorting
-         throws every row somewhere else and a tap that only ever ticks on
-         reads as a tap that wiped the lot. Hold the order and the scroll,
-         and only the ticks and the figures move. */
-      var wasEmpty = !stocked().length;
-      preset.ingredients.forEach(function (id) { if (ing[id]) have[id] = true; });
-      saveHave();
-      if (wasEmpty) barOrder = null;
-      var wasAt = $('#main').scrollTop;
-      renderBar();
-      if (!wasEmpty) $('#main').scrollTop = wasAt;
-      refreshCount();
-      track('bar_preset', {
-        action: preset.id,
-        bottles: stocked().length,
-        drinks: pourableCount(have)
-      });
-      return;
-    }
-
-    if (t.dataset.bar === 'all') {
-      data.bar.ingredients.forEach(function (i) { have[i.id] = true; });
-      saveHave(); barOrder = null; renderBar(); refreshCount();
-      track('bar_bulk', { action: 'all' });
-      return;
-    }
-
-    if (t.dataset.bar === 'none') {
-      have = {};
-      own = {};
-      saveHave(); saveOwn(); barOrder = null; renderBar(); refreshCount();
-      track('bar_bulk', { action: 'none' });
-      return;
-    }
+    barAction(t);
   });
 
   document.addEventListener('keydown', function (e) {
@@ -2578,6 +2657,12 @@
   });
 
   window.addEventListener('hashchange', route);
+
+  /* Crossing 900px moves the open recipe between the row and the aside.
+     Nothing about the drink changes; only where it is read. */
+  WIDE.addEventListener('change', function () {
+    if (!$('#view-menu').hidden) repaintMenu();
+  });
 
   /* ── boot ──────────────────────────────────────────────── */
 

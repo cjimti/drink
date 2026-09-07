@@ -35,6 +35,8 @@
   --mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --pad: 20px;
+  --measure: 660px;
+  --wide: 1120px;
   --topbar-h: 52px;
   --tabbar-h: 58px;
 
@@ -135,6 +137,39 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .04em;
   text-transform: lowercase;
   white-space: nowrap;
+}
+
+/* The same three sections as the tab bar, for a screen wide enough that
+   a bar pinned to the bottom edge is a phone habit rather than a help.
+   Hidden until then; the JS keeps both sets in step. */
+.topbar__tabs { display: none; gap: 22px; margin-right: auto; padding-left: 26px; }
+
+.toptab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.toptab.is-active { color: var(--bone); border-bottom-color: var(--brass); }
+
+.toptab__count {
+  margin-left: 7px;
+  min-width: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--brass);
+  color: var(--on-brass);
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 17px;
+  text-align: center;
 }
 
 /* About sits where the old house link did: quiet, until it is on. */
@@ -260,7 +295,11 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Layout ───────────────────────────────────────────────── */
 
-.view { max-width: 660px; margin: 0 auto; padding: 0 var(--pad) 40px; }
+.view { max-width: var(--measure); margin: 0 auto; padding: 0 var(--pad) 40px; }
+
+/* Below 900px this is the whole Menu view and the aside is not rendered;
+   above it, the two are the grid's cells. */
+.menu-main { min-width: 0; }
 
 .loading {
   padding: 70px var(--pad);
@@ -1712,6 +1751,107 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   @keyframes tick { from { opacity: .3; transform: translateY(5px) scale(.82); } }
 }
 
+/* ── Wide screens ─────────────────────────────────────────────
+   The app is a phone column and stops there, which leaves a laptop a
+   strip in a void. Two breakpoints, no framework, and nothing below
+   900px changes: the tabs move up into the top bar, the open recipe
+   moves out of the list and sits beside it, and the shelf and the key
+   stop being one column each. */
+
+.menu-aside {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  max-height: calc(100dvh - var(--topbar-h));
+  overflow-y: auto;
+  /* #main is the scroll container, so this sticks against that and not
+     against the window. */
+  overscroll-behavior-y: contain;
+}
+
+.menu-aside__head {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--rule);
+}
+.menu-aside__head .drink__code { color: var(--brass); }
+
+.menu-aside__none {
+  margin: 0;
+  padding-top: 22px;
+  font-style: italic;
+  color: var(--faint);
+}
+
+@media (min-width: 900px) {
+  .tabbar { display: none; }
+  .topbar__tabs { display: flex; }
+
+  .view { max-width: var(--wide); }
+
+  /* :not([hidden]) because an id beats the [hidden] attribute — a bare
+     `display: grid` here would leave the Menu on screen under the Bar
+     tab, which is exactly how it broke the first time. */
+  #view-menu:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    column-gap: 40px;
+    align-items: start;
+  }
+
+  /* The row the aside is answering to. Every row carries the rule and
+     the offset so only the colour changes — an indent that appears with
+     the selection would nudge the whole list sideways. */
+  .drink {
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+    margin-left: -14px;
+  }
+  .drink.is-open { border-left-color: var(--brass); }
+
+  /* Two columns of shelves, with everything that talks about the whole
+     shelf spanning both. Not multicol: that would cut a section in half
+     mid-row. */
+  #bar-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    align-items: start;
+  }
+  .tally, .tally__body { grid-column: 1 / -1; }
+
+  /* Each row is short and never breaks, so columns are safe here. */
+  .defs { columns: 2; column-gap: 40px; }
+  .def { break-inside: avoid; }
+  .examples { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+
+@media (min-width: 1200px) {
+  #view-menu { grid-template-columns: minmax(0, 1fr) 400px; column-gap: 56px; }
+  .drink__name { font-size: 14.5px; }
+}
+
+/* The whole app was built for touch, so a mouse has never had anything
+   to tell it what it is over. Borders and ink only — no fills, and no
+   brass, which is an earned state and not a hover. */
+@media (hover: hover) {
+  .drink:not(.is-pourable) .drink__head:hover .drink__name { color: var(--bone); }
+  /* A drink the shelf is short of sits back at .42, so the name is
+     already the colour the rule above asks for. Bringing the row up is
+     the change a pointer can actually see. */
+  .drink.is-short .drink__head:hover .drink__name,
+  .drink.is-short .drink__head:hover .drink__line,
+  .drink.is-short .drink__head:hover .drink__glass { opacity: .72; }
+
+  .bottle__row:hover { background: var(--sunk); }
+
+  /* Nothing fills on hover — a fill is what `is-on` means. */
+  .chip:not(.is-on):hover, .btn:hover { border-color: var(--muted); color: var(--bone); }
+  .seg__b:not(.is-on):hover { color: var(--bone); }
+}
+
 /* ── Print ────────────────────────────────────────────────────
    The point of the shelf filter is a menu you can hand someone, so it
    has to survive contact with paper. Force the light palette — a phone
@@ -1737,7 +1877,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
     --on-brass: #FFFFFF;
   }
 
-  .topbar, .tabbar, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
+  .topbar, .tabbar, .menu-aside, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
   .shared, .tally__acts, .starters, .next, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-panel--share, .recipe-refs {
@@ -1766,6 +1906,13 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   }
   .tally { position: static; }
   .view { max-width: none; padding: 0; }
+
+  /* Chrome's print preview keeps the screen's viewport width, so the
+     wide-screen grids are still live on paper unless they are unwound
+     here. The card is one flow of two columns, always. */
+  #view-menu:not([hidden]) { display: block; }
+  #bar-body { display: block; }
+  .defs, .examples { columns: auto; display: block; }
 
   /* Two columns, newspaper fill. The card title spans both; drinks
      run down the left then the right. */
