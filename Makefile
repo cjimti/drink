@@ -1,15 +1,37 @@
 # fewbottles.com — no build step, so `verify` is the whole pipeline.
 
 .DEFAULT_GOAL := verify
-.PHONY: verify check json syntax menu kin llms assets serve icons clean
+.PHONY: verify check json syntax lint code style test menu kin llms assets \
+        serve icons events clean
 
 ## verify — run every check, then stamp the review-gate sentinel
 verify: check
 	@scripts/verify-sentinel.sh
 
 ## check — everything CI runs
-check: json syntax menu assets
+check: json syntax lint test menu assets
 	@echo "all checks passed"
+
+## lint — the standard, since there is no eslint and never will be
+##
+## code:  size, cyclomatic complexity, nesting and the foot-guns, in
+##        JavaScript, Python and shell alike
+## style: the house rules out of CLAUDE.md — colour tokens with a light
+##        counterpart, no shadows, the three fonts, an accessible page,
+##        and the three app contracts (TRACK_KEYS, the delegated click
+##        wiring, the shelf read as a BigInt)
+lint: code style
+
+code:
+	@python3 scripts/check_code.py
+
+style:
+	@python3 scripts/check_style.py
+
+## test — break every rule on purpose and check that something notices.
+##        A linter nobody has seen fail passes everything.
+test:
+	@python3 scripts/test_checks.py
 
 ## json — every data file parses
 json:
@@ -22,7 +44,7 @@ json:
 syntax:
 	@node --check assets/app.js && echo "  syntax  assets/app.js"
 	@node --check sw.js && echo "  syntax  sw.js"
-	@python3 -m py_compile scripts/check_menu.py scripts/make-icons.py scripts/make-og.py scripts/kin.py scripts/llms.py
+	@python3 -m py_compile scripts/*.py
 	@echo "  syntax  scripts/*.py"
 
 ## menu — every shorthand code agrees with the build it stands for,
@@ -55,6 +77,11 @@ assets:
 PORT ?= 8010
 serve:
 	@python3 scripts/serve.py $(PORT)
+
+## events — the custom events app.js pushes to the dataLayer, read off
+##          the source rather than kept in a second list that goes stale
+events:
+	@grep -o "track('[a-z_]*'" assets/app.js | sed "s/track('//;s/'//" | sort -u
 
 ## icons — regenerate the home-screen PNG and the social card
 icons:

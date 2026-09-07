@@ -72,6 +72,7 @@ make verify    # the whole pipeline
 make kin       # rebuild data/kin.json from the builds
 make llms      # rebuild llms.txt and llms-full.txt from the menu
 make icons     # redraw the home-screen PNG and the X/social card
+make events    # the custom events the app sends, straight from the source
 ```
 
 `make verify` is the only gate. It parses every JSON file, syntax-checks
@@ -80,6 +81,22 @@ for exists and every element id `app.js` reaches for is real, and — the
 one that matters — checks that every shorthand code still agrees with
 the recipe it stands for, that `data/kin.json` still matches those
 builds, and that the agent dumps still match the menu.
+
+It also lints. There is no `package.json` and there is not going to be
+one, so `scripts/check_code.py` is the linter: it measures every function
+in the repo — JavaScript and Python alike — for length, cyclomatic
+complexity, nesting and argument count, and fails on the foot-guns a
+static site cannot afford. Five functions are already over the line and
+are written down in a `BUDGET` at the top of that file with the reason;
+an entry is a ceiling, not a pass, so a budgeted function can shrink and
+never grow. `scripts/check_style.py` enforces the house rules — a colour
+token with no light counterpart, a literal hex, a shadow, an unlabelled
+control — along with the three contracts the app would otherwise break
+silently: an analytics parameter the dataLayer does not reset, a click
+branch whose `data-` attribute is missing from the delegation selector,
+and the shelf code read as anything but a `BigInt`.
+`scripts/test_checks.py` breaks every one of those rules on purpose and
+fails if a checker sleeps through it.
 
 The service worker registers in production only, and off https the app
 actively unregisters any worker it finds. A worker owns an *origin*, not
@@ -94,6 +111,20 @@ Push to `main` and GitHub Pages deploys the site. That is the origin
 for fewbottles.com. `drink.shoephone.net` is a Cloudflare Worker that
 evicts the old service worker and 301s here — it does not serve the
 menu, and a content push does not need `wrangler`.
+
+## What is counted
+
+The site runs Google Analytics through Google Tag Manager, and counts
+what gets used, in aggregate: which tab opened, which drink was expanded,
+which bottle was ticked, whether a menu was printed or shared. There is
+no account and no name to attach any of it to, the shelf itself never
+leaves your phone unless you share it, and nothing is sold to anyone. A
+content blocker stops all of it and the site works exactly the same. The
+same statement is in About on the site.
+
+The events are the `track()` calls in `assets/app.js`. `make events`
+prints the current list, which is better than a copy here that goes stale
+the next time one is added.
 
 ## Adding a drink
 

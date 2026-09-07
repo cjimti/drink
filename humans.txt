@@ -12,6 +12,7 @@ Doctype: HTML5
 Standards: HTML, CSS, JavaScript
 Software: a text editor and a printed card
 Source: https://github.com/cjimti/drink
+Analytics: Google Analytics, aggregate only. See About on the site.
 
 The menu is the card. The site decodes the house shorthand and asks
 the shelf what it can pour. Cocktail maxxing on a budget. No
