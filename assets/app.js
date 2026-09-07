@@ -1717,7 +1717,9 @@
   }
 
   /* What it costs to say yes. The solid tier is the house answer to "which
-     one should I buy"; a bottle with no brands is one you make. */
+     one should I buy"; a bottle with no brands is one you make. The price
+     is what the shelf paid, not what the shop is charging today, so it
+     says so. */
   function nextBuyLine(i) {
     if (bottleHasBrands(i)) {
       var pick = null;
@@ -1726,7 +1728,7 @@
         pick = i.bottles.filter(function (b) { return b.tier === tier; })[0] || null;
       });
       if (!pick) return '';
-      return pick.name + (pick.price != null ? ', $' + pick.price : '');
+      return pick.name + (pick.price != null ? ', est. $' + pick.price : '');
     }
     if (bottleHasNotes(i)) return 'house recipe on the shelf';
     return '';
@@ -1788,7 +1790,10 @@
     if (!presets || !presets.length || viewingShared()) return '';
 
     var html = '<section class="starters">' +
-      '<h2 class="starters__h">Start from a shelf</h2>';
+      '<h2 class="starters__h">Start from a shelf</h2>' +
+      '<p class="starters__note">Each one adds its bottles. Nothing gets ' +
+      'unticked, so they stack — and the figure is what this one would ' +
+      'add to what you already have.</p>';
 
     presets.forEach(function (p) {
       var gain = shelfGain(p, held);
@@ -2340,12 +2345,19 @@
         return p.id === t.dataset.shelf;
       })[0];
       if (!preset) return;
+      /* Arriving at a shelf and adding to one are two different moves.
+         From nothing there is no order worth keeping, so let the new best
+         buys come up. On a shelf someone has already built, re-sorting
+         throws every row somewhere else and a tap that only ever ticks on
+         reads as a tap that wiped the lot. Hold the order and the scroll,
+         and only the ticks and the figures move. */
+      var wasEmpty = !stocked().length;
       preset.ingredients.forEach(function (id) { if (ing[id]) have[id] = true; });
       saveHave();
-      /* The whole shelf just changed, so the frozen order is stale in a
-         way one tick never makes it: let the new best buys come up. */
-      barOrder = null;
+      if (wasEmpty) barOrder = null;
+      var wasAt = $('#main').scrollTop;
       renderBar();
+      if (!wasEmpty) $('#main').scrollTop = wasAt;
       refreshCount();
       track('bar_preset', {
         action: preset.id,

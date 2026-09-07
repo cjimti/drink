@@ -1153,6 +1153,14 @@ noscript.fallback a { color: var(--brass); }
   margin: 0 0 3px;
 }
 
+.starters__note {
+  margin: 0 0 7px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--faint);
+  line-height: 1.45;
+}
+
 .starter {
   display: flex;
   align-items: center;
