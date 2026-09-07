@@ -1751,6 +1751,93 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   @keyframes tick { from { opacity: .3; transform: translateY(5px) scale(.82); } }
 }
 
+/* ── Tonight ──────────────────────────────────────────────────
+   The phone propped against the bottles at a party, and the tablet on
+   the bar. The same list `renderMenu` always writes, with everything
+   that is not a drink taken off the screen and the type doubled. It is a
+   display: nothing here is persisted, nothing here is a control except
+   Done, and the theme is whatever the room already put the phone in.
+
+   `.tonight` is the masthead and was named long before this; the mode is
+   `body.is-tonight` and its own furniture is `.night`. */
+
+body.is-tonight .topbar,
+body.is-tonight .tabbar,
+body.is-tonight #filters,
+body.is-tonight .shared,
+body.is-tonight .tonight__hit,
+body.is-tonight .tonight__pane,
+body.is-tonight .drink__code,
+body.is-tonight .recipe-tabs { display: none; }
+
+/* Only what pours is on the card, exactly as paper does it. */
+body.is-tonight .drink.is-short { display: none; }
+
+/* The card title, in the treatment print gives it. */
+body.is-tonight .tonight { padding-bottom: 14px; border-bottom: 3px solid var(--rule); }
+body.is-tonight .tonight__print { display: block; }
+
+body.is-tonight .tonight__print-title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  line-height: 1.15;
+  color: var(--bone);
+}
+
+body.is-tonight .tonight__print-of {
+  margin: 8px 0 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Across the room, not in the hand. */
+body.is-tonight .drink__name { font-size: 22px; }
+body.is-tonight .drink__line { font-size: 17px; }
+body.is-tonight .drink__glass { flex: 0 0 3.4em; }
+body.is-tonight .drink__text { padding: 18px 0; }
+
+/* A guest reads the pour, not the Barline, so the recipe opens on its
+   one pane with nothing to switch it. */
+body.is-tonight .recipe-panel--taste,
+body.is-tonight .recipe-panel--history,
+body.is-tonight .recipe-panel--kin,
+body.is-tonight .recipe-panel--share { display: none; }
+
+/* One control, out of the way of the list and clear of the home bar. */
+.night { display: none; }
+body.is-tonight .night { display: block; }
+body.is-tonight .view { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+
+.night__done {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 50;
+  appearance: none;
+  background: var(--ground);
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  padding: 9px 22px;
+  color: var(--faint);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.night__done:hover { color: var(--muted); }
+.night__done:focus-visible { color: var(--brass); }
+
 /* ── Wide screens ─────────────────────────────────────────────
    The app is a phone column and stops there, which leaves a laptop a
    strip in a void. Two breakpoints, no framework, and nothing below
@@ -1833,6 +1920,16 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   .drink__name { font-size: 14.5px; }
 }
 
+/* Tonight is one wide column of big type on any screen, so the aside
+   stands down for it — the JS hides it, and the grid comes off here. */
+@media (min-width: 900px) {
+  body.is-tonight #view-menu:not([hidden]) { display: block; }
+  body.is-tonight .drink__name { font-size: 28px; }
+  body.is-tonight .drink__line { font-size: 20px; }
+  body.is-tonight .tonight__print-title { font-size: 34px; }
+  body.is-tonight .drink { border-left: 0; padding-left: 0; margin-left: 0; }
+}
+
 /* The whole app was built for touch, so a mouse has never had anything
    to tell it what it is over. Borders and ink only — no fills, and no
    brass, which is an earned state and not a hover. */
@@ -1877,7 +1974,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
     --on-brass: #FFFFFF;
   }
 
-  .topbar, .tabbar, .menu-aside, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
+  .topbar, .tabbar, .menu-aside, .night, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
   .shared, .tally__acts, .starters, .next, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-panel--share, .recipe-refs {
@@ -1912,6 +2009,19 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
      here. The card is one flow of two columns, always. */
   #view-menu:not([hidden]) { display: block; }
   #bar-body { display: block; }
+
+  /* Tonight is a screen mode. Printing from it prints the card: the
+     shorthand comes back, so does every drink the shelf is short of, and
+     the type goes back to the size paper wants. */
+  body.is-tonight .drink.is-short { display: block; }
+  body.is-tonight .drink__code { display: block; }
+  body.is-tonight .drink__name { font-size: 8.5pt; }
+  body.is-tonight .drink__line { font-size: 8.5pt; }
+  body.is-tonight .drink__glass { flex: 0 0 2.2em; }
+  body.is-tonight .drink__text { padding: 5pt 0; }
+  body.is-tonight .tonight { padding: 0 0 10pt; }
+  body.is-tonight .tonight__print-title { font-size: 18pt; }
+  body.is-tonight .view { padding: 0; }
   .defs, .examples { columns: auto; display: block; }
 
   /* Two columns, newspaper fill. The card title spans both; drinks

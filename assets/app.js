@@ -51,6 +51,7 @@
   var menuTitle = '';     /* name on the printed card; empty is "Your menu" */
   var printOpen = false;  /* Print menu reveal, session only */
   var shareOpen = false;  /* Share menu reveal, session only */
+  var tonight = false;    /* big type for the bar, session only, never saved */
   var shared = null;      /* { have, code } once a shared link has been opened; stays for the session */
   var introDone = false;  /* the first-run strip has been dismissed, for good */
   var printOpts = { icon: true, recipe: false, taste: false, history: false, barline: false };
@@ -74,6 +75,10 @@
      Below this the app is the phone column it has always been, and the
      recipe unfolds under the row it belongs to. */
   var WIDE = window.matchMedia('(min-width: 900px)');
+
+  /* Where the open recipe goes. Tonight is one column of big type on any
+     screen, so the aside stands down for it. */
+  function asideLive() { return WIDE.matches && !tonight; }
 
   function emptyFilter() {
     /* pourable is My menu: the list gated by your shelf. shared is Shared
@@ -1198,7 +1203,7 @@
     /* On a wide screen the recipe reads in the aside beside the list, so
        the row stays a row. Paper is not a viewport — the print blocks go
        in either way, which is what actually prints. */
-    if (open[d.id] && !WIDE.matches) html += renderRecipe(d, held);
+    if (open[d.id] && !asideLive()) html += renderRecipe(d, held);
     html += renderPrintExtras(d, held);
     return html + '</div>';
   }
@@ -1307,15 +1312,29 @@
       '</div>';
   }
 
-  function revealHit(kind, label, hint, on) {
-    return '<button type="button" class="tonight__hit' + (on ? ' is-open' : '') + '"' +
-      ' data-' + kind + '-open="1"' +
-      ' aria-expanded="' + (on ? 'true' : 'false') + '"' +
-      ' aria-controls="' + kind + '-pane">' +
+  /* One row of the masthead. Share and Print expand a pane under them and
+     carry the chevron that says so; Tonight has nothing to expand, so it
+     takes neither — a button claiming to control a pane that is not there
+     is a lie a screen reader reads out loud. */
+  function hitRow(cls, attrs, label, hint, more) {
+    return '<button type="button" class="tonight__hit' + cls + '"' + attrs + '>' +
       '<span class="tonight__k">' + esc(label) + '</span>' +
       '<span class="tonight__count">' + esc(hint) + '</span>' +
-      '<span class="bottle__more" aria-hidden="true"></span>' +
+      (more ? '<span class="bottle__more" aria-hidden="true"></span>' : '') +
       '</button>';
+  }
+
+  function revealHit(kind, label, hint, on) {
+    return hitRow(on ? ' is-open' : '',
+      ' data-' + kind + '-open="1"' +
+      ' aria-expanded="' + (on ? 'true' : 'false') + '"' +
+      ' aria-controls="' + kind + '-pane"', label, hint, true);
+  }
+
+  /* On paper a nameless card is "Your menu". A phone propped against the
+     bottles is saying what tonight is, so it says Tonight. */
+  function nightTitle() {
+    return (menuTitle || '').replace(/\s+/g, ' ').trim() || 'Tonight';
   }
 
   function renderMasthead(n, held) {
@@ -1324,9 +1343,11 @@
     var drinks = n + ' ' + (n === 1 ? 'drink' : 'drinks');
     return '<div class="tonight">' +
       '<div class="tonight__print">' +
-        '<h1 class="tonight__print-title">' + esc(cardTitle()) + '</h1>' +
+        '<h1 class="tonight__print-title">' +
+          esc(tonight ? nightTitle() : cardTitle()) + '</h1>' +
         '<p class="tonight__print-of">' + drinks + '</p>' +
       '</div>' +
+      hitRow('', ' data-tonight="open"', 'Tonight', 'big type for the bar', false) +
       revealHit('share', 'Share menu', 'QR code or link', shareOpen) +
       renderSharePane(held) +
       revealHit('print', 'Print menu', drinks, shown) +
@@ -1483,15 +1504,15 @@
      drink opens and closes. */
   function renderAside(held, showShelf) {
     var el = $('#menu-aside');
-    el.hidden = !WIDE.matches;
-    if (!WIDE.matches) { el.innerHTML = ''; return; }
+    el.hidden = !asideLive();
+    if (!asideLive()) { el.innerHTML = ''; return; }
 
     var id = Object.keys(open).filter(function (k) {
       return cocktailBy[k] && matches(cocktailBy[k], held);
     }).pop();
     /* One aside holds one drink. Anything else left open — from a phone
-       width, where the list has always let you unfold several — would put
-       a brass rule on rows this column is not answering to. */
+       width, or from Tonight, where the list has always let you unfold
+       several — would put a brass rule on rows it is not answering to. */
     if (id) { open = {}; open[id] = true; }
     if (!id) {
       el.removeAttribute('data-open-drink');
@@ -1504,15 +1525,22 @@
       renderDrinkText(d, held, showShelf) + '</div>' + renderRecipe(d, held);
   }
 
+  /* The only chrome Tonight has. Everything else on screen is the menu. */
+  function renderNightBar() {
+    return '<div class="night"><button type="button" class="night__done" ' +
+      'data-tonight="done">Done</button></div>';
+  }
+
   function renderMenu() {
     var held = heldNow();
     var showShelf = stocked(held).length > 0;
     var list = data.menu.cocktails.filter(function (d) { return matches(d, held); });
     var pre = viewingShared() ? renderSharedBanner(held) : '';
     renderAside(held, showShelf);
+    var night = tonight ? renderNightBar() : '';
 
     if (!list.length) {
-      $('#menu-body').innerHTML = pre + renderEmpty(held);
+      $('#menu-body').innerHTML = pre + renderEmpty(held) + night;
       return;
     }
 
@@ -1524,7 +1552,7 @@
       '<img src="assets/qr.svg" alt="">' +
       '<span>fewbottles.com</span>' +
       '</div>';
-    html += renderPrintBarline();
+    html += renderPrintBarline() + night;
 
     $('#menu-body').innerHTML = html;
   }
@@ -2207,13 +2235,48 @@
       delete recipePane[id];
       track('drink_close', { drink_id: id, drink_name: drinkName(id) });
     } else {
-      if (WIDE.matches) { open = {}; recipePane = {}; }
+      if (asideLive()) { open = {}; recipePane = {}; }
       open[id] = true;
       recipePane[id] = 'recipe';
       track('drink_open', { drink_id: id, drink_name: drinkName(id) });
     }
     renderMenu();
   }
+
+  var wakeLock = null;
+
+  /* A phone propped against the bottles should not go dark mid-pour. This
+     is a bonus, not a requirement: every way it can say no is ignored. */
+  function nightWake(on) {
+    try {
+      if (!on || !navigator.wakeLock) {
+        if (wakeLock) wakeLock.release().catch(function () { /* already gone */ });
+        wakeLock = null;
+        return;
+      }
+      navigator.wakeLock.request('screen').then(function (lock) { wakeLock = lock; },
+        function () { /* denied, or the document is not visible */ });
+    } catch (e) { /* not allowed in this context */ }
+  }
+
+  /* Big type, the pourable list, and nothing else. The phone against the
+     bottles at a party, and the tablet on the bar. Nothing is persisted —
+     a reload comes back as the app, which is the point of a display. */
+  function setTonight(on) {
+    tonight = on;
+    document.body.classList.toggle('is-tonight', on);
+    /* Tonight shows the Recipe pane and hides the tabs that would change
+       it, so a drink left open on Kin has to come back to the pour. */
+    if (on) Object.keys(recipePane).forEach(function (id) { recipePane[id] = 'recipe'; });
+    nightWake(on);
+    track('tonight', { action: on ? 'open' : 'close', drinks: pourableCount(heldNow()) });
+    repaintMenu();
+    $('#main').scrollTop = 0;
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (tonight) nightWake(!document.hidden);
+  });
 
   function fromDrinkId(t) {
     var row = t.closest('.drink');
@@ -2258,6 +2321,50 @@
     if (t.dataset.drinkSms) return countDrinkLink(t.dataset.drinkSms, 'sms');
 
     return false;
+  }
+
+  /* Every figure the Bar tab prints is a way through to the list it is
+     counting. A number that does not lead anywhere is trivia. */
+  function jumpAction(t) {
+    /* The name goes to the row, which is where the tick is. Sending
+       someone to a list they cannot act on is the same trivia. */
+    if (t.dataset.nextJump) {
+      var to = document.querySelector('[data-bottle="' + t.dataset.nextJump + '"]');
+      track('bar_next', {
+        bottle_id: t.dataset.nextJump,
+        drinks: marginalGain(t.dataset.nextJump, have)
+      });
+      if (to) {
+        to.closest('.bottle').scrollIntoView({ block: 'center' });
+        to.focus({ preventScroll: true });
+      }
+      return true;
+    }
+
+    /* The figure goes to the drinks it counts, filtered to that bottle. */
+    if (t.dataset.nextSee) {
+      var id = t.dataset.nextSee;
+      track('bar_next', { bottle_id: id, drinks: marginalGain(id, have) });
+      filter = emptyFilter();
+      filter.pourable = true;
+      filter.family = hasChip(ing[id] || {}) ? id : null;
+      /* A bottle whose unlocks are all drinks it does not itself lead
+         filters the list to nothing. Drop the chip and land on the menu. */
+      var seen = heldNow();
+      if (!data.menu.cocktails.some(function (d) { return matches(d, seen); })) {
+        filter.family = null;
+      }
+    } else if (t.dataset.seemenu) {
+      /* From the count on the Bar tab to the menu it is counting. */
+      filter = emptyFilter();
+      filter.pourable = true;
+      track('see_pourable');
+    } else {
+      return false;
+    }
+    repaintMenu();
+    location.hash = '#menu';
+    return true;
   }
 
   /* Every figure on the shelf is relative to what is stocked, so a tick
@@ -2376,11 +2483,16 @@
       '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
       '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
       '[data-drink-link],[data-drink-share],[data-drink-sms],' +
-      '[data-share-adopt],[data-intro-open],[data-intro-dismiss]');
+      '[data-share-adopt],[data-intro-open],[data-intro-dismiss],[data-tonight]');
     if (!t) return;
 
     if (t.dataset.recipeTab) {
       setRecipePane(t.dataset.recipeFor, t.dataset.recipeTab, t.closest('.recipe'));
+      return;
+    }
+
+    if (t.dataset.tonight) {
+      setTonight(t.dataset.tonight === 'open');
       return;
     }
 
@@ -2462,48 +2574,7 @@
       return;
     }
 
-    /* The name goes to the row, which is where the tick is. Sending
-       someone to a list they cannot act on is the same trivia the tally
-       button exists to avoid. */
-    if (t.dataset.nextJump) {
-      var jumpTo = document.querySelector('[data-bottle="' + t.dataset.nextJump + '"]');
-      track('bar_next', {
-        bottle_id: t.dataset.nextJump,
-        drinks: marginalGain(t.dataset.nextJump, have)
-      });
-      if (!jumpTo) return;
-      jumpTo.closest('.bottle').scrollIntoView({ block: 'center' });
-      jumpTo.focus({ preventScroll: true });
-      return;
-    }
-
-    /* The figure goes to the drinks it counts, filtered to that bottle. */
-    if (t.dataset.nextSee) {
-      var seeId = t.dataset.nextSee;
-      track('bar_next', { bottle_id: seeId, drinks: marginalGain(seeId, have) });
-      filter = emptyFilter();
-      filter.pourable = true;
-      filter.family = hasChip(ing[seeId] || {}) ? seeId : null;
-      var heldSee = heldNow();
-      var any = data.menu.cocktails.some(function (d) { return matches(d, heldSee); });
-      /* A bottle whose unlocks are all drinks it does not itself lead
-         filters the list to nothing. The count is worth reading only if it
-         leads to a list, so drop the chip and land on the menu. */
-      if (!any) filter.family = null;
-      repaintMenu();
-      location.hash = '#menu';
-      return;
-    }
-
-    /* Jump from the count on the Bar tab to the menu it is counting. */
-    if (t.dataset.seemenu) {
-      filter = emptyFilter();
-      filter.pourable = true;
-      track('see_pourable');
-      repaintMenu();
-      location.hash = '#menu';
-      return;
-    }
+    if (jumpAction(t)) return;
 
     if (t.dataset.printOpen || t.dataset.shareOpen) {
       var isPrint = !!t.dataset.printOpen;
