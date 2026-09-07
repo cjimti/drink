@@ -371,6 +371,17 @@
     return pourableCount(withIt) - pourableCount(held);
   }
 
+  /* The same question marginalGain asks, put to a whole preset: what does
+     this shelf add on top of what is already ticked. Presets are additive,
+     so a shelf you have half of is worth only its other half, and the
+     figure has to say so. */
+  function shelfGain(preset, held) {
+    var withIt = {};
+    Object.keys(held).forEach(function (k) { withIt[k] = held[k]; });
+    preset.ingredients.forEach(function (id) { withIt[id] = true; });
+    return pourableCount(withIt) - pourableCount(held);
+  }
+
   function usageCount(id) {
     return data.menu.cocktails.filter(function (d) {
       return needs(d).indexOf(id) >= 0;
@@ -1578,6 +1589,36 @@
     }).forEach(function (r, n) { barOrder[r.id] = n; });
   }
 
+  /* From nothing, the greedy path is brutal: the first bottle unlocks no
+     drinks, and neither do the first three. Nobody stays long enough to
+     see a row read +7, which is the thing this tab is for. A preset is a
+     way to arrive somewhere the numbers already mean something.
+
+     They only ever tick bottles on, so tapping two stacks them and
+     tapping one over a shelf you have adds the rest of it. Clearing is
+     still one button, and it is not this one. */
+  function renderShelves(held) {
+    var presets = data.bar.shelves;
+    if (!presets || !presets.length || viewingShared()) return '';
+
+    var html = '<section class="starters">' +
+      '<h2 class="starters__h">Start from a shelf</h2>';
+
+    presets.forEach(function (p) {
+      var gain = shelfGain(p, held);
+      html += '<button type="button" class="starter" data-shelf="' + esc(p.id) + '">' +
+        '<span class="starter__text">' +
+          '<span class="starter__label">' + esc(p.label) + '</span>' +
+          '<span class="starter__blurb">' + esc(p.blurb) + '</span>' +
+        '</span>' +
+        '<span class="starter__gain' + (gain ? '' : ' starter__gain--flat') + '">+' +
+          gain + '</span>' +
+        '</button>';
+    });
+
+    return html + '</section>';
+  }
+
   function renderBar() {
     var held = have;
     var can = pourableCount(held);
@@ -1588,8 +1629,8 @@
 
     var note;
     if (!bottles) {
-      note = 'Tick what is actually on the shelf. The count above is what ' +
-             'you can pour tonight, and every bottle below shows what it would add.';
+      note = 'Tick what is on the shelf, or start from one of the shelves ' +
+             'below. Every bottle then shows what it would add.';
     } else if (!can) {
       note = 'Not enough yet. The gain figures below are drinks unlocked, ' +
              'not drinks that merely use the bottle.';
@@ -1615,6 +1656,7 @@
       '</div>' +
       '<div class="tally__body">' +
       '<p class="tally__note">' + esc(note) + '</p>' +
+      renderShelves(held) +
       '<div class="tally__acts">' +
         '<button class="btn" data-bar="all">Stock everything</button>' +
         '<button class="btn" data-bar="none">Clear the shelf</button>' +
@@ -1800,7 +1842,7 @@
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
-      '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-seemenu],' +
+      '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-shelf],[data-seemenu],' +
       '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
       '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
       '[data-share-adopt]');
@@ -2054,6 +2096,26 @@
       $('#main').scrollTop = y;
       refreshCount();
       track('bar_stock', { bottle_id: t.dataset.bottle, stocked: !!have[t.dataset.bottle] });
+      return;
+    }
+
+    if (t.dataset.shelf) {
+      var preset = (data.bar.shelves || []).filter(function (p) {
+        return p.id === t.dataset.shelf;
+      })[0];
+      if (!preset) return;
+      preset.ingredients.forEach(function (id) { if (ing[id]) have[id] = true; });
+      saveHave();
+      /* The whole shelf just changed, so the frozen order is stale in a
+         way one tick never makes it: let the new best buys come up. */
+      barOrder = null;
+      renderBar();
+      refreshCount();
+      track('bar_preset', {
+        action: preset.id,
+        bottles: stocked().length,
+        drinks: pourableCount(have)
+      });
       return;
     }
 

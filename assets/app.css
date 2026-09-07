@@ -1010,6 +1010,62 @@ noscript.fallback a { color: var(--brass); }
 
 .tally__acts { display: flex; gap: 8px; margin-top: 15px; }
 
+/* Named starting points, between the note and the bulk buttons. A row is
+   the shelf, what is in it, and what it would add — the same figure the
+   bottles carry, so it reads as the same idea one size up. */
+.starters { margin-top: 19px; }
+
+.starters__h {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 3px;
+}
+
+.starter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hair);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.starter__text { flex: 1; min-width: 0; }
+
+.starter__label {
+  display: block;
+  font-size: 15px;
+}
+
+.starter__blurb {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--faint);
+}
+
+.starter__gain {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: .04em;
+  color: var(--brass);
+  white-space: nowrap;
+}
+.starter__gain--flat { color: var(--faint); }
+
 .btn {
   appearance: none;
   background: transparent;
@@ -1524,7 +1580,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   }
 
   .topbar, .tabbar, .filters, .tonight__hit, .tonight__pane, .tonight__acts,
-  .shared, .tally__acts, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
+  .shared, .tally__acts, .starters, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-refs {
     display: none !important;

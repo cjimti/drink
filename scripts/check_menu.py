@@ -26,6 +26,10 @@ are unique across the bar. `catalog` marks a type that is on the shopping
 list before any drink calls for it — those still need bottles, or they
 are the same quiet drift the unused-ingredient check is for.
 
+`shelves` are the named starting points on the Bar tab. Each is a list of
+ingredient ids and nothing more — what a preset pours is counted live by the
+app — so the only thing here that can rot is a name that no longer exists.
+
 Taste, history, and refs are optional until the research tickets finish.
 If they are present they have to be the right shape, and a fourth invention
 on a cocktail object is a fail.
@@ -66,6 +70,7 @@ BOTTLE_KEYS = {"id", "name", "size", "price", "tier"}
 BOTTLE_TIERS = {
     "solid", "elevated", "excellent", "exceptional", "alternatives",
 }
+SHELF_KEYS = {"id", "label", "blurb", "ingredients"}
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 HTML = re.compile(r"<[^>]+>")
 MD_LINK = re.compile(r"\[[^\]]+\]\([^)]+\)")
@@ -234,6 +239,65 @@ def check_bits(bar, errs):
         seen[bit] = who
 
 
+def check_shelves(bar, errs):
+    """Named starting points on the Bar tab, when the file carries any.
+
+    A preset is a list of ingredient ids and nothing else: how many drinks
+    it pours is the app's live count, never a number written down here. So
+    the only thing that can rot is a name, and a preset that ticks a bottle
+    the bar does not have would silently tick nothing.
+    """
+    shelves = bar.get("shelves")
+    if shelves is None:
+        return
+    if not isinstance(shelves, list) or not shelves:
+        errs.append("bar: shelves must be a non-empty array")
+        return
+
+    stocked = {i["id"] for i in bar["ingredients"]}
+    seen = set()
+    for s in shelves:
+        if not isinstance(s, dict):
+            errs.append("bar shelves: every entry must be an object")
+            continue
+        who = s.get("id", "<no id>")
+        for k in sorted(SHELF_KEYS - set(s)):
+            errs.append(f"bar shelf {who}: missing {k!r}")
+        for k in sorted(set(s) - SHELF_KEYS):
+            errs.append(f"bar shelf {who}: unknown key {k!r}")
+
+        if not isinstance(who, str) or not SLUG.fullmatch(who):
+            errs.append(f"bar shelf {who!r}: id is not a slug")
+        elif who in seen:
+            errs.append(f"bar shelf {who}: duplicate id")
+        else:
+            seen.add(who)
+
+        for k in ("label", "blurb"):
+            v = s.get(k)
+            if k in s and (not isinstance(v, str) or not v.strip()):
+                errs.append(f"bar shelf {who}: {k} must be a non-empty string")
+            elif isinstance(v, str) and HTML.search(v):
+                errs.append(f"bar shelf {who}: {k} contains HTML")
+
+        want = s.get("ingredients")
+        if "ingredients" not in s:
+            continue
+        if not isinstance(want, list) or not want:
+            errs.append(f"bar shelf {who}: ingredients must be a non-empty array")
+            continue
+        held = set()
+        for iid in want:
+            if not isinstance(iid, str):
+                errs.append(f"bar shelf {who}: ingredients must be ids")
+                continue
+            if iid not in stocked:
+                errs.append(f"bar shelf {who}: {iid!r} is not in the bar")
+            elif iid in held:
+                errs.append(f"bar shelf {who}: {iid} is listed twice")
+            held.add(iid)
+
+
 def check_notes(d, who, errs):
     """Optional taste / history / refs, when present, have to be the contract.
 
@@ -300,6 +364,7 @@ def main():
             errs.append("bar: bottles_copy contains HTML")
 
     check_bits(bar, errs)
+    check_shelves(bar, errs)
     seen_brands = set()
     for i in bar["ingredients"]:
         check_ingredient_notes(i, errs)
