@@ -212,6 +212,22 @@ body), and the native share sheet where there is one. The QR encoder is
 the standard written small — byte mode, level M — and is checked against
 a reference library module for module; do not swap it for a CDN.
 
+**One drink shares the same way.** A drink has its own address,
+`fewbottles.com/#drink/<id>`, and the Share tab — last in the recipe
+strip, after Kin — is the same card at a smaller size: the QR for
+somebody standing in front of you with their own phone, the link for a
+thread. A cocktail id is a stable key precisely because these links live
+in other people's messages, exactly like a shelf bit.
+
+Opening `#drink/<id>` is a **way in, not state.** It shows the Menu with
+that drink expanded and centred, dropping any filter that would hide it,
+and then replaces the hash with `#menu` so the tab bar keeps working and
+the back button does not bounce. An id nothing answers to opens the Menu
+and says nothing. A kin link lands on the Kin pane, because that is the
+pane you were reading; a drink link lands on the recipe, because
+somebody sent you a drink. Nothing else writes the address: tapping a
+row in the list does not.
+
 Opening a shared link is **reading, not adopting**. The sender's shelf is
 held in memory for the session and the list opens gated on it, with a
 banner over the top. The chip row then carries two menus: My menu is

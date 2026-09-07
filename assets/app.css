@@ -811,35 +811,6 @@ noscript.fallback a { color: var(--brass); }
   padding-top: 4px;
 }
 
-/* The foot of an open recipe: this drink's own address, to send. Set in
-   the same type and ink as a recipe tab, because it is a control and
-   --faint on white is too thin to find. Nothing here is brass but the
-   focus ring: sending a link is not an earned state. */
-.recipe-links {
-  display: flex;
-  gap: 16px;
-  margin-top: 9px;
-}
-
-.recipe-link {
-  appearance: none;
-  background: transparent;
-  border: 0;
-  color: var(--muted);
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 9.5px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  padding: 5px 0;
-  cursor: pointer;
-}
-.recipe-link:hover { color: var(--bone); }
-.recipe-link:focus-visible {
-  outline: 1px solid var(--brass);
-  outline-offset: 2px;
-}
-
 .empty {
   padding: 46px 0;
   text-align: center;
@@ -1018,6 +989,12 @@ noscript.fallback a { color: var(--brass); }
   -webkit-user-select: all;
 }
 .share__side .tonight__acts { margin: 12px 0 0; }
+
+/* Same card, one drink. The panel is narrower than the Bar tab's block,
+   and the code is a short address rather than a shelf, so it stays
+   readable at a smaller square. */
+.recipe-panel--share .share { margin-top: 12px; }
+.recipe-panel--share .share__qr { width: 148px; height: 148px; }
 
 /* Over a menu someone sent. Their bar is on screen; yours is not touched. */
 .shared {
@@ -1763,7 +1740,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   .topbar, .tabbar, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
   .shared, .tally__acts, .starters, .next, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
-  .recipe-panel--kin, .recipe-refs, .recipe-links {
+  .recipe-panel--kin, .recipe-panel--share, .recipe-refs {
     display: none !important;
   }
 
