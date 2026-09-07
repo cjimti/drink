@@ -568,6 +568,18 @@ noscript.fallback a { color: var(--brass); }
   padding-top: 3px;
 }
 
+/* Pourable, but on a bottle the card does not name. A note, not a state,
+   so it takes the muted ink and none of the brass. */
+.drink__standin {
+  grid-column: 1 / -1;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  color: var(--muted);
+  text-transform: uppercase;
+  padding-top: 3px;
+}
+
 /* ── Expanded recipe ──────────────────────────────────────── */
 
 .recipe {
@@ -741,6 +753,13 @@ noscript.fallback a { color: var(--brass); }
   text-transform: uppercase;
   color: var(--brass);
   margin-left: 7px;
+}
+
+/* The bottle standing in, beside the one the card asks for. */
+.pour__sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-left: 6px;
 }
 
 .serve {
@@ -1061,6 +1080,64 @@ noscript.fallback a { color: var(--brass); }
 
 .tally__acts { display: flex; gap: 8px; margin-top: 15px; }
 
+/* The three bottles worth buying next. Same figure as the rows below it,
+   lifted out of a long shelf, with the drinks it opens read out — brass on
+   the number and nowhere else, because the number is the earned part. */
+.next { margin-top: 19px; }
+
+.next__h {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 3px;
+}
+
+.next__row {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.next__top {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.next__name {
+  flex: 1;
+  min-width: 0;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.next__gain {
+  flex: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.next__what,
+.next__buy {
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.next__buy { color: var(--faint); font-style: italic; }
+
 /* Named starting points, between the note and the bulk buttons. A row is
    the shelf, what is in it, and what it would add — the same figure the
    bottles carry, so it reads as the same idea one size up. */
@@ -1074,6 +1151,14 @@ noscript.fallback a { color: var(--brass); }
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 3px;
+}
+
+.starters__note {
+  margin: 0 0 7px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--faint);
+  line-height: 1.45;
 }
 
 .starter {
@@ -1628,7 +1713,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   }
 
   .topbar, .tabbar, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
-  .shared, .tally__acts, .starters, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
+  .shared, .tally__acts, .starters, .next, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-refs {
     display: none !important;
@@ -1735,6 +1820,11 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   body.is-print-recipe .print-extras,
   body.is-print-taste .print-extras,
   body.is-print-history .print-extras { display: block; }
+
+  /* The stand-in note belongs to the recipe, so it prints with it. */
+  .drink__standin { display: none; }
+  body.is-print-recipe .drink__standin { display: block; color: var(--faint); }
+  .print-card .pour__sub { font-size: 8pt; color: var(--faint); }
 
   .print-card { display: none; margin-top: 4pt; }
   body.is-print-recipe .print-card--recipe,

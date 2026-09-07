@@ -1,5 +1,5 @@
 {
-  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `bit` is the ingredient's place in a shared shelf code and is never renamed or reused (a dropped ingredient's bit goes into `retired_bits`), `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand, `shelf` overrides the name where the bottle and the pour want different words for the same thing, `notes` is a house recipe for making that bottle \u2014 the checkbox ticks the shelf, the rest of the row reveals the notes when there are any. `bottles` is the shopping list for that type, grouped by quality; ticking a brand ticks the parent, and the last brand unticked unticks it. `catalog` marks a type that is on the shopping list before any drink calls for it. `shelves` are named starting points on the Bar tab: one tap ticks a listed set of ingredients, additively \u2014 the drinks each would pour is computed live, never written down here. Garnish is stocked like anything else \u2014 the letter lives in the serve token, and notation.json says which bottle it calls for \u2014 but it is optional, so it never decides whether a drink can be poured.",
+  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `bit` is the ingredient's place in a shared shelf code and is never renamed or reused (a dropped ingredient's bit goes into `retired_bits`), `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand, `shelf` overrides the name where the bottle and the pour want different words for the same thing, `notes` is a house recipe for making that bottle \u2014 the checkbox ticks the shelf, the rest of the row reveals the notes when there are any. `bottles` is the shopping list for that type, grouped by quality; ticking a brand ticks the parent, and the last brand unticked unticks it. `catalog` marks a type that is on the shopping list before any drink calls for it. `stand_in` is the short list of bottles the house will pour in place of this one, close enough that the drink is still the drink \u2014 a build gates on the bottle it names or on anything standing in for it, and each direction is written out on its own rather than inferred. `shelves` are named starting points on the Bar tab: one tap ticks a listed set of ingredients, additively \u2014 the drinks each would pour is computed live, never written down here. Garnish is stocked like anything else \u2014 the letter lives in the serve token, and notation.json says which bottle it calls for \u2014 but it is optional, so it never decides whether a drink can be poured.",
   "bottles_copy": "When it comes to base liquor, anything above excellent is made for sipping neat. This does not mean the quality of the bottles in the solid or elevated lists is poor, quite the opposite: staples like Four Roses Bourbon and Beefeater London Dry Gin are nearly perfect representations of their categories, but that kind of makes them boring for a neat sip, yet a solid foundation for a cocktail expecting their familiar flavor profile.",
   "kinds": [
     { "id": "base",     "label": "Base spirits",  "blurb": "Ten bottles carry the whole menu." },
@@ -224,6 +224,7 @@
     { "bit": 31, "id": "peychauds",      "name": "Peychaud's bitters", "short": "Peychaud's",  "kind": "bitters", "unit": "dash" },
 
     { "bit": 32, "id": "simple",         "name": "Simple syrup",       "short": "simple",      "kind": "syrup",  "staple": true,
+      "stand_in": ["demerara"],
       "notes": {
         "parts": [
           { "amt": "300 g", "item": "white sugar" },
@@ -233,6 +234,7 @@
       }
     },
     { "bit": 33, "id": "demerara",       "name": "Demerara syrup",     "short": "demerara",    "kind": "syrup",  "staple": true,
+      "stand_in": ["simple"],
       "notes": {
         "parts": [
           { "amt": "300 g", "item": "demerara sugar (cubes or chunks)" },
