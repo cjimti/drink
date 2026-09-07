@@ -94,6 +94,18 @@ drink uses, and a garnish letter counts as use, so the bar cannot
 quietly drift. `catalog` is the exception: a type on the shopping list
 before any drink calls for it. Those still need bottles.
 
+`stand_in` is the short list of bottles the house will pour in place of
+this one. It is a hard gate turned soft where soft is honest: the card
+writes the Old-Fashioned with demerara, and a shelf holding simple pours
+it. A drink standing in counts as pourable, so the Bar tab's figure for
+demerara drops to nothing once simple is ticked — buying it unlocks
+nothing new, and that is the true answer. The list is tiny on purpose;
+simple and demerara are the whole of it. Each direction is written out
+and the checker refuses a stand-in of a different `kind`, so nothing
+infers the reverse and no syrup ever stands in for a gin. The recipe
+still says demerara, with what is standing in beside it, because the
+card calls for demerara.
+
 ### `data/notation.json`
 
 The key tab, and the table the decoder reads from. Adding a garnish
@@ -151,6 +163,12 @@ Same rule on a drink's Kin pane: the neighbour is a button that opens
 that drink, and the count of the family opens the Families view of the
 list it is counting. If either stops being a way through, that is a
 regression.
+
+**Next bottles** is the same figure lifted: the three best unopened
+bottles, each naming the drinks it actually opens and what the solid
+tier costs. Three, never more, and never ranked by usage count. It waits
+for a shelf worth improving on — from nothing every figure is zero, and
+a heading over three `+0` rows is worse than no heading.
 
 The print stylesheet forces the light palette outright. What theme a
 phone happens to be in must never decide how much toner a menu costs.

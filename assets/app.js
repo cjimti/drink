@@ -32,6 +32,7 @@
 
   var data = {};
   var ing = {};          /* id -> ingredient */
+  var standInBy = {};    /* id -> bottles that may be poured in its place */
   var cocktailBy = {};   /* id -> cocktail */
   var patternBy = {};    /* id -> kin pattern */
   var garnishCodes = []; /* longest first */
@@ -131,6 +132,13 @@
 
   function drinkName(id) {
     return (cocktailBy[id] && cocktailBy[id].name) || id;
+  }
+
+  /* The lowercase form a bottle takes inside a sentence. `short` is the
+     field for it, and the shelf already reads that way in "Need simple". */
+  function shortName(id) {
+    var i = ing[id] || {};
+    return i.short || i.name || id;
   }
 
   /* Escape first, then promote `backticked` spans to mono. Case carries
@@ -361,10 +369,41 @@
   /* Only what has to end up in the glass. This is the one that gates. */
   function pours(d) { return poursBy[d.id]; }
 
+  /* A stand-in is a bottle the house will pour in place of another, close
+     enough that the drink is still the drink. The table is in bar.json and
+     it is tiny on purpose; each direction is written out there, so nothing
+     here infers the reverse.
+
+     It is a hard gate turned soft where soft is honest. The card writes the
+     Old-Fashioned with demerara, and a beginner holding a bottle of simple
+     reads a hard gate as a bug. It is not a bug, but it is not the truth
+     either: that shelf pours the drink. */
+  function standInHeld(id, held) {
+    var subs = standInBy[id];
+    if (!subs) return null;
+    for (var n = 0; n < subs.length; n++) {
+      if (held[subs[n]]) return subs[n];
+    }
+    return null;
+  }
+
   function missingFor(d, held) {
     var out = [];
     pours(d).forEach(function (id) {
-      if (!held[id] && out.indexOf(id) < 0) out.push(id);
+      if (held[id] || standInHeld(id, held)) return;
+      if (out.indexOf(id) < 0) out.push(id);
+    });
+    return out;
+  }
+
+  /* Which bottle is doing the standing in, once missingFor has already
+     said the drink pours. Display only — the gate is answered elsewhere. */
+  function standInFor(d, held) {
+    var out = [];
+    pours(d).forEach(function (id) {
+      if (held[id]) return;
+      var use = standInHeld(id, held);
+      if (use) out.push({ want: id, use: use });
     });
     return out;
   }
@@ -832,6 +871,13 @@
     }).join(', ');
   }
 
+  /* Which bottles get a chip in the filter row. Anything else can still be
+     a family filter, but nothing on screen would show it was on, and a
+     filter you cannot see is a filter you cannot turn off. */
+  function hasChip(i) {
+    return i.kind === 'base' || i.kind === 'vermouth' || i.kind === 'modifier';
+  }
+
   function matches(d, held) {
     if (filter.method === 'stirred' || filter.method === 'shaken') {
       if (d.method !== filter.method) return false;
@@ -931,11 +977,15 @@
       var i = ing[p[0]] || { name: p[0] };
       var a = readAmount(p[1], i);
       var isGarnish = p[2] === 'g';
-      var out = shelfInUse && !held[p[0]];
+      var absent = shelfInUse && !held[p[0]];
+      /* The card calls for demerara, so the row still says demerara. What
+         is on the shelf goes beside it, not over it. */
+      var use = absent ? standInHeld(p[0], held) : null;
 
       html += '<div class="pour">' +
         '<div class="pour__amt' + (p[1] === null ? ' pour__amt--none' : '') + '">' + esc(a.text) + '</div>' +
-        '<div class="pour__ing' + (out ? ' is-out' : '') + '">' + esc(i.name) +
+        '<div class="pour__ing' + (absent && !use ? ' is-out' : '') + '">' + esc(i.name) +
+        (use ? '<span class="pour__sub">— ' + esc(shortName(use)) + ' stands in</span>' : '') +
         (isGarnish ? '<span class="pour__tag">on top</span>' : '') +
         (a.note ? '<span class="pour__tag">' + esc(a.note) + '</span>' : '') +
         '</div></div>';
@@ -1076,6 +1126,17 @@
       html += '<span class="drink__missing">Need ' + esc(missing.map(function (m) {
         return (ing[m] || {}).short || m;
       }).join(', ')) + '</span>';
+    }
+
+    /* Pourable, but not on the bottle the card names. Say which, quietly:
+       this is a note about the shelf, not an earned state, so no brass. */
+    if (showShelf && !missing.length) {
+      var subs = standInFor(d, held);
+      if (subs.length) {
+        html += '<span class="drink__standin">' + esc(subs.map(function (s) {
+          return shortName(s.use) + ' for ' + shortName(s.want);
+        }).join(', ')) + '</span>';
+      }
     }
 
     html += '</span></button>';
@@ -1443,9 +1504,7 @@
 
     /* Spirits first — they are how anyone actually chooses a drink —
        then the modifiers that decide the rest of the menu. */
-    data.bar.ingredients.filter(function (i) {
-      return i.kind === 'base' || i.kind === 'vermouth' || i.kind === 'modifier';
-    }).forEach(function (i) {
+    data.bar.ingredients.filter(hasChip).forEach(function (i) {
       html += '<button class="chip' + (filter.family === i.id ? ' is-on' : '') +
         '" data-family="' + esc(i.id) + '">' + esc(i.short) + '</button>';
     });
@@ -1616,14 +1675,104 @@
      its place. Freezing the order on entry keeps the best buys at the
      top where they are worth seeing, and keeps the list still while you
      work down it. Only the numbers move. */
-  function freezeBarOrder(held) {
+  function freezeBarOrder(held, gains) {
     barOrder = {};
     data.bar.ingredients.map(function (i) {
-      return { id: i.id, gain: marginalGain(i.id, held), uses: usageCount(i.id) };
+      return { id: i.id, gain: gains[i.id], uses: usageCount(i.id) };
     }).sort(function (a, b) {
       if (b.gain !== a.gain) return b.gain - a.gain;
       return b.uses - a.uses;
     }).forEach(function (r, n) { barOrder[r.id] = n; });
+  }
+
+  /* Every figure on this tab is the same question asked of one bottle, and
+     the tab asks it of every bottle two or three times over. Ask once per
+     render and hand the answers around. */
+  function allGains(held) {
+    var out = {};
+    data.bar.ingredients.forEach(function (i) {
+      out[i.id] = marginalGain(i.id, held);
+    });
+    return out;
+  }
+
+  /* Which drinks a bottle actually opens, not how many. The number beside
+     a row is the whole point of this tab, but "+7" says how many and never
+     which, so the three best get their names read out. Counted the same
+     way the figure is: pour the menu with the bottle on the shelf and diff
+     it against the menu without. */
+  function unlockedBy(id, held) {
+    var withIt = {};
+    Object.keys(held).forEach(function (k) { withIt[k] = held[k]; });
+    withIt[id] = true;
+    return data.menu.cocktails.filter(function (d) {
+      return canPour(d, withIt) && !canPour(d, held);
+    });
+  }
+
+  function unlockedLine(list) {
+    var names = list.slice(0, 3).map(function (d) { return d.name; });
+    var rest = list.length - names.length;
+    return names.join(', ') + (rest ? ' and ' + rest + ' more' : '');
+  }
+
+  /* What it costs to say yes. The solid tier is the house answer to "which
+     one should I buy"; a bottle with no brands is one you make. */
+  function nextBuyLine(i) {
+    if (bottleHasBrands(i)) {
+      var pick = null;
+      TIER_ORDER.forEach(function (tier) {
+        if (pick) return;
+        pick = i.bottles.filter(function (b) { return b.tier === tier; })[0] || null;
+      });
+      if (!pick) return '';
+      return pick.name + (pick.price != null ? ', $' + pick.price : '');
+    }
+    if (bottleHasNotes(i)) return 'house recipe on the shelf';
+    return '';
+  }
+
+  /* The three bottles worth buying next, named, with what each one opens.
+     The figures are already down the page, one per row, in the frozen
+     order — but nobody reads a shelf top to bottom to find the best three,
+     and the shelf is long. This is the same number, lifted.
+
+     Not before there is a shelf to improve on: from nothing, everything is
+     zero and a heading over three +0 rows is worse than no heading. */
+  function renderNext(held, gains) {
+    if (!stocked(held).length || viewingShared()) return '';
+
+    var top = data.bar.ingredients.filter(function (i) {
+      return !held[i.id] && gains[i.id] > 0;
+    }).map(function (i, n) {
+      return { i: i, gain: gains[i.id], uses: usageCount(i.id), n: n };
+    }).sort(function (a, b) {
+      if (b.gain !== a.gain) return b.gain - a.gain;
+      if (b.uses !== a.uses) return b.uses - a.uses;
+      return a.n - b.n;
+    }).slice(0, 3);
+
+    if (!top.length) return '';
+
+    var html = '<section class="next"><h2 class="next__h">Next bottles</h2>';
+
+    top.forEach(function (r) {
+      var name = r.i.shelf || r.i.name;
+      var buy = nextBuyLine(r.i);
+      html += '<div class="next__row">' +
+        '<div class="next__top">' +
+          '<button type="button" class="next__name" data-next-jump="' + esc(r.i.id) + '">' +
+            esc(name) + '</button>' +
+          '<button type="button" class="next__gain bottle__gain" ' +
+            'data-next-see="' + esc(r.i.id) + '" ' +
+            'aria-label="' + esc('See the ' + name + ' drinks') + '">+' + r.gain + '</button>' +
+        '</div>' +
+        '<p class="next__what">' + esc(unlockedLine(unlockedBy(r.i.id, held))) + '</p>' +
+        (buy ? '<p class="next__buy">' + esc(buy) + '</p>' : '') +
+        '</div>';
+    });
+
+    return html + '</section>';
   }
 
   /* From nothing, the greedy path is brutal: the first bottle unlocks no
@@ -1661,8 +1810,9 @@
     var can = pourableCount(held);
     var total = data.menu.cocktails.length;
     var bottles = stocked().length;
+    var gains = allGains(held);
 
-    if (!barOrder) freezeBarOrder(held);
+    if (!barOrder) freezeBarOrder(held, gains);
 
     var note;
     if (!bottles) {
@@ -1693,6 +1843,7 @@
       '</div>' +
       '<div class="tally__body">' +
       '<p class="tally__note">' + esc(note) + '</p>' +
+      renderNext(held, gains) +
       renderShelves(held) +
       '<div class="tally__acts">' +
         '<button class="btn" data-bar="all">Stock everything</button>' +
@@ -1712,7 +1863,7 @@
       /* Biggest unlock first, in the order frozen on the way in — a row
          never moves out from under the finger that just ticked it. */
       rows.map(function (i) {
-        return { i: i, gain: marginalGain(i.id, held), uses: usageCount(i.id) };
+        return { i: i, gain: gains[i.id], uses: usageCount(i.id) };
       }).sort(function (a, b) {
         return barOrder[a.i.id] - barOrder[b.i.id];
       }).forEach(function (r) {
@@ -1880,6 +2031,7 @@
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
       '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-shelf],[data-seemenu],' +
+      '[data-next-jump],[data-next-see],' +
       '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
       '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
       '[data-share-adopt],[data-intro-open],[data-intro-dismiss]');
@@ -1977,6 +2129,39 @@
       filter.pourable = false;
       track('filter', { filter_type: 'shared', filter_value: filter.shared ? 'on' : 'off' });
       repaintMenu();
+      return;
+    }
+
+    /* The name goes to the row, which is where the tick is. Sending
+       someone to a list they cannot act on is the same trivia the tally
+       button exists to avoid. */
+    if (t.dataset.nextJump) {
+      var jumpTo = document.querySelector('[data-bottle="' + t.dataset.nextJump + '"]');
+      track('bar_next', {
+        bottle_id: t.dataset.nextJump,
+        drinks: marginalGain(t.dataset.nextJump, have)
+      });
+      if (!jumpTo) return;
+      jumpTo.closest('.bottle').scrollIntoView({ block: 'center' });
+      jumpTo.focus({ preventScroll: true });
+      return;
+    }
+
+    /* The figure goes to the drinks it counts, filtered to that bottle. */
+    if (t.dataset.nextSee) {
+      var seeId = t.dataset.nextSee;
+      track('bar_next', { bottle_id: seeId, drinks: marginalGain(seeId, have) });
+      filter = emptyFilter();
+      filter.pourable = true;
+      filter.family = hasChip(ing[seeId] || {}) ? seeId : null;
+      var heldSee = heldNow();
+      var any = data.menu.cocktails.some(function (d) { return matches(d, heldSee); });
+      /* A bottle whose unlocks are all drinks it does not itself lead
+         filters the list to nothing. The count is worth reading only if it
+         leads to a list, so drop the chip and land on the menu. */
+      if (!any) filter.family = null;
+      repaintMenu();
+      location.hash = '#menu';
       return;
     }
 
@@ -2303,7 +2488,10 @@
     data.notation = res[2];
     data.kin = res[3];
 
-    data.bar.ingredients.forEach(function (i) { ing[i.id] = i; });
+    data.bar.ingredients.forEach(function (i) {
+      ing[i.id] = i;
+      if (i.stand_in) standInBy[i.id] = i.stand_in;
+    });
     data.menu.cocktails.forEach(function (d) { cocktailBy[d.id] = d; });
     data.kin.patterns.forEach(function (p) { patternBy[p.id] = p; });
     data.notation.glasses.forEach(function (g) { glassBy[g.code] = g; });

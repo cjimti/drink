@@ -26,6 +26,12 @@ are unique across the bar. `catalog` marks a type that is on the shopping
 list before any drink calls for it — those still need bottles, or they
 are the same quiet drift the unused-ingredient check is for.
 
+`stand_in` on an ingredient is the short list of bottles the house will pour
+in its place. It is a hard gate turned soft where soft is honest: the card
+writes the Old-Fashioned with demerara, and a beginner holding simple syrup
+can still pour it. The list is tiny on purpose and every direction is written
+out on its own, so it never gets inferred back the other way by accident.
+
 `shelves` are the named starting points on the Bar tab. Each is a list of
 ingredient ids and nothing more — what a preset pours is counted live by the
 app — so the only thing here that can rot is a name that no longer exists.
@@ -62,7 +68,7 @@ COCKTAIL_KEYS = {
 REF_KEYS = {"title", "url"}
 INGREDIENT_KEYS = {
     "id", "name", "short", "kind", "unit", "staple", "shelf", "notes",
-    "bottles", "catalog", "bit",
+    "bottles", "catalog", "bit", "stand_in",
 }
 NOTES_KEYS = {"parts", "copy"}
 PART_KEYS = {"amt", "item"}
@@ -239,6 +245,42 @@ def check_bits(bar, errs):
         seen[bit] = who
 
 
+def check_stand_ins(bar, errs):
+    """What the house will pour in place of what the card asks for.
+
+    A stand-in is close enough that the drink is still the drink, which is
+    why it has to be the same kind of bottle: a syrup for a syrup, never a
+    syrup for a gin. Each direction is its own line. Simple and demerara
+    happen to name each other today, but the day one of them stands in and
+    the reverse does not, the file says so rather than the code inferring it.
+    """
+    kinds = {i["id"]: i.get("kind") for i in bar["ingredients"]}
+
+    for i in bar["ingredients"]:
+        who = i.get("id", "<no id>")
+        subs = i.get("stand_in")
+        if subs is None:
+            continue
+        if not isinstance(subs, list) or not subs:
+            errs.append(f"bar {who}: stand_in must be a non-empty array")
+            continue
+        seen = set()
+        for sid in subs:
+            if not isinstance(sid, str):
+                errs.append(f"bar {who}: stand_in must be ingredient ids")
+                continue
+            if sid == who:
+                errs.append(f"bar {who}: stand_in names itself")
+            elif sid not in kinds:
+                errs.append(f"bar {who}: stand_in {sid!r} is not in the bar")
+            elif kinds[sid] != kinds.get(who):
+                errs.append(f"bar {who}: stand_in {sid} is a "
+                            f"{kinds[sid]}, not a {kinds.get(who)}")
+            if sid in seen:
+                errs.append(f"bar {who}: stand_in {sid} is listed twice")
+            seen.add(sid)
+
+
 def check_shelves(bar, errs):
     """Named starting points on the Bar tab, when the file carries any.
 
@@ -364,6 +406,7 @@ def main():
             errs.append("bar: bottles_copy contains HTML")
 
     check_bits(bar, errs)
+    check_stand_ins(bar, errs)
     check_shelves(bar, errs)
     seen_brands = set()
     for i in bar["ingredients"]:
