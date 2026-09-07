@@ -1646,8 +1646,16 @@
     }
     var d = cocktailBy[id];
     el.setAttribute('data-open-drink', d.id);
+    /* The way back to the shelf. Tapping the row again closes it too, but
+       the row may be a screen away by the time you have read the recipe,
+       and a panel you cannot dismiss from inside is a panel that has taken
+       the column. It is the drink's own toggle, so it counts as a close
+       and puts the row's `aria-expanded` back. */
     el.innerHTML = '<div class="menu-aside__head">' + renderGlass(d.serve) +
-      renderDrinkText(d, held, showShelf) + '</div>' + renderRecipe(d, held);
+      renderDrinkText(d, held, showShelf) +
+      '<button type="button" class="menu-aside__close" data-drink="' +
+        esc(d.id) + '" aria-label="' + esc('Close the ' + d.name) + '">Close</button>' +
+      '</div>' + renderRecipe(d, held);
   }
 
   /* The only chrome Tonight has. Everything else on screen is the menu. */
@@ -2812,6 +2820,16 @@
     if (e.target.id === 'menu-title' && e.key === 'Enter') {
       e.preventDefault();
       e.target.blur();
+      return;
+    }
+
+    /* Escape dismisses the rail, the way it dismisses any other panel.
+       Not from inside a field, where the browser has its own meaning for
+       it, and not while the About dialog is up and owns the key. */
+    if (e.key === 'Escape' && asideLive() && !aboutDlg.open
+        && !/^(INPUT|TEXTAREA)$/.test(e.target.tagName || '')) {
+      var open1 = Object.keys(open)[0];
+      if (open1) toggleDrink(open1);
       return;
     }
 

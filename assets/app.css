@@ -1892,6 +1892,25 @@ body.is-tonight .view { padding-bottom: calc(76px + env(safe-area-inset-bottom))
 .menu-aside__head .drink__name { font-size: 15px; }
 .menu-aside__head .drink__code { color: var(--brass); }
 
+/* The way out of the rail, in the same quiet cap the About sheet closes
+   with. Escape does it too. */
+.menu-aside__close {
+  flex: none;
+  align-self: flex-start;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 2px 0 8px 8px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--faint);
+  cursor: pointer;
+}
+.menu-aside__close:hover { color: var(--bone); }
+
 /* Inside the rail the recipe is the panel, not an unfolding of a row, so
    the dashed seam that ties it to the row above comes off. */
 .menu-aside .recipe { border-top: 0; margin-top: 0; padding-top: 10px; }
