@@ -90,7 +90,8 @@
   /* The shelf's running order, fixed on the way into the tab. See
      renderBar. */
   var barOrder = null;
-  var lastCan = null;    /* what the tally said last time, to tick it */
+  var lastCan = null;    /* what the tally said last time, to move it */
+  var lastRail = null;   /* the same, for the count in the Menu's rail */
 
   /* ── helpers ───────────────────────────────────────────── */
 
@@ -1523,17 +1524,46 @@
     return nextMemo.val;
   }
 
-  /* The premise, for a rail with nothing to describe yet. Same words the
-     first-run strip says on a phone; on a wide screen the rail is where
-     they go and the strip stands down. */
+  /* A first visit has a whole column and nothing to put in it yet, so it
+     gets the thing a first visit actually needs: what this is and what to
+     do with it. Three steps, in the Key tab's own numbered treatment,
+     because that is what this site already looks like when it explains
+     itself. The strip above the list on a phone says the short version;
+     up here there is room for the whole of it. */
+  var STEPS = [
+    {
+      h: 'The card',
+      t: 'Everything on the left is the menu — every drink the house pours, ' +
+         'most of them from a handful of bottles. Filter it by bottle, or ' +
+         'search a name, an ingredient, or a code.'
+    },
+    {
+      h: 'Your bottles',
+      t: 'Open the Bar tab and select what you own. The figure beside a bottle ' +
+         'you have not selected is how many more drinks it would pour — not ' +
+         'how many mention it.'
+    },
+    {
+      h: 'My menu',
+      t: 'Narrows the card to what your shelf actually makes. Print that for ' +
+         'the counter, or send the whole shelf to a guest as one link.'
+    }
+  ];
+
   function renderRailIntro() {
-    return '<div class="card">' +
-      '<h2 class="card__h">Tick your bottles, and this becomes your menu.</h2>' +
-      '<p class="card__note">Open the Bar tab, tick what you own, and the list ' +
-        'shrinks to what you can pour tonight. Every unopened bottle shows how ' +
-        'many drinks it would add.</p>' +
-      '<div class="card__acts">' +
-        '<a class="btn" href="#bar">Open the Bar tab</a>' +
+    var html = '<div class="card">' +
+      '<h2 class="card__h">' + data.menu.cocktails.length +
+        ' drinks, from a few bottles.</h2>' +
+      '<p class="card__k card__k--top">How this works</p>' +
+      '<ol class="rules">';
+    STEPS.forEach(function (r) {
+      html += '<li class="rule">' +
+        '<div class="rule__h">' + esc(r.h) + '</div>' +
+        '<p class="rule__t">' + esc(r.t) + '</p>' +
+        '</li>';
+    });
+    return html + '</ol><div class="card__acts">' +
+      '<a class="btn" href="#bar">Open the Bar tab</a>' +
       '</div></div>';
   }
 
@@ -1546,7 +1576,9 @@
 
     var can = pourableCount(held);
     var total = data.menu.cocktails.length;
-    var figure = '<span class="card__n">' + can + '</span>' +
+    var up = lastRail !== null && can > lastRail;
+    lastRail = can;
+    var figure = '<span class="card__n' + (up ? ' is-up' : '') + '">' + can + '</span>' +
       '<span class="card__of">drinks ' + (viewingShared() ? 'they' : 'you') +
         ' can pour<br>of ' + total + '</span>';
 
@@ -1560,8 +1592,17 @@
     var next = viewingShared() ? null : bestNext(held);
     if (next) {
       var name = next.i.shelf || next.i.name;
+      /* The same control the shelf uses, on the row that names the bottle
+         worth buying. Selecting it here counts it in without a trip to the
+         other tab: the figure moves, and the next-best bottle takes its
+         place. */
       html += '<p class="card__k">Next bottle</p>' +
         '<div class="card__buy">' +
+          '<button type="button" class="bottle__stock card__box"' +
+            ' data-bottle="' + esc(next.i.id) + '" aria-pressed="false"' +
+            ' aria-label="' + esc('Select ' + name) + '">' +
+            '<span class="bottle__box"></span>' +
+          '</button>' +
           '<span class="card__buy-name">' + esc(name) + '</span>' +
           '<span class="card__buy-n">+' + next.gain + '</span>' +
         '</div>' +
@@ -1642,10 +1683,10 @@
   function renderIntro() {
     if (!showIntro()) return '';
     return '<div class="intro">' +
-      '<h2 class="intro__h">Tick your bottles, and this becomes your menu.</h2>' +
-      '<p class="intro__p">Open the Bar tab, tick what you own, and the list ' +
-        'shrinks to what you can pour tonight. Every unopened bottle shows how ' +
-        'many drinks it would add.</p>' +
+      '<h2 class="intro__h">Select your bottles, and this becomes your menu.</h2>' +
+      '<p class="intro__p">Open the Bar tab, select what you own, and the list ' +
+        'shrinks to what you can pour tonight. Every bottle you have not ' +
+        'selected shows how many drinks it would add.</p>' +
       '<div class="intro__acts">' +
         '<button type="button" class="btn intro__go" data-intro-open="1">Open the Bar tab</button>' +
         '<button type="button" class="intro__no" data-intro-dismiss="1">Not now</button>' +
@@ -1994,7 +2035,7 @@
     var html = '<section class="starters">' +
       '<h2 class="starters__h">Start from a shelf</h2>' +
       '<p class="starters__note">Each one adds its bottles. Nothing gets ' +
-      'unticked, so they stack — and the figure is what this one would ' +
+      'removed, so they stack — and the figure is what this one would ' +
       'add to what you already have.</p>';
 
     presets.forEach(function (p) {
@@ -2023,7 +2064,7 @@
 
     var note;
     if (!bottles) {
-      note = 'Tick what is on the shelf, or start from one of the shelves ' +
+      note = 'Select what is on the shelf, or start from one of the shelves ' +
              'below. Every bottle then shows what it would add.';
     } else if (!can) {
       note = 'Not enough yet. The gain figures below are drinks unlocked, ' +
@@ -2503,9 +2544,24 @@
     return true;
   }
 
-  /* Every figure on the shelf is relative to what is stocked, so a tick
-     rewrites the whole list. Put the scroll back where it was, or the row
-     you just ticked leaves the screen under your finger. */
+  /* A bottle can now be selected from the Menu's rail as well as from the
+     shelf, so what a selection repaints is whichever tab is on screen. On
+     the Menu that is the list re-gating and the rail naming the next
+     bottle; the Bar, hidden, catches up on the way in. */
+  function afterShelf(keepScroll) {
+    if (!$('#view-bar').hidden) {
+      repaintBar(keepScroll);
+      return;
+    }
+    var y = $('#main').scrollTop;
+    refreshCount();
+    repaintMenu();
+    $('#main').scrollTop = y;
+  }
+
+  /* Every figure on the shelf is relative to what is stocked, so selecting
+     one rewrites the whole list. Put the scroll back where it was, or the
+     row you just selected leaves the screen under your finger. */
   function repaintBar(keepScroll) {
     var y = $('#main').scrollTop;
     /* On a wide screen the rail is a scroller of its own, and a long shelf
@@ -2551,7 +2607,7 @@
     else delete have[parent];
     saveOwn();
     saveHave();
-    repaintBar(true);
+    afterShelf(true);
     track('bar_brand', { brand_id: brand, bottle_id: parent, stocked: !!own[brand] });
     return true;
   }
@@ -2565,7 +2621,7 @@
       saveOwn();
     }
     saveHave();
-    repaintBar(true);
+    afterShelf(true);
     track('bar_stock', { bottle_id: id, stocked: !!have[id] });
     return true;
   }
@@ -2585,7 +2641,7 @@
     preset.ingredients.forEach(function (id) { if (ing[id]) have[id] = true; });
     saveHave();
     if (wasEmpty) barOrder = null;
-    repaintBar(!wasEmpty);
+    afterShelf(!wasEmpty);
     track('bar_preset', {
       action: preset.id,
       bottles: stocked().length,
@@ -2616,7 +2672,7 @@
       return false;
     }
     barOrder = null;
-    repaintBar(false);
+    afterShelf(false);
     track('bar_bulk', { action: t.dataset.bar });
     return true;
   }

@@ -1772,7 +1772,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   /* Only when the number actually went up. A tick on every repaint is
      noise; a tick when a bottle just bought you three drinks is the
      point of the tab. */
-  .tally__n.is-up { animation: tick .3s ease-out; }
+  .tally__n.is-up, .card__n.is-up { animation: tick .3s ease-out; }
   @keyframes tick { from { opacity: .3; transform: translateY(5px) scale(.82); } }
 }
 
@@ -1951,6 +1951,7 @@ button.card__fig { cursor: pointer; }
 
 .card__k {
   margin: 22px 0 0;
+  /* clear: the how-to's lead sits under a headline, not beside it */
   font-family: var(--display);
   font-weight: 800;
   font-size: 10px;
@@ -1961,10 +1962,15 @@ button.card__fig { cursor: pointer; }
 
 .card__buy {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
   margin-top: 7px;
 }
+
+/* The shelf's own control, on the row that names the bottle worth buying:
+   selecting it here counts the bottle in without a trip to the Bar tab. */
+.card__box { padding: 4px 0; }
+.card__box .bottle__box { display: block; }
 .card__buy-n {
   flex: none;
   margin-left: auto;
@@ -1991,17 +1997,24 @@ button.card__fig { cursor: pointer; }
 
 .card__acts { margin-top: 18px; }
 
-/* The premise, for a rail with no shelf to describe yet. Same words the
-   first-run strip uses on a phone; on a wide screen it has a column of
-   its own and the strip stands down. */
+/* The how-to reuses the Key tab's numbered treatment, because that is
+   already what this site looks like when it explains itself. */
+.card__k--top { margin-top: 26px; }
+.card .rules { margin-top: 4px; }
+.card .rule { padding-left: 26px; }
+.card .rule__t { font-size: 14px; }
+
+/* A first visit has the whole rail and no shelf to describe yet, so it
+   gets what a first visit needs: what this is, and what to do with it.
+   The strip above the list on a phone says the short version. */
 .card__h {
   margin: 0;
   font-family: var(--display);
   font-weight: 800;
-  font-size: 13px;
-  letter-spacing: .17em;
+  font-size: 15px;
+  letter-spacing: .15em;
   text-transform: uppercase;
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--bone);
 }
 
