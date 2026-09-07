@@ -1,12 +1,12 @@
 /* ─────────────────────────────────────────────────────────────
-   fewbottles.com — Fern Street 110
+   fewbottles.com, Fern Street 110
 
    The printed menu is pure black and white: a heavy rule under a
    letterspaced cap, italic ingredient lines, and the shorthand set
    small and grey in the margin. This is that page after dark.
 
    Dark is the default because a menu gets read in a dim room. Light
-   mode is not an inversion — it is the printed page, near enough to
+   mode is not an inversion. It is the printed page, near enough to
    put the two side by side.
 
    One accent only. Brass carries every earned state: a filter that is
@@ -103,8 +103,8 @@ body {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
   /* Hold the scrollbar track open. A short view and a long one otherwise
-     differ by a scrollbar's width, and everything centred — the tabs
-     included — slides sideways as you move between them. */
+     differ by a scrollbar's width, and everything centred, the tabs
+     included, slides sideways as you move between them. */
   scrollbar-gutter: stable;
 }
 
@@ -572,7 +572,7 @@ noscript.fallback a { color: var(--brass); }
   font: inherit;
 }
 
-/* Full height of the row, left of the name. Decorative — the code
+/* Full height of the row, left of the name. Decorative, because the code
    already says which glass. */
 .drink__glass {
   flex: 0 0 2.4em;
@@ -891,7 +891,7 @@ noscript.fallback a { color: var(--brass); }
   padding-bottom: 1px;
 }
 
-/* Not "nothing here" but "your filters disagree" — it gets a way out. */
+/* Not "nothing here" but "your filters disagree", so it gets a way out. */
 .empty--clash { padding: 38px 0; }
 .empty--clash p { margin: 0 auto 15px; max-width: 34ch; }
 .empty--clash b { color: var(--brass); font-style: normal; }
@@ -953,7 +953,7 @@ noscript.fallback a { color: var(--brass); }
 }
 
 /* The name that prints on the card. Looks like a heading you can type
-   into, not a search box — a hairline, no fill. */
+   into, not a search box: a hairline, no fill. */
 .tonight__title {
   display: block;
   width: 100%;
@@ -1170,7 +1170,7 @@ noscript.fallback a { color: var(--brass); }
 .tally__acts { display: flex; gap: 8px; margin-top: 15px; }
 
 /* The three bottles worth buying next. Same figure as the rows below it,
-   lifted out of a long shelf, with the drinks it opens read out — brass on
+   lifted out of a long shelf, with the drinks it opens read out. Brass on
    the number and nowhere else, because the number is the earned part. */
 .next { margin-top: 19px; }
 
@@ -1228,7 +1228,7 @@ noscript.fallback a { color: var(--brass); }
 .next__buy { color: var(--faint); font-style: italic; }
 
 /* Named starting points, between the note and the bulk buttons. A row is
-   the shelf, what is in it, and what it would add — the same figure the
+   the shelf, what is in it, and what it would add, the same figure the
    bottles carry, so it reads as the same idea one size up. */
 .starters { margin-top: 19px; }
 
@@ -1730,7 +1730,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
 
 .tab__glyph { width: 17px; height: 17px; border: 1.5px solid currentColor; }
 /* The three glyphs are drawn at different heights on purpose, so each
-   reserves the same 17px box — otherwise the labels under them sit at
+   reserves the same 17px box, or the labels under them would sit at
    three slightly different heights. */
 .tab__glyph--menu { border-width: 1.5px 0; height: 13px; margin: 2px 0; }
 .tab__glyph--bar {
@@ -1871,7 +1871,7 @@ body.is-tonight .view { padding-bottom: calc(76px + env(safe-area-inset-bottom))
 
 /* ── The rail ─────────────────────────────────────────────────
    The app is a phone column and stops there, which leaves a laptop a
-   strip in a void. The second column is not more room for the list — the
+   strip in a void. The second column is not more room for the list. The
    list has the width it was drawn at. It is a rail that answers the
    column beside it: on the Menu, the drink you opened, or the shelf you
    are building toward; on the Bar, the count that moves as you tick.
@@ -2074,7 +2074,7 @@ button.card__fig { cursor: pointer; }
      then starts where the list starts and stops where the list stops. */
   .filters { margin: 0; padding-inline: 0; }
 
-  /* A pointer has no way to swipe a chip row. Wrap them instead — and
+  /* A pointer has no way to swipe a chip row. Wrap them instead. And
      twenty-seven chips wrapped is half the fold gone before the first
      drink, so the bottle row is clamped to two and opens on a word. */
   .chips { flex-wrap: wrap; overflow: visible; }
@@ -2103,7 +2103,7 @@ button.card__fig { cursor: pointer; }
   .seg--wide .seg__b { letter-spacing: .15em; font-size: 10.5px; padding: 9px 18px; }
 
   /* The row the rail is answering to. Every row carries the rule and the
-     offset so only the colour changes — an indent that appears with the
+     offset so only the colour changes. An indent that appears with the
      selection would nudge the whole list sideways. */
   .drink {
     border-left: 2px solid transparent;
@@ -2191,7 +2191,7 @@ button.card__fig { cursor: pointer; }
 }
 
 /* Tonight is one wide column of big type on any screen, so the rail
-   stands down for it — the JS hides it, and the grid comes off here. */
+   stands down for it: the JS hides it, and the grid comes off here. */
 @media (min-width: 900px) {
   body.is-tonight #view-menu:not([hidden]) { display: block; }
   body.is-tonight .drink__name { font-size: 28px; }
@@ -2201,7 +2201,7 @@ button.card__fig { cursor: pointer; }
 }
 
 /* The whole app was built for touch, so a mouse has never had anything
-   to tell it what it is over. Borders and ink only — no fills, and no
+   to tell it what it is over. Borders and ink only, no fills, and no
    brass, which is an earned state and not a hover. */
 @media (hover: hover) {
   .drink:not(.is-pourable) .drink__head:hover .drink__name { color: var(--bone); }
@@ -2214,15 +2214,15 @@ button.card__fig { cursor: pointer; }
 
   .bottle__row:hover { background: var(--sunk); }
 
-  /* Nothing fills on hover — a fill is what `is-on` means. */
+  /* Nothing fills on hover; a fill is what `is-on` means. */
   .chip:not(.is-on):hover, .btn:hover { border-color: var(--muted); color: var(--bone); }
   .seg__b:not(.is-on):hover { color: var(--bone); }
 }
 
 /* ── Print ────────────────────────────────────────────────────
    The point of the shelf filter is a menu you can hand someone, so it
-   has to survive contact with paper. Force the light palette — a phone
-   theme must never decide how much toner this costs — drop every piece
+   has to survive contact with paper. Force the light palette, because a phone
+   theme must never decide how much toner this costs. Drop every piece
    of app chrome, and let the card layout carry it. US Letter, because
    that is the paper a party menu is printed on. */
 
@@ -2355,7 +2355,7 @@ button.card__fig { cursor: pointer; }
 
   /* Never split a drink. Method sections may continue across a
      column or a sheet. Hairline under each drink comes off; one
-     extra line of space sits after the last thing in the drink —
+     extra line of space sits after the last thing in the drink,
      the line, or recipe / taste / history if those printed. */
   .drink {
     break-inside: avoid;

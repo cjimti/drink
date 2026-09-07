@@ -1,10 +1,10 @@
-/* fewbottles.com — the cocktail menu.
+/* fewbottles.com: the cocktail menu.
 
    Two ideas carry the whole app.
 
    The first is that the house shorthand is decodable. Every code on the
-   printed menu is contextual — a bare number is ounces beside a spirit
-   and dashes beside bitters — so the decoder reads each amount against
+   printed menu is contextual, so a bare number is ounces beside a spirit
+   and dashes beside bitters. The decoder reads each amount against
    the ingredient it belongs to. That is what turns a margin note into a
    recipe without anyone having to type the recipe twice.
 
@@ -109,7 +109,7 @@
      owns dataLayer; we only push. Each event is one thing a person
      did, with the ids the reports will group by. Skip http so a
      localhost session does not pollute production. In GTM, a GA4
-     Event tag that fires on these Custom Event names is enough —
+     Event tag that fires on these Custom Event names is enough;
      the params ride along as event parameters.
 
      The dataLayer is a merged model, not a payload per event: a key
@@ -117,7 +117,7 @@
      drink_open would still carry that drink's id. Every push therefore
      resets every key any event can send. undefined clears a key from
      the model; null does not, GA4 would send it. TRACK_KEYS is the
-     whole set — a new parameter goes here or it goes stale, and the
+     whole set, so a new parameter goes here or it goes stale, and the
      container's regex and variables need the new name too. */
   var TRACK_KEYS = [
     'tab',
@@ -167,7 +167,7 @@
      and two dashes of Angostura, and only the ingredient knows which. */
   function readAmount(token, ingredient) {
     if (token === null || token === undefined) {
-      return { text: '—', note: 'one' };
+      return { text: '\u00b7', note: 'one' };
     }
     if (token === 'r') return { text: 'rinse', note: '' };
 
@@ -333,7 +333,7 @@
     return Object.keys(held).filter(function (k) { return held[k] && ing[k]; });
   }
 
-  /* The shelf the menu reads. Yours, unless Shared menu is the view —
+  /* The shelf the menu reads. Yours, unless Shared menu is the view,
      then the sender's, held in memory, and yours is left exactly as it was. */
   function viewingShared() { return !!(shared && filter.shared); }
   function heldNow() { return viewingShared() ? shared.have : have; }
@@ -345,8 +345,8 @@
 
      What a drink *pours* is its build, and missing one of those is the
      end of it. What it *needs* adds whatever the serve token garnishes
-     it with — a real call on the shelf, since a lemon twist costs a
-     lemon — but never a reason to say no. A Martini with no olive is
+     it with, a real call on the shelf since a lemon twist costs a
+     lemon, but never a reason to say no. A Martini with no olive is
      still a Martini.
 
      So the line is the whole rule: the build gates, the serve token does
@@ -409,7 +409,7 @@
   }
 
   /* Which bottle is doing the standing in, once missingFor has already
-     said the drink pours. Display only — the gate is answered elsewhere. */
+     said the drink pours. Display only; the gate is answered elsewhere. */
   function standInFor(d, held) {
     var out = [];
     pours(d).forEach(function (id) {
@@ -809,7 +809,7 @@
      is N is stocked, and bar.json owns those bits and never moves one,
      so a link sent today decodes the same after the bar grows: a new
      bottle takes a new bit, and an old code simply has it unset. Only
-     the type is carried, never the brand — a guest needs to know there
+     the type is carried, never the brand. A guest needs to know there
      is gin, not which gin.
 
      Decimal, because a number is the thing a person can read back over
@@ -991,7 +991,7 @@
       /* Cropped to the tumbler and centred on it (x = 100). A rocks
          glass is shorter than a Nick & Nora, so the CSS scales this
          down rather than stretching it to the row. Garnishes that
-         stick out still draw — overflow is visible. */
+         stick out still draw, because overflow is visible. */
       svg = svg.replace('viewBox="0 0 200 270"', 'viewBox="45 118 110 146"');
       cls += ' drink__glass--rocks';
     }
@@ -1014,7 +1014,7 @@
       html += '<div class="pour">' +
         '<div class="pour__amt' + (p[1] === null ? ' pour__amt--none' : '') + '">' + esc(a.text) + '</div>' +
         '<div class="pour__ing' + (absent && !use ? ' is-out' : '') + '">' + esc(i.name) +
-        (use ? '<span class="pour__sub">— ' + esc(shortName(use)) + ' stands in</span>' : '') +
+        (use ? '<span class="pour__sub">' + esc(shortName(use)) + ' stands in</span>' : '') +
         (isGarnish ? '<span class="pour__tag">on top</span>' : '') +
         (a.note ? '<span class="pour__tag">' + esc(a.note) + '</span>' : '') +
         '</div></div>';
@@ -1028,7 +1028,7 @@
           : 'Shake hard with ice, then strain.') +
       '</span></div>' +
       '<div class="serve__row"><span class="serve__k">Glass</span><span>' +
-        esc(s.glass) + (s.gloss ? ' — ' + esc(s.gloss) : '') +
+        esc(s.glass) + (s.gloss ? ' (' + esc(s.gloss) + ')' : '') +
       '</span></div>' +
       (s.garnish.length
         ? '<div class="serve__row"><span class="serve__k">Garnish</span><span>' +
@@ -1124,7 +1124,7 @@
     var url = drinkUrl(d.id);
     var qr = qrSvg(url, 'QR code for the ' + d.name);
     return '<p class="recipe-copy">Scan it, or send the link. Either one ' +
-        'opens this drink on their phone \u2014 no app, nothing to install.</p>' +
+        'opens this drink on their phone. No app, nothing to install.</p>' +
       '<div class="share">' +
         (qr ? '<div class="share__qr">' + qr + '</div>' : '') +
         '<div class="share__side">' +
@@ -1203,7 +1203,7 @@
       '</button>';
 
     /* On a wide screen the recipe reads in the aside beside the list, so
-       the row stays a row. Paper is not a viewport — the print blocks go
+       the row stays a row. Paper is not a viewport, so the print blocks go
        in either way, which is what actually prints. */
     if (open[d.id] && !asideLive()) html += renderRecipe(d, held);
     html += renderPrintExtras(d, held);
@@ -1267,7 +1267,7 @@
     }
 
     if (filter.pourable) {
-      return '<p class="empty">Nothing yet. Stock a few more bottles on the ' +
+      return '<p class="empty">Nothing yet. Select a few more bottles on the ' +
              '<a href="#bar">Bar tab</a> and the menu fills in.</p>';
     }
 
@@ -1288,7 +1288,7 @@
   }
 
   /* Share menu is the reveal above Print. The QR and the link are the
-     same thing — the shelf as one number on the end of the address — so
+     same thing, the shelf as one number on the end of the address, so
      whoever scans or taps opens this list live, on their own phone. */
   function renderSharePane(held) {
     var code = shelfCode(held);
@@ -1297,8 +1297,8 @@
     var qr = qrSvg(url);
     var body = shareTitle() + ' ' + url;
     return '<div class="tonight__pane" id="share-pane"' + (shareOpen ? '' : ' hidden') + '>' +
-      '<p class="tonight__note">Scan it, or send the link. It carries the shelf, ' +
-        'not the brands, so what opens is this list, live, on their own phone.</p>' +
+      '<p class="tonight__note">Scan it, or send the link. It carries the shelf ' +
+        'but not the brands, so they get this same list on their own phone.</p>' +
       '<div class="share">' +
         (qr ? '<div class="share__qr">' + qr + '</div>' : '') +
         '<div class="share__side">' +
@@ -1316,7 +1316,7 @@
 
   /* One row of the masthead. Share and Print expand a pane under them and
      carry the chevron that says so; Tonight has nothing to expand, so it
-     takes neither — a button claiming to control a pane that is not there
+     takes neither. A button claiming to control a pane that is not there
      is a lie a screen reader reads out loud. */
   function hitRow(cls, attrs, label, hint, more) {
     return '<button type="button" class="tonight__hit' + cls + '"' + attrs + '>' +
@@ -1354,13 +1354,13 @@
       renderSharePane(held) +
       revealHit('print', 'Print menu', drinks, shown) +
       '<div class="tonight__pane" id="print-pane"' + (shown ? '' : ' hidden') + '>' +
-        '<label class="tonight__field" for="menu-title">Card title</label>' +
+        '<label class="tonight__field" for="menu-title">Menu title</label>' +
         '<input class="tonight__title" id="menu-title" type="text" maxlength="72" ' +
           'placeholder="Home St. Bar" autocomplete="off" ' +
           'spellcheck="true" enterkeyhint="done" value="' + esc(menuTitle) + '">' +
-        '<p class="tonight__note">Everything the ' + plural(bottles, 'bottle', 'bottles') +
-          ' on ' + (viewingShared() ? 'this' : 'your') + ' shelf will pour, in full. Garnish where ' +
-          (viewingShared() ? 'they have' : 'you have') + ' it.</p>' +
+        '<p class="tonight__note">Every drink the ' + plural(bottles, 'bottle', 'bottles') +
+          ' on ' + (viewingShared() ? 'this' : 'your') + ' shelf will pour, written out in ' +
+          'full. Garnish where ' + (viewingShared() ? 'they have' : 'you have') + ' it.</p>' +
         '<div class="tonight__opts">' +
           printOptBtn('icon', 'Icon') +
           printOptBtn('recipe', 'Recipe') +
@@ -1501,7 +1501,7 @@
   }
 
   /* `allGains` re-counts the whole menu once per bottle. That is fine on
-     the Bar tab, where it runs on a selection — and not fine on the Menu,
+     the Bar tab, where it runs on a selection, and not fine on the Menu,
      where the list repaints on every keystroke in the search box. The
      shelf is the only input, so its code is the whole cache key. */
   var gainsMemo = { key: null, val: null };
@@ -1531,7 +1531,7 @@
 
   /* One suggestion: the shelf's own checkbox, the name, what it would
      add, and the drinks it would open. Selecting it here counts the
-     bottle in without a trip to the Bar tab — the figure above moves, and
+     bottle in without a trip to the Bar tab. The figure above moves, and
      the list behind it re-gates. */
   function renderRailNext(r, held) {
     var name = r.i.shelf || r.i.name;
@@ -1557,21 +1557,21 @@
      up here there is room for the whole of it. */
   var STEPS = [
     {
-      h: 'The card',
-      t: 'Everything on the left is the menu — every drink the house pours, ' +
-         'most of them from a handful of bottles. Filter it by bottle, or ' +
-         'search a name, an ingredient, or a code.'
+      h: 'The menu',
+      t: 'Everything on the left is what this bar pours, most of it from a ' +
+         'handful of bottles. Filter the list by bottle, or search for a name, ' +
+         'an ingredient, or a code.'
     },
     {
       h: 'Your bottles',
-      t: 'Open the Bar tab and select what you own. The figure beside a bottle ' +
-         'you have not selected is how many more drinks it would pour — not ' +
-         'how many mention it.'
+      t: 'Open the Bar tab and select what you own. The figure next to a bottle ' +
+         'you have not selected is how many more drinks it would let you pour, ' +
+         'not how many recipes mention it.'
     },
     {
       h: 'My menu',
-      t: 'Narrows the card to what your shelf actually makes. Print that for ' +
-         'the counter, or send the whole shelf to a guest as one link.'
+      t: 'Narrows the list to the drinks your own bottles make. Print that for ' +
+         'the counter, or send your shelf to a guest as a link.'
     }
   ];
 
@@ -1635,9 +1635,9 @@
     var id = Object.keys(open).filter(function (k) {
       return cocktailBy[k] && matches(cocktailBy[k], held);
     }).pop();
-    /* One aside holds one drink. Anything else left open — from a phone
+    /* One aside holds one drink. Anything else left open, from a phone
        width, or from Tonight, where the list has always let you unfold
-       several — would put a brass rule on rows it is not answering to. */
+       several, would put a brass rule on rows it is not answering to. */
     if (id) { open = {}; open[id] = true; }
     if (!id) {
       el.removeAttribute('data-open-drink');
@@ -1713,11 +1713,11 @@
       '</div>';
   }
 
-  /* Spirits first — they are how anyone actually chooses a drink — then
+  /* Spirits first, because they are how anyone actually chooses a drink, then
      the modifiers that decide the rest of the menu.
 
      On a phone this row is a scroller you swipe. A pointer cannot swipe
-     it, so on a wide screen it wraps instead — and twenty-seven chips
+     it, so on a wide screen it wraps instead. Twenty-seven chips
      wrapped is half the fold gone before the first drink, so it is
      clamped to two rows with a word under it that opens the rest. A chip
      that is on is never hidden behind that word. */
@@ -1998,7 +1998,7 @@
 
   /* The three bottles worth buying next, named, with what each one opens.
      The figures are already down the page, one per row, in the frozen
-     order — but nobody reads a shelf top to bottom to find the best three,
+     order, but nobody reads a shelf top to bottom to find the best three,
      and the shelf is long. This is the same number, lifted.
 
      Not before there is a shelf to improve on: from nothing, everything is
@@ -2045,8 +2045,8 @@
     var html = '<section class="starters">' +
       '<h2 class="starters__h">Start from a shelf</h2>' +
       '<p class="starters__note">Each one adds its bottles. Nothing gets ' +
-      'removed, so they stack — and the figure is what this one would ' +
-      'add to what you already have.</p>';
+      'removed, so they stack. The figure is what this one would add to ' +
+      'what you already have.</p>';
 
     presets.forEach(function (p) {
       var gain = shelfGain(p, held);
@@ -2077,8 +2077,8 @@
       note = 'Select what is on the shelf, or start from one of the shelves ' +
              'below. Every bottle then shows what it would add.';
     } else if (!can) {
-      note = 'Not enough yet. The gain figures below are drinks unlocked, ' +
-             'not drinks that merely use the bottle.';
+      note = 'Not enough yet. The figures below are drinks a bottle would ' +
+             'unlock, not drinks that only use it.';
     } else {
       note = plural(bottles, 'bottle', 'bottles') + ' on the shelf. The count ' +
              'above follows you down the page, so you can watch it move.';
@@ -2118,7 +2118,7 @@
           ? '<p class="shelf__copy">' + esc(data.bar.bottles_copy) + '</p>'
           : '');
 
-      /* Biggest unlock first, in the order frozen on the way in — a row
+      /* Biggest unlock first, in the order frozen on the way in, so a row
          never moves out from under the finger that just ticked it. */
       rows.map(function (i) {
         return { i: i, gain: gains[i.id], uses: usageCount(i.id) };
@@ -2169,7 +2169,7 @@
       '<p class="key__lead key__lead--tight">' + esc(n.note) + '</p>' +
 
       '<h2 class="key__h">Ounces</h2>' +
-      '<p class="key__sub">Lowercase is small, uppercase is large — <em>q</em> is a quarter, <em>Q</em> is three quarters.</p>' +
+      '<p class="key__sub">Lowercase is small, uppercase is large. So <em>q</em> is a quarter and <em>Q</em> is three quarters.</p>' +
       defs(n.amounts) +
 
       '<h2 class="key__h">Dashes, spoons, rinses</h2>' +
@@ -2180,7 +2180,7 @@
       defs(n.glasses) +
 
       '<h2 class="key__h">Garnish</h2>' +
-      '<p class="key__sub">Whatever letters follow the glass. Case matters — <em>l</em> is lemon, <em>L</em> is lime.</p>' +
+      '<p class="key__sub">Whatever letters follow the glass. Case matters: <em>l</em> is lemon, <em>L</em> is lime.</p>' +
       defs(n.garnishes) +
 
       '<h2 class="key__h">Reading one straight through</h2>' +
@@ -2204,7 +2204,7 @@
     $('#key-body').innerHTML = renderBarlineBody() +
       '<p class="colophon">' +
       esc(data.menu.cocktails.length + ' drinks, ' + data.bar.ingredients.length +
-          ' ingredients. Every code here is the one from the printed card; the ' +
+          ' ingredients. Every code here is the one from the printed menu; the ' +
           'recipes are generated from it, so the two cannot drift apart.') +
       '</p>' +
       '<p class="sign">© 2026 <a href="https://imti.co/resume/" ' +
@@ -2222,7 +2222,7 @@
       t.classList.toggle('is-active', t.dataset.view === view);
     });
     /* Every view repaints on the way in. The menu depends on the shelf,
-       and the shelf is edited on another tab — rendering it once at boot
+       and the shelf is edited on another tab. Rendering it once at boot
        and again only when a filter is touched leaves it frozen at
        whatever the bar looked like earlier, still claiming nothing is
        pourable while the badge says otherwise. */
@@ -2266,7 +2266,7 @@
   /* ── wiring ────────────────────────────────────────────── */
 
   /* Open a drink and put it on screen. If the current filters hide it,
-     drop whatever is hiding it — a kin link that does not lead to the
+     drop whatever is hiding it. A kin link that does not lead to the
      drink it names is trivia.
 
      A kin link lands on Kin, because that is the pane you were reading.
@@ -2399,7 +2399,7 @@
   }
 
   /* Big type, the pourable list, and nothing else. The phone against the
-     bottles at a party, and the tablet on the bar. Nothing is persisted —
+     bottles at a party, and the tablet on the bar. Nothing is persisted:
      a reload comes back as the app, which is the point of a display. */
   function setTonight(on) {
     tonight = on;
@@ -2986,7 +2986,7 @@
      and every static site here serves './', 'index.html' and
      'assets/app.js' from it. So a worker installed by one project will
      answer for the next one, cache-first, and keep answering after the
-     dev server is dead — a page that loads with nothing listening on the
+     dev server is dead. A page that loads with nothing listening on the
      port is the tell.
 
      Skipping registration is not enough to undo that: the stale worker
