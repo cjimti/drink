@@ -36,7 +36,14 @@
 
   --pad: 20px;
   --measure: 660px;
-  --wide: 1120px;
+  /* The wide layout is two fixed tracks, not a column that stretches. A
+     drink row is a name on the left and its code on the right, and past
+     about 700px those two stop reading as one row. So the list holds the
+     measure the whole design is drawn at and the rail takes the rest. */
+  --wide: 1000px;
+  --list: 1fr;
+  --rail: 320px;
+  --railgap: 36px;
   --topbar-h: 52px;
   --tabbar-h: 58px;
 
@@ -471,6 +478,24 @@ noscript.fallback a { color: var(--brass); }
   text-transform: uppercase;
 }
 .filters__note b { color: var(--brass); font-weight: 500; }
+
+/* Off on a phone: down there the chip row is a scroller and there is
+   nothing to reveal. */
+.chips__more {
+  display: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 7px 0 0;
+  color: var(--faint);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.chips__more:hover { color: var(--muted); }
 
 /* ── Method + family headings ─────────────────────────────── */
 
@@ -1836,61 +1861,209 @@ body.is-tonight .view { padding-bottom: calc(76px + env(safe-area-inset-bottom))
   cursor: pointer;
 }
 .night__done:hover { color: var(--muted); }
+
+/* A pill in the middle of a phone is out of the way. In the middle of a
+   1120px column it sits on top of a drink. */
+@media (min-width: 900px) {
+  .night__done { left: auto; right: var(--pad); transform: none; }
+}
 .night__done:focus-visible { color: var(--brass); }
 
-/* ── Wide screens ─────────────────────────────────────────────
+/* ── The rail ─────────────────────────────────────────────────
    The app is a phone column and stops there, which leaves a laptop a
-   strip in a void. Two breakpoints, no framework, and nothing below
-   900px changes: the tabs move up into the top bar, the open recipe
-   moves out of the list and sits beside it, and the shelf and the key
-   stop being one column each. */
+   strip in a void. The second column is not more room for the list — the
+   list has the width it was drawn at. It is a rail that answers the
+   column beside it: on the Menu, the drink you opened, or the shelf you
+   are building toward; on the Bar, the count that moves as you tick.
 
-.menu-aside {
-  position: sticky;
-  top: 0;
-  align-self: start;
-  max-height: calc(100dvh - var(--topbar-h));
-  overflow-y: auto;
-  /* #main is the scroll container, so this sticks against that and not
-     against the window. */
-  overscroll-behavior-y: contain;
-}
+   Both rails are sticky against #main and both are the same width, so
+   moving between the two tabs does not move the furniture. */
+
 
 .menu-aside__head {
   display: flex;
-  align-items: stretch;
-  gap: 10px;
-  padding-bottom: 4px;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 0 8px;
   border-bottom: 1px solid var(--rule);
 }
+.menu-aside__head .drink__glass { flex: 0 0 3em; }
+.menu-aside__head .drink__text { padding: 0; }
+.menu-aside__head .drink__name { font-size: 15px; }
 .menu-aside__head .drink__code { color: var(--brass); }
 
-.menu-aside__none {
-  margin: 0;
-  padding-top: 22px;
+/* Inside the rail the recipe is the panel, not an unfolding of a row, so
+   the dashed seam that ties it to the row above comes off. */
+.menu-aside .recipe { border-top: 0; margin-top: 0; padding-top: 10px; }
+
+/* ── The rail's resting state ─────────────────────────────────
+   A third of the screen saying "tap a drink" is a third of the screen
+   doing nothing, and it is the first thing a laptop sees. So when no
+   drink is open the rail holds the engine: what the shelf pours now,
+   and the one bottle that would move it most. */
+
+.card { padding-top: 4px; }
+
+.card__fig {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0 0 14px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+}
+button.card__fig { cursor: pointer; }
+
+.card__n {
+  flex: none;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 34px;
+  line-height: .9;
+  letter-spacing: -.02em;
+  color: var(--brass);
+  font-variant-numeric: tabular-nums;
+}
+
+.card__of {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.card__note {
+  margin: 12px 0 0;
+  font-size: 13.5px;
   font-style: italic;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.card__k {
+  margin: 22px 0 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
   color: var(--faint);
 }
+
+.card__buy {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 7px;
+}
+.card__buy-n {
+  flex: none;
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--brass);
+}
+.card__buy-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.card__opens {
+  margin: 5px 0 0;
+  font-size: 13.5px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.card__acts { margin-top: 18px; }
+
+/* The premise, for a rail with no shelf to describe yet. Same words the
+   first-run strip uses on a phone; on a wide screen it has a column of
+   its own and the strip stands down. */
+.card__h {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--bone);
+}
+
+/* ── Wide screens ───────────────────────────────────────────── */
 
 @media (min-width: 900px) {
   .tabbar { display: none; }
   .topbar__tabs { display: flex; }
 
+  /* The brand and About sit on the same verticals the list and the rail
+     do. A top bar flush to the window over content centred at 1000px is
+     the tell that nothing here was laid out for a big screen. */
+  .topbar {
+    padding-inline: max(var(--pad), (100% - var(--wide)) / 2 + var(--pad));
+  }
+
   .view { max-width: var(--wide); }
 
-  /* :not([hidden]) because an id beats the [hidden] attribute — a bare
-     `display: grid` here would leave the Menu on screen under the Bar
-     tab, which is exactly how it broke the first time. */
   #view-menu:not([hidden]) {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 360px;
-    column-gap: 40px;
+    grid-template-columns: minmax(0, var(--list)) var(--rail);
+    column-gap: var(--railgap);
+    justify-content: center;
     align-items: start;
   }
 
-  /* The row the aside is answering to. Every row carries the rule and
-     the offset so only the colour changes — an indent that appears with
-     the selection would nudge the whole list sideways. */
+  /* The filter block bleeds edge to edge on a phone, where edge to edge
+     is the whole screen. In a grid cell it should be the cell: its rule
+     then starts where the list starts and stops where the list stops. */
+  .filters { margin: 0; padding-inline: 0; }
+
+  /* A pointer has no way to swipe a chip row. Wrap them instead — and
+     twenty-seven chips wrapped is half the fold gone before the first
+     drink, so the bottle row is clamped to two and opens on a word. */
+  .chips { flex-wrap: wrap; overflow: visible; }
+  /* Exactly two rows. A clamp that lands mid-chip reads as a rendering
+     bug, so this is the chip height twice plus the gap between them. */
+  .chips--bottle { max-height: 60px; overflow: hidden; }
+  .chips--bottle.is-all { max-height: none; }
+  .chips__more { display: block; text-align: left; padding-bottom: 4px; }
+
+  /* The method control and the search field are each half a line; on a
+     phone they are two full-width rows because there is no width to
+     share. Here there is. */
+  .filters {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    column-gap: 14px;
+  }
+  .filters > * { grid-column: 1 / -1; }
+  .filters > .seg { grid-column: 1; }
+  .filters > .search { grid-column: 2; margin-top: 0; }
+  .filters > .seg + .search { margin-top: 9px; }
+
+  /* The phone squeezes the tracking and the padding so four segments fit
+     a 390px row. There is room here; give it back. */
+  .seg--wide .seg__b { letter-spacing: .15em; font-size: 10.5px; padding: 9px 18px; }
+
+  /* The row the rail is answering to. Every row carries the rule and the
+     offset so only the colour changes — an indent that appears with the
+     selection would nudge the whole list sideways. */
   .drink {
     border-left: 2px solid transparent;
     padding-left: 12px;
@@ -1898,16 +2071,58 @@ body.is-tonight .view { padding-bottom: calc(76px + env(safe-area-inset-bottom))
   }
   .drink.is-open { border-left-color: var(--brass); }
 
-  /* Two columns of shelves, with everything that talks about the whole
-     shelf spanning both. Not multicol: that would cut a section in half
-     mid-row. */
+  /* Tick on the left, watch the number move on the right. The shelf is
+     one column at the same measure the menu uses; the count, the next
+     bottles and the starter shelves ride beside it and stay put. Two
+     equal columns of shelf sections was worse than one: a Base section
+     seven hundred pixels tall beside a Vermouth section ninety pixels
+     tall leaves six hundred pixels of nothing. */
   #bar-body {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 40px;
+    grid-template-columns: minmax(0, var(--list)) var(--rail);
+    column-gap: var(--railgap);
+    justify-content: center;
     align-items: start;
   }
-  .tally, .tally__body { grid-column: 1 / -1; }
+  .bar-shelves { grid-column: 1; grid-row: 1; min-width: 0; }
+  .bar-rail { grid-column: 2; grid-row: 1; }
+
+  /* Below 900px `.bar-rail` is just the block the tally has always been
+     and `.menu-aside` is not rendered at all, so every rule that makes a
+     rail a rail belongs in here and nowhere else. */
+  .menu-aside,
+  .bar-rail {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    /* #main is the scroll container, so this sticks against that and not
+       against the window. */
+    max-height: calc(100dvh - var(--topbar-h));
+    min-height: calc(100dvh - var(--topbar-h) - 40px);
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    padding: 12px 0 0 calc(var(--railgap) / 2);
+    border-left: 1px solid var(--hair);
+  }
+
+  /* A panel that ends flush with the fold reads as cut off. */
+  .menu-aside > *:last-child,
+  .bar-rail > *:last-child { margin-bottom: 24px; }
+
+  /* The rail is what follows you down the page now, and the count follows
+     you down the rail: on a tall shelf the rail scrolls inside itself, and
+     a count that scrolls away is a count you cannot watch move. */
+  .bar-rail .tally {
+    margin: 0;
+    padding: 0;
+    background: var(--ground);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar-rail .tally__hit,
+  .bar-rail .tally__fig { flex-wrap: wrap; min-height: 0; padding: 2px 0 14px; }
+  .bar-rail .tally__cta { margin: 10px 0 0; flex-basis: 100%; }
+  .bar-rail .tally__note { margin-top: 14px; }
+  .shelf:first-child { margin-top: 12px; }
 
   /* Each row is short and never breaks, so columns are safe here. */
   .defs { columns: 2; column-gap: 40px; }
@@ -1916,11 +2131,25 @@ body.is-tonight .view { padding-bottom: calc(76px + env(safe-area-inset-bottom))
 }
 
 @media (min-width: 1200px) {
-  #view-menu { grid-template-columns: minmax(0, 1fr) 400px; column-gap: 56px; }
+  :root {
+    --wide: 1120px;
+    --list: 640px;
+    --rail: 380px;
+    --railgap: 56px;
+  }
   .drink__name { font-size: 14.5px; }
 }
 
-/* Tonight is one wide column of big type on any screen, so the aside
+@media (min-width: 1500px) {
+  :root {
+    --wide: 1240px;
+    --list: 680px;
+    --rail: 440px;
+    --railgap: 64px;
+  }
+}
+
+/* Tonight is one wide column of big type on any screen, so the rail
    stands down for it — the JS hides it, and the grid comes off here. */
 @media (min-width: 900px) {
   body.is-tonight #view-menu:not([hidden]) { display: block; }
@@ -2009,6 +2238,20 @@ body.is-tonight .view { padding-bottom: calc(76px + env(safe-area-inset-bottom))
      here. The card is one flow of two columns, always. */
   #view-menu:not([hidden]) { display: block; }
   #bar-body { display: block; }
+
+  /* The wide layout is still live in print preview, so everything it
+     moved has to be moved back. The selected-row rule is the one that
+     costs toner: a drink left open would print with a black bar down its
+     left edge and every other drink pulled into the margin beside it. */
+  .drink { border-left: 0; padding-left: 0; margin-left: 0; }
+  .bar-rail {
+    position: static;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
+    padding: 0;
+    border-left: 0;
+  }
 
   /* Tonight is a screen mode. Printing from it prints the card: the
      shorthand comes back, so does every drink the shelf is short of, and

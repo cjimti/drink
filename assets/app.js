@@ -51,6 +51,7 @@
   var menuTitle = '';     /* name on the printed card; empty is "Your menu" */
   var printOpen = false;  /* Print menu reveal, session only */
   var shareOpen = false;  /* Share menu reveal, session only */
+  var chipsOpen = false;  /* the whole bottle-filter row, wide screens only */
   var tonight = false;    /* big type for the bar, session only, never saved */
   var shared = null;      /* { have, code } once a shared link has been opened; stays for the session */
   var introDone = false;  /* the first-run strip has been dismissed, for good */
@@ -1498,6 +1499,78 @@
       '</div>';
   }
 
+  /* The best unopened bottle, memoised on the shelf it was computed for.
+     `allGains` re-counts the whole menu once per bottle, which is fine on
+     the Bar tab where it runs on a tick — and not fine on the Menu, where
+     the list repaints on every keystroke in the search box. The shelf only
+     changes on the other tab, so its code is the whole cache key. */
+  var nextMemo = { key: null, val: null };
+
+  function bestNext(held) {
+    var key = shelfCode(held);
+    if (nextMemo.key === key) return nextMemo.val;
+    var gains = allGains(held);
+    var best = data.bar.ingredients.filter(function (i) {
+      return !held[i.id] && gains[i.id] > 0;
+    }).sort(function (a, b) {
+      if (gains[b.id] !== gains[a.id]) return gains[b.id] - gains[a.id];
+      return usageCount(b.id) - usageCount(a.id);
+    })[0];
+    nextMemo = {
+      key: key,
+      val: best ? { i: best, gain: gains[best.id] } : null
+    };
+    return nextMemo.val;
+  }
+
+  /* The premise, for a rail with nothing to describe yet. Same words the
+     first-run strip says on a phone; on a wide screen the rail is where
+     they go and the strip stands down. */
+  function renderRailIntro() {
+    return '<div class="card">' +
+      '<h2 class="card__h">Tick your bottles, and this becomes your menu.</h2>' +
+      '<p class="card__note">Open the Bar tab, tick what you own, and the list ' +
+        'shrinks to what you can pour tonight. Every unopened bottle shows how ' +
+        'many drinks it would add.</p>' +
+      '<div class="card__acts">' +
+        '<a class="btn" href="#bar">Open the Bar tab</a>' +
+      '</div></div>';
+  }
+
+  /* What the shelf pours right now, and the one bottle that would move
+     that number most. The figure is the same one the Bar tab prints, in
+     the same treatment, and it leads to the list it counts. */
+  function renderRailCard(held) {
+    var bottles = stocked(held).length;
+    if (!bottles) return renderRailIntro();
+
+    var can = pourableCount(held);
+    var total = data.menu.cocktails.length;
+    var figure = '<span class="card__n">' + can + '</span>' +
+      '<span class="card__of">drinks ' + (viewingShared() ? 'they' : 'you') +
+        ' can pour<br>of ' + total + '</span>';
+
+    var html = '<div class="card">' +
+      (can && !shelfGate()
+        ? '<button type="button" class="card__fig" data-seemenu="1">' + figure + '</button>'
+        : '<div class="card__fig">' + figure + '</div>') +
+      '<p class="card__note">' + esc(plural(bottles, 'bottle', 'bottles') +
+        (viewingShared() ? ' on their shelf.' : ' on your shelf.')) + '</p>';
+
+    var next = viewingShared() ? null : bestNext(held);
+    if (next) {
+      var name = next.i.shelf || next.i.name;
+      html += '<p class="card__k">Next bottle</p>' +
+        '<div class="card__buy">' +
+          '<span class="card__buy-name">' + esc(name) + '</span>' +
+          '<span class="card__buy-n">+' + next.gain + '</span>' +
+        '</div>' +
+        '<p class="card__opens">' + esc(unlockedLine(unlockedBy(next.i.id, held))) + '</p>' +
+        '<div class="card__acts"><a class="btn" href="#bar">Open the Bar tab</a></div>';
+    }
+    return html + '</div>';
+  }
+
   /* The open drink, beside the list instead of inside it. Same pieces a
      row is made of, over the same recipe. The placeholder is there so the
      column keeps its width and the list does not reflow every time a
@@ -1516,7 +1589,7 @@
     if (id) { open = {}; open[id] = true; }
     if (!id) {
       el.removeAttribute('data-open-drink');
-      el.innerHTML = '<p class="menu-aside__none">Tap a drink.</p>';
+      el.innerHTML = renderRailCard(held);
       return;
     }
     var d = cocktailBy[id];
@@ -1563,7 +1636,7 @@
      once it has been waved off. A shared link is its own onboarding,
      so it stays out of the way of one. */
   function showIntro() {
-    return !introDone && !shared && stocked().length === 0;
+    return !introDone && !shared && stocked().length === 0 && !asideLive();
   }
 
   function renderIntro() {
@@ -1578,6 +1651,29 @@
         '<button type="button" class="intro__no" data-intro-dismiss="1">Not now</button>' +
       '</div>' +
       '</div>';
+  }
+
+  /* Spirits first — they are how anyone actually chooses a drink — then
+     the modifiers that decide the rest of the menu.
+
+     On a phone this row is a scroller you swipe. A pointer cannot swipe
+     it, so on a wide screen it wraps instead — and twenty-seven chips
+     wrapped is half the fold gone before the first drink, so it is
+     clamped to two rows with a word under it that opens the rest. A chip
+     that is on is never hidden behind that word. */
+  function renderBottleChips() {
+    var chipped = data.bar.ingredients.filter(hasChip);
+    var all = chipsOpen || !!filter.family;
+    var html = '<div class="chips chips--bottle' + (all ? ' is-all' : '') + '">';
+    chipped.forEach(function (i) {
+      html += '<button class="chip' + (filter.family === i.id ? ' is-on' : '') +
+        '" data-family="' + esc(i.id) + '">' + esc(i.short) + '</button>';
+    });
+    return html + '</div>' +
+      '<button type="button" class="chips__more" data-chips="1"' +
+      ' aria-expanded="' + (all ? 'true' : 'false') + '">' +
+      (all ? 'Fewer filters' : 'All ' + chipped.length + ' bottle filters') +
+      '</button>';
   }
 
   function renderFilters() {
@@ -1614,22 +1710,14 @@
       html += '</div>';
     }
 
-    html += '<div class="chips">';
-
-    /* Spirits first — they are how anyone actually chooses a drink —
-       then the modifiers that decide the rest of the menu. */
-    data.bar.ingredients.filter(hasChip).forEach(function (i) {
-      html += '<button class="chip' + (filter.family === i.id ? ' is-on' : '') +
-        '" data-family="' + esc(i.id) + '">' + esc(i.short) + '</button>';
-    });
+    html += renderBottleChips() + '<div class="chips">';
 
     /* Carry the shelf count on the control itself. The Bar tab shows the
        same number, and the two disagreeing with no explanation is exactly
        how this filter looked broken. */
     var canNow = stocked().length ? pourableCount(have) : null;
 
-    html += '</div><div class="chips">' +
-      '<button class="chip chip--pour' + (filter.pourable ? ' is-on' : '') +
+    html += '<button class="chip chip--pour' + (filter.pourable ? ' is-on' : '') +
         '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + 'My menu' +
         (canNow === null ? '' : ' · ' + canNow) + '</button>';
 
@@ -1953,7 +2041,7 @@
     var figure = '<span class="tally__n' + (up ? ' is-up' : '') + '">' + can + '</span>' +
       '<span class="tally__of">drinks you can pour<br>of ' + total + '</span>';
 
-    var html = '<div class="tally">' +
+    var html = '<div class="bar-rail"><div class="tally">' +
       (can
         ? '<button class="tally__hit" data-seemenu="1">' + figure +
             '<span class="tally__cta">See the menu <span aria-hidden="true">&rarr;</span></span>' +
@@ -1967,7 +2055,7 @@
       '<div class="tally__acts">' +
         '<button class="btn" data-bar="all">Stock everything</button>' +
         '<button class="btn" data-bar="none">Clear the shelf</button>' +
-      '</div></div>';
+      '</div></div></div><div class="bar-shelves">';
 
     data.bar.kinds.forEach(function (k) {
       var rows = data.bar.ingredients.filter(function (i) { return i.kind === k.id; });
@@ -1992,7 +2080,7 @@
       html += '</section>';
     });
 
-    $('#bar-body').innerHTML = html;
+    $('#bar-body').innerHTML = html + '</div>';
   }
 
   /* ── key view ──────────────────────────────────────────── */
@@ -2323,6 +2411,54 @@
     return false;
   }
 
+  /* The two reveals in the masthead, the paper ticks, and the dialog
+     itself. All of it is about what leaves the phone as a page. */
+  function printAction(t) {
+    if (t.dataset.printOpen || t.dataset.shareOpen) {
+      var isPrint = !!t.dataset.printOpen;
+      var on = isPrint ? (printOpen = !printOpen) : (shareOpen = !shareOpen);
+      t.classList.toggle('is-open', on);
+      t.setAttribute('aria-expanded', on ? 'true' : 'false');
+      var pane = document.getElementById(t.getAttribute('aria-controls'));
+      if (pane) pane.hidden = !on;
+      track(isPrint ? 'print_reveal' : 'share_reveal', { open: on });
+      return true;
+    }
+
+    if (t.dataset.printOpt) {
+      var opt = t.dataset.printOpt;
+      printOpts[opt] = !printOpts[opt];
+      savePrintOpts();
+      applyPrintFlags();
+      t.classList.toggle('is-on', !!printOpts[opt]);
+      t.setAttribute('aria-pressed', printOpts[opt] ? 'true' : 'false');
+      track('print_opt', { opt: opt, on: !!printOpts[opt] });
+      return true;
+    }
+
+    if (!t.dataset.print) return false;
+
+    /* The print dialog's header and the saved PDF name should be the card,
+       not the site. Restore after the dialog closes. */
+    var prev = document.title;
+    document.title = cardTitle();
+    var restore = function () {
+      document.title = prev;
+      window.removeEventListener('afterprint', restore);
+    };
+    window.addEventListener('afterprint', restore);
+    track('print_menu', {
+      named: cardTitle() !== 'Your menu',
+      icon: printOpts.icon !== false,
+      recipe: !!printOpts.recipe,
+      taste: !!printOpts.taste,
+      history: !!printOpts.history,
+      barline: !!printOpts.barline
+    });
+    window.print();
+    return true;
+  }
+
   /* Every figure the Bar tab prints is a way through to the list it is
      counting. A number that does not lead anywhere is trivia. */
   function jumpAction(t) {
@@ -2372,8 +2508,17 @@
      you just ticked leaves the screen under your finger. */
   function repaintBar(keepScroll) {
     var y = $('#main').scrollTop;
+    /* On a wide screen the rail is a scroller of its own, and a long shelf
+       pushes the starter shelves below its fold. Rewriting it would send
+       you back to the top of a panel you did not touch. */
+    var rail = document.querySelector('.bar-rail');
+    var railY = rail ? rail.scrollTop : 0;
     renderBar();
-    if (keepScroll) $('#main').scrollTop = y;
+    if (keepScroll) {
+      $('#main').scrollTop = y;
+      rail = document.querySelector('.bar-rail');
+      if (rail) rail.scrollTop = railY;
+    }
     refreshCount();
   }
 
@@ -2483,11 +2628,17 @@
       '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
       '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
       '[data-drink-link],[data-drink-share],[data-drink-sms],' +
-      '[data-share-adopt],[data-intro-open],[data-intro-dismiss],[data-tonight]');
+      '[data-share-adopt],[data-intro-open],[data-intro-dismiss],[data-tonight],[data-chips]');
     if (!t) return;
 
     if (t.dataset.recipeTab) {
       setRecipePane(t.dataset.recipeFor, t.dataset.recipeTab, t.closest('.recipe'));
+      return;
+    }
+
+    if (t.dataset.chips) {
+      chipsOpen = !chipsOpen;
+      renderFilters();
       return;
     }
 
@@ -2576,51 +2727,8 @@
 
     if (jumpAction(t)) return;
 
-    if (t.dataset.printOpen || t.dataset.shareOpen) {
-      var isPrint = !!t.dataset.printOpen;
-      var on = isPrint ? (printOpen = !printOpen) : (shareOpen = !shareOpen);
-      t.classList.toggle('is-open', on);
-      t.setAttribute('aria-expanded', on ? 'true' : 'false');
-      var pane = document.getElementById(t.getAttribute('aria-controls'));
-      if (pane) pane.hidden = !on;
-      track(isPrint ? 'print_reveal' : 'share_reveal', { open: on });
-      return;
-    }
-
+    if (printAction(t)) return;
     if (shareAction(t)) return;
-
-    if (t.dataset.printOpt) {
-      var opt = t.dataset.printOpt;
-      printOpts[opt] = !printOpts[opt];
-      savePrintOpts();
-      applyPrintFlags();
-      t.classList.toggle('is-on', !!printOpts[opt]);
-      t.setAttribute('aria-pressed', printOpts[opt] ? 'true' : 'false');
-      track('print_opt', { opt: opt, on: !!printOpts[opt] });
-      return;
-    }
-
-    if (t.dataset.print) {
-      /* The print dialog's header and the saved PDF name should be the
-         card, not the site. Restore after the dialog closes. */
-      var prevTitle = document.title;
-      document.title = cardTitle();
-      var restoreTitle = function () {
-        document.title = prevTitle;
-        window.removeEventListener('afterprint', restoreTitle);
-      };
-      window.addEventListener('afterprint', restoreTitle);
-      track('print_menu', {
-        named: cardTitle() !== 'Your menu',
-        icon: printOpts.icon !== false,
-        recipe: !!printOpts.recipe,
-        taste: !!printOpts.taste,
-        history: !!printOpts.history,
-        barline: !!printOpts.barline
-      });
-      window.print();
-      return;
-    }
 
     /* Keep the shelf filter, drop whatever else was excluding things. */
     if (t.dataset.clearothers) {
