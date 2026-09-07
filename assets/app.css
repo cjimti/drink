@@ -258,6 +258,63 @@ noscript.fallback {
 }
 noscript.fallback a { color: var(--brass); }
 
+/* ── First-run strip ──────────────────────────────────────── */
+
+/* An empty shelf on a first visit is a hundred-odd drinks and no
+   premise. This says it once, in the flow of the list rather than
+   floated over it, and goes the moment a bottle is ticked. The brass
+   is the left rule and the focus ring; the block itself is not gold. */
+.intro {
+  margin: 16px 0 2px;
+  padding: 14px 15px;
+  background: var(--sunk);
+  border-left: 2px solid var(--brass);
+}
+
+.intro__h {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--bone);
+}
+
+.intro__p {
+  margin: 8px 0 0;
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* Wrapped on a phone, one row by the time the view is at its widest. */
+.intro__acts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-top: 13px;
+}
+
+.intro__go { color: var(--bone); border-color: var(--muted); }
+.intro__go:hover { border-color: var(--bone); }
+
+.intro__no {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 8px 2px;
+  color: var(--faint);
+  font-family: var(--body);
+  font-size: 13px;
+  font-style: italic;
+  cursor: pointer;
+}
+.intro__no:hover { color: var(--muted); }
+
 /* ── Filters ──────────────────────────────────────────────── */
 
 .filters {
@@ -1579,7 +1636,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
     --on-brass: #FFFFFF;
   }
 
-  .topbar, .tabbar, .filters, .tonight__hit, .tonight__pane, .tonight__acts,
+  .topbar, .tabbar, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
   .shared, .tally__acts, .starters, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-refs {

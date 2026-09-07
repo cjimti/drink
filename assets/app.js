@@ -25,6 +25,7 @@
   var BRAND_STORE = 'drink.brands.v1';
   var TITLE_STORE = 'drink.menuTitle.v1';
   var PRINT_STORE = 'drink.print.v1';
+  var INTRO_STORE = 'drink.intro.v1';
   var SHARE_PARAM = 's';  /* fewbottles.com/?s=<shelf code> */
 
   var FRACTION = { h: '1/2', q: '1/4', Q: '3/4' };
@@ -50,6 +51,7 @@
   var printOpen = false;  /* Print menu reveal, session only */
   var shareOpen = false;  /* Share menu reveal, session only */
   var shared = null;      /* { have, code } once a shared link has been opened; stays for the session */
+  var introDone = false;  /* the first-run strip has been dismissed, for good */
   var printOpts = { icon: true, recipe: false, taste: false, history: false, barline: false };
 
   /* WebKit has never paginated CSS multicol (WebKit bug 15546, open
@@ -262,6 +264,18 @@
   function savePrintOpts() {
     try { localStorage.setItem(PRINT_STORE, JSON.stringify(printOpts)); }
     catch (e) { /* private mode */ }
+  }
+
+  /* The first-run strip. An empty shelf is the only thing that asks for
+     it, so it goes on its own the moment a bottle is ticked; the flag is
+     only for the visitor who says no while the shelf is still empty. */
+  function loadIntro() {
+    try { introDone = !!localStorage.getItem(INTRO_STORE); }
+    catch (e) { introDone = false; }
+  }
+
+  function saveIntro() {
+    try { localStorage.setItem(INTRO_STORE, '1'); } catch (e) { /* private mode */ }
   }
 
   /* Body classes are what the print stylesheet keys off, so a tick
@@ -1368,6 +1382,29 @@
     $('#menu-body').innerHTML = html;
   }
 
+  /* A first visit is 132 drinks and no reason given. The strip is the
+     one place the premise gets stated on the way past: it shows on an
+     empty shelf, goes when a bottle is ticked, and never comes back
+     once it has been waved off. A shared link is its own onboarding,
+     so it stays out of the way of one. */
+  function showIntro() {
+    return !introDone && !shared && stocked().length === 0;
+  }
+
+  function renderIntro() {
+    if (!showIntro()) return '';
+    return '<div class="intro">' +
+      '<h2 class="intro__h">Tick your bottles, and this becomes your menu.</h2>' +
+      '<p class="intro__p">Open the Bar tab, tick what you own, and the list ' +
+        'shrinks to what you can pour tonight. Every unopened bottle shows how ' +
+        'many drinks it would add.</p>' +
+      '<div class="intro__acts">' +
+        '<button type="button" class="btn intro__go" data-intro-open="1">Open the Bar tab</button>' +
+        '<button type="button" class="intro__no" data-intro-dismiss="1">Not now</button>' +
+      '</div>' +
+      '</div>';
+  }
+
   function renderFilters() {
     var held = heldNow();
     var n = data.menu.cocktails.filter(function (d) { return matches(d, held); }).length;
@@ -1385,7 +1422,7 @@
     }));
     if (data.kin) seg.push({ id: 'families', label: 'Families' });
 
-    var html = '<div class="filters">' +
+    var html = renderIntro() + '<div class="filters">' +
       '<div class="seg' + (seg.length > 3 ? ' seg--wide' : '') + '">' + seg.map(function (s) {
         return '<button class="seg__b' + (filter.method === s.id ? ' is-on' : '') +
           '" data-method="' + s.id + '">' + esc(s.label) + '</button>';
@@ -1845,7 +1882,7 @@
       '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-shelf],[data-seemenu],' +
       '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
       '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
-      '[data-share-adopt]');
+      '[data-share-adopt],[data-intro-open],[data-intro-dismiss]');
     if (!t) return;
 
     if (t.dataset.recipeTab) {
@@ -1910,6 +1947,20 @@
       track('see_pattern', { pattern: t.dataset.seePattern });
       repaintMenu();
       $('#main').scrollTop = 0;
+      return;
+    }
+
+    if (t.dataset.introOpen) {
+      track('intro', { action: 'open' });
+      location.hash = '#bar';
+      return;
+    }
+
+    if (t.dataset.introDismiss) {
+      introDone = true;
+      saveIntro();
+      track('intro', { action: 'dismiss' });
+      renderFilters();
       return;
     }
 
@@ -2265,6 +2316,7 @@
     loadOwn();
     loadMenuTitle();
     loadPrintOpts();
+    loadIntro();
     applyPrintFlags();
     document.body.classList.toggle('is-print-split', PRINT_SPLIT);
     syncHaveFromBrands();
