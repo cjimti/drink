@@ -3,14 +3,15 @@
 > Classic drinks from one small home bar, decoded from the house
 > shorthand on the printed card.
 
-132 drinks, 74 stirred, 58 shaken, 48 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
+152 drinks, 74 stirred, 59 shaken, 19 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
 
 Barline reads left to right in build order, base spirit first, and
 ends with one token for glass plus garnish. A bare number is ounces
 beside a spirit and dashes beside bitters. `h` `q` `Q` are 1/2, 1/4,
-3/4 oz. The last token is matched longest-first, so `ccin` is a coupe
-with grated cinnamon. Garnish is optional; it never gates a drink.
-Egg white takes no measure.
+3/4 oz, and `t` is a top: fill the glass with the mixer over the ice
+already in it. The last token is matched longest-first, so `ccin` is
+a coupe with grated cinnamon. Garnish is optional; it never gates a
+drink. Egg white takes no measure.
 
 ## Stirred
 
@@ -1251,7 +1252,7 @@ Louis Eppinger is credited with the Bamboo at the Grand Hotel in Yokohama, somet
 
 #### Fernet and Ginger
 
-`1,4,RLw` · stirred · Fernet · Sparkling family
+`1,4,RLw` · stirred · Fernet · Highball family
 
 - 1 oz Fernet
 - 4 oz Ginger beer
@@ -2219,6 +2220,23 @@ The Last Word is credited to the Detroit Athletic Club around 1915, and to Frank
 - [Punch, Last Word](https://punchdrink.com/recipes/last-word/)
 - [Difford's Guide, Last Word](https://www.diffordsguide.com/cocktails/recipe/1158/last-word)
 
+#### Gin Fizz
+
+`2,1,h,t,h` · shaken · Gin · Highball family
+
+- 2 oz Gin
+- 1 oz Lemon juice
+- 1/2 oz Simple syrup
+- top with Soda water
+- Highball
+
+The Collins pour, shaken hard first and served tall with no ice in the glass: two ounces of gin, an ounce of lemon, half an ounce of simple, then soda. The shake beats air into the lemon, so there is a foam head over a short cold body. Drink it while the fizz is still on it.
+
+Jerry Thomas prints the Gin Fizz in the 1876 edition of his Bar-tenders Guide, as the Whiskey Fizz with gin in the whiskey's place: shake the spirit, lemon, and sugar with ice, strain, and top with seltzer. The Fizz is the Sour served long and strained off its ice; the Collins is built in the glass. Henry Charles Ramos built the famous variant at the Imperial Cabinet Saloon in New Orleans in 1888, with cream, egg white, and orange flower water, and held the formula until Prohibition closed him in 1919. This card pours two ounces of gin, an ounce of lemon, and half an ounce of simple, shaken, then soda in a tall glass with no ice.
+
+- [Difford's Guide, Gin Fizz](https://www.diffordsguide.com/cocktails/recipe/840/gin-fizz)
+- [Difford's Guide, History of gin cocktails](https://www.diffordsguide.com/encyclopedia/1068/cocktails/history-of-gin-cocktails)
+
 ### Vermouth
 
 #### Queen Elizabeth
@@ -2253,3 +2271,326 @@ A drink called Dry Vermouth Sour does not appear under that name in the pre-1970
 
 - [The Oxford Companion to Spirits and Cocktails, The sour](https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-422)
 - [Difford's Guide, Vermouth Cocktail](https://www.diffordsguide.com/cocktails/recipe/5639/vermouth-cocktail)
+
+## Built
+
+Made in the glass it is served in. Ice, spirit, then the mixer on top; one lift with a barspoon.
+
+### Aged Rum
+
+#### Dark and Stormy
+
+`2,h,t,HLw` · built · Aged Rum · Highball family
+
+- 2 oz Aged rum
+- 1/2 oz Lime juice
+- top with Ginger beer
+- Highball, iced, Lime wheel
+
+Two ounces of aged rum, half an ounce of lime, and ginger beer over ice. Molasses against ginger heat, with lime cutting across both. Rounder and darker than the same build in vodka, and a lime wheel on the rim.
+
+Bermuda's national drink, and nobody knows who first poured it. The story is British sailors on shore leave after the First World War. Gosling Brothers, a Bermuda merchant house since James Gosling landed at St George's in 1806 and renamed when Ambrose joined, sells both the Black Seal rum and a ginger beer, and was among the first to trademark a cocktail, in the late 1970s. That registration is why the trademarked spelling names Gosling's rum specifically, and why a generic pour goes under a plainer name. This card pours two ounces of aged rum, half an ounce of lime, and ginger beer over ice, with a lime wheel.
+
+- [Difford's Guide, Dark N Stormy (Difford's recipe)](https://www.diffordsguide.com/cocktails/recipe/619/dark-n-stormy-diffords-recipe)
+- [Difford's Guide, Trademarking cocktails](https://www.diffordsguide.com/encyclopedia/1150/cocktails/trademarking-cocktails)
+
+### Cognac
+
+#### Champagne Cocktail
+
+`b,3,h,t,hl` · built · Cognac · Sparkling family
+
+- 1 barspoon Sugar
+- 3 dashes Angostura bitters
+- 1/2 oz Cognac
+- top with Champagne
+- Highball, Lemon twist
+
+A barspoon of sugar soaked with three dashes of Angostura, half an ounce of cognac, then Champagne poured on top. The sugar is there for the bead as much as the sweetness; it dissolves slowly and keeps a stream of bubbles rising off it. Bitters give it clove and bark, the cognac gives it weight, and the wine stays dry under a lemon twist.
+
+Robert Tomes describes one in Panama in 1855, made with Mumm, bitters, sugar, and ice. Jerry Thomas prints it in the first cocktail book in 1862 with no brandy in it at all. The cognac arrives later. Difford's traces it to W. J. Tarling's 1937 Cafe Royal Cocktail Book, which allows a dash of brandy as required. David Wondrich makes the point that the sugar cube earns its place on the bubbles it keeps sending up. This card pours a barspoon of sugar, three dashes of Angostura, half an ounce of cognac, and Champagne, with a lemon twist.
+
+- [Difford's Guide, Champagne Cocktail](https://www.diffordsguide.com/cocktails/recipe/393/champagne-cocktail)
+
+### Bourbon
+
+#### Whiskey Highball
+
+`2,t,Hl` · built · Bourbon · Highball family
+
+- 2 oz Bourbon
+- top with Soda water
+- Highball, iced, Lemon twist
+
+Two ounces of bourbon and soda over ice, with a lemon twist. Water and gas open the whiskey out, so corn and barrel come forward and the vanilla rides up on the bubbles. The twist puts oil on the surface, so the first sip is citrus over sweet grain.
+
+The word turns up in the 1890s. A character asks for a high ball of whiskey in Ha Du Souchet's 1894 play My Friend From India, and Chris Lawlor's 1895 The Mixicologist prints High Ball as ice, seltzer, and brandy or whiskey; Harry Johnson's 1900 Bartenders Manual settles it as one word. Gary Regan offered a different etymology in The Joy of Mixology (2003): a highball was a railroad signal, the ball on a float in a steam engine's water tank showing there was water enough to go. This card pours two ounces of bourbon over ice, tops with soda, and twists lemon over it.
+
+- [Difford's Guide, Highball history](https://www.diffordsguide.com/g/1086/highballs/story)
+- [Difford's Guide, Highball (generic name)](https://www.diffordsguide.com/cocktails/recipe/2179/highball-generic-name)
+
+#### Mint Julep
+
+`2,q,Rm` · built · Bourbon · Old-Fashioned family
+
+- 2 oz Bourbon
+- 1/4 oz Simple syrup
+- one Mint
+- Rocks, iced, Mint
+
+Two ounces of bourbon and a quarter ounce of simple over ice, with mint muddled into the glass. A quarter of syrup against a full pour of whiskey is a light hand, so the drink is bourbon and mint oil, cold. It frosts the glass while it sits and it keeps diluting as it goes.
+
+The word comes through the Arabic julab, rosewater, and the drink through Persia and Europe, where mint took the place of rose petals. John Davis, in Travels in the United States (1803), defines a julep as a dram of spirituous liquor that has mint steeped in it, taken by Virginians of a morning. Captain Frederick Marryat carried it back to Britain in 1839 and called it one of the most delightful and insinuating potations that ever was invented. Brandy and rum gave way to whiskey by 1900, and Churchill Downs made it the official drink of the Kentucky Derby in 1938. This card pours two ounces of bourbon, a quarter ounce of simple, and muddled mint over ice in a rocks glass rather than a silver cup.
+
+- [Difford's Guide, Mint Julep](https://www.diffordsguide.com/cocktails/recipe/1330/mint-julep)
+- [Difford's Guide, Julep cocktails](https://www.diffordsguide.com/encyclopedia/1562/cocktails/julep-cocktails)
+
+#### Kentucky Mule
+
+`2,h,t,HLw` · built · Bourbon · Highball family
+
+- 2 oz Bourbon
+- 1/2 oz Lime juice
+- top with Ginger beer
+- Highball, iced, Lime wheel
+
+Two ounces of bourbon, half an ounce of lime, and ginger beer over ice. Ginger sits on the corn sweetness and the whiskey still reads through the heat. Lime keeps it from going syrupy.
+
+The Mule became a template the moment the Moscow Mule sold vodka: spirit, lime, ginger beer, ice. The bourbon version is the Kentucky Mule, which Difford's also files as the Bourbon Mule. It is the older Buck pattern, spirit with citrus and ginger, under a newer name, and no bartender or date is attached to it. This card pours two ounces of bourbon, half an ounce of lime, and ginger beer over ice, with a lime wheel.
+
+- [Difford's Guide, Bourbon Mule](https://www.diffordsguide.com/cocktails/recipe/13404/bourbon-mule)
+
+#### Seelbach
+
+`1,h,7,7,t,ho` · built · Bourbon · Sparkling family
+
+- 1 oz Bourbon
+- 1/2 oz Orange liqueur
+- 7 dashes Angostura bitters
+- 7 dashes Peychaud's bitters
+- top with Champagne
+- Highball, Orange twist
+
+An ounce of bourbon, half an ounce of orange liqueur, then seven dashes each of Angostura and Peychaud's, which is enough bitters to colour the glass and to run the drink. Champagne on top, an orange twist over that. Spiced orange over whiskey, dry at the finish.
+
+Adam Seger created this at the Seelbach Hilton in Louisville in 1995, then invented a history for it: he said he had found it on the hotel's pre-Prohibition menus and dated it to about 1917. The Louisville Courier-Journal reported the rediscovery, Gary and Mardee Regan printed it in New Classic Cocktails in 1997, and Ted Haigh repeated it in Vintage Spirits and Forgotten Cocktails in 2009, by which point it was taken as fact. Seger confessed to Gary Regan, and Robert Simonson published the debunking in The New York Times in October 2016. The drink is real; only its age was made up. This card pours an ounce of bourbon, half an ounce of orange liqueur, seven dashes each of Angostura and Peychaud's, and Champagne, with an orange twist.
+
+- [Difford's Guide, Seelbach](https://www.diffordsguide.com/cocktails/recipe/1807/seelbach)
+
+### Scotch
+
+#### Scotch and Soda
+
+`2,t,H` · built · Scotch · Highball family
+
+- 2 oz Scotch
+- top with Soda water
+- Highball, iced
+
+Two ounces of Scotch and soda to the top of an iced glass. Whisky, water, and gas, so what you taste is the bottle you bought, pulled open: smoke and cereal where the neat pour was tight. Long and cold, and it stays that way.
+
+Patrick Gavin Duffy claimed in his 1934 The Official Mixer's Guide that he brought the highball to America in 1895, at his cafe by the Lyceum Theatre in New York, after an English actor asked for Scotch and soda and he laid in a stock of Usher's. He said the Broadway Scotch craze followed. The New York Times printed his letter making the claim in 1927 without checking it, and Difford's still files it as a claim. This card pours two ounces of Scotch over ice and tops with soda, no garnish.
+
+- [Difford's Guide, Highball history](https://www.diffordsguide.com/g/1086/highballs/story)
+- [Difford's Guide, Scotch Whisky Highball](https://www.diffordsguide.com/cocktails/recipe/4794/scotch-whisky-highball)
+
+### Light Rum
+
+#### Mojito
+
+`2,Q,h,t,Hm` · built · Light Rum · Highball family
+
+- 2 oz Light rum
+- 3/4 oz Lime juice
+- 1/2 oz Simple syrup
+- one Mint
+- top with Soda water
+- Highball, iced, Mint
+
+Two ounces of light rum, three-quarters of lime, half an ounce of simple, mint muddled into the glass, then soda over ice. Bruised mint gives oil; shredded mint gives green. Cane, lime, and cold air. A sprig on top, slapped once to wake it up.
+
+The ancestor is the Draque, cane spirit with lime, sugar, and mint, which Cubans were taking daily as medicine by the 1830s and which legend ties to Francis Drake in 1586. When Bacardi's rum replaced the rough aguardiente the drink got the new name. Printed recipes turn up as Mojo Criollo in 1927 and Mojo de Ron in 1929, and the name Mojito appears on the souvenir menu of Sloppy Joe's Bar in Havana for the 1931-32 season, alongside a gin version. La Bodeguita del Medio hangs a note signed by Hemingway claiming his Mojito; Difford's doubts it, since nothing Hemingway published mentions either the drink or the bar. This card pours two ounces of light rum, three-quarters lime, half an ounce of simple, muddled mint, and soda over ice.
+
+- [Difford's Guide, Mojito cocktail history](https://www.diffordsguide.com/g/1228/mojito-cocktail/mojito-cocktail-history)
+
+### Tequila
+
+#### Paloma
+
+`2,1,h,h,t,HS` · built · Tequila · Highball family
+
+- 2 oz Tequila
+- 1 oz Grapefruit juice
+- 1/2 oz Lime juice
+- 1/2 oz Simple syrup
+- top with Soda water
+- Highball, iced, Salt rim
+
+Two ounces of tequila, a full ounce of grapefruit, half an ounce each of lime and simple, then soda over ice. Building the grapefruit half out of juice, syrup, and plain soda leaves the agave in front; a grapefruit soda would sit over it. Salt on the rim pulls the bitter edge off the grapefruit.
+
+The paper trail starts with a 1950 brochure for Squirt, an American grapefruit soda, suggesting the mix with tequila. Squirt launched in Mexico in 1955 and advertised hard there in the early 1970s, and who first adapted it to Mexican taste is unknown. It was a Jalisco drink through the 1970s and 1980s, associated with the bars on the Parian square in Tlaquepaque, reached Southern California by the late 1990s, and spread across the United States in the early 2000s. Paloma is Spanish for dove. This card builds the soda half from an ounce of fresh grapefruit, half an ounce of lime, half an ounce of simple, and plain soda water, over ice with a salt rim.
+
+- [The Oxford Companion to Spirits and Cocktails, The Paloma](https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-379)
+- [Difford's Guide, Paloma](https://www.diffordsguide.com/cocktails/recipe/1456/paloma)
+
+### Mezcal
+
+#### Mezcal Mule
+
+`2,h,t,HLw` · built · Mezcal · Highball family
+
+- 2 oz Mezcal
+- 1/2 oz Lime juice
+- top with Ginger beer
+- Highball, iced, Lime wheel
+
+Two ounces of mezcal, half an ounce of lime, and ginger beer over ice. Smoke and ginger are both loud and they hold each other up; the lime keeps the middle clean. Agave all the way down, under a lime wheel.
+
+The Mule template took a Mexican spirit early. Difford's files the tequila version as the Mexican Mule, also called El Burro, and the mezcal version is the same build with the smoked agave in the spirit slot. Nothing is on record about who poured the first one. It dates from the 2000s, when mezcal reached American back bars. This card pours two ounces of mezcal, half an ounce of lime, and ginger beer over ice, with a lime wheel.
+
+- [Difford's Guide, Mexican Mule](https://www.diffordsguide.com/cocktails/recipe/1306/mexican-mule)
+
+### Vodka
+
+#### Moscow Mule
+
+`2,h,t,HLw` · built · Vodka · Highball family
+
+- 2 oz Vodka
+- 1/2 oz Lime juice
+- top with Ginger beer
+- Highball, iced, Lime wheel
+
+Two ounces of vodka, half an ounce of lime, and ginger beer over ice. Ginger and lime carry it, with the vodka as weight underneath, so the drink gets sharper the hotter the ginger beer is. Lime wheel.
+
+The usual story puts it at the Cock 'n Bull in Los Angeles in 1941, where John G. Martin of Heublein was trying to sell Smirnoff and the owner Jack Morgan was trying to sell his ginger beer. The bar's head bartender, Charles Wesley Price, said he made the first one and served it to Broderick Crawford and Rod Cameron. A competing account has Martin and Morgan working it out in New York first, and the Oxford Companion calls the whole thing possibly apocryphal. The copper mug was a marketing decision, and Martin went bar to bar with an instant camera photographing bartenders holding one. This card pours two ounces of vodka, half an ounce of lime, and ginger beer over ice in a highball, with a lime wheel.
+
+- [The Oxford Companion to Spirits and Cocktails, The Moscow Mule](https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-371)
+- [Difford's Guide, Moscow Mule](https://www.diffordsguide.com/cocktails/recipe/1366/moscow-mule)
+
+#### Vodka Soda
+
+`2,t,HLw` · built · Vodka · Highball family
+
+- 2 oz Vodka
+- top with Soda water
+- Highball, iced, Lime wheel
+
+Two ounces of vodka and soda over ice. It drinks like cold water with weight in it and a mineral edge off the bubbles. The bottle you poured is all the flavour there is, and a lime wheel is all the seasoning.
+
+Nobody invented this one. It is the highball template with vodka in the spirit slot, and it arrived with vodka's rise in American bars after the Second World War. Difford's puts the ratio with the widest appeal at two and a half parts soda to one of vodka, and notes that a couple of dashes of grapefruit bitters round off the edge. This card pours two ounces of vodka and soda over ice, with a lime wheel.
+
+- [Difford's Guide, Vodka Soda](https://www.diffordsguide.com/cocktails/recipe/4280/vodka-soda)
+
+### Gin
+
+#### Gin & Tonic
+
+`2,t,HLw` · built · Gin · Highball family
+
+- 2 oz Gin
+- top with Tonic water
+- Highball, iced, Lime wheel
+
+Two ounces of gin, then tonic to the top of an iced highball. Quinine is bitter and the tonic is sweet, and carrying both at once is what rounds the juniper off. The lime wheel is oil and a squeeze on the way in. Cold and long, with the bitterness arriving last.
+
+Quinine went into carbonated water as a malaria tonic in the 1850s, and Schweppes put out its own in 1870 under the name Indian Tonic Water. British India is where gin met it: the Raj was drinking a great deal of gin already, and the quinine dose went down easier sweetened and mixed. Difford's puts the drink in the second half of the nineteenth century and says the first pour is lost. This card pours two ounces of gin and tops with tonic over ice, with a lime wheel.
+
+- [Difford's Guide, Gin and Tonic](https://www.diffordsguide.com/cocktails/recipe/835/gin-and-tonic)
+
+#### Gin Rickey
+
+`2,h,t,HL` · built · Gin · Highball family
+
+- 2 oz Gin
+- 1/2 oz Lime juice
+- top with Soda water
+- Highball, iced, Lime twist
+
+Two ounces of gin, half an ounce of lime, and soda over ice. Lime and bubbles are the only things standing next to the gin, so it lands sharp and the juniper is bare. Long and dry, lime twist on top.
+
+The Rickey is a Washington drink. Joseph Kyle Rickey, a Missouri lobbyist, was drinking whiskey with carbonated water at Shoomaker's bar in the late 1880s, and the bartender George Williamson is credited by some with adding the squeezed half lime. Rickey said he introduced the drink rather than invented it, and put the idea down to Enno Sander, a Prussian physician who argued carbonated water made the more refreshing mixer. The name was circulating by 1889, and by the mid-1890s gin had displaced the bourbon. The city council made it the official cocktail of the District of Columbia in 2011. This card pours two ounces of gin, half an ounce of lime, and soda over ice, with a lime twist.
+
+- [The Oxford Companion to Spirits and Cocktails, The Rickey](https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-400)
+- [Difford's Guide, Gin Rickey](https://www.diffordsguide.com/cocktails/recipe/1676/gin-rickey)
+
+#### Tom Collins
+
+`2,1,h,t,Hlc` · built · Gin · Highball family
+
+- 2 oz Gin
+- 1 oz Lemon juice
+- 1/2 oz Simple syrup
+- top with Soda water
+- Highball, iced, Lemon twist, Cherry
+
+Two ounces of gin against a full ounce of lemon, half an ounce of simple, and soda to the top over ice. A gin sour stretched long, and that much lemon stays loud through the dilution, with the syrup a thin coat under it. Lemon twist and a cherry on top.
+
+The drink is named for John Collins, head waiter at Limmer's Hotel on Conduit Street in London, whose gin punch was famous by 1814 and who got his own limerick out of it. The split is in the gin: Harry Johnson's 1882 Bartenders' Manual prints a Tom Collins on Old Tom, the sweetened style, and a John Collins on Holland gin. There is also the Great Tom Collins Hoax of 1874, a New York joke in which a man was sent across town to confront a Tom Collins who had been insulting him; whether the joke named the drink or the drink named the joke has never been settled. This card pours two ounces of gin, an ounce of lemon, half an ounce of simple, and soda over ice, with a lemon twist and a cherry.
+
+- [Difford's Guide, Tom Collins](https://www.diffordsguide.com/cocktails/recipe/1972/tom-collins)
+- [Difford's Guide, Collins cocktails](https://www.diffordsguide.com/encyclopedia/490/cocktails/collins-cocktails)
+
+#### Elderflower Collins
+
+`1h,Q,Q,t,Hl` · built · Gin · Highball family
+
+- 1 1/2 oz Gin
+- 3/4 oz Elderflower liqueur
+- 3/4 oz Lemon juice
+- top with Soda water
+- Highball, iced, Lemon twist
+
+An ounce and a half of gin, three-quarters of elderflower liqueur, three-quarters of lemon, and soda over ice. The elderflower is the sugar in this Collins, so the sweetness arrives floral, and the lemon keeps it tart underneath. Long and light, lemon twist.
+
+A Collins is gin, lemon, sugar, and soda, and the modern habit is to move the sugar into a liqueur. St-Germain, the first elderflower liqueur, arrived in 2007, made from flowers picked in the Haute-Savoie and macerated within 48 hours, and the Elderflower Collins followed the bottle onto back bars. Difford's prints a version that adds a touch of maraschino beside the elderflower. No creator and no date are attached to it. This card pours an ounce and a half of gin, three-quarters of elderflower, three-quarters of lemon, and soda over ice, with a lemon twist.
+
+- [Difford's Guide, Elderflower Collins](https://www.diffordsguide.com/cocktails/recipe/704/elderflower-collins)
+- [Difford's Guide, St Germain Elderflower Liqueur](https://www.diffordsguide.com/beer-wine-spirits/182/st-germain-elderflower-liqueur)
+
+### Vermouth
+
+#### Americano
+
+`1h,1h,t,Ho` · built · Vermouth · Highball family
+
+- 1 1/2 oz Campari
+- 1 1/2 oz Sweet vermouth
+- top with Soda water
+- Highball, iced, Orange twist
+
+An ounce and a half each of Campari and sweet vermouth, then soda over ice. Equal pours, so bitter orange and grape sit level, and the soda stretches both into something you can drink for an hour. Low proof, and it stays bitter to the end. An orange twist goes over the top.
+
+Gaspare Campari put his bitter together with Turin vermouth at the Caffe Campari on Milan's Piazza del Duomo in the 1860s and called it the Milano-Torino, after where the two bottles came from. Adding soda made it the Americano, American-style, though the name first belonged to a category: Italian producers sold vermouth with bitters already in it as vermouth americano, and Ferruccio Mazzon's 1920 Il Barista prints two different Americanos. It is the first drink Bond orders in Casino Royale. This card pours an ounce and a half each of Campari and sweet vermouth over ice, tops with soda, and twists orange over it.
+
+- [Difford's Guide, Americano](https://www.diffordsguide.com/cocktails/recipe/61/americano)
+- [Difford's Guide, Milano Torino](https://www.diffordsguide.com/cocktails/recipe/3495/milano-torino-mi-to-cocktail)
+
+#### Negroni Sbagliato
+
+`1,1,t,Ro` · built · Vermouth · Sparkling family
+
+- 1 oz Campari
+- 1 oz Sweet vermouth
+- top with Champagne
+- Rocks, iced, Orange twist
+
+An ounce each of Campari and sweet vermouth with sparkling wine on top, over ice. Two thirds of a Negroni with the bubbles doing the gin's lifting: bitter orange and grape, lighter and lower in proof, fizzing at the edge under an orange twist.
+
+Sbagliato means bungled. Mirko Stocchetto, at Bar Basso in Milan, reached for the spumante instead of the gin while building a Negroni and kept the result; Difford's dates the mistake to the late 1980s. Bar Basso has served it ever since, in spumante rather than prosecco, in the oversized stemmed chalices Stocchetto designed in the 1980s and licensed to WMF. He died on 10 November 2016 and his family still runs the bar. This card pours an ounce each of Campari and sweet vermouth, tops with Champagne, and serves it over ice with an orange twist.
+
+- [Difford's Guide, Negroni Sbagliato](https://www.diffordsguide.com/cocktails/recipe/2515/negroni-sbagliato)
+
+#### Death in the Afternoon
+
+`1h,t,h` · built · Vermouth · Sparkling family
+
+- 1 1/2 oz Absinthe
+- top with Champagne
+- Highball
+
+An ounce and a half of absinthe with Champagne poured onto it. The wine goes cloudy as the anise louches, and that milkiness is the trick of it. Anise, wormwood, and fennel over dry bubbles, in a tall glass with no ice. It drinks easier than its proof.
+
+Hemingway contributed it to So Red the Nose, or Breath in the Afternoon, a 1935 collection of cocktails by authors, and named it after his 1932 book on bullfighting. His own instruction: pour one jigger of absinthe into a Champagne glass, add iced Champagne until it attains the proper opalescent milkiness, and drink three to five of these slowly. He credited the recipe to himself and three officers of HMS Danae, after seven hours in the water trying to get Captain Bra Saunders' fishing boat off a bank. This card pours an ounce and a half of absinthe and tops with Champagne.
+
+- [Difford's Guide, Death In The Afternoon](https://www.diffordsguide.com/cocktails/recipe/623/death-in-the-afternoon)

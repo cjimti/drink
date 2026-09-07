@@ -10,8 +10,12 @@ This file is the working context. Read it before touching the menu.
 - One person's shelf, pouring for guests and for himself.
 - The organising constraint is **range from few bottles**. The menu is
   large because the ingredients overlap, not because the bar is.
-- Two methods, `stirred` and `shaken`, exactly as the printed card. A
-  drink is shaken when juice, egg, or syrup carries it.
+- Three methods. `stirred` and `shaken` are the printed card: a drink is
+  shaken when juice, egg, or syrup carries it. `built` is the long drinks
+  added in 2026, made in the glass they are served in, ice first and the
+  mixer last. Nothing counts methods by hand any more. The checker, the
+  agent dumps and the segmented control all read `menu.methods`, so a
+  fourth method costs one line of data.
 - Drinks are grouped under a `family` — the section they print under.
   That is the menu's own filing, not a claim about the base spirit.
   So So Cocktail files under Apple Brandy and is mostly gin; Corpse
@@ -36,10 +40,16 @@ slots, and the decoder resolves it against the ingredient:
 - `b` is barspoons, `d` is dashes, bare `b`/`d` mean one.
 - `r` in an amount slot is a **rinse**. `r` as the last token is a rocks
   glass with no ice. The Sazerac, `2,1b,4,r,r`, is both.
-- The last token is the glass (`c` coupe, `r` rocks, `R` rocks with ice)
-  followed by garnish letters, packed together. `ccin` is a coupe with
-  grated cinnamon, not `c` + `i` + `n` — the decoder matches longest
-  first, and that is load-bearing.
+- `t` is a **top**: fill the glass with the mixer over the ice already in
+  it. It never takes a number, because a top is however much the glass
+  holds. `2t` is not a token and never will be.
+- The last token is the glass (`c` coupe, `r` rocks, `R` rocks with ice,
+  `h` highball for a fizz, `H` highball packed with ice) followed by
+  garnish letters, packed together. `ccin` is a coupe with grated
+  cinnamon, not `c` + `i` + `n` — the decoder matches longest first, and
+  that is load-bearing. `h` is a half ounce everywhere except the last
+  slot, where it is the tall glass. `r` already makes that bargain, and
+  the serve token being last is what keeps it safe.
 
 Garnish is on the shelf but never gates a drink. The letter for it
 rides the serve token, and `notation.json` names the bottle it calls for
@@ -93,6 +103,17 @@ weighed — a kitchen scale is required. The checker fails on a stocked ingredie
 drink uses, and a garnish letter counts as use, so the bar cannot
 quietly drift. `catalog` is the exception: a type on the shopping list
 before any drink calls for it. Those still need bottles.
+
+`kind: mixer` is soda water, tonic, and ginger beer: the bottles that
+fill the rest of the glass. They get no chip in the filter row, because
+a guest chooses by spirit and the search box finds `soda`. Every mixer
+counts as a highball in `kin.py`, whether the card writes it as `t` or
+as four ounces.
+
+`mint` carries `unit: "none"` and stays `kind: garnish`, and both are
+true at once. The `m` in a serve token is a garnish and gates nothing;
+the Mojito muddles mint into the build with no amount, and a build entry
+always gates. Egg white already worked this way.
 
 `stand_in` is the short list of bottles the house will pour in place of
 this one. It is a hard gate turned soft where soft is honest: the card

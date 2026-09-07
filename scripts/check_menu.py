@@ -55,11 +55,12 @@ AMOUNT = re.compile(r"""
       | [hqQ]         # h q Q       — a bare fraction
       | \d*[bd]       # 2b b 1d d   — barspoons, dashes
       | r             # r           — a rinse
+      | t             # t           — top with the mixer
       | \d+           # 2 10        — ounces, or dashes next to bitters
     )$
 """, re.X)
 
-GLASSES = set("crR")
+GLASSES = set("crRhH")
 
 COCKTAIL_KEYS = {
     "id", "name", "method", "family", "code", "serve", "build",
@@ -385,6 +386,21 @@ def check_notes(d, who, errs):
             errs.append(f"{who}: refs[{i}] url must start with https://")
 
 
+def method_tally(menu):
+    """`74 stirred, 59 shaken, 19 built`, counted off the file's own list.
+
+    The card had two methods and then it had three, so the sentence is
+    built from `methods` and nobody has to retype it. A method nothing is
+    filed under is left off instead of printing a zero.
+    """
+    counts = []
+    for m in menu["methods"]:
+        n = sum(1 for d in menu["cocktails"] if d["method"] == m["id"])
+        if n:
+            counts.append(f"{n} {m['id']}")
+    return ", ".join(counts)
+
+
 def main():
     bar = load("bar.json")
     notation = load("notation.json")
@@ -491,12 +507,11 @@ def main():
         return 1
 
     n = len(menu["cocktails"])
-    st = sum(1 for d in menu["cocktails"] if d["method"] == "stirred")
     ng = sum(1 for i in bar["ingredients"] if i["kind"] == "garnish")
     nb = sum(1 for i in bar["ingredients"] if i.get("bottles"))
     nc = sum(1 for i in bar["ingredients"] if i.get("catalog") is True)
     hi = max(i["bit"] for i in bar["ingredients"])
-    print(f"  menu    {n} drinks ({st} stirred, {n - st} shaken), "
+    print(f"  menu    {n} drinks ({method_tally(menu)}), "
           f"{len(stocked)} ingredients ({ng} garnish, {nc} catalog, "
           f"bits 0–{hi}, {len(bar['retired_bits'])} retired, "
           f"{nb} with bottles, {len(seen_brands)} brands, "

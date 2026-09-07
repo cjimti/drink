@@ -416,8 +416,9 @@ noscript.fallback a { color: var(--brass); }
 .seg__b:last-child { border-right: 0; }
 .seg__b.is-on { background: var(--bone); color: var(--ground); }
 
-/* Four segments (All / Stirred / Shaken / Families) on a phone.
-   Tracking drops a little so FAMILIES still sits on one line. */
+/* Five segments (All / Stirred / Shaken / Built / Families) on a phone.
+   Tracking drops a little so FAMILIES still sits on one line: the five
+   need 313px of the 350px a 390 wide phone leaves inside the padding. */
 .seg--wide .seg__b {
   letter-spacing: .11em;
   font-size: 10px;
@@ -594,6 +595,11 @@ noscript.fallback a { color: var(--brass); }
    Nick & Nora rather than stretching both to the same row height. */
 .drink__glass--rocks svg {
   width: 75%;
+}
+/* A highball is the tall one. Narrower again, so the drawing comes out
+   the height of a Nick & Nora and the row does not grow around it. */
+.drink__glass--tall svg {
+  width: 70%;
 }
 
 .drink__text {

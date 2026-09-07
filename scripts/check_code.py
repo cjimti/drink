@@ -60,13 +60,14 @@ BUDGET = {
             "adds a branch that calls a named function; it does not grow "
             "the handler"),
     "scripts/check_menu.py:main": dict(
-        lines=117, complexity=47,
+        lines=116, complexity=40,
         why="the menu checker's report, one paragraph per rule, in the "
             "order the failures are worth reading"),
-    "scripts/kin.py:analyse": dict(
-        lines=95, complexity=36, nesting=8,
+    "scripts/kin.py:classify_by_ratio": dict(
+        nesting=8,
         why="the shape classifier — one ladder of ratios, where the order "
-            "of the tests is the definition"),
+            "of the tests is the definition. The nesting number counts "
+            "elif rungs, not depth anybody has to hold in their head"),
     "scripts/kin.py:build": dict(
         complexity=26,
         why="assembles data/kin.json in one pass over every drink"),

@@ -14,7 +14,7 @@
       },
       {
         "h": "Case does the work of extra letters",
-        "t": "Rather than invent a second letter, one initial carries both halves of a pair, so there is less to memorise, not more. Where two garnishes want the same letter, lowercase is the one you reach for more often: `l` lemon, `L` lime; `s` sugar, `S` salt; `o` orange, `O` olive. Where it is a matter of degree, uppercase is the larger: `q` a quarter, `Q` three quarters; `r` a bare rocks glass, `R` one with ice."
+        "t": "Rather than invent a second letter, one initial carries both halves of a pair, so there is less to memorise, not more. Where two garnishes want the same letter, lowercase is the one you reach for more often: `l` lemon, `L` lime; `s` sugar, `S` salt; `o` orange, `O` olive. Where it is a matter of degree, uppercase is the larger: `q` a quarter, `Q` three quarters; `r` a bare rocks glass, `R` one with ice; `h` a highball for a fizz, `H` one packed with ice. A glass letter only ever lands in the last slot, so `h` there is the tall glass and `h` earlier is half an ounce, the same bargain `r` already makes."
       },
       {
         "h": "The last token is service",
@@ -101,6 +101,11 @@
       "code": "r",
       "label": "rinse",
       "gloss": "in an amount slot: coat the glass and dump"
+    },
+    {
+      "code": "t",
+      "label": "top",
+      "gloss": "fill the glass with the mixer, over the ice already in it"
     }
   ],
   "glasses": [
@@ -118,6 +123,16 @@
       "code": "R",
       "label": "Rocks, iced",
       "gloss": "one large cube, or cubes, depending on the drink"
+    },
+    {
+      "code": "h",
+      "label": "Highball",
+      "gloss": "tall glass, no ice: a fizz"
+    },
+    {
+      "code": "H",
+      "label": "Highball, iced",
+      "gloss": "tall glass packed with ice, the mixer poured over it"
     }
   ],
   "garnishes": [
@@ -188,6 +203,15 @@
     }
   ],
   "examples": [
+    {
+      "name": "Gin & Tonic",
+      "code": "2,t,HLw",
+      "lines": [
+        "2      2 oz gin",
+        "t      top with tonic",
+        "HLw    highball glass iced, lime wheel"
+      ]
+    },
     {
       "name": "Pedro Martinez",
       "code": "2,1,q,3,10,2b,R",
