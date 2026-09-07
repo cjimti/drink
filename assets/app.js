@@ -1500,28 +1500,53 @@
       '</div>';
   }
 
-  /* The best unopened bottle, memoised on the shelf it was computed for.
-     `allGains` re-counts the whole menu once per bottle, which is fine on
-     the Bar tab where it runs on a tick — and not fine on the Menu, where
-     the list repaints on every keystroke in the search box. The shelf only
-     changes on the other tab, so its code is the whole cache key. */
-  var nextMemo = { key: null, val: null };
+  /* `allGains` re-counts the whole menu once per bottle. That is fine on
+     the Bar tab, where it runs on a selection — and not fine on the Menu,
+     where the list repaints on every keystroke in the search box. The
+     shelf is the only input, so its code is the whole cache key. */
+  var gainsMemo = { key: null, val: null };
 
-  function bestNext(held) {
+  function gainsFor(held) {
     var key = shelfCode(held);
-    if (nextMemo.key === key) return nextMemo.val;
-    var gains = allGains(held);
-    var best = data.bar.ingredients.filter(function (i) {
+    if (gainsMemo.key !== key) gainsMemo = { key: key, val: allGains(held) };
+    return gainsMemo.val;
+  }
+
+  /* The three bottles worth buying next: biggest unlock first, then the
+     one more drinks already want, then the order the shelf is written in.
+     The Bar tab and the Menu's rail both read this, so the two lists
+     cannot rank the same shelf differently. */
+  function nextBottles(held) {
+    var gains = gainsFor(held);
+    return data.bar.ingredients.filter(function (i) {
       return !held[i.id] && gains[i.id] > 0;
+    }).map(function (i, n) {
+      return { i: i, gain: gains[i.id], uses: usageCount(i.id), n: n };
     }).sort(function (a, b) {
-      if (gains[b.id] !== gains[a.id]) return gains[b.id] - gains[a.id];
-      return usageCount(b.id) - usageCount(a.id);
-    })[0];
-    nextMemo = {
-      key: key,
-      val: best ? { i: best, gain: gains[best.id] } : null
-    };
-    return nextMemo.val;
+      if (b.gain !== a.gain) return b.gain - a.gain;
+      if (b.uses !== a.uses) return b.uses - a.uses;
+      return a.n - b.n;
+    }).slice(0, 3);
+  }
+
+  /* One suggestion: the shelf's own checkbox, the name, what it would
+     add, and the drinks it would open. Selecting it here counts the
+     bottle in without a trip to the Bar tab — the figure above moves, and
+     the list behind it re-gates. */
+  function renderRailNext(r, held) {
+    var name = r.i.shelf || r.i.name;
+    return '<div class="card__next">' +
+      '<div class="card__buy">' +
+        '<button type="button" class="bottle__stock card__box"' +
+          ' data-bottle="' + esc(r.i.id) + '" aria-pressed="false"' +
+          ' aria-label="' + esc('Select ' + name) + '">' +
+          '<span class="bottle__box"></span>' +
+        '</button>' +
+        '<span class="card__buy-name">' + esc(name) + '</span>' +
+        '<span class="card__buy-n">+' + r.gain + '</span>' +
+      '</div>' +
+      '<p class="card__opens">' + esc(unlockedLine(unlockedBy(r.i.id, held))) + '</p>' +
+      '</div>';
   }
 
   /* A first visit has a whole column and nothing to put in it yet, so it
@@ -1589,25 +1614,11 @@
       '<p class="card__note">' + esc(plural(bottles, 'bottle', 'bottles') +
         (viewingShared() ? ' on their shelf.' : ' on your shelf.')) + '</p>';
 
-    var next = viewingShared() ? null : bestNext(held);
-    if (next) {
-      var name = next.i.shelf || next.i.name;
-      /* The same control the shelf uses, on the row that names the bottle
-         worth buying. Selecting it here counts it in without a trip to the
-         other tab: the figure moves, and the next-best bottle takes its
-         place. */
-      html += '<p class="card__k">Next bottle</p>' +
-        '<div class="card__buy">' +
-          '<button type="button" class="bottle__stock card__box"' +
-            ' data-bottle="' + esc(next.i.id) + '" aria-pressed="false"' +
-            ' aria-label="' + esc('Select ' + name) + '">' +
-            '<span class="bottle__box"></span>' +
-          '</button>' +
-          '<span class="card__buy-name">' + esc(name) + '</span>' +
-          '<span class="card__buy-n">+' + next.gain + '</span>' +
-        '</div>' +
-        '<p class="card__opens">' + esc(unlockedLine(unlockedBy(next.i.id, held))) + '</p>' +
-        '<div class="card__acts"><a class="btn" href="#bar">Open the Bar tab</a></div>';
+    var next = viewingShared() ? [] : nextBottles(held);
+    if (next.length) {
+      html += '<p class="card__k">Next bottle suggestions</p>';
+      next.forEach(function (r) { html += renderRailNext(r, held); });
+      html += '<div class="card__acts"><a class="btn" href="#bar">Open the Bar tab</a></div>';
     }
     return html + '</div>';
   }
@@ -1984,19 +1995,10 @@
 
      Not before there is a shelf to improve on: from nothing, everything is
      zero and a heading over three +0 rows is worse than no heading. */
-  function renderNext(held, gains) {
+  function renderNext(held) {
     if (!stocked(held).length || viewingShared()) return '';
 
-    var top = data.bar.ingredients.filter(function (i) {
-      return !held[i.id] && gains[i.id] > 0;
-    }).map(function (i, n) {
-      return { i: i, gain: gains[i.id], uses: usageCount(i.id), n: n };
-    }).sort(function (a, b) {
-      if (b.gain !== a.gain) return b.gain - a.gain;
-      if (b.uses !== a.uses) return b.uses - a.uses;
-      return a.n - b.n;
-    }).slice(0, 3);
-
+    var top = nextBottles(held);
     if (!top.length) return '';
 
     var html = '<section class="next"><h2 class="next__h">Next bottles</h2>';
@@ -2058,7 +2060,7 @@
     var can = pourableCount(held);
     var total = data.menu.cocktails.length;
     var bottles = stocked().length;
-    var gains = allGains(held);
+    var gains = gainsFor(held);
 
     if (!barOrder) freezeBarOrder(held, gains);
 
@@ -2091,7 +2093,7 @@
       '</div>' +
       '<div class="tally__body">' +
       '<p class="tally__note">' + esc(note) + '</p>' +
-      renderNext(held, gains) +
+      renderNext(held) +
       renderShelves(held) +
       '<div class="tally__acts">' +
         '<button class="btn" data-bar="all">Stock everything</button>' +
