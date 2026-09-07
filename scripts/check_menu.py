@@ -15,6 +15,12 @@ so the bottle it calls for counts as used. Whether a missing garnish stops
 you pouring is the app's question, not this one — here it only has to be a
 bottle something wants.
 
+`bit` on an ingredient is its place in a shared shelf code — the decimal
+integer in a fewbottles.com/?s= link, bit N set meaning ingredient N is on
+the shelf. Those links live in other people's message threads, so a bit is
+assigned once and never moved or reused. A dropped ingredient's bit goes
+into `retired_bits` so it cannot be handed out again.
+
 `bottles` on an ingredient is the shopping list for that type. Brand ids
 are unique across the bar. `catalog` marks a type that is on the shopping
 list before any drink calls for it — those still need bottles, or they
@@ -52,7 +58,7 @@ COCKTAIL_KEYS = {
 REF_KEYS = {"title", "url"}
 INGREDIENT_KEYS = {
     "id", "name", "short", "kind", "unit", "staple", "shelf", "notes",
-    "bottles", "catalog",
+    "bottles", "catalog", "bit",
 }
 NOTES_KEYS = {"parts", "copy"}
 PART_KEYS = {"amt", "item"}
@@ -200,6 +206,34 @@ def check_ingredient_bottles(i, errs, seen_brands):
                 errs.append(f"{loc}.price must be a non-negative integer")
 
 
+def check_bits(bar, errs):
+    """Every ingredient has a bit, no two share one, none is retired.
+
+    The bit is what a shared link encodes, so this is the same kind of
+    promise as a cocktail id: stable forever. Gaps are fine — a retired
+    bit is a gap on purpose.
+    """
+    retired = bar.get("retired_bits")
+    if not isinstance(retired, list) or any(
+            not isinstance(b, int) or isinstance(b, bool) or b < 0 for b in retired):
+        errs.append("bar: retired_bits must be an array of non-negative integers")
+        retired = []
+    retired = set(retired)
+
+    seen = {}
+    for i in bar["ingredients"]:
+        who = i.get("id", "<no id>")
+        bit = i.get("bit")
+        if not isinstance(bit, int) or isinstance(bit, bool) or bit < 0:
+            errs.append(f"bar {who}: bit must be a non-negative integer")
+            continue
+        if bit in retired:
+            errs.append(f"bar {who}: bit {bit} is retired")
+        if bit in seen:
+            errs.append(f"bar {who}: bit {bit} is already {seen[bit]}'s")
+        seen[bit] = who
+
+
 def check_notes(d, who, errs):
     """Optional taste / history / refs, when present, have to be the contract.
 
@@ -265,6 +299,7 @@ def main():
         elif HTML.search(copy):
             errs.append("bar: bottles_copy contains HTML")
 
+    check_bits(bar, errs)
     seen_brands = set()
     for i in bar["ingredients"]:
         check_ingredient_notes(i, errs)
@@ -352,8 +387,10 @@ def main():
     ng = sum(1 for i in bar["ingredients"] if i["kind"] == "garnish")
     nb = sum(1 for i in bar["ingredients"] if i.get("bottles"))
     nc = sum(1 for i in bar["ingredients"] if i.get("catalog") is True)
+    hi = max(i["bit"] for i in bar["ingredients"])
     print(f"  menu    {n} drinks ({st} stirred, {n - st} shaken), "
           f"{len(stocked)} ingredients ({ng} garnish, {nc} catalog, "
+          f"bits 0–{hi}, {len(bar['retired_bits'])} retired, "
           f"{nb} with bottles, {len(seen_brands)} brands, "
           f"{len(gbottle)} letters that call for one), every code checks out")
     return 0

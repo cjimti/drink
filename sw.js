@@ -94,8 +94,13 @@ self.addEventListener('fetch', function (e) {
     return;
   }
 
+  /* A shared menu arrives as /?s=<code>. The shell is cached under './',
+     so a navigation has to match on the path alone or every shared link
+     opened offline misses the cache it is standing next to. */
+  var opts = req.mode === 'navigate' ? { ignoreSearch: true } : undefined;
+
   e.respondWith(
-    caches.match(req).then(function (hit) {
+    caches.match(req, opts).then(function (hit) {
       return hit || fetch(req).then(function (res) {
         var copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put(req, copy); });

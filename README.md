@@ -31,7 +31,10 @@ not a statistic — tapping it opens the list it counts. Print menu is a
 reveal on that list: name the card, keep the glass icon or drop it,
 tick recipe / taste / history if you want them on paper, and add a
 Barline sheet if a guest needs the key. Two columns on letter, a QR
-back to the site.
+back to the site. Share menu, above it, is the same list as a link: the
+shelf packed into one number on the end of the address, shown as a QR
+to scan or sent by text, and opened live on the guest's own phone
+without touching their shelf.
 
 **Filters the way you choose a drink.** Stirred or shaken, then by any
 spirit or modifier, then by what the shelf can actually support.

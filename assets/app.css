@@ -26,6 +26,9 @@
   --on-brass: #121211;
   --mark-bg: #FBF8F1;
   --mark-fg: #121211;
+  /* A QR code is paper whatever the room looks like. Same in both. */
+  --qr-paper: #FFFFFF;
+  --qr-ink:   #000000;
 
   --display: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --body: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -51,6 +54,8 @@
     --on-brass: #FFFFFF;
     --mark-bg: #121211;
     --mark-fg: #FFFFFF;
+    --qr-paper: #FFFFFF;
+    --qr-ink:   #000000;
     color-scheme: light;
   }
 }
@@ -710,6 +715,15 @@ noscript.fallback a { color: var(--brass); }
   font-style: italic;
 }
 
+/* The tab it names is the way out, so the name is the link. Same
+   brass underline as the tally's call. */
+.empty a {
+  color: var(--brass);
+  text-decoration: none;
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 1px;
+}
+
 /* Not "nothing here" but "your filters disagree" — it gets a way out. */
 .empty--clash { padding: 38px 0; }
 .empty--clash p { margin: 0 auto 15px; max-width: 34ch; }
@@ -744,7 +758,11 @@ noscript.fallback a { color: var(--brass); }
   text-transform: uppercase;
   color: var(--muted);
 }
-.tonight.is-open .tonight__k { color: var(--brass); }
+.tonight__hit.is-open .tonight__k { color: var(--brass); }
+
+/* Two reveals share the block. A hairline keeps the second a row of
+   its own whether or not the pane above it is open. */
+.tonight__pane + .tonight__hit { border-top: 1px solid var(--hair); }
 
 .tonight__count {
   flex: 1;
@@ -835,6 +853,63 @@ noscript.fallback a { color: var(--brass); }
 }
 
 .tonight__acts { display: flex; gap: 8px; margin: 14px 0 4px; flex-wrap: wrap; }
+
+/* Share menu. The QR sits on a paper card; the link beside it wraps
+   wherever it has to and selects as one piece. */
+.share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px 22px;
+  margin-top: 14px;
+}
+.share__qr {
+  flex: none;
+  box-sizing: border-box;
+  width: 168px;
+  height: 168px;
+  padding: 10px;
+  background: var(--qr-paper);
+  color: var(--qr-ink);
+  border-radius: 2px;
+}
+.share__qr svg { display: block; width: 100%; height: 100%; }
+.share__side { flex: 1 1 200px; min-width: 0; }
+.share__url {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .02em;
+  line-height: 1.5;
+  color: var(--bone);
+  word-break: break-all;
+  user-select: all;
+  -webkit-user-select: all;
+}
+.share__side .tonight__acts { margin: 12px 0 0; }
+
+/* Over a menu someone sent. Their bar is on screen; yours is not touched. */
+.shared {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.shared__k {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.shared__copy {
+  margin: 6px 0 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+  max-width: 46ch;
+}
+.shared .tonight__acts { margin: 12px 0 0; }
 
 /* Paper-only recipe / taste / history under each drink. */
 .print-extras { display: none; }
@@ -939,6 +1014,7 @@ noscript.fallback a { color: var(--brass); }
   cursor: pointer;
 }
 .btn:hover { color: var(--bone); border-color: var(--muted); }
+a.btn { display: inline-block; text-decoration: none; line-height: normal; }
 
 .shelf { margin-top: 26px; }
 
@@ -1437,7 +1513,7 @@ noscript.fallback a { color: var(--brass); }
   }
 
   .topbar, .tabbar, .filters, .tonight__hit, .tonight__pane, .tonight__acts,
-  .tally__acts, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
+  .shared, .tally__acts, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-refs {
     display: none !important;

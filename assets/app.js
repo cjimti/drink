@@ -25,6 +25,7 @@
   var BRAND_STORE = 'drink.brands.v1';
   var TITLE_STORE = 'drink.menuTitle.v1';
   var PRINT_STORE = 'drink.print.v1';
+  var SHARE_PARAM = 's';  /* fewbottles.com/?s=<shelf code> */
 
   var FRACTION = { h: '1/2', q: '1/4', Q: '3/4' };
 
@@ -47,10 +48,14 @@
   var searchTimer = null;
   var menuTitle = '';     /* name on the printed card; empty is "Your menu" */
   var printOpen = false;  /* Print menu reveal, session only */
+  var shareOpen = false;  /* Share menu reveal, session only */
+  var shared = null;      /* { have, code } once a shared link has been opened; stays for the session */
   var printOpts = { icon: true, recipe: false, taste: false, history: false, barline: false };
 
   function emptyFilter() {
-    return { method: 'all', family: null, pattern: null, pourable: false, q: '' };
+    /* pourable is My menu: the list gated by your shelf. shared is Shared
+       menu: the same gate against the shelf someone sent. One at a time. */
+    return { method: 'all', family: null, pattern: null, pourable: false, shared: false, q: '' };
   }
 
   /* The shelf's running order, fixed on the way into the tab. See
@@ -255,9 +260,18 @@
     i.bottles.forEach(function (b) { delete own[b.id]; });
   }
 
-  function stocked() {
-    return Object.keys(have).filter(function (k) { return have[k] && ing[k]; });
+  function stocked(held) {
+    held = held || have;
+    return Object.keys(held).filter(function (k) { return held[k] && ing[k]; });
   }
+
+  /* The shelf the menu reads. Yours, unless Shared menu is the view —
+     then the sender's, held in memory, and yours is left exactly as it was. */
+  function viewingShared() { return !!(shared && filter.shared); }
+  function heldNow() { return viewingShared() ? shared.have : have; }
+
+  /* Either menu gates the list on a shelf; only which shelf differs. */
+  function shelfGate() { return filter.pourable || filter.shared; }
 
   /* Two lists, because there are two different questions.
 
@@ -329,6 +343,427 @@
     }).length;
   }
 
+  /* ── QR ────────────────────────────────────────────────── */
+
+  /* A byte-mode QR encoder, error level M, versions 1 to 10. That is
+     enough for a URL a few hundred characters long, which is more than
+     a shelf code will ever need. Nothing here is specific to the menu;
+     it is the standard, written small. */
+
+  /* Per version, 1 to 10: error codewords in each block, and how many
+     blocks. Both at level M. */
+  var QR_ECC = [10, 16, 26, 18, 24, 16, 18, 22, 22, 26];
+  var QR_BLOCKS = [1, 1, 1, 2, 2, 4, 4, 4, 5, 5];
+
+  function qrRawModules(ver) {
+    var n = (16 * ver + 128) * ver + 64;
+    if (ver >= 2) {
+      var align = Math.floor(ver / 7) + 2;
+      n -= (25 * align - 10) * align - 55;
+      if (ver >= 7) n -= 36;
+    }
+    return n;
+  }
+
+  function qrDataBytes(ver) {
+    return Math.floor(qrRawModules(ver) / 8) - QR_ECC[ver - 1] * QR_BLOCKS[ver - 1];
+  }
+
+  function gfMul(x, y) {
+    var z = 0;
+    for (var i = 7; i >= 0; i--) {
+      z = (z << 1) ^ ((z >>> 7) * 0x11D);
+      z ^= ((y >>> i) & 1) * x;
+    }
+    return z & 0xFF;
+  }
+
+  /* Reed-Solomon remainder of `data` against a generator of `degree`. */
+  function rsRemainder(data, degree) {
+    var gen = [1];
+    var root = 1;
+    var i, j;
+    for (i = 0; i < degree; i++) {
+      var next = [];
+      for (j = 0; j <= gen.length; j++) next.push(0);
+      for (j = 0; j < gen.length; j++) {
+        next[j] ^= gen[j];
+        next[j + 1] ^= gfMul(gen[j], root);
+      }
+      gen = next;
+      root = gfMul(root, 2);
+    }
+    gen.shift();
+    var rem = [];
+    for (i = 0; i < degree; i++) rem.push(0);
+    data.forEach(function (b) {
+      var factor = b ^ rem.shift();
+      rem.push(0);
+      for (j = 0; j < degree; j++) rem[j] ^= gfMul(gen[j], factor);
+    });
+    return rem;
+  }
+
+  /* Bytes to send, as codewords: segment header, data, terminator,
+     padding, then the error blocks interleaved the way the spec wants. */
+  function qrCodewords(bytes, ver) {
+    var cap = qrDataBytes(ver);
+    var bits = [];
+    function put(val, len) {
+      for (var i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1);
+    }
+    put(4, 4);
+    put(bytes.length, ver < 10 ? 8 : 16);
+    bytes.forEach(function (b) { put(b, 8); });
+    put(0, Math.min(4, cap * 8 - bits.length));
+    while (bits.length % 8) bits.push(0);
+    for (var pad = 0xEC; bits.length < cap * 8; pad ^= 0xEC ^ 0x11) put(pad, 8);
+
+    var data = [];
+    for (var i = 0; i < bits.length; i += 8) {
+      var b = 0;
+      for (var k = 0; k < 8; k++) b = (b << 1) | bits[i + k];
+      data.push(b);
+    }
+
+    var nb = QR_BLOCKS[ver - 1];
+    var ecc = QR_ECC[ver - 1];
+    var total = Math.floor(qrRawModules(ver) / 8);
+    var shortBlocks = nb - (total % nb);
+    var shortLen = Math.floor(total / nb) - ecc;
+    var blocks = [];
+    var at = 0;
+    for (var n = 0; n < nb; n++) {
+      var len = shortLen + (n < shortBlocks ? 0 : 1);
+      var chunk = data.slice(at, at + len);
+      at += len;
+      var rem = rsRemainder(chunk, ecc);
+      if (n < shortBlocks) chunk.push(0);
+      blocks.push(chunk.concat(rem));
+    }
+
+    var out = [];
+    for (var col = 0; col < blocks[0].length; col++) {
+      for (var row = 0; row < nb; row++) {
+        if (col === shortLen && row < shortBlocks) continue;
+        out.push(blocks[row][col]);
+      }
+    }
+    return out;
+  }
+
+  function qrAlignPositions(ver) {
+    if (ver === 1) return [];
+    var count = Math.floor(ver / 7) + 2;
+    var size = ver * 4 + 17;
+    var step = Math.floor((ver * 4 + count * 2 + 1) / (count * 2 - 2)) * 2;
+    var out = [6];
+    for (var pos = size - 7; out.length < count; pos -= step) out.splice(1, 0, pos);
+    return out;
+  }
+
+  /* Build the symbol. Returns the module grid: rows of booleans, true
+     is dark. `forceMask` is only for the test harness. */
+  function qrMatrix(text, forceMask) {
+    var bytes = [];
+    var enc = encodeURI(text);
+    for (var i = 0; i < enc.length; i++) {
+      var c = enc.charAt(i);
+      if (c === '%') { bytes.push(parseInt(enc.substr(i + 1, 2), 16)); i += 2; }
+      else bytes.push(enc.charCodeAt(i));
+    }
+    /* Mode nibble plus a count of 8 bits through version 9, 16 after. */
+    function needed(v) { return Math.ceil((4 + (v < 10 ? 8 : 16) + bytes.length * 8) / 8); }
+    var ver = 1;
+    while (ver <= 10 && qrDataBytes(ver) < needed(ver)) ver++;
+    if (ver > 10) return null;
+
+    var size = ver * 4 + 17;
+    var grid = [];
+    var fixed = [];
+    var y, x;
+    for (y = 0; y < size; y++) {
+      grid.push([]); fixed.push([]);
+      for (x = 0; x < size; x++) { grid[y].push(false); fixed[y].push(false); }
+    }
+    function set(xx, yy, dark) {
+      if (xx < 0 || yy < 0 || xx >= size || yy >= size) return;
+      grid[yy][xx] = dark;
+      fixed[yy][xx] = true;
+    }
+    function finder(cx, cy) {
+      for (var dy = -4; dy <= 4; dy++) {
+        for (var dx = -4; dx <= 4; dx++) {
+          var d = Math.max(Math.abs(dx), Math.abs(dy));
+          set(cx + dx, cy + dy, d !== 2 && d !== 4);
+        }
+      }
+    }
+    function align(cx, cy) {
+      for (var dy = -2; dy <= 2; dy++) {
+        for (var dx = -2; dx <= 2; dx++) {
+          set(cx + dx, cy + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+        }
+      }
+    }
+
+    for (i = 0; i < size; i++) {
+      set(6, i, i % 2 === 0);
+      set(i, 6, i % 2 === 0);
+    }
+    finder(3, 3);
+    finder(size - 4, 3);
+    finder(3, size - 4);
+    var pos = qrAlignPositions(ver);
+    for (i = 0; i < pos.length; i++) {
+      for (var j = 0; j < pos.length; j++) {
+        var corner = (i === 0 && j === 0) || (i === 0 && j === pos.length - 1) ||
+          (i === pos.length - 1 && j === 0);
+        if (!corner) align(pos[i], pos[j]);
+      }
+    }
+
+    function formatBits(mask) {
+      var d = (0 << 3) | mask; /* level M is 00 */
+      var rem = d;
+      for (var k = 0; k < 10; k++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+      var bits = ((d << 10) | rem) ^ 0x5412;
+      for (k = 0; k <= 5; k++) set(8, k, ((bits >>> k) & 1) === 1);
+      set(8, 7, ((bits >>> 6) & 1) === 1);
+      set(8, 8, ((bits >>> 7) & 1) === 1);
+      set(7, 8, ((bits >>> 8) & 1) === 1);
+      for (k = 9; k < 15; k++) set(14 - k, 8, ((bits >>> k) & 1) === 1);
+      for (k = 0; k < 8; k++) set(size - 1 - k, 8, ((bits >>> k) & 1) === 1);
+      for (k = 8; k < 15; k++) set(8, size - 15 + k, ((bits >>> k) & 1) === 1);
+      set(8, size - 8, true);
+    }
+    function versionBits() {
+      if (ver < 7) return;
+      var rem = ver;
+      for (var k = 0; k < 12; k++) rem = (rem << 1) ^ ((rem >>> 11) * 0x1F25);
+      var bits = (ver << 12) | rem;
+      for (k = 0; k < 18; k++) {
+        var bit = ((bits >>> k) & 1) === 1;
+        var a = size - 11 + (k % 3);
+        var b = Math.floor(k / 3);
+        set(a, b, bit);
+        set(b, a, bit);
+      }
+    }
+    formatBits(0);
+    versionBits();
+
+    /* Data, zigzagged up and down in two-module columns. */
+    var words = qrCodewords(bytes, ver);
+    var bi = 0;
+    for (var right = size - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (var vert = 0; vert < size; vert++) {
+        for (var k = 0; k < 2; k++) {
+          var xx = right - k;
+          var up = ((right + 1) & 2) === 0;
+          var yy = up ? size - 1 - vert : vert;
+          if (!fixed[yy][xx] && bi < words.length * 8) {
+            grid[yy][xx] = ((words[bi >>> 3] >>> (7 - (bi & 7))) & 1) === 1;
+            bi++;
+          }
+        }
+      }
+    }
+
+    function maskBit(m, xx, yy) {
+      switch (m) {
+        case 0: return (xx + yy) % 2 === 0;
+        case 1: return yy % 2 === 0;
+        case 2: return xx % 3 === 0;
+        case 3: return (xx + yy) % 3 === 0;
+        case 4: return (Math.floor(xx / 3) + Math.floor(yy / 2)) % 2 === 0;
+        case 5: return (xx * yy) % 2 + (xx * yy) % 3 === 0;
+        case 6: return ((xx * yy) % 2 + (xx * yy) % 3) % 2 === 0;
+        default: return ((xx + yy) % 2 + (xx * yy) % 3) % 2 === 0;
+      }
+    }
+    function applyMask(m) {
+      for (var yy = 0; yy < size; yy++) {
+        for (var xx = 0; xx < size; xx++) {
+          if (!fixed[yy][xx] && maskBit(m, xx, yy)) grid[yy][xx] = !grid[yy][xx];
+        }
+      }
+    }
+
+    /* The standard's four penalties. A mask is chosen for the lowest. */
+    function finderRuns(hist) {
+      var n = hist[1];
+      var core = n > 0 && hist[2] === n && hist[3] === n * 3 && hist[4] === n && hist[5] === n;
+      return (core && hist[0] >= n * 4 && hist[6] >= n ? 1 : 0) +
+        (core && hist[6] >= n * 4 && hist[0] >= n ? 1 : 0);
+    }
+    function pushRun(run, hist) {
+      if (hist[0] === 0) run += size;
+      hist.pop();
+      hist.unshift(run);
+    }
+    function endRuns(color, run, hist) {
+      if (color) { pushRun(run, hist); run = 0; }
+      pushRun(run + size, hist);
+      return finderRuns(hist);
+    }
+    function penalty() {
+      var score = 0;
+      var yy, xx, color, run, hist;
+      for (yy = 0; yy < size; yy++) {
+        color = false; run = 0; hist = [0, 0, 0, 0, 0, 0, 0];
+        for (xx = 0; xx < size; xx++) {
+          if (grid[yy][xx] === color) {
+            run++;
+            if (run === 5) score += 3; else if (run > 5) score++;
+          } else {
+            pushRun(run, hist);
+            if (!color) score += finderRuns(hist) * 40;
+            color = grid[yy][xx]; run = 1;
+          }
+        }
+        score += endRuns(color, run, hist) * 40;
+      }
+      for (xx = 0; xx < size; xx++) {
+        color = false; run = 0; hist = [0, 0, 0, 0, 0, 0, 0];
+        for (yy = 0; yy < size; yy++) {
+          if (grid[yy][xx] === color) {
+            run++;
+            if (run === 5) score += 3; else if (run > 5) score++;
+          } else {
+            pushRun(run, hist);
+            if (!color) score += finderRuns(hist) * 40;
+            color = grid[yy][xx]; run = 1;
+          }
+        }
+        score += endRuns(color, run, hist) * 40;
+      }
+      var dark = 0;
+      for (yy = 0; yy < size - 1; yy++) {
+        for (xx = 0; xx < size - 1; xx++) {
+          var c = grid[yy][xx];
+          if (c === grid[yy][xx + 1] && c === grid[yy + 1][xx] && c === grid[yy + 1][xx + 1]) score += 3;
+        }
+      }
+      for (yy = 0; yy < size; yy++) for (xx = 0; xx < size; xx++) if (grid[yy][xx]) dark++;
+      var total = size * size;
+      score += (Math.ceil(Math.abs(dark * 20 - total * 10) / total) - 1) * 10;
+      return score;
+    }
+
+    var best = 0;
+    if (typeof forceMask === 'number') {
+      best = forceMask;
+    } else {
+      var low = Infinity;
+      for (var m = 0; m < 8; m++) {
+        applyMask(m); formatBits(m);
+        var p = penalty();
+        if (p < low) { low = p; best = m; }
+        applyMask(m);
+      }
+    }
+    applyMask(best);
+    formatBits(best);
+    return grid;
+  }
+
+  /* The grid as an SVG, one path, a two-module quiet zone, drawn in
+     currentColor so the pane decides the ink. */
+  function qrSvg(text) {
+    var grid = qrMatrix(text);
+    if (!grid) return '';
+    var size = grid.length;
+    var pad = 2;
+    var d = '';
+    for (var y = 0; y < size; y++) {
+      for (var x = 0; x < size; x++) {
+        if (!grid[y][x]) continue;
+        var w = 1;
+        while (x + w < size && grid[y][x + w]) w++;
+        d += 'M' + (x + pad) + ' ' + (y + pad) + 'h' + w + 'v1h-' + w + 'z';
+        x += w - 1;
+      }
+    }
+    var box = size + pad * 2;
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + box + ' ' + box + '"' +
+      ' shape-rendering="crispEdges" role="img" aria-label="QR code for this menu">' +
+      '<path fill="currentColor" d="' + d + '"/></svg>';
+  }
+
+  /* ── sharing ───────────────────────────────────────────── */
+
+  /* A shelf is one integer. Bit N set means the ingredient whose `bit`
+     is N is stocked, and bar.json owns those bits and never moves one,
+     so a link sent today decodes the same after the bar grows: a new
+     bottle takes a new bit, and an old code simply has it unset. Only
+     the type is carried, never the brand — a guest needs to know there
+     is gin, not which gin.
+
+     Decimal, because a number is the thing a person can read back over
+     the phone. BigInt, not Number: a double is exact to 53 bits, and the
+     fifty-fourth bottle would otherwise round the whole shelf. */
+  function shelfCode(held) {
+    if (typeof BigInt !== 'function') return '';
+    var n = BigInt(0);
+    data.bar.ingredients.forEach(function (i) {
+      if (held[i.id] && typeof i.bit === 'number') n = n | (BigInt(1) << BigInt(i.bit));
+    });
+    return n.toString();
+  }
+
+  function shelfFromCode(code) {
+    if (typeof BigInt !== 'function' || !/^\d{1,400}$/.test(code || '')) return null;
+    var n = BigInt(code);
+    var out = {};
+    var any = false;
+    data.bar.ingredients.forEach(function (i) {
+      if (typeof i.bit !== 'number') return;
+      if ((n >> BigInt(i.bit)) & BigInt(1)) { out[i.id] = true; any = true; }
+    });
+    return any ? out : null;
+  }
+
+  function shareUrl(code) {
+    return location.origin + location.pathname + '?' + SHARE_PARAM + '=' + code;
+  }
+
+  function shareTitle() {
+    return cardTitle() === 'Your menu' ? 'Tonight\u2019s menu' : cardTitle();
+  }
+
+  /* Read ?s= on the way in. A good code opens the menu as the sender
+     sees it, shelf filter on; a bad one is dropped from the address and
+     otherwise ignored. */
+  function openSharedLink() {
+    var code = new URLSearchParams(location.search).get(SHARE_PARAM);
+    if (code === null) return;
+    var h = shelfFromCode(code);
+    if (!h) { dropSharedLink(); return; }
+    shared = { have: h, code: BigInt(code).toString() };
+    filter = emptyFilter();
+    filter.shared = true;
+    track('share_open', { bottles: stocked(h).length, drinks: pourableCount(h) });
+  }
+
+  function dropSharedLink() {
+    try { history.replaceState(null, '', location.pathname + location.hash); }
+    catch (e) { /* file:// */ }
+  }
+
+  /* Fallback for a clipboard that says no: leave the link selected. */
+  function selectShareUrl(from) {
+    var box = from.closest('.share');
+    var el = box && box.querySelector('.share__url');
+    if (!el || !window.getSelection) return;
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
   /* ── menu view ─────────────────────────────────────────── */
 
   function ingredientLine(d) {
@@ -344,7 +779,7 @@
     }
     if (filter.family && needs(d).indexOf(filter.family) < 0) return false;
     if (filter.pattern && patternIdOf(d) !== filter.pattern) return false;
-    if (filter.pourable && !canPour(d, held)) return false;
+    if (shelfGate() && !canPour(d, held)) return false;
     if (filter.q) {
       var hay = (d.name + ' ' + ingredientLine(d) + ' ' + d.code).toLowerCase();
       if (hay.indexOf(filter.q) < 0) return false;
@@ -615,7 +1050,7 @@
   function renderEmpty(held) {
     var canNow = pourableCount(held);
 
-    if (filter.pourable && canNow > 0) {
+    if (shelfGate() && canNow > 0) {
       /* Each clause is a full predicate, so they read as a sentence
          however many of them there happen to be. */
       var blocking = [];
@@ -642,9 +1077,13 @@
         '</div>';
     }
 
+    if (viewingShared()) {
+      return '<p class="empty">This shelf pours nothing on the menu yet.</p>';
+    }
+
     if (filter.pourable) {
       return '<p class="empty">Nothing yet. Stock a few more bottles on the ' +
-             'Bar tab and the menu fills in.</p>';
+             '<a href="#bar">Bar tab</a> and the menu fills in.</p>';
     }
 
     return '<p class="empty">Nothing on the menu matches that.</p>';
@@ -663,30 +1102,64 @@
       '</button>';
   }
 
-  function renderMasthead(n) {
-    var bottles = stocked().length;
+  /* Share menu is the reveal above Print. The QR and the link are the
+     same thing — the shelf as one number on the end of the address — so
+     whoever scans or taps opens this list live, on their own phone. */
+  function renderSharePane(held) {
+    var code = shelfCode(held);
+    if (!code || code === '0') return '';
+    var url = shareUrl(code);
+    var qr = qrSvg(url);
+    var body = shareTitle() + ' ' + url;
+    return '<div class="tonight__pane" id="share-pane"' + (shareOpen ? '' : ' hidden') + '>' +
+      '<p class="tonight__note">Scan it, or send the link. It carries the shelf, ' +
+        'not the brands, so what opens is this list, live, on their own phone.</p>' +
+      '<div class="share">' +
+        (qr ? '<div class="share__qr">' + qr + '</div>' : '') +
+        '<div class="share__side">' +
+          '<p class="share__url">' + esc(url.replace(/^https?:\/\//, '')) + '</p>' +
+          '<div class="tonight__acts">' +
+            '<button class="btn" data-share-copy="1">Copy link</button>' +
+            '<a class="btn" href="sms:?&body=' + encodeURIComponent(body) + '"' +
+              ' data-share-sms="1">Send by text</a>' +
+            (navigator.share ? '<button class="btn" data-share-native="1">Share\u2026</button>' : '') +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '</div>';
+  }
+
+  function revealHit(kind, label, hint, on) {
+    return '<button type="button" class="tonight__hit' + (on ? ' is-open' : '') + '"' +
+      ' data-' + kind + '-open="1"' +
+      ' aria-expanded="' + (on ? 'true' : 'false') + '"' +
+      ' aria-controls="' + kind + '-pane">' +
+      '<span class="tonight__k">' + esc(label) + '</span>' +
+      '<span class="tonight__count">' + esc(hint) + '</span>' +
+      '<span class="bottle__more" aria-hidden="true"></span>' +
+      '</button>';
+  }
+
+  function renderMasthead(n, held) {
+    var bottles = stocked(held).length;
     var shown = printOpen;
-    return '<div class="tonight' + (shown ? ' is-open' : '') + '">' +
+    var drinks = n + ' ' + (n === 1 ? 'drink' : 'drinks');
+    return '<div class="tonight">' +
       '<div class="tonight__print">' +
         '<h1 class="tonight__print-title">' + esc(cardTitle()) + '</h1>' +
-        '<p class="tonight__print-of">' + n + ' ' +
-          (n === 1 ? 'drink' : 'drinks') + '</p>' +
+        '<p class="tonight__print-of">' + drinks + '</p>' +
       '</div>' +
-      '<button type="button" class="tonight__hit" data-print-open="1"' +
-        ' aria-expanded="' + (shown ? 'true' : 'false') + '"' +
-        ' aria-controls="print-pane">' +
-        '<span class="tonight__k">Print menu</span>' +
-        '<span class="tonight__count">' + n + ' ' +
-          (n === 1 ? 'drink' : 'drinks') + '</span>' +
-        '<span class="bottle__more" aria-hidden="true"></span>' +
-      '</button>' +
+      revealHit('share', 'Share menu', 'QR code or link', shareOpen) +
+      renderSharePane(held) +
+      revealHit('print', 'Print menu', drinks, shown) +
       '<div class="tonight__pane" id="print-pane"' + (shown ? '' : ' hidden') + '>' +
         '<label class="tonight__field" for="menu-title">Card title</label>' +
         '<input class="tonight__title" id="menu-title" type="text" maxlength="72" ' +
           'placeholder="Home St. Bar" autocomplete="off" ' +
           'spellcheck="true" enterkeyhint="done" value="' + esc(menuTitle) + '">' +
         '<p class="tonight__note">Everything the ' + plural(bottles, 'bottle', 'bottles') +
-          ' on your shelf will pour, in full. Garnish where you have it.</p>' +
+          ' on ' + (viewingShared() ? 'this' : 'your') + ' shelf will pour, in full. Garnish where ' +
+          (viewingShared() ? 'they have' : 'you have') + ' it.</p>' +
         '<div class="tonight__opts">' +
           printOptBtn('icon', 'Icon') +
           printOptBtn('recipe', 'Recipe') +
@@ -701,17 +1174,35 @@
       '</div></div>';
   }
 
+  /* What a guest sees over a shared list. Their own shelf, if they have
+     one, is not touched until they say so; the My menu chip is the way
+     back to it. */
+  function renderSharedBanner(held) {
+    var b = stocked(held).length;
+    var n = pourableCount(held);
+    var mine = stocked().length > 0;
+    return '<div class="shared">' +
+      '<p class="shared__k">Shared menu</p>' +
+      '<p class="shared__copy">Someone sent you their bar: ' +
+        plural(b, 'bottle', 'bottles') + ', ' + plural(n, 'drink', 'drinks') + '.' +
+        (mine ? ' Your own shelf is untouched.' : '') + '</p>' +
+      '<div class="tonight__acts">' +
+        '<button class="btn" data-share-adopt="1">Make this my shelf</button>' +
+      '</div></div>';
+  }
+
   function renderMenu() {
-    var held = have;
-    var showShelf = stocked().length > 0;
+    var held = heldNow();
+    var showShelf = stocked(held).length > 0;
     var list = data.menu.cocktails.filter(function (d) { return matches(d, held); });
+    var pre = viewingShared() ? renderSharedBanner(held) : '';
 
     if (!list.length) {
-      $('#menu-body').innerHTML = renderEmpty(held);
+      $('#menu-body').innerHTML = pre + renderEmpty(held);
       return;
     }
 
-    var html = filter.pourable ? renderMasthead(list.length) : '';
+    var html = pre + (shelfGate() ? renderMasthead(list.length, held) : '');
 
     if (filter.method === 'families' && data.kin) {
       data.kin.patterns.forEach(function (p) {
@@ -757,7 +1248,7 @@
   }
 
   function renderFilters() {
-    var held = have;
+    var held = heldNow();
     var n = data.menu.cocktails.filter(function (d) { return matches(d, held); }).length;
 
     /* The chip row is a horizontal scroller. Rebuilding it from innerHTML
@@ -804,13 +1295,23 @@
     /* Carry the shelf count on the control itself. The Bar tab shows the
        same number, and the two disagreeing with no explanation is exactly
        how this filter looked broken. */
-    var canNow = stocked().length ? pourableCount(held) : null;
+    var canNow = stocked().length ? pourableCount(have) : null;
 
     html += '</div><div class="chips">' +
       '<button class="chip chip--pour' + (filter.pourable ? ' is-on' : '') +
-        '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + 'What I can pour' +
-        (canNow === null ? '' : ' · ' + canNow) + '</button>' +
-      (filter.family || filter.pattern || filter.q || filter.method !== 'all' || filter.pourable
+        '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + 'My menu' +
+        (canNow === null ? '' : ' · ' + canNow) + '</button>';
+
+    /* Once a shared link has been opened its menu is a second chip for
+       the rest of the session, so the two are a switch, not a detour. */
+    if (shared) {
+      html += '<button class="chip chip--pour' + (filter.shared ? ' is-on' : '') +
+        '" data-shared="1">' + (filter.shared ? '✓ ' : '') + 'Shared menu · ' +
+        pourableCount(shared.have) + '</button>';
+    }
+
+    html +=
+      (filter.family || filter.pattern || filter.q || filter.method !== 'all' || shelfGate()
         ? '<button class="chip" data-clear="1">Clear</button>' : '') +
       '</div>' +
       '<p class="filters__note"><b>' + n + '</b> of ' + data.menu.cocktails.length + ' shown</p>' +
@@ -1154,14 +1655,14 @@
   function revealDrink(id) {
     var d = cocktailBy[id];
     if (!d) return;
-    if (!matches(d, have)) {
+    if (!matches(d, heldNow())) {
       filter.family = null;
       filter.q = '';
       if (filter.pattern && patternIdOf(d) !== filter.pattern) filter.pattern = null;
       if (filter.method === 'stirred' || filter.method === 'shaken') {
         if (d.method !== filter.method) filter.method = 'all';
       }
-      if (filter.pourable && !canPour(d, have)) filter.pourable = false;
+      if (shelfGate() && !canPour(d, heldNow())) { filter.pourable = false; filter.shared = false; }
     }
     open = {};
     open[id] = true;
@@ -1189,8 +1690,10 @@
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
-      '[data-pourable],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-seemenu],' +
-      '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern]');
+      '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-seemenu],' +
+      '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
+      '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
+      '[data-share-adopt]');
     if (!t) return;
 
     if (t.dataset.recipeTab) {
@@ -1260,7 +1763,16 @@
 
     if (t.dataset.pourable) {
       filter.pourable = !filter.pourable;
+      filter.shared = false;
       track('filter', { filter_type: 'pourable', filter_value: filter.pourable ? 'on' : 'off' });
+      repaintMenu();
+      return;
+    }
+
+    if (t.dataset.shared) {
+      filter.shared = !filter.shared;
+      filter.pourable = false;
+      track('filter', { filter_type: 'shared', filter_value: filter.shared ? 'on' : 'off' });
       repaintMenu();
       return;
     }
@@ -1275,15 +1787,60 @@
       return;
     }
 
-    if (t.dataset.printOpen) {
-      printOpen = !printOpen;
-      var tonight = t.closest('.tonight');
-      if (!tonight) return;
-      tonight.classList.toggle('is-open', printOpen);
-      t.setAttribute('aria-expanded', printOpen ? 'true' : 'false');
-      var pane = tonight.querySelector('#print-pane');
-      if (pane) pane.hidden = !printOpen;
-      track('print_reveal', { open: printOpen });
+    if (t.dataset.printOpen || t.dataset.shareOpen) {
+      var isPrint = !!t.dataset.printOpen;
+      var on = isPrint ? (printOpen = !printOpen) : (shareOpen = !shareOpen);
+      t.classList.toggle('is-open', on);
+      t.setAttribute('aria-expanded', on ? 'true' : 'false');
+      var pane = document.getElementById(t.getAttribute('aria-controls'));
+      if (pane) pane.hidden = !on;
+      track(isPrint ? 'print_reveal' : 'share_reveal', { open: on });
+      return;
+    }
+
+    if (t.dataset.shareCopy) {
+      var url = shareUrl(shelfCode(heldNow()));
+      var said = function () {
+        t.textContent = 'Copied';
+        setTimeout(function () { t.textContent = 'Copy link'; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(said, function () { selectShareUrl(t); });
+      } else {
+        selectShareUrl(t);
+      }
+      track('share_copy');
+      return;
+    }
+
+    /* The anchor does the work; this only counts it. */
+    if (t.dataset.shareSms) {
+      track('share_sms');
+      return;
+    }
+
+    if (t.dataset.shareNative) {
+      navigator.share({ title: shareTitle(), url: shareUrl(shelfCode(heldNow())) })
+        .catch(function () { /* dismissed */ });
+      track('share_native');
+      return;
+    }
+
+    if (t.dataset.shareAdopt) {
+      if (!shared) return;
+      have = {};
+      Object.keys(shared.have).forEach(function (k) { have[k] = true; });
+      own = {};
+      saveHave(); saveOwn();
+      track('share_adopt', { bottles: stocked().length });
+      shared = null;
+      dropSharedLink();
+      filter = emptyFilter();
+      filter.pourable = true;
+      barOrder = null;
+      refreshCount();
+      repaintMenu();
+      $('#main').scrollTop = 0;
       return;
     }
 
@@ -1322,8 +1879,9 @@
 
     /* Keep the shelf filter, drop whatever else was excluding things. */
     if (t.dataset.clearothers) {
+      var keepShared = filter.shared;
       filter = emptyFilter();
-      filter.pourable = true;
+      if (keepShared) filter.shared = true; else filter.pourable = true;
       track('filter', { filter_type: 'clear', filter_value: 'others' });
       repaintMenu();
       return;
@@ -1450,7 +2008,7 @@
     renderMenu();
     var note = document.querySelector('.filters__note');
     if (note) {
-      var n = data.menu.cocktails.filter(function (d) { return matches(d, have); }).length;
+      var n = data.menu.cocktails.filter(function (d) { return matches(d, heldNow()); }).length;
       note.innerHTML = '<b>' + n + '</b> of ' + data.menu.cocktails.length + ' shown';
     }
     if (searchTimer) clearTimeout(searchTimer);
@@ -1538,6 +2096,7 @@
     applyPrintFlags();
     syncHaveFromBrands();
     saveHave();
+    openSharedLink();
 
     $('#loading').hidden = true;
     repaintMenu();

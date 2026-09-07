@@ -161,6 +161,40 @@ are on; Barline, when ticked, is its own sheet after the drinks, the
 same instructions as the Key tab. Kin never does. The named title is
 the letterspaced cap.
 
+## Sharing
+
+A menu leaves the phone as one number: `fewbottles.com/?s=281474976710655`.
+The shelf is a bitmask. Every ingredient in `bar.json` carries a `bit`,
+and bit N set means that ingredient is stocked. Brands are never in the
+code — a guest needs to know there is gin, not which gin.
+
+**A bit is a stable key, like a cocktail id.** The links live in other
+people's message threads, so a bit is assigned once and never moved or
+reused. A new ingredient takes the next unused bit, wherever it sits in
+the file. Dropping an ingredient means moving its bit into
+`retired_bits`, and the checker refuses a duplicate or a retired bit.
+There is no ceiling in the code itself: the number is a decimal string
+read with `BigInt`, never `Number`, because a double is exact to 53 bits
+and the fifty-fourth bottle would round the whole shelf. The QR encoder
+in `app.js` stops at version 10, which leaves room for bits 0–621.
+
+Share menu is the reveal above Print on the pourable list: a QR of the
+link, the link itself, Copy, Send by text (`sms:` with the link in the
+body), and the native share sheet where there is one. The QR encoder is
+the standard written small — byte mode, level M — and is checked against
+a reference library module for module; do not swap it for a CDN.
+
+Opening a shared link is **reading, not adopting**. The sender's shelf is
+held in memory for the session and the list opens gated on it, with a
+banner over the top. The chip row then carries two menus: My menu is
+the list your shelf pours, Shared menu is the list theirs pours, and
+tapping one switches off the other. The guest's own shelf in
+`localStorage` is not touched until they tap Make this my shelf, which
+replaces it (brand ticks included, since brands do not travel) and
+drops the parameter from the address. The service worker matches
+navigations with `ignoreSearch` so a shared link opens offline from the
+cached shell.
+
 ## Families
 
 A fourth segment after All / Stirred / Shaken. It regroups the same
