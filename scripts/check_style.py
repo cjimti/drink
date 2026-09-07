@@ -305,6 +305,35 @@ def check_bigint(src):
     return []
 
 
+SHIPPED = ["index.html", "assets/app.css", "assets/app.js", "sw.js",
+           "llms.txt", "llms-full.txt"]
+
+
+def shipped_files():
+    """Everything the site actually serves, as {name: text}."""
+    names = SHIPPED + sorted(str(p.relative_to(ROOT))
+                             for p in (ROOT / "data").glob("*.json"))
+    return {n: (ROOT / n).read_text() for n in names}
+
+
+def check_dashes(texts):
+    """No em dash in anything the site serves.
+
+    A dash standing in for a pause is the surest tell of prose nobody
+    edited, and it is banned here on the house's say-so rather than on
+    taste. Comments count: they ship inside the file. The escaped
+    spelling counts too, because JSON writes it that way and no reader
+    can tell which spelling it arrived in.
+    """
+    errs = []
+    for name, text in sorted(texts.items()):
+        for n, line in enumerate(text.splitlines(), 1):
+            if "\u2014" in line or "\\u2014" in line:
+                errs.append(f"{name}:{n} em dash in a served file; a comma, "
+                            f"a colon or a full stop says it")
+    return errs
+
+
 def check_drink_links(src):
     """Every drink id is reachable at the address the Copy button hands out.
 
@@ -341,6 +370,7 @@ def main():
     errs += check_track(js)
     errs += check_bigint(js)
     errs += check_drink_links(js)
+    errs += check_dashes(shipped_files())
 
     for e in errs:
         print(f"  STYLE   {e}")
@@ -352,6 +382,8 @@ def main():
     print("  a11y    labels, alt text and unique ids in index.html")
     print("  wiring  every click branch reachable, every track() key known, "
           "every drink id addressable")
+    print(f"  copy    no em dash in the {len(shipped_files())} file(s) the "
+          f"site serves")
     return 0
 
 

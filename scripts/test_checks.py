@@ -161,6 +161,16 @@ def run_house(failures):
     report("house/drink route clean", check_style.check_drink_links(app),
            False, failures)
 
+    dash = "\u2014"
+    report("house/em dash", check_style.check_dashes({"a.js": "/* a " + dash +
+                                                     " b */"}), True, failures)
+    report("house/em dash escaped",
+           check_style.check_dashes({"a.json": '{"a": "b \\u2014 c"}'}), True,
+           failures)
+    report("house/em dash clean",
+           check_style.check_dashes(check_style.shipped_files()), False,
+           failures)
+
 
 def run_lexer(failures):
     """Stripping the real files leaves every bracket balanced."""
@@ -187,7 +197,7 @@ def main():
     if failures:
         return 1
     n = (len(css_cases()) + len(js_cases()) + len(py_cases())
-         + len(size_cases()) + 8 + 2)
+         + len(size_cases()) + 11 + 2)
     print(f"  test    {n} case(s): every rule fails when it is broken")
     return 0
 

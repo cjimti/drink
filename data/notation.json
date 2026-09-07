@@ -2,7 +2,7 @@
   "system": {
     "name": "Barline",
     "tagline": "A notation for cocktails",
-    "lead": "Barline writes down what changes and leaves out what you already know. It never names an ingredient — the ingredient line does that. What is left is quantity, order and service, which turns out to be all a code needs to carry.",
+    "lead": "Barline writes down what changes and leaves out what you already know. It never names an ingredient, because the ingredient line does that. What is left is quantity, order and service, which turns out to be all a code needs to carry.",
     "principles": [
       {
         "h": "The list is the score",
@@ -14,7 +14,7 @@
       },
       {
         "h": "Case does the work of extra letters",
-        "t": "Rather than invent a second letter, one initial carries both halves of a pair — so there is less to memorise, not more. Where two garnishes want the same letter, lowercase is the one you reach for more often: `l` lemon, `L` lime; `s` sugar, `S` salt; `o` orange, `O` olive. Where it is a matter of degree, uppercase is the larger: `q` a quarter, `Q` three quarters; `r` a bare rocks glass, `R` one with ice."
+        "t": "Rather than invent a second letter, one initial carries both halves of a pair, so there is less to memorise, not more. Where two garnishes want the same letter, lowercase is the one you reach for more often: `l` lemon, `L` lime; `s` sugar, `S` salt; `o` orange, `O` olive. Where it is a matter of degree, uppercase is the larger: `q` a quarter, `Q` three quarters; `r` a bare rocks glass, `R` one with ice."
       },
       {
         "h": "The last token is service",
@@ -27,7 +27,7 @@
     ],
     "footnote": "The nearest relative is figured bass, where a composer writes the bass note and a few numbers for the intervals above it and the player fills in the harmony from what they already know. Same bargain: write the figures, trust the reader."
   },
-  "note": "The house shorthand. Codes read left to right in build order, base spirit first, and end with one token for glass plus garnish. Everything is contextual — a bare number is ounces next to a spirit and dashes next to bitters.",
+  "note": "The house shorthand. Codes read left to right in build order, base spirit first, and end with one token for glass plus garnish. Everything is contextual: a bare number is ounces next to a spirit and dashes next to bitters.",
   "amounts": [
     {
       "code": "2",
@@ -208,7 +208,7 @@
         "2      2 oz bourbon",
         "Q      3/4 oz lemon juice",
         "h      1/2 oz demerara syrup",
-        "—      egg white takes no measure",
+        "\u00b7      egg white takes no measure",
         "Rcl    rocks glass iced, cherry and lemon"
       ]
     }

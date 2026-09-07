@@ -127,12 +127,12 @@ def write_llms(menu, bar, notation, kin):
         "`q` is a quarter ounce and `Q` is three quarters; the last token is",
         "glass plus garnish, matched longest-first. Each drink in the JSON",
         "carries both `code` (the card) and `build` (the same drink spelled",
-        "out). Ids are stable — never renamed, never reused.",
+        "out). Ids are stable: never renamed, never reused.",
         "",
         "## Start here",
         "",
         f"- [The app]({ORIGIN}/): interactive menu, Bar tab, and the Barline key",
-        f"- [Full menu]({ORIGIN}/llms-full.txt): every drink decoded — amounts, glass, garnish, taste, history",
+        f"- [Full menu]({ORIGIN}/llms-full.txt): every drink decoded, with amounts, glass, garnish, taste and history",
         f"- [Cocktails JSON]({ORIGIN}/data/cocktails.json): source of truth for the menu",
         f"- [The bar]({ORIGIN}/data/bar.json): every bottle a drink can call for",
         f"- [Barline]({ORIGIN}/data/notation.json): the shorthand table the decoder reads from",
@@ -156,7 +156,7 @@ def write_llms(menu, bar, notation, kin):
                 # to the dump: #drink/<id> opens that drink expanded.
                 lines.append(
                     f"- [{d['name']}]({ORIGIN}/#drink/{d['id']}): "
-                    f"`{d['code']}` — {fam}; {line}"
+                    f"`{d['code']}`; {fam}; {line}"
                 )
         lines.append("")
     lines += [
@@ -190,7 +190,7 @@ def write_full(menu, bar, notation, kin):
             pattern_of[did] = row.get("pattern")
 
     lines = [
-        "# few bottles — the cocktail menu",
+        "# few bottles: the cocktail menu",
         "",
         "> Classic drinks from one small home bar, decoded from the house",
         "> shorthand on the printed card.",

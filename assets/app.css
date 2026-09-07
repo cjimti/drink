@@ -1,12 +1,12 @@
 /* ─────────────────────────────────────────────────────────────
-   fewbottles.com — Fern Street 110
+   fewbottles.com, Fern Street 110
 
    The printed menu is pure black and white: a heavy rule under a
    letterspaced cap, italic ingredient lines, and the shorthand set
    small and grey in the margin. This is that page after dark.
 
    Dark is the default because a menu gets read in a dim room. Light
-   mode is not an inversion — it is the printed page, near enough to
+   mode is not an inversion. It is the printed page, near enough to
    put the two side by side.
 
    One accent only. Brass carries every earned state: a filter that is
@@ -35,6 +35,15 @@
   --mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --pad: 20px;
+  --measure: 660px;
+  /* The wide layout is two fixed tracks, not a column that stretches. A
+     drink row is a name on the left and its code on the right, and past
+     about 700px those two stop reading as one row. So the list holds the
+     measure the whole design is drawn at and the rail takes the rest. */
+  --wide: 1000px;
+  --list: 1fr;
+  --rail: 320px;
+  --railgap: 36px;
   --topbar-h: 52px;
   --tabbar-h: 58px;
 
@@ -94,8 +103,8 @@ body {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
   /* Hold the scrollbar track open. A short view and a long one otherwise
-     differ by a scrollbar's width, and everything centred — the tabs
-     included — slides sideways as you move between them. */
+     differ by a scrollbar's width, and everything centred, the tabs
+     included, slides sideways as you move between them. */
   scrollbar-gutter: stable;
 }
 
@@ -135,6 +144,39 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .04em;
   text-transform: lowercase;
   white-space: nowrap;
+}
+
+/* The same three sections as the tab bar, for a screen wide enough that
+   a bar pinned to the bottom edge is a phone habit rather than a help.
+   Hidden until then; the JS keeps both sets in step. */
+.topbar__tabs { display: none; gap: 22px; margin-right: auto; padding-left: 26px; }
+
+.toptab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.toptab.is-active { color: var(--bone); border-bottom-color: var(--brass); }
+
+.toptab__count {
+  margin-left: 7px;
+  min-width: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--brass);
+  color: var(--on-brass);
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 17px;
+  text-align: center;
 }
 
 /* About sits where the old house link did: quiet, until it is on. */
@@ -260,7 +302,11 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Layout ───────────────────────────────────────────────── */
 
-.view { max-width: 660px; margin: 0 auto; padding: 0 var(--pad) 40px; }
+.view { max-width: var(--measure); margin: 0 auto; padding: 0 var(--pad) 40px; }
+
+/* Below 900px this is the whole Menu view and the aside is not rendered;
+   above it, the two are the grid's cells. */
+.menu-main { min-width: 0; }
 
 .loading {
   padding: 70px var(--pad);
@@ -433,6 +479,24 @@ noscript.fallback a { color: var(--brass); }
 }
 .filters__note b { color: var(--brass); font-weight: 500; }
 
+/* Off on a phone: down there the chip row is a scroller and there is
+   nothing to reveal. */
+.chips__more {
+  display: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 7px 0 0;
+  color: var(--faint);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.chips__more:hover { color: var(--muted); }
+
 /* ── Method + family headings ─────────────────────────────── */
 
 .method { padding-top: 30px; }
@@ -508,7 +572,7 @@ noscript.fallback a { color: var(--brass); }
   font: inherit;
 }
 
-/* Full height of the row, left of the name. Decorative — the code
+/* Full height of the row, left of the name. Decorative, because the code
    already says which glass. */
 .drink__glass {
   flex: 0 0 2.4em;
@@ -827,7 +891,7 @@ noscript.fallback a { color: var(--brass); }
   padding-bottom: 1px;
 }
 
-/* Not "nothing here" but "your filters disagree" — it gets a way out. */
+/* Not "nothing here" but "your filters disagree", so it gets a way out. */
 .empty--clash { padding: 38px 0; }
 .empty--clash p { margin: 0 auto 15px; max-width: 34ch; }
 .empty--clash b { color: var(--brass); font-style: normal; }
@@ -889,7 +953,7 @@ noscript.fallback a { color: var(--brass); }
 }
 
 /* The name that prints on the card. Looks like a heading you can type
-   into, not a search box — a hairline, no fill. */
+   into, not a search box: a hairline, no fill. */
 .tonight__title {
   display: block;
   width: 100%;
@@ -1106,7 +1170,7 @@ noscript.fallback a { color: var(--brass); }
 .tally__acts { display: flex; gap: 8px; margin-top: 15px; }
 
 /* The three bottles worth buying next. Same figure as the rows below it,
-   lifted out of a long shelf, with the drinks it opens read out — brass on
+   lifted out of a long shelf, with the drinks it opens read out. Brass on
    the number and nowhere else, because the number is the earned part. */
 .next { margin-top: 19px; }
 
@@ -1164,7 +1228,7 @@ noscript.fallback a { color: var(--brass); }
 .next__buy { color: var(--faint); font-style: italic; }
 
 /* Named starting points, between the note and the bulk buttons. A row is
-   the shelf, what is in it, and what it would add — the same figure the
+   the shelf, what is in it, and what it would add, the same figure the
    bottles carry, so it reads as the same idea one size up. */
 .starters { margin-top: 19px; }
 
@@ -1666,7 +1730,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
 
 .tab__glyph { width: 17px; height: 17px; border: 1.5px solid currentColor; }
 /* The three glyphs are drawn at different heights on purpose, so each
-   reserves the same 17px box — otherwise the labels under them sit at
+   reserves the same 17px box, or the labels under them would sit at
    three slightly different heights. */
 .tab__glyph--menu { border-width: 1.5px 0; height: 13px; margin: 2px 0; }
 .tab__glyph--bar {
@@ -1708,14 +1772,457 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   /* Only when the number actually went up. A tick on every repaint is
      noise; a tick when a bottle just bought you three drinks is the
      point of the tab. */
-  .tally__n.is-up { animation: tick .3s ease-out; }
+  .tally__n.is-up, .card__n.is-up { animation: tick .3s ease-out; }
   @keyframes tick { from { opacity: .3; transform: translateY(5px) scale(.82); } }
+}
+
+/* ── Tonight ──────────────────────────────────────────────────
+   The phone propped against the bottles at a party, and the tablet on
+   the bar. The same list `renderMenu` always writes, with everything
+   that is not a drink taken off the screen and the type doubled. It is a
+   display: nothing here is persisted, nothing here is a control except
+   Done, and the theme is whatever the room already put the phone in.
+
+   `.tonight` is the masthead and was named long before this; the mode is
+   `body.is-tonight` and its own furniture is `.night`. */
+
+body.is-tonight .topbar,
+body.is-tonight .tabbar,
+body.is-tonight #filters,
+body.is-tonight .shared,
+body.is-tonight .tonight__hit,
+body.is-tonight .tonight__pane,
+body.is-tonight .drink__code,
+body.is-tonight .recipe-tabs { display: none; }
+
+/* Only what pours is on the card, exactly as paper does it. */
+body.is-tonight .drink.is-short { display: none; }
+
+/* The card title, in the treatment print gives it. */
+body.is-tonight .tonight { padding-bottom: 14px; border-bottom: 3px solid var(--rule); }
+body.is-tonight .tonight__print { display: block; }
+
+body.is-tonight .tonight__print-title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  line-height: 1.15;
+  color: var(--bone);
+}
+
+body.is-tonight .tonight__print-of {
+  margin: 8px 0 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Across the room, not in the hand. */
+body.is-tonight .drink__name { font-size: 22px; }
+body.is-tonight .drink__line { font-size: 17px; }
+body.is-tonight .drink__glass { flex: 0 0 3.4em; }
+body.is-tonight .drink__text { padding: 18px 0; }
+
+/* A guest reads the pour, not the Barline, so the recipe opens on its
+   one pane with nothing to switch it. */
+body.is-tonight .recipe-panel--taste,
+body.is-tonight .recipe-panel--history,
+body.is-tonight .recipe-panel--kin,
+body.is-tonight .recipe-panel--share { display: none; }
+
+/* One control, out of the way of the list and clear of the home bar. */
+.night { display: none; }
+body.is-tonight .night { display: block; }
+body.is-tonight .view { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+
+.night__done {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 50;
+  appearance: none;
+  background: var(--ground);
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  padding: 9px 22px;
+  color: var(--faint);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.night__done:hover { color: var(--muted); }
+
+/* A pill in the middle of a phone is out of the way. In the middle of a
+   1120px column it sits on top of a drink. */
+@media (min-width: 900px) {
+  .night__done { left: auto; right: var(--pad); transform: none; }
+}
+.night__done:focus-visible { color: var(--brass); }
+
+/* ── The rail ─────────────────────────────────────────────────
+   The app is a phone column and stops there, which leaves a laptop a
+   strip in a void. The second column is not more room for the list. The
+   list has the width it was drawn at. It is a rail that answers the
+   column beside it: on the Menu, the drink you opened, or the shelf you
+   are building toward; on the Bar, the count that moves as you tick.
+
+   Both rails are sticky against #main and both are the same width, so
+   moving between the two tabs does not move the furniture. */
+
+
+.menu-aside__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 0 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.menu-aside__head .drink__glass { flex: 0 0 3em; }
+.menu-aside__head .drink__text { padding: 0; }
+.menu-aside__head .drink__name { font-size: 15px; }
+.menu-aside__head .drink__code { color: var(--brass); }
+
+/* The way out of the rail, in the same quiet cap the About sheet closes
+   with. Escape does it too. */
+.menu-aside__close {
+  flex: none;
+  align-self: flex-start;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 2px 0 8px 8px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--faint);
+  cursor: pointer;
+}
+.menu-aside__close:hover { color: var(--bone); }
+
+/* Inside the rail the recipe is the panel, not an unfolding of a row, so
+   the dashed seam that ties it to the row above comes off. */
+.menu-aside .recipe { border-top: 0; margin-top: 0; padding-top: 10px; }
+
+/* ── The rail's resting state ─────────────────────────────────
+   A third of the screen saying "tap a drink" is a third of the screen
+   doing nothing, and it is the first thing a laptop sees. So when no
+   drink is open the rail holds the engine: what the shelf pours now,
+   and the one bottle that would move it most. */
+
+.card { padding-top: 4px; }
+
+.card__fig {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0 0 14px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+}
+button.card__fig { cursor: pointer; }
+
+.card__n {
+  flex: none;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 34px;
+  line-height: .9;
+  letter-spacing: -.02em;
+  color: var(--brass);
+  font-variant-numeric: tabular-nums;
+}
+
+.card__of {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.card__note {
+  margin: 12px 0 0;
+  font-size: 13.5px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.card__k {
+  margin: 22px 0 0;
+  /* clear: the how-to's lead sits under a headline, not beside it */
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* Three suggestions, read as a list: same hairline rows the Bar tab's
+   own Next bottles use. */
+.card__next {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.card__next:first-of-type { padding-top: 5px; }
+.card__next:last-of-type { border-bottom: 0; }
+
+.card__buy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* The shelf's own control, on the row that names the bottle worth buying:
+   selecting it here counts the bottle in without a trip to the Bar tab. */
+.card__box { padding: 4px 0; }
+.card__box .bottle__box { display: block; }
+.card__buy-n {
+  flex: none;
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--brass);
+}
+.card__buy-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.card__opens {
+  /* Under the name, not under the checkbox: 17px box plus the 10px gap. */
+  margin: 4px 0 0 27px;
+  font-size: 13.5px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.card__acts { margin-top: 18px; }
+
+/* The how-to reuses the Key tab's numbered treatment, because that is
+   already what this site looks like when it explains itself. */
+.card__k--top { margin-top: 26px; }
+.card .rules { margin-top: 4px; }
+.card .rule { padding-left: 26px; }
+.card .rule__t { font-size: 14px; }
+
+/* A first visit has the whole rail and no shelf to describe yet, so it
+   gets what a first visit needs: what this is, and what to do with it.
+   The strip above the list on a phone says the short version. */
+.card__h {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  line-height: 1.45;
+  color: var(--bone);
+}
+
+/* ── Wide screens ───────────────────────────────────────────── */
+
+@media (min-width: 900px) {
+  .tabbar { display: none; }
+  .topbar__tabs { display: flex; }
+
+  /* The brand and About sit on the same verticals the list and the rail
+     do. A top bar flush to the window over content centred at 1000px is
+     the tell that nothing here was laid out for a big screen. */
+  .topbar {
+    padding-inline: max(var(--pad), (100% - var(--wide)) / 2 + var(--pad));
+  }
+
+  .view { max-width: var(--wide); }
+
+  #view-menu:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, var(--list)) var(--rail);
+    column-gap: var(--railgap);
+    justify-content: center;
+    align-items: start;
+  }
+
+  /* The filter block bleeds edge to edge on a phone, where edge to edge
+     is the whole screen. In a grid cell it should be the cell: its rule
+     then starts where the list starts and stops where the list stops. */
+  .filters { margin: 0; padding-inline: 0; }
+
+  /* A pointer has no way to swipe a chip row. Wrap them instead. And
+     twenty-seven chips wrapped is half the fold gone before the first
+     drink, so the bottle row is clamped to two and opens on a word. */
+  .chips { flex-wrap: wrap; overflow: visible; }
+  /* Exactly two rows. A clamp that lands mid-chip reads as a rendering
+     bug, so this is the chip height twice plus the gap between them. */
+  .chips--bottle { max-height: 60px; overflow: hidden; }
+  .chips--bottle.is-all { max-height: none; }
+  .chips__more { display: block; text-align: left; padding-bottom: 4px; }
+
+  /* The method control and the search field are each half a line; on a
+     phone they are two full-width rows because there is no width to
+     share. Here there is. */
+  .filters {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    column-gap: 14px;
+  }
+  .filters > * { grid-column: 1 / -1; }
+  .filters > .seg { grid-column: 1; }
+  .filters > .search { grid-column: 2; margin-top: 0; }
+  .filters > .seg + .search { margin-top: 9px; }
+
+  /* The phone squeezes the tracking and the padding so four segments fit
+     a 390px row. There is room here; give it back. */
+  .seg--wide .seg__b { letter-spacing: .15em; font-size: 10.5px; padding: 9px 18px; }
+
+  /* The row the rail is answering to. Every row carries the rule and the
+     offset so only the colour changes. An indent that appears with the
+     selection would nudge the whole list sideways. */
+  .drink {
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+    margin-left: -14px;
+  }
+  .drink.is-open { border-left-color: var(--brass); }
+
+  /* Tick on the left, watch the number move on the right. The shelf is
+     one column at the same measure the menu uses; the count, the next
+     bottles and the starter shelves ride beside it and stay put. Two
+     equal columns of shelf sections was worse than one: a Base section
+     seven hundred pixels tall beside a Vermouth section ninety pixels
+     tall leaves six hundred pixels of nothing. */
+  #bar-body {
+    display: grid;
+    grid-template-columns: minmax(0, var(--list)) var(--rail);
+    column-gap: var(--railgap);
+    justify-content: center;
+    align-items: start;
+  }
+  .bar-shelves { grid-column: 1; grid-row: 1; min-width: 0; }
+  .bar-rail { grid-column: 2; grid-row: 1; }
+
+  /* Below 900px `.bar-rail` is just the block the tally has always been
+     and `.menu-aside` is not rendered at all, so every rule that makes a
+     rail a rail belongs in here and nowhere else. */
+  .menu-aside,
+  .bar-rail {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    /* #main is the scroll container, so this sticks against that and not
+       against the window. */
+    max-height: calc(100dvh - var(--topbar-h));
+    min-height: calc(100dvh - var(--topbar-h) - 40px);
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    padding: 12px 0 0 calc(var(--railgap) / 2);
+    border-left: 1px solid var(--hair);
+  }
+
+  /* A panel that ends flush with the fold reads as cut off. */
+  .menu-aside > *:last-child,
+  .bar-rail > *:last-child { margin-bottom: 24px; }
+
+  /* The rail is what follows you down the page now, and the count follows
+     you down the rail: on a tall shelf the rail scrolls inside itself, and
+     a count that scrolls away is a count you cannot watch move. */
+  .bar-rail .tally {
+    margin: 0;
+    padding: 0;
+    background: var(--ground);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar-rail .tally__hit,
+  .bar-rail .tally__fig { flex-wrap: wrap; min-height: 0; padding: 2px 0 14px; }
+  .bar-rail .tally__cta { margin: 10px 0 0; flex-basis: 100%; }
+  .bar-rail .tally__note { margin-top: 14px; }
+  .shelf:first-child { margin-top: 12px; }
+
+  /* Each row is short and never breaks, so columns are safe here. */
+  .defs { columns: 2; column-gap: 40px; }
+  .def { break-inside: avoid; }
+  .examples { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --wide: 1120px;
+    --list: 640px;
+    --rail: 380px;
+    --railgap: 56px;
+  }
+  .drink__name { font-size: 14.5px; }
+}
+
+@media (min-width: 1500px) {
+  :root {
+    --wide: 1240px;
+    --list: 680px;
+    --rail: 440px;
+    --railgap: 64px;
+  }
+}
+
+/* Tonight is one wide column of big type on any screen, so the rail
+   stands down for it: the JS hides it, and the grid comes off here. */
+@media (min-width: 900px) {
+  body.is-tonight #view-menu:not([hidden]) { display: block; }
+  body.is-tonight .drink__name { font-size: 28px; }
+  body.is-tonight .drink__line { font-size: 20px; }
+  body.is-tonight .tonight__print-title { font-size: 34px; }
+  body.is-tonight .drink { border-left: 0; padding-left: 0; margin-left: 0; }
+}
+
+/* The whole app was built for touch, so a mouse has never had anything
+   to tell it what it is over. Borders and ink only, no fills, and no
+   brass, which is an earned state and not a hover. */
+@media (hover: hover) {
+  .drink:not(.is-pourable) .drink__head:hover .drink__name { color: var(--bone); }
+  /* A drink the shelf is short of sits back at .42, so the name is
+     already the colour the rule above asks for. Bringing the row up is
+     the change a pointer can actually see. */
+  .drink.is-short .drink__head:hover .drink__name,
+  .drink.is-short .drink__head:hover .drink__line,
+  .drink.is-short .drink__head:hover .drink__glass { opacity: .72; }
+
+  .bottle__row:hover { background: var(--sunk); }
+
+  /* Nothing fills on hover; a fill is what `is-on` means. */
+  .chip:not(.is-on):hover, .btn:hover { border-color: var(--muted); color: var(--bone); }
+  .seg__b:not(.is-on):hover { color: var(--bone); }
 }
 
 /* ── Print ────────────────────────────────────────────────────
    The point of the shelf filter is a menu you can hand someone, so it
-   has to survive contact with paper. Force the light palette — a phone
-   theme must never decide how much toner this costs — drop every piece
+   has to survive contact with paper. Force the light palette, because a phone
+   theme must never decide how much toner this costs. Drop every piece
    of app chrome, and let the card layout carry it. US Letter, because
    that is the paper a party menu is printed on. */
 
@@ -1737,7 +2244,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
     --on-brass: #FFFFFF;
   }
 
-  .topbar, .tabbar, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
+  .topbar, .tabbar, .menu-aside, .night, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
   .shared, .tally__acts, .starters, .next, .about, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-panel--share, .recipe-refs {
@@ -1766,6 +2273,40 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   }
   .tally { position: static; }
   .view { max-width: none; padding: 0; }
+
+  /* Chrome's print preview keeps the screen's viewport width, so the
+     wide-screen grids are still live on paper unless they are unwound
+     here. The card is one flow of two columns, always. */
+  #view-menu:not([hidden]) { display: block; }
+  #bar-body { display: block; }
+
+  /* The wide layout is still live in print preview, so everything it
+     moved has to be moved back. The selected-row rule is the one that
+     costs toner: a drink left open would print with a black bar down its
+     left edge and every other drink pulled into the margin beside it. */
+  .drink { border-left: 0; padding-left: 0; margin-left: 0; }
+  .bar-rail {
+    position: static;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
+    padding: 0;
+    border-left: 0;
+  }
+
+  /* Tonight is a screen mode. Printing from it prints the card: the
+     shorthand comes back, so does every drink the shelf is short of, and
+     the type goes back to the size paper wants. */
+  body.is-tonight .drink.is-short { display: block; }
+  body.is-tonight .drink__code { display: block; }
+  body.is-tonight .drink__name { font-size: 8.5pt; }
+  body.is-tonight .drink__line { font-size: 8.5pt; }
+  body.is-tonight .drink__glass { flex: 0 0 2.2em; }
+  body.is-tonight .drink__text { padding: 5pt 0; }
+  body.is-tonight .tonight { padding: 0 0 10pt; }
+  body.is-tonight .tonight__print-title { font-size: 18pt; }
+  body.is-tonight .view { padding: 0; }
+  .defs, .examples { columns: auto; display: block; }
 
   /* Two columns, newspaper fill. The card title spans both; drinks
      run down the left then the right. */
@@ -1814,7 +2355,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
 
   /* Never split a drink. Method sections may continue across a
      column or a sheet. Hairline under each drink comes off; one
-     extra line of space sits after the last thing in the drink —
+     extra line of space sits after the last thing in the drink,
      the line, or recipe / taste / history if those printed. */
   .drink {
     break-inside: avoid;

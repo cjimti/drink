@@ -11,7 +11,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-WTFK3CCS');</script>
 <!-- End Google Tag Manager -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>few bottles — the cocktail menu</title>
+<title>few bottles: the cocktail menu</title>
 <meta name="description" content="Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded from house shorthand, with a shelf that shows what you can pour tonight.">
 <meta name="author" content="Craig Johnston">
 <meta name="robots" content="index, follow">
@@ -32,20 +32,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:site_name" content="few bottles">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://fewbottles.com/">
-<meta property="og:title" content="few bottles — the cocktail menu">
+<meta property="og:title" content="few bottles: the cocktail menu">
 <meta property="og:description" content="Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded from house shorthand, with a shelf that shows what you can pour tonight.">
 <meta property="og:image" content="https://fewbottles.com/assets/og.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1260">
-<meta property="og:image:alt" content="few bottles — line drawings of Nick & Nora and rocks glasses, empty and with twist, pick, and wheel.">
+<meta property="og:image:alt" content="few bottles: line drawings of Nick & Nora and rocks glasses, empty and with twist, pick, and wheel.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@cjimti">
 <meta name="twitter:creator" content="@cjimti">
-<meta name="twitter:title" content="few bottles — the cocktail menu">
+<meta name="twitter:title" content="few bottles: the cocktail menu">
 <meta name="twitter:description" content="Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded from house shorthand, with a shelf that shows what you can pour tonight.">
 <meta name="twitter:image" content="https://fewbottles.com/assets/og.png">
-<meta name="twitter:image:alt" content="few bottles — line drawings of Nick & Nora and rocks glasses, empty and with twist, pick, and wheel.">
+<meta name="twitter:image:alt" content="few bottles: line drawings of Nick & Nora and rocks glasses, empty and with twist, pick, and wheel.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -121,6 +121,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </svg>
     <span class="topbar__name">fewbottles.com</span>
   </a>
+  <nav class="topbar__tabs" aria-label="Sections">
+    <a class="toptab is-active" href="#menu" data-view="menu">Menu</a>
+    <a class="toptab" href="#bar" data-view="bar">Bar<span class="toptab__count" id="top-count" hidden></span></a>
+    <a class="toptab" href="#key" data-view="key">Key</a>
+  </nav>
   <button type="button" class="topbar__about" id="about-open"
           aria-haspopup="dialog" aria-controls="about" aria-expanded="false">
     About
@@ -138,11 +143,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p>You only need a few bottles to start exploring the fundamentals of classic cocktails.</p>
       <p>Juice with vodka is a regression. Plenty of modern drinks came out of these older shapes, and those flavor profiles are still terribly underrated.</p>
       <p>This is a small utility. Broad categories, few ingredients, little expense. The complete catalog of classic and modern drinks, with every niche bottle named, can wait until you know what you actually like.</p>
-      <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Tick what you have. See what opens. Buy the bottle that unlocks the most.</p>
+      <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Select what you have. See what opens. Buy the bottle that unlocks the most.</p>
     </div>
-    <h3 class="about__k">What is counted</h3>
+    <h3 class="about__k">Analytics</h3>
     <div class="about__copy">
-      <p>This site counts what gets used, in aggregate, through Google Analytics: which tab opened, which drink was expanded, which bottle was ticked, whether a menu was printed or shared. That is the whole list. There is no account and no name to attach it to, the shelf itself never leaves your phone unless you share it, and nothing is sold to anyone. I read the numbers so the next change is one people actually use. So far nobody has ever opened a Tip Top, and it is a great drink.</p>
+      <p>This site is a hobby. I run Google Analytics on it so I can see how it gets used: which tab someone opened, which drink they expanded, which bottle they selected, whether a menu was printed or shared. That is the whole list.</p>
+      <p>It tells me nothing about who you are. There is no account, no sign-in, no name attached to any of it. Your shelf stays on your phone unless you share it yourself. I do not sell the numbers and I do not market to anyone. I read them so I know which parts of this are worth more work. So far nobody has ever opened a Tip Top, and it is a great drink.</p>
       <p>The events are in the source: <a href="https://github.com/cjimti/drink/blob/main/assets/app.js" rel="noopener"><code>track()</code> in assets/app.js</a>. A content blocker stops all of it and the site works exactly the same.</p>
     </div>
     <p class="sign">© 2026 <a href="https://imti.co/resume/" rel="noopener">Craig Johnston</a></p>
@@ -152,8 +158,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <main id="main">
 
   <section class="view" id="view-menu" aria-label="Menu">
-    <div id="filters"></div>
-    <div id="menu-body"></div>
+    <div class="menu-main">
+      <div id="filters"></div>
+      <div id="menu-body"></div>
+    </div>
+    <aside class="menu-aside" id="menu-aside" hidden aria-label="Open drink"></aside>
   </section>
 
   <section class="view" id="view-bar" hidden aria-label="The bar">
@@ -166,7 +175,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <p class="loading" id="loading">Pouring…</p>
   <noscript class="fallback">
-    <p>This menu needs JavaScript to decode the house shorthand and tick the shelf. The drinks themselves are in <a href="data/cocktails.json">data/cocktails.json</a>. A markdown dump of every recipe is at <a href="llms-full.txt">llms-full.txt</a>, and an index for agents is at <a href="llms.txt">llms.txt</a>.</p>
+    <p>This menu needs JavaScript to decode the house shorthand and select the shelf. The drinks themselves are in <a href="data/cocktails.json">data/cocktails.json</a>. A markdown dump of every recipe is at <a href="llms-full.txt">llms-full.txt</a>, and an index for agents is at <a href="llms.txt">llms.txt</a>.</p>
   </noscript>
 
 </main>
