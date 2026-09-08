@@ -7,7 +7,7 @@
 One person's shelf, pouring for guests and for himself.
 Three methods, stirred, shaken, and built. The menu is large because the bottles
 overlap, not because the bar is.
-152 drinks (74 stirred, 59 shaken, 19 built), 50 ingredients.
+165 drinks (80 stirred, 66 shaken, 19 built), 50 ingredients.
 
 The printed card writes a contextual shorthand called Barline. A
 bare number is ounces beside a spirit and dashes beside bitters;
@@ -30,6 +30,7 @@ never renamed, never reused.
 
 - [Pedro Martinez](https://fewbottles.com/#drink/pedro-martinez): `2,1,q,3,10,2b,R`; Aged Rum; aged rum, sweet verm., maraschino, orange bitt., Angostura, absinthe
 - [Rum Old Fashioned](https://fewbottles.com/#drink/rum-old-fashioned): `2,1b,2,1,Ro`; Aged Rum; aged rum, demerara, Angostura, orange bitt.
+- [Kingston Negroni](https://fewbottles.com/#drink/kingston-negroni): `1,1,1,Ro`; Aged Rum; aged rum, Campari, sweet verm.
 - [So So Cocktail](https://fewbottles.com/#drink/so-so-cocktail): `1,1,h,h,cc`; Apple Brandy; gin, dry verm., apple, grenadine
 - [Dempsey](https://fewbottles.com/#drink/dempsey): `1h,1h,h,q,c`; Apple Brandy; apple, gin, grenadine, absinthe
 - [Corpse Reviver No. 1](https://fewbottles.com/#drink/corpse-reviver-1): `1h,Q,Q,cc`; Apple Brandy; cognac, apple, sweet verm.
@@ -59,6 +60,7 @@ never renamed, never reused.
 - [Cocktail de la Louisiane](https://fewbottles.com/#drink/cocktail-de-la-louisiane): `Q,Q,Q,2b,3,clc`; Rye; rye, sweet verm., Bénédictine, absinthe, Peychaud's
 - [Toronto](https://fewbottles.com/#drink/toronto): `2,q,1b,2,Ro`; Rye; rye, Fernet, demerara, Angostura
 - [Little Italy](https://fewbottles.com/#drink/little-italy): `2,Q,h,cc`; Rye; rye, sweet verm., Cynar
+- [Bensonhurst](https://fewbottles.com/#drink/bensonhurst): `2,1,h,b,c`; Rye; rye, dry verm., maraschino, Cynar
 - [Bobby Burns](https://fewbottles.com/#drink/bobby-burns): `1h,1,h,cl`; Scotch; scotch, sweet verm., Bénédictine
 - [Affinity](https://fewbottles.com/#drink/affinity): `1h,Q,Q,2,clc`; Scotch; scotch, sweet verm., dry verm., Angostura
 - [Rob Roy](https://fewbottles.com/#drink/rob-roy): `2,1,2,c`; Scotch; scotch, sweet verm., orange bitt.
@@ -67,12 +69,14 @@ never renamed, never reused.
 - [Telling Phoebe](https://fewbottles.com/#drink/telling-phoebe): `1h,Q,h,h,cc`; Scotch; scotch, sweet verm., Fernet, Bénédictine
 - [Country Club](https://fewbottles.com/#drink/country-club): `1h,1,h,1,cl`; Light Rum; light rum, dry verm., orange liq., orange bitt.
 - [Yacht Club](https://fewbottles.com/#drink/yacht-club): `2,1,q,c`; Light Rum; light rum, sweet verm., apricot
+- [El Presidente](https://fewbottles.com/#drink/el-presidente): `1h,Q,h,b,co`; Light Rum; light rum, dry verm., orange liq., grenadine
 - [Brazilian Negroni](https://fewbottles.com/#drink/brazilian-negroni): `1q,Q,Q,Ro`; Cachaça; cachaça, Campari, sweet verm.
 - [Cornerstone](https://fewbottles.com/#drink/cornerstone): `1h,h,q,2,co`; Cachaça; cachaça, grenadine, Fernet, orange bitt.
 - [Rosita](https://fewbottles.com/#drink/rosita): `1h,1,h,h,1,Ro`; Tequila; tequila, Campari, sweet verm., dry verm., Angostura
 - [One Chance Fancy](https://fewbottles.com/#drink/one-chance-fancy): `2,q,q,2,Ro`; Tequila; tequila, orange liq., sweet verm., Angostura
 - [El Camino](https://fewbottles.com/#drink/el-camino): `1,1,h,4,Ro`; Mezcal; mezcal, rye, Bénédictine, Peychaud's
 - [1910](https://fewbottles.com/#drink/1910): `Q,Q,1,h,2,co`; Mezcal; mezcal, cognac, sweet verm., maraschino, Peychaud's
+- [Mezcal Negroni](https://fewbottles.com/#drink/mezcal-negroni): `1,1,1,Ro`; Mezcal; mezcal, Campari, sweet verm.
 - [Tipsy Coachman](https://fewbottles.com/#drink/tipsy-coachman): `1h,Q,1,Rl`; Vodka; vodka, Bénédictine, Angostura
 - [Vodka Martini](https://fewbottles.com/#drink/vodka-martini): `2,h,cl`; Vodka; vodka, dry verm.
 - [Quill](https://fewbottles.com/#drink/quill): `1,1,1,q,co`; Gin; gin, Campari, sweet verm., absinthe
@@ -95,12 +99,14 @@ never renamed, never reused.
 - [Bijou](https://fewbottles.com/#drink/bijou): `1,1,1,1,Rl`; Gin; gin, Chartreuse, sweet verm., orange bitt.
 - [Cin-Cyn](https://fewbottles.com/#drink/cin-cyn): `1,1,1,Ro`; Gin; gin, Cynar, sweet verm.
 - [Physically Forgotten](https://fewbottles.com/#drink/physically-forgotten): `1h,Q,h,2,cl`; Gin; gin, Cynar, maraschino, orange bitt.
+- [Cardinale](https://fewbottles.com/#drink/cardinale): `1h,Q,Q,cl`; Gin; gin, Campari, dry verm.
 - [Duplex](https://fewbottles.com/#drink/duplex): `1h,1h,2,co`; Vermouth; sweet verm., dry verm., orange bitt.
 - [Vermouth Panaché](https://fewbottles.com/#drink/vermouth-panache): `2,1,1,cl`; Vermouth; sweet verm., dry verm., orange bitt.
 - [Diplomat](https://fewbottles.com/#drink/diplomat): `2,1,q,clc`; Vermouth; dry verm., sweet verm., maraschino
 - [Chrysanthemum](https://fewbottles.com/#drink/chrysanthemum): `2,h,2b,co`; Vermouth; dry verm., Bénédictine, absinthe
 - [Tip Top](https://fewbottles.com/#drink/tip-top): `2,Q,2,cl`; Vermouth; dry verm., Bénédictine, orange bitt.
 - [Bamboo](https://fewbottles.com/#drink/bamboo): `1h,1h,d,2,cOl`; Vermouth; sherry, dry verm., Angostura, orange bitt.
+- [Bitter Giuseppe](https://fewbottles.com/#drink/bitter-giuseppe): `2,1,q,6,Rl`; Vermouth; Cynar, sweet verm., lemon, orange bitt.
 - [Fernet and Ginger](https://fewbottles.com/#drink/fernet-and-ginger): `1,4,RLw`; Fernet; Fernet, ginger beer
 
 ## Shaken
@@ -108,12 +114,15 @@ never renamed, never reused.
 - [Winter Daiquiri](https://fewbottles.com/#drink/winter-daiquiri): `2,1,h,2,c`; Aged Rum; aged rum, lime, demerara, Angostura
 - [Air Mail](https://fewbottles.com/#drink/air-mail): `1h,Q,Q,2,R`; Aged Rum; aged rum, lime, honey, Champagne
 - [Brass Rail](https://fewbottles.com/#drink/brass-rail): `1h,h,1,h,2,c3`; Aged Rum; aged rum, Bénédictine, lemon, simple, orange bitt., egg white, Angostura
+- [Old Cuban](https://fewbottles.com/#drink/old-cuban): `1h,Q,1,2,2,cm`; Aged Rum; aged rum, lime, simple, Angostura, mint, Champagne
 - [Ace of Clubs](https://fewbottles.com/#drink/ace-of-clubs): `2,1,Q,c`; Aged Rum; aged rum, cacao, lime
 - [Jack Rose](https://fewbottles.com/#drink/jack-rose): `1h,Q,Q,c`; Apple Brandy; apple, lime, grenadine
 - [Pink Lady](https://fewbottles.com/#drink/pink-lady): `1h,Q,Q,h,cc`; Apple Brandy; gin, apple, lime, grenadine, egg white
 - [Honeymoon](https://fewbottles.com/#drink/honeymoon): `1q,1,1b,h,1,Ro`; Apple Brandy; apple, Bénédictine, orange liq., lemon, orange bitt.
 - [Southern Point](https://fewbottles.com/#drink/southern-point): `Q,Q,Q,Q,ca`; Apple Brandy; apple, elderflower, orange liq., lemon
 - [Sidecar](https://fewbottles.com/#drink/sidecar): `1h,1,Q,cs`; Cognac; cognac, orange liq., lemon
+- [Between the Sheets](https://fewbottles.com/#drink/between-the-sheets): `1,1,1,Q,cl`; Cognac; cognac, light rum, orange liq., lemon
+- [Champs-Élysées](https://fewbottles.com/#drink/champs-elysees): `1h,h,Q,q,1,cl`; Cognac; cognac, Chartreuse, lemon, simple, Angostura
 - [Brandy Alexander](https://fewbottles.com/#drink/brandy-alexander): `1,1,1,c`; Cognac; cognac, cacao, cream
 - [Buster Brown](https://fewbottles.com/#drink/buster-brown): `2,Q,h,3,co`; Bourbon; bourbon, lemon, demerara, orange bitt.
 - [Gold Rush](https://fewbottles.com/#drink/gold-rush): `2,Q,Q,R`; Bourbon; bourbon, lemon, honey
@@ -122,6 +131,7 @@ never renamed, never reused.
 - [Whiskey Daisy](https://fewbottles.com/#drink/whiskey-daisy): `2,Q,q,1b,R`; Bourbon; bourbon, lemon, orange liq., simple
 - [Man o' War](https://fewbottles.com/#drink/man-o-war): `2,Q,h,h,cl`; Bourbon; bourbon, orange liq., sweet verm., lemon
 - [Little Honey](https://fewbottles.com/#drink/little-honey): `1h,Q,h,h,q,Ro`; Bourbon; bourbon, elderflower, dry verm., lemon, honey, egg white
+- [Brown Derby](https://fewbottles.com/#drink/brown-derby): `2,1,h,c`; Bourbon; bourbon, grapefruit, honey
 - [Scofflaw](https://fewbottles.com/#drink/scofflaw): `1,1,h,h,1,co`; Rye; rye, dry verm., grenadine, lemon, orange bitt.
 - [Harvest Sour](https://fewbottles.com/#drink/harvest-sour): `1,1,Q,h,ccin`; Rye; rye, apple, lemon, simple, egg white
 - [Final Ward](https://fewbottles.com/#drink/final-ward): `Q,Q,Q,Q,c`; Rye; rye, Chartreuse, maraschino, lemon
@@ -135,6 +145,7 @@ never renamed, never reused.
 - [King's Jubilee](https://fewbottles.com/#drink/kings-jubilee): `1h,h,h,cc`; Light Rum; light rum, maraschino, lemon
 - [Twelve Mile Limit](https://fewbottles.com/#drink/twelve-mile-limit): `1,h,h,h,h,c`; Light Rum; light rum, rye, cognac, grenadine, lemon
 - [Elderflower Daiquiri](https://fewbottles.com/#drink/elderflower-daiquiri): `2,Q,1,c`; Light Rum; light rum, elderflower, lime
+- [Hemingway Daiquiri](https://fewbottles.com/#drink/hemingway-daiquiri): `2,h,h,Q,c`; Light Rum; light rum, maraschino, grapefruit, lime
 - [Caipirinha](https://fewbottles.com/#drink/caipirinha): `2,3b,1h,R`; Cachaça; cachaça, sugar, lime
 - [Pey-Lé](https://fewbottles.com/#drink/pey-le): `1h,1,Q,h,h,c`; Cachaça; cachaça, honey, lemon, grapefruit, Peychaud's
 - [Margarita](https://fewbottles.com/#drink/margarita): `2,Q,Q,cS`; Tequila; tequila, orange liq., lime
@@ -145,6 +156,7 @@ never renamed, never reused.
 - [Lemon Drop](https://fewbottles.com/#drink/lemon-drop): `2,Q,1,1b,cs`; Vodka; vodka, orange liq., lemon, simple
 - [Katinka](https://fewbottles.com/#drink/katinka): `1h,Q,h,c`; Vodka; vodka, apricot, lime
 - [Queen Bee](https://fewbottles.com/#drink/queen-bee): `Q,Q,Q,q,1,cl`; Vodka; vodka, elderflower, lemon, honey, Champagne
+- [Kamikaze](https://fewbottles.com/#drink/kamikaze): `1,1,1,cL`; Vodka; vodka, orange liq., lime
 - [Gimlet](https://fewbottles.com/#drink/gimlet): `2,Q,h,c`; Gin; gin, lime, simple
 - [French 75](https://fewbottles.com/#drink/french-75): `1h,1,h,3,Rl`; Gin; gin, lemon, simple, Champagne
 - [Bennett](https://fewbottles.com/#drink/bennett): `1h,Q,h,2,c`; Gin; gin, lime, simple, Angostura
@@ -158,6 +170,7 @@ never renamed, never reused.
 - [Pendennis Club](https://fewbottles.com/#drink/pendennis-club): `2,1,Q,2,cLw`; Gin; gin, apricot, lime, Peychaud's
 - [Hat Tip](https://fewbottles.com/#drink/hat-tip): `1h,Q,q,h,1b,c`; Gin; gin, elderflower, Campari, lemon, simple
 - [Olivette](https://fewbottles.com/#drink/olivette): `1,1,h,cO`; Gin; gin, dry verm., elderflower
+- [Southside](https://fewbottles.com/#drink/southside): `2,Q,Q,cm`; Gin; gin, lime, simple, mint
 - [Alexander](https://fewbottles.com/#drink/alexander): `1,1,1,c`; Gin; gin, cacao, cream
 - [Campari Alexander](https://fewbottles.com/#drink/campari-alexander): `1,1,1,c`; Gin; Campari, cacao, cream
 - [Last Word](https://fewbottles.com/#drink/last-word): `Q,Q,Q,Q,cc`; Gin; gin, Chartreuse, maraschino, lime
