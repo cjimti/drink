@@ -2954,7 +2954,7 @@
     'rocks', 'rocks-twist', 'rocks-pick', 'rocks-wheel',
     'rocks-cube', 'rocks-cube-twist', 'rocks-cube-pick', 'rocks-cube-wheel',
     'rocks-ice',
-    'highball', 'highball-twist', 'highball-wheel',
+    'highball', 'highball-twist', 'highball-wheel', 'highball-pick',
     'highball-ice', 'highball-ice-twist', 'highball-ice-wheel',
     'highball-ice-pick'
   ];
