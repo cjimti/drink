@@ -1,0 +1,21 @@
+name: Checks
+
+# main is where work in progress lands, so it gets checked and ships
+# nothing. The deploy workflow runs off a v* tag.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify
+        run: make check
