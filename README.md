@@ -1,6 +1,7 @@
 # fewbottles.com
 
-The house cocktail menu, as a web app instead of a printed card. A
+<!-- numbers from make stats -->
+The house cocktail menu, as a web app instead of a printed card. Over a
 hundred and fifty classics, three methods, one small bar — cocktail
 maxxing on a budget. No build step, no framework, no database.
 Everything renders from three JSON files.

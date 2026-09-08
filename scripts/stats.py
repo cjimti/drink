@@ -18,12 +18,20 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kin  # noqa: E402  (path set above; there is no package here)
+import kin   # noqa: E402  (path set above; there is no package here)
+import llms  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
 # The shelf the README describes as "gin, bourbon, both vermouths, two
 # bitters and the staples". Change the sentence, change this list.
+# The README lede rounds down to the nearest fifty and says "over", so it
+# stays true as drinks are added and only needs touching every fifty.
+WORDS = {
+    50: "fifty", 100: "a hundred", 150: "a hundred and fifty",
+    200: "two hundred", 250: "two hundred and fifty", 300: "three hundred",
+}
+
 README_SHELF = [
     "gin", "bourbon", "sweet-vermouth", "dry-vermouth",
     "angostura", "orange-bitters",
@@ -108,17 +116,23 @@ def main():
 
     held = set(README_SHELF)
     base, top = gains(bar, pours, held, stand_in)
+    n = len(menu["cocktails"])
     counts = ", ".join(
         f"{sum(1 for d in menu['cocktails'] if d['method'] == m['id'])} {m['id']}"
         for m in menu["methods"])
 
-    print(f"  stats   {len(menu['cocktails'])} drinks ({counts}), "
+    print(f"  stats   {n} drinks ({counts}), "
           f"{len(bar['ingredients'])} ingredients")
     print(f"          shelf of {len(held)}: " +
           ", ".join(by_id[i]["short"] for i in README_SHELF))
     print(f"          pours {base}; next " +
           ", ".join(f"{i['short']} +{n}" for n, i in top[:3]))
     print()
+    floor = n // 50 * 50
+    many = f"Over {WORDS[floor]}" if floor in WORDS else str(n)
+    methods = llms.COUNT_WORDS.get(len(menu["methods"]),
+                                   str(len(menu["methods"]))).lower()
+    print(f"{many} classics, {methods} methods, one small bar")
     print(sentence(base, top))
     return 0
 

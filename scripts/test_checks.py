@@ -16,7 +16,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import check_assets                                          # noqa: E402
 import check_code                                            # noqa: E402
+import check_menu                                            # noqa: E402
 import check_style                                           # noqa: E402
 import jslex                                                 # noqa: E402
 
@@ -172,6 +174,35 @@ def run_house(failures):
            failures)
 
 
+def run_menu(failures):
+    """A top has to sit beside something that can fill a glass."""
+    bar = check_menu.load("bar.json")
+    by_id = {i["id"]: i for i in bar["ingredients"]}
+    for iid, expected in (("gin", True), ("simple", True),
+                          ("soda-water", False), ("champagne", False)):
+        report(f"menu/top beside {iid}",
+               check_menu.amount_errors("t", iid, by_id.get(iid)),
+               expected, failures)
+    report("menu/unreadable amount",
+           check_menu.amount_errors("zz", "gin", by_id["gin"]), True, failures)
+
+
+def run_glasses(failures):
+    """Every drawing a serve token can reach is on disk and fetched."""
+    app = (ROOT / "assets" / "app.js").read_text()
+    report("glass/clean", check_assets.check_glasses(app)[0], False, failures)
+
+    broken = app.replace(", 'highball-pick'", "")
+    report("glass/never fetched", check_assets.check_glasses(broken)[0], True,
+           failures)
+
+    broken = app.replace(
+        "    if (g === 'h') return extra ? 'highball-' + extra : 'highball';",
+        "    if (g === 'j') return extra ? 'julep-' + extra : 'julep';")
+    report("glass/no drawing", check_assets.check_glasses(broken)[0], True,
+           failures)
+
+
 def run_lexer(failures):
     """Stripping the real files leaves every bracket balanced."""
     for f in ("assets/app.js", "sw.js"):
@@ -190,14 +221,15 @@ def run_lexer(failures):
 def main():
     """Every case, then the count."""
     failures = []
-    for run in (run_css, run_js, run_py, run_house, run_lexer):
+    for run in (run_css, run_js, run_py, run_house, run_menu, run_glasses,
+                run_lexer):
         run(failures)
     for f in failures:
         print(f"  TEST    {f}")
     if failures:
         return 1
     n = (len(css_cases()) + len(js_cases()) + len(py_cases())
-         + len(size_cases()) + 11 + 2)
+         + len(size_cases()) + 11 + 5 + 3 + 2)
     print(f"  test    {n} case(s): every rule fails when it is broken")
     return 0
 
