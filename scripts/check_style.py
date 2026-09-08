@@ -13,7 +13,9 @@ every one of them has already been broken by somebody in a hurry:
   JS    a track() parameter missing from TRACK_KEYS goes stale silently.
         A delegated click branch whose data attribute is missing from the
         selector never fires: the button is simply dead. A shelf read
-        with Number() instead of BigInt loses the 54th bottle.
+        with Number() instead of BigInt loses the 54th bottle. A method
+        line that ignores the serve token told three people to build a
+        Death in the Afternoon over ice.
 
 None of this is taste. Each one is a specific bug that shipped, or would
 have.
@@ -305,6 +307,32 @@ def check_bigint(src):
     return []
 
 
+def check_method_line(src):
+    """The instruction has to agree with the glass it is poured into.
+
+    Sixteen built drinks are packed with ice and three are not, and the
+    serve token is the only thing that knows which. `methodLine` shipped
+    reading the method alone, so the Champagne Cocktail, the Seelbach and
+    Death in the Afternoon all said `over ice` in a dry glass. That is a
+    wrong instruction, not a wrong shade of grey, and nothing here caught
+    it. So: the function takes the serve, and every call hands it over.
+    """
+    m = re.search(r"function methodLine\((.*?)\)", src)
+    if not m:
+        return ["assets/app.js methodLine is gone"]
+    if len(m.group(1).split(",")) < 2:
+        return ["assets/app.js methodLine no longer takes the serve token — "
+                "a built drink in a dry glass would say `over ice`"]
+    stripped = jslex.strip(src)
+    calls = re.findall(r"methodLine\(([^)]*)\)", stripped)
+    for args in calls:
+        if args.strip().startswith("function") or "," in args:
+            continue
+        return [f"assets/app.js methodLine({args.strip()}) drops the serve "
+                f"token — the built line would ignore the glass"]
+    return []
+
+
 SHIPPED = ["index.html", "assets/app.css", "assets/app.js", "sw.js",
            "llms.txt", "llms-full.txt"]
 
@@ -369,6 +397,7 @@ def main():
     errs += check_delegation(js)
     errs += check_track(js)
     errs += check_bigint(js)
+    errs += check_method_line(js)
     errs += check_drink_links(js)
     errs += check_dashes(shipped_files())
 

@@ -23,7 +23,8 @@
     { "id": "vodka",        "label": "Vodka" },
     { "id": "gin",          "label": "Gin" },
     { "id": "vermouth",     "label": "Vermouth" },
-    { "id": "fernet",       "label": "Fernet" }
+    { "id": "fernet",       "label": "Fernet" },
+    { "id": "absinthe",     "label": "Absinthe" }
   ],
 
   "cocktails": [
@@ -41,6 +42,13 @@
       "history": "The Old-Fashioned takes its name from drinkers in the 1870s who asked for an old-fashioned whiskey cocktail after bartenders began dressing the Whiskey Cocktail with absinthe, curacao, and other liqueurs. The formula itself is older: spirit, sugar, water, and bitters, the definition printed in The Balance and Columbian Repository in 1806. A rum Old-Fashioned is that template with the whiskey swapped out, a substitution that became common in craft bars in the 2000s as aged rum was treated as a sipping spirit. This card pours two ounces of aged rum, one barspoon of demerara syrup, two dashes of Angostura, and one of orange bitters, over ice with an orange twist.",
       "refs": [
         { "title": "Difford's Guide, Old Fashioned cocktail history", "url": "https://www.diffordsguide.com/g/1198/old-fashioned-cocktail/history" }
+      ] },
+    { "id": "kingston-negroni", "name": "Kingston Negroni", "method": "stirred", "family": "aged-rum", "code": "1,1,1,Ro", "serve": "Ro",
+      "build": [["aged-rum","1"],["campari","1"],["sweet-vermouth","1"]],
+      "taste": "Equal ounces of aged rum, Campari, and sweet vermouth, over ice. Rum in the gin slot puts molasses and overripe fruit where juniper was, and the Campari has to push through that instead of sitting beside it. The cube gives up water slowly, so it rounds off as it stands. Rocks with ice, orange twist.",
+      "history": "Joaquín Simó built the Kingston Negroni at Death & Co in New York's East Village in late 2009, the day the importer Eric Seed walked in with a bottle of Smith & Cross, a navy-strength pot-still Jamaican rum. He reached for Carpano Antica for the vermouth, on the grounds that Smith & Cross is no shrinking violet and needed a vermouth that could stand in front of it. The drink went on the Death & Co menu in spring 2010, was on the list at Rickhouse in San Francisco by that autumn, and was printed in the bar's 2014 book. This card pours an ounce each of aged rum, Campari, and sweet vermouth, stirred, rocks with ice, orange twist.",
+      "refs": [
+        { "title": "Punch, How the Kingston Negroni Became a Modern Classic", "url": "https://punchdrink.com/articles/kingston-negroni-became-modern-classic-jamaican-rum-cocktail-recipe/" }
       ] },
 
     { "id": "so-so-cocktail", "name": "So So Cocktail", "method": "stirred", "family": "apple-brandy", "code": "1,1,h,h,cc", "serve": "cc",
@@ -315,6 +323,13 @@
         { "title": "1948 Ron Daiquiri Coctelera, Yacht Club Cocktail", "url": "https://euvs-vintage-cocktail-books.cld.bz/1948-Ron-Daiquiri-Coctelera-Cocktail-Book-Habana-Cuba/16/" },
         { "title": "Difford's Guide, Yacht Club", "url": "https://www.diffordsguide.com/cocktails/recipe/2111/yacht-club" }
       ] },
+    { "id": "el-presidente", "name": "El Presidente", "method": "stirred", "family": "light-rum", "code": "1h,Q,h,b,co", "serve": "co",
+      "build": [["light-rum","1h"],["dry-vermouth","Q"],["orange-liqueur","h"],["grenadine","b"]],
+      "taste": "An ounce and a half of light rum, three-quarters of dry vermouth, half an ounce of orange liqueur, a barspoon of grenadine. Stirred, so it comes out clear and heavy in the glass. The barspoon of grenadine is pomegranate on the finish and a shade of colour; the orange liqueur is where the sugar actually is. Coupe, orange twist.",
+      "history": "Havana, mid-1910s. The earliest known recipe is in John B. Escalante's Manual del Cantinero of 1915, which the French historian Fernando Castellon found in Cuba's Biblioteca Nacional, and Basil Woon's 1928 When It's Cocktail Time in Cuba called the drink the aristocrat of cocktails. David Wondrich credits Constantino Ribalaigua on the strength of a 1937 interview by Jack Cuddy, in which Ribalaigua claimed it. David Embury drew the line plainly in his 1948 The Fine Art of Mixing Drinks: if vermouth instead of citrus is used with the grenadine, the name is El Presidente. This card pours an ounce and a half of light rum, three-quarters of dry vermouth, half an ounce of orange liqueur, and a barspoon of grenadine, stirred, coupe, orange twist.",
+      "refs": [
+        { "title": "Difford's Guide, El Presidente", "url": "https://www.diffordsguide.com/cocktails/recipe/701/el-presidente" }
+      ] },
 
     { "id": "tipsy-coachman", "name": "Tipsy Coachman", "method": "stirred", "family": "vodka", "code": "1h,Q,1,Rl", "serve": "Rl",
       "build": [["vodka","1h"],["benedictine","Q"],["angostura","1"]],
@@ -509,6 +524,13 @@
         { "title": "Punch, 1910", "url": "https://punchdrink.com/recipes/1910/" },
         { "title": "Difford's Guide, 1910", "url": "https://www.diffordsguide.com/cocktails/recipe/4834/1910" }
       ] },
+    { "id": "mezcal-negroni", "name": "Mezcal Negroni", "method": "stirred", "family": "mezcal", "code": "1,1,1,Ro", "serve": "Ro",
+      "build": [["mezcal","1"],["campari","1"],["sweet-vermouth","1"]],
+      "taste": "Equal ounces of mezcal, Campari, and sweet vermouth, over ice. Smoke and roasted agave stand where juniper does in the original, and the smoke is the loudest thing in the glass until the ice opens it up. Campari and mezcal are bitter in different directions, and holding those two apart is most of what the vermouth is for. Rocks with ice, orange twist.",
+      "history": "There is no single author. Phil Ward, who opened the agave bar Mayahuel in New York in 2009, is the name most often attached to it and takes no credit himself, saying only that pouring one was obvious in the bar's early days. Joaquín Simó remembers first drinking one in the early days of Death & Co, after Ward had taken to mezcal, and later built his own variations at Pouring Ribbons. Lynnette Marrero puts the arrival around 2009 and calls it entirely organic, something that happened while a lot of bartenders were working through amari and mezcal at the same time. This card pours an ounce each of mezcal, Campari, and sweet vermouth, stirred, rocks with ice, orange twist.",
+      "refs": [
+        { "title": "Punch, How the Mezcal Negroni Became a Menu Mainstay", "url": "https://punchdrink.com/articles/mezcal-negronis-world-cocktail-recipe/" }
+      ] },
 
     { "id": "brazilian-negroni", "name": "Brazilian Negroni", "method": "stirred", "family": "cachaca", "code": "1q,Q,Q,Ro", "serve": "Ro",
       "build": [["cachaca","1q"],["campari","Q"],["sweet-vermouth","Q"]],
@@ -549,6 +571,13 @@
       "refs": [
         { "title": "Punch, Little Italy", "url": "https://punchdrink.com/recipes/little-italy/" },
         { "title": "Difford's Guide, Little Italy", "url": "https://www.diffordsguide.com/cocktails/recipe/3083/little-italy" }
+      ] },
+    { "id": "bensonhurst", "name": "Bensonhurst", "method": "stirred", "family": "rye", "code": "2,1,h,b,c", "serve": "c",
+      "build": [["rye","2"],["dry-vermouth","1"],["maraschino","h"],["cynar","b"]],
+      "taste": "Two ounces of rye, a full ounce of dry vermouth, half an ounce of maraschino, a barspoon of Cynar. The dry vermouth keeps the whiskey lean, and the maraschino carries the sugar as cherry pit and almond. The barspoon of Cynar is the artichoke bitterness that arrives last and stays. Stirred, coupe, no ice.",
+      "history": "Chad Solomon made the Bensonhurst in 2006 while working at Milk & Honey in Manhattan, and named it for the Brooklyn neighbourhood near where he lived. It is a riff on the Brooklyn, which is itself a Manhattan built on dry vermouth and maraschino, with Cynar taking the fourth slot. Dozens of Brooklyn variations came out of New York in the years after, and this is one of the few still ordered by name. This card pours two ounces of rye, an ounce of dry vermouth, half an ounce of maraschino, and a barspoon of Cynar, stirred, coupe.",
+      "refs": [
+        { "title": "Difford's Guide, Bensonhurst", "url": "https://www.diffordsguide.com/cocktails/recipe/541/bensonhurst" }
       ] },
 
     { "id": "telling-phoebe", "name": "Telling Phoebe", "method": "stirred", "family": "scotch", "code": "1h,Q,h,h,cc", "serve": "cc",
@@ -596,6 +625,13 @@
       "refs": [
         { "title": "Cocktail Virgin Slut, Physically Forgotten", "url": "https://cocktailvirgin.blogspot.com/2023/09/physically-forgotten.html" }
       ] },
+    { "id": "cardinale", "name": "Cardinale", "method": "stirred", "family": "gin", "code": "1h,Q,Q,cl", "serve": "cl",
+      "build": [["gin","1h"],["campari","Q"],["dry-vermouth","Q"]],
+      "taste": "An ounce and a half of gin, three-quarters of Campari, three-quarters of dry vermouth. More gin than either modifier, and dry vermouth in the sweet slot, so the juniper stays in front and the Campari reads as bitter orange peel over a lean drink. Stirred, coupe, lemon twist.",
+      "history": "Giovanni Raimondo made the Cardinale at the Excelsior Hotel in Rome in 1950, for a cardinal in the city at the summons of Pope Pius XII for the Jubilee. That build was roughly an ounce of gin, half an ounce of dry Moselle, and a third of an ounce of Campari, with a clove-studded orange peel; dry vermouth replaced the wine later, likely for availability and for keeping. David Wondrich points out that the name is older: Piero Grandi's 1926 Campari book Cocktails lists a Campari Cardinal made with sweet vermouth, and Paolo Ponzo found a dry-vermouth Cardinale in Amedeo Gandiglio's 1947 Cocktails Portfolio, the same book that first prints the equal-parts Negroni. This card pours an ounce and a half of gin, three-quarters of Campari, and three-quarters of dry vermouth, stirred, coupe, lemon twist.",
+      "refs": [
+        { "title": "Punch, What Is the Cardinale Cocktail?", "url": "https://punchdrink.com/articles/next-best-negroni-cardinale-cocktail-recipe/" }
+      ] },
 
     { "id": "bamboo", "name": "Bamboo", "method": "stirred", "family": "vermouth", "code": "1h,1h,d,2,cOl", "serve": "cOl",
       "build": [["sherry","1h"],["dry-vermouth","1h"],["angostura","d"],["orange-bitters","2"]],
@@ -604,6 +640,14 @@
       "refs": [
         { "title": "Difford's Guide, Bamboo", "url": "https://www.diffordsguide.com/cocktails/recipe/196/bamboo-cocktail" },
         { "title": "Imbibe, Bamboo Cocktail", "url": "https://imbibemagazine.com/recipe/bamboo-cocktail/" }
+      ] },
+    { "id": "bitter-giuseppe", "name": "Bitter Giuseppe", "method": "stirred", "family": "vermouth", "code": "2,1,q,6,Rl", "serve": "Rl",
+      "build": [["cynar","2"],["sweet-vermouth","1"],["lemon","q"],["orange-bitters","6"]],
+      "taste": "Two ounces of Cynar, an ounce of sweet vermouth, a quarter of lemon, six dashes of orange bitters. No base spirit, so it is low proof, and artichoke bitterness runs the whole length of it with the vermouth holding what sugar there is. The quarter ounce of lemon is the odd part, and it is what keeps the Cynar from going flat. Rocks with ice, lemon twist.",
+      "history": "Stephen Cole made the Bitter Giuseppe at The Violet Hour in Chicago in 2007, when an Italian chef came into the bar and Cole guessed he would want a Cynar Manhattan, built with Carpano Antica. It came out sweet, so he added lemon juice, which a stirred spirit drink was not supposed to take, and kept adjusting until he had a quarter ounce of lemon and six dashes of orange bitters. He credits the Ti' Punch of Martinique for the idea that citrus belongs in a stirred glass, and tells the story in The Bartender's Manifesto in 2022. This card pours two ounces of Cynar, an ounce of sweet vermouth, a quarter of lemon, and six dashes of orange bitters, stirred, rocks with ice, lemon twist.",
+      "refs": [
+        { "title": "Punch, Bitter Giuseppe", "url": "https://punchdrink.com/recipes/bitter-giuseppe/" },
+        { "title": "Difford's Guide, Bitter Giuseppe", "url": "https://www.diffordsguide.com/cocktails/recipe/4856/bitter-giuseppe" }
       ] },
 
     { "id": "fernet-and-ginger", "name": "Fernet and Ginger", "method": "stirred", "family": "fernet", "code": "1,4,RLw", "serve": "RLw",
@@ -635,6 +679,13 @@
       "history": "Tony Abou-Ganim built the Brass Rail as a nightcap for his cousin Helen David, who favored Benedictine, and named it for her bar in Port Huron, Michigan, which she opened in 1937. Difford's Guide adapts the recipe from Abou-Ganim: aged rum, Benedictine, lemon, sugar, egg white, and orange bitters, with a flamed orange twist and cinnamon on the foam. This card uses aged rum, Benedictine, a full ounce of lemon, half an ounce of simple, two dashes of orange bitters, egg white, and three dashes of Angostura dropped on the foam.",
       "refs": [
         { "title": "Difford's Guide, Brass Rail", "url": "https://www.diffordsguide.com/cocktails/recipe/564/brass-rail" }
+      ] },
+    { "id": "old-cuban", "name": "Old Cuban", "method": "shaken", "family": "aged-rum", "code": "1h,Q,1,2,2,cm", "serve": "cm",
+      "build": [["aged-rum","1h"],["lime","Q"],["simple","1"],["angostura","2"],["mint",null],["champagne","2"]],
+      "taste": "An ounce and a half of aged rum, three-quarters of lime, a full ounce of simple, two dashes of Angostura, mint shaken in, then two ounces of Champagne. An ounce of syrup is a heavy pour of sugar, and the bitters and the bubbles are what hold it up. Shaking the mint takes the oil and leaves the leaf whole. Coupe, mint on top.",
+      "history": "Audrey Saunders built the Old Cuban in 2001 and put it on at Bemelmans Bar in the Carlyle, in Manhattan, where by her account it took off almost immediately. She carried it to the Ritz in London for a pop-up in 2002, then onto the opening menu at Pegu Club in 2005, filed under Champagne Opportunities, and it stayed a bestseller for the fifteen years that bar ran. Saunders describes the aim as a lively yet elegant Champagne cocktail with a neotropical edge; the two parents are the Mojito and the French 75. This card pours an ounce and a half of aged rum, three-quarters of lime, an ounce of simple, two dashes of Angostura, mint, and two ounces of Champagne, shaken, coupe, mint.",
+      "refs": [
+        { "title": "Punch, How the Old Cuban Became a Modern Classic", "url": "https://punchdrink.com/articles/old-cuban-modern-classic-champagne-mojito-cocktail-recipe/" }
       ] },
 
     { "id": "jack-rose", "name": "Jack Rose", "method": "shaken", "family": "apple-brandy", "code": "1h,Q,Q,c", "serve": "c",
@@ -676,6 +727,20 @@
       "refs": [
         { "title": "The Oxford Companion to Spirits and Cocktails, The Sidecar", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-417" },
         { "title": "Difford's Guide, Sidecar", "url": "https://www.diffordsguide.com/cocktails/recipe/4791/sidecar" }
+      ] },
+    { "id": "between-the-sheets", "name": "Between the Sheets", "method": "shaken", "family": "cognac", "code": "1,1,1,Q,cl", "serve": "cl",
+      "build": [["cognac","1"],["light-rum","1"],["orange-liqueur","1"],["lemon","Q"]],
+      "taste": "An ounce each of cognac, light rum, and orange liqueur, with three-quarters of lemon behind them. Three ounces of alcohol in a coupe, so it drinks hot, and a full third of that is the orange liqueur, carrying the sugar and most of the aroma. The rum sharpens the grape in the cognac; the lemon is what keeps it moving. Coupe, lemon twist.",
+      "history": "The earliest documented printing is Frank Shay's 1929 Drawn From The Wood, where the drink is equal parts gin, Bacardi, and Cointreau. Harry Craddock's 1930 The Savoy Cocktail Book prints it in thirds as brandy, Cointreau, and Bacardi rum, which is the version that stuck, and Charles H. Baker's 1939 The Gentleman's Companion carries a Jerusalem version of cognac, Cointreau, dry gin, and lemon in equal parts. Credit is disputed: Harry MacElhone of Harry's New York Bar in Paris is the usual claim, and Johnny Brooks put his own name to it in My 35 Years Behind Bars in 1954. This card pours an ounce each of cognac, light rum, and orange liqueur with three-quarters of lemon, shaken, coupe, lemon twist.",
+      "refs": [
+        { "title": "Difford's Guide, Between The Sheets", "url": "https://www.diffordsguide.com/cocktails/recipe/209/between-the-sheets" }
+      ] },
+    { "id": "champs-elysees", "name": "Champs-Élysées", "method": "shaken", "family": "cognac", "code": "1h,h,Q,q,1,cl", "serve": "cl",
+      "build": [["cognac","1h"],["chartreuse","h"],["lemon","Q"],["simple","q"],["angostura","1"]],
+      "taste": "An ounce and a half of cognac, half an ounce of Chartreuse, three-quarters of lemon, a quarter of simple, one dash of Angostura. Green is the Chartreuse this wants; the bar keeps green and yellow as brands of the one bottle, and green has the proof to hold up against brandy. A quarter ounce of sugar leaves the herbs and the lemon to do the talking. Coupe, lemon twist.",
+      "history": "The earliest known recipe is in Drinks Long and Short, published in London in 1925 by Nina Toye and A. H. Adair, written out for a party of six: three glasses of brandy, one of the herbal liqueur, and one and a half of sweetened lemon juice, shaken with Angostura. Harry Craddock printed the same proportions in the 1930 The Savoy Cocktail Book with cognac named in place of brandy. No creator is documented; historians place the drink in the first half of the 1920s and treat it as French, named for the avenue between the Arc de Triomphe and the Place de la Concorde. This card pours an ounce and a half of cognac, half an ounce of Chartreuse, three-quarters of lemon, a quarter of simple, and a dash of Angostura, shaken, coupe, lemon twist.",
+      "refs": [
+        { "title": "Coqtail, Champs-Elysees cocktail recipe and story", "url": "https://www.coqtail.com/en/champs-elysees-cocktail-recipe-story/" }
       ] },
 
     { "id": "buster-brown", "name": "Buster Brown", "method": "shaken", "family": "bourbon", "code": "2,Q,h,3,co", "serve": "co",
@@ -729,6 +794,14 @@
         { "title": "Punch, How the Gold Rush Became a Modern Classic", "url": "https://punchdrink.com/articles/gold-rush-bourbon-cocktail-recipe-became-modern-classic/" },
         { "title": "VinePair, 8 Things You Should Know About St-Germain Elderflower Liqueur", "url": "https://vinepair.com/articles/ntk-st-germain/" }
       ] },
+    { "id": "brown-derby", "name": "Brown Derby", "method": "shaken", "family": "bourbon", "code": "2,1,h,c", "serve": "c",
+      "build": [["bourbon","2"],["grapefruit","1"],["honey-syrup","h"]],
+      "taste": "Two ounces of bourbon, a full ounce of grapefruit, half an ounce of honey syrup. Grapefruit is a third of the glass, so pith and a low bitterness arrive before the corn does. Honey is heavier than sugar and sits under the juice rather than dissolving through it. Shaken, coupe, no ice.",
+      "history": "The formula is older than the name. Judge Jr. printed it in Here's How in 1927 as Scotch, grapefruit, and honey, and Harry Craddock printed the same proportions as the De Rigueur Cocktail in the 1930 The Savoy Cocktail Book. George Buzza Jr. copied Craddock into Hollywood Cocktails in 1933 and renamed it the Brown Derby, after the hat-shaped restaurant on Wilshire. Dale DeGroff revived that version in The Craft of the Cocktail in 2002 and gave it to Billy Wilkerson's Vendome Club on Sunset around 1930; Robert F. Moss has since argued the record will not carry that: the Vendome opened in May 1933, and the Brown Derby Esquire prints in 1939 is a rum drink. This card pours two ounces of bourbon, an ounce of grapefruit, and half an ounce of honey syrup, shaken, coupe.",
+      "refs": [
+        { "title": "Robert F. Moss, The Tale of Two Derbies (Brown Ones)", "url": "https://robertfmoss.com/features/The-Tale-of-Two-Derbies-Brown-Ones" },
+        { "title": "Punch, Brown Derby", "url": "https://punchdrink.com/recipes/brown-derby/" }
+      ] },
 
     { "id": "lemon-drop", "name": "Lemon Drop", "method": "shaken", "family": "vodka", "code": "2,Q,1,1b,cs", "serve": "cs",
       "build": [["vodka","2"],["orange-liqueur","Q"],["lemon","1"],["simple","1b"]],
@@ -751,6 +824,13 @@
       "refs": [
         { "title": "Punch, Bring Back the Queen Bee", "url": "https://punchdrink.com/articles/bring-back-charles-baker-queen-bee-cocktail-recipe/" },
         { "title": "VinePair, 8 Things You Should Know About St-Germain Elderflower Liqueur", "url": "https://vinepair.com/articles/ntk-st-germain/" }
+      ] },
+    { "id": "kamikaze", "name": "Kamikaze", "method": "shaken", "family": "vodka", "code": "1,1,1,cL", "serve": "cL",
+      "build": [["vodka","1"],["orange-liqueur","1"],["lime","1"]],
+      "taste": "An ounce each of vodka, orange liqueur, and lime. A third of the glass is lime juice, so it lands sour first and orange second, and the vodka is there to carry both. Three ounces in a coupe rather than the shot glass it usually arrives in, which gives it room to read as a drink. Lime twist.",
+      "history": "Two accounts, a decade apart. Peter Miller, writing in Ski in October 1979, put the drink out of Florida in the early to mid 1970s and moving from there to New York, and printed the earliest known recipe: an ounce and a half of pre-chilled vodka, a dash of lime, and one drop of Cointreau, served with no ice because everything in it was already frozen. John Mariani, in Motorboating and Sailing for January 1989, credited Tony Lauriano at Les Pyrenees in New York in 1972, who called it the Jesus Christ Superstar until customers found the name strange. Montebello Brands was bottling an Original Kamikaze Cocktail by 1975. This card pours an ounce each of vodka, orange liqueur, and lime, shaken, coupe, lime twist.",
+      "refs": [
+        { "title": "Vintage American Cocktails, Kamikaze", "url": "https://vintageamericancocktails.com/kamikaze/" }
       ] },
 
     { "id": "gimlet", "name": "Gimlet", "method": "shaken", "family": "gin", "code": "2,Q,h,c", "serve": "c",
@@ -853,6 +933,14 @@
       "refs": [
         { "title": "St-Germain, Olivette", "url": "https://www.stgermainliqueur.com/us/en/cocktails/olivette/" },
         { "title": "The Savoy Cocktail Book (1930), Olivette Cocktail", "url": "https://savoycocktaildatabase.com/cocktails/olivette-cocktail" }
+      ] },
+    { "id": "southside", "name": "Southside", "method": "shaken", "family": "gin", "code": "2,Q,Q,cm", "serve": "cm",
+      "build": [["gin","2"],["lime","Q"],["simple","Q"],["mint",null]],
+      "taste": "Two ounces of gin, three-quarters of lime, three-quarters of simple, mint shaken in with them. Lime and sugar are matched at three-quarters each, so it runs sweeter than a Gimlet, and the mint oil sits over the juniper rather than under it. Double strained into a coupe with no soda, mint on top.",
+      "history": "The drink comes off the Mint Julep at Snedecor's Tavern on Long Island in the 1890s, a place that later became the South Side Sportsmen's Club, where wealthy Manhattanites went to hunt and fish. Hugo Ensslin printed a South Side Fizz in the 1917 second edition of Recipes for Mixed Drinks, the whole instruction being that it is made the same as a Gin Fizz, adding fresh mint leaves. New York's Twenty-One Club claimed it as a Prohibition house drink and poured it until the room closed in 2020. The other story, that it belongs to Chicago's South Side and its bootleggers, is bar lore. This card leaves the soda out: two ounces of gin, three-quarters of lime, three-quarters of simple, and mint, shaken, coupe.",
+      "refs": [
+        { "title": "Difford's Guide, South Side Fizz", "url": "https://www.diffordsguide.com/cocktails/recipe/2584/south-side-fizz" },
+        { "title": "Punch, Southside", "url": "https://punchdrink.com/recipes/southside/" }
       ] },
 
     { "id": "margarita", "name": "Margarita", "method": "shaken", "family": "tequila", "code": "2,Q,Q,cS", "serve": "cS",
@@ -963,6 +1051,13 @@
       "refs": [
         { "title": "Difford's Guide, Daiquiri history", "url": "https://www.diffordsguide.com/g/1083/daiquiri-cocktail/story" },
         { "title": "The Seattle Times, St-Germain", "url": "https://www.seattletimes.com/pacific-nw-magazine/st-germain-liqueur-tastes-old-world-but-is-a-modern-take-on-elderflower/" }
+      ] },
+    { "id": "hemingway-daiquiri", "name": "Hemingway Daiquiri", "method": "shaken", "family": "light-rum", "code": "2,h,h,Q,c", "serve": "c",
+      "build": [["light-rum","2"],["maraschino","h"],["grapefruit","h"],["lime","Q"]],
+      "taste": "Two ounces of light rum, half an ounce of maraschino, half of grapefruit, three-quarters of lime. The maraschino is all the sugar there is, so it runs dry, with cherry pit sitting under the citrus. Grapefruit puts pith and a slow bitterness on top of the lime's acid. Shaken hard and strained into a coupe.",
+      "history": "Constantino Ribalaigua Vert, head bartender at El Floridita in Havana, mixed this for Ernest Hemingway in the early 1930s, after Hemingway tried the house frozen Daiquiri and asked for it without sugar and with double the rum. Hemingway had haemochromatosis, an inherited condition he shared with his father, which is the usual explanation offered for the aversion to sugar. The first version was rum and lime and nothing else. Antonio Meilan, Ribalaigua's successor as head bartender, added the maraschino and the grapefruit later, and the name moved from Daiquiri Like Papa to Papa Doble to Hemingway Special. This card pours two ounces of light rum, half an ounce of maraschino, half of grapefruit, and three-quarters of lime, shaken, coupe.",
+      "refs": [
+        { "title": "Difford's Guide, Hemingway Special Daiquiri (Papa Doble)", "url": "https://www.diffordsguide.com/cocktails/recipe/954/hemingway-special-daiquiri-papa-doble" }
       ] },
 
     { "id": "scofflaw", "name": "Scofflaw", "method": "shaken", "family": "rye", "code": "1,1,h,h,1,co", "serve": "co",
@@ -1218,7 +1313,8 @@
       "refs": [
         { "title": "Difford's Guide, Negroni Sbagliato", "url": "https://www.diffordsguide.com/cocktails/recipe/2515/negroni-sbagliato" }
       ] },
-    { "id": "death-in-the-afternoon", "name": "Death in the Afternoon", "method": "built", "family": "vermouth", "code": "1h,t,h", "serve": "h",
+
+    { "id": "death-in-the-afternoon", "name": "Death in the Afternoon", "method": "built", "family": "absinthe", "code": "1h,t,h", "serve": "h",
       "build": [["absinthe","1h"],["champagne","t"]],
       "taste": "An ounce and a half of absinthe with Champagne poured onto it. The wine goes cloudy as the anise louches, and that milkiness is the trick of it. Anise, wormwood, and fennel over dry bubbles, in a tall glass with no ice. It drinks easier than its proof.",
       "history": "Hemingway contributed it to So Red the Nose, or Breath in the Afternoon, a 1935 collection of cocktails by authors, and named it after his 1932 book on bullfighting. His own instruction: pour one jigger of absinthe into a Champagne glass, add iced Champagne until it attains the proper opalescent milkiness, and drink three to five of these slowly. He credited the recipe to himself and three officers of HMS Danae, after seven hours in the water trying to get Captain Bra Saunders' fishing boat off a bank. This card pours an ounce and a half of absinthe and tops with Champagne.",
