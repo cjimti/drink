@@ -1,9 +1,10 @@
 # fewbottles.com
 
-The house cocktail menu, as a web app instead of a printed card. A
-hundred-odd classics, two methods, one small bar — cocktail maxxing
-on a budget. No build step, no framework, no database. Everything
-renders from three JSON files.
+<!-- numbers from make stats -->
+The house cocktail menu, as a web app instead of a printed card. Over a
+hundred and fifty classics, three methods, one small bar — cocktail
+maxxing on a budget. No build step, no framework, no database.
+Everything renders from three JSON files.
 
 Live at **[fewbottles.com](https://fewbottles.com)**. `drink.shoephone.net`
 still opens the menu and sends you here.
@@ -11,8 +12,9 @@ still opens the menu and sends you here.
 ## What it does that paper cannot
 
 **Decodes the shorthand.** Every drink carries the house code exactly as
-printed — `2,1,q,3,10,2b,R` — and tapping it spells the drink out in
-ounces, dashes, glass and garnish. The codes are contextual, so the
+printed — `2,1,q,3,10,2b,R` — and the long drinks added since are written
+in the same shorthand. Tapping one spells the drink out in ounces,
+dashes, glass and garnish. The codes are contextual, so the
 decoder reads each amount against the ingredient it belongs to: a bare
 `2` is two ounces of rye and two dashes of Angostura.
 
@@ -22,9 +24,12 @@ what is one bottle short, and which bottle it is. The whole point of
 this bar is range from few bottles, so every unopened bottle shows what
 it would add — in drinks unlocked, not drinks it merely appears in.
 
-That number is frequently surprising. From gin, bourbon, both vermouths,
-two bitters and the staples you can pour 14 drinks; the best next bottle
-is not a spirit at all but orange liqueur, at +9.
+That number is frequently surprising.
+
+<!-- numbers from make stats -->
+From gin, bourbon, both vermouths, two bitters and the staples you can
+pour 9 drinks; the best next bottle is not a spirit at all but orange
+liqueur, at +8, then Bénédictine at +6 and maraschino liqueur at +5.
 
 **Turns the shelf into a menu.** The count on the Bar tab is a way in,
 not a statistic — tapping it opens the list it counts. Print menu is a
@@ -36,8 +41,8 @@ shelf packed into one number on the end of the address, shown as a QR
 to scan or sent by text, and opened live on the guest's own phone
 without touching their shelf.
 
-**Filters the way you choose a drink.** Stirred or shaken, then by any
-spirit or modifier, then by what the shelf can actually support.
+**Filters the way you choose a drink.** Stirred, shaken or built, then by
+any spirit or modifier, then by what the shelf can actually support.
 Families regroups the same list by shape — Martini, Sour, Daisy — so
 the Manhattan sits with the Martini, not just under bourbon.
 
@@ -59,6 +64,7 @@ family those drinks sit in.
 | `scripts/check_menu.py` | Regenerates each code from its build and refuses a mismatch. |
 | `scripts/kin.py` | Rebuilds `data/kin.json` from the builds. `--check` refuses a drift. |
 | `scripts/check_assets.py` | Missing files, and ids `app.js` reaches for that nothing renders. |
+| `scripts/stats.py` | The counts the copy quotes. `make stats` prints the README sentence. |
 | `llms.txt` | Map for agents: what this is, and a one-line index of every drink. |
 | `llms-full.txt` | The menu spelled out. Generated; `make verify` refuses a drift. |
 | `robots.txt` / `sitemap.xml` | Crawler entry. The sitemap is the one page. |
@@ -73,6 +79,7 @@ make kin       # rebuild data/kin.json from the builds
 make llms      # rebuild llms.txt and llms-full.txt from the menu
 make icons     # redraw the home-screen PNG and the X/social card
 make events    # the custom events the app sends, straight from the source
+make stats     # the figures the copy quotes, and the README sentence to paste
 ```
 
 `make verify` is the only gate. It parses every JSON file, syntax-checks
@@ -143,7 +150,7 @@ menu, spell the build out, and let `make verify` catch the disagreement.
 Then run `make kin` so the new drink joins its family, and `make llms`
 so it lands in the agent dumps. Verify will fail on a stale copy of either.
 
-Ingredients that take no measure (egg white) get `null`. An ingredient
+Ingredients that take no measure (egg white, muddled mint) get `null`. An ingredient
 poured on top rather than into the shaker — the bitters in a `c3` sour —
 gets a third element, `"g"`, so it counts toward what the drink needs
 without appearing among the comma-separated amounts.

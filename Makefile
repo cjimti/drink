@@ -2,7 +2,7 @@
 
 .DEFAULT_GOAL := verify
 .PHONY: verify check json syntax lint code style test menu kin llms assets \
-        serve icons events clean
+        serve icons events stats clean
 
 ## verify — run every check, then stamp the review-gate sentinel
 verify: check
@@ -77,6 +77,11 @@ assets:
 PORT ?= 8010
 serve:
 	@python3 scripts/serve.py $(PORT)
+
+## stats — the figures the copy quotes, off the data that owns them.
+##         The last paragraph is the README sentence, ready to paste.
+stats:
+	@python3 scripts/stats.py
 
 ## events — the custom events app.js pushes to the dataLayer, read off
 ##          the source rather than kept in a second list that goes stale

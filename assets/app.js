@@ -34,6 +34,7 @@
   var ing = {};          /* id -> ingredient */
   var standInBy = {};    /* id -> bottles that may be poured in its place */
   var cocktailBy = {};   /* id -> cocktail */
+  var methodBy = {};     /* id -> method */
   var patternBy = {};    /* id -> kin pattern */
   var garnishCodes = []; /* longest first */
   var glassBy = {};
@@ -170,6 +171,7 @@
       return { text: '\u00b7', note: 'one' };
     }
     if (token === 'r') return { text: 'rinse', note: '' };
+    if (token === 't') return { text: 'top', note: '' };
 
     var m;
 
@@ -907,10 +909,15 @@
     return i.kind === 'base' || i.kind === 'vermouth' || i.kind === 'modifier';
   }
 
+  /* Two segments of the control are not methods: All and Families. Those
+     two get named here, and every method passes. That is why the card
+     could go from two methods to three without this line moving. */
+  function methodFilterOn() {
+    return filter.method !== 'all' && filter.method !== 'families';
+  }
+
   function matches(d, held) {
-    if (filter.method === 'stirred' || filter.method === 'shaken') {
-      if (d.method !== filter.method) return false;
-    }
+    if (methodFilterOn() && d.method !== filter.method) return false;
     if (filter.family && needs(d).indexOf(filter.family) < 0) return false;
     if (filter.pattern && patternIdOf(d) !== filter.pattern) return false;
     if (shelfGate() && !canPour(d, held)) return false;
@@ -979,23 +986,49 @@
     if (g === 'c') return extra ? 'nick-nora-' + extra : 'nick-nora';
     if (g === 'r') return extra ? 'rocks-' + extra : 'rocks';
     if (g === 'R') return extra ? 'rocks-cube-' + extra : 'rocks-cube';
+    if (g === 'h') return extra ? 'highball-' + extra : 'highball';
+    if (g === 'H') return extra ? 'highball-ice-' + extra : 'highball-ice';
     return null;
   }
+
+  /* Cropped to the tumbler and centred on it (x = 100). A rocks glass is
+     shorter than a Nick & Nora and a highball is taller, so each one crops
+     to the box its drawing fills and the CSS scales that box down to
+     match. Stretch them all to one row height and they stop looking like
+     glasses. Garnishes that stick out still draw, because overflow is
+     visible. */
+  var GLASS_CROP = {
+    rocks: { box: '45 118 110 146', cls: ' drink__glass--rocks' },
+    highball: { box: '45 64 110 200', cls: ' drink__glass--tall' }
+  };
 
   function renderGlass(serve) {
     var id = pickGlassArt(serve);
     var svg = id && glassMarkup[id];
     if (!svg) return '';
+    var crop = GLASS_CROP[id.split('-')[0]];
     var cls = 'drink__glass';
-    if (id.indexOf('rocks') === 0) {
-      /* Cropped to the tumbler and centred on it (x = 100). A rocks
-         glass is shorter than a Nick & Nora, so the CSS scales this
-         down rather than stretching it to the row. Garnishes that
-         stick out still draw, because overflow is visible. */
-      svg = svg.replace('viewBox="0 0 200 270"', 'viewBox="45 118 110 146"');
-      cls += ' drink__glass--rocks';
+    if (crop) {
+      svg = svg.replace('viewBox="0 0 200 270"', 'viewBox="' + crop.box + '"');
+      cls += crop.cls;
     }
     return '<span class="' + cls + '" aria-hidden="true">' + svg + '</span>';
+  }
+
+  /* The instruction you follow at the bar. The blurb in cocktails.json is
+     the heading over that section of the menu and reads like one, so the
+     sentence for a single drink lives here with the decoder. A method
+     with no line here falls back to its blurb, so a fourth one still
+     says something. */
+  var METHOD_HOW = {
+    stirred: 'Stir with ice until cold, then strain.',
+    shaken: 'Shake hard with ice, then strain.',
+    built: 'Build in the glass over ice, then lift once with a barspoon.'
+  };
+
+  function methodLine(id) {
+    var m = methodBy[id];
+    return METHOD_HOW[id] || (m ? m.blurb : id);
   }
 
   function renderPours(d, held) {
@@ -1023,9 +1056,7 @@
     var s = readServe(d.serve);
     html += '<div class="serve">' +
       '<div class="serve__row"><span class="serve__k">Method</span><span>' +
-        (d.method === 'stirred'
-          ? 'Stir with ice until cold, then strain.'
-          : 'Shake hard with ice, then strain.') +
+        esc(methodLine(d.method)) +
       '</span></div>' +
       '<div class="serve__row"><span class="serve__k">Glass</span><span>' +
         esc(s.glass) + (s.gloss ? ' (' + esc(s.gloss) + ')' : '') +
@@ -1242,9 +1273,7 @@
       if (filter.family) {
         blocking.push('use ' + ((ing[filter.family] || {}).short || filter.family));
       }
-      if (filter.method === 'stirred' || filter.method === 'shaken') {
-        blocking.push('are ' + filter.method);
-      }
+      if (methodFilterOn()) blocking.push('are ' + filter.method);
       if (filter.pattern) {
         var pat = patternBy[filter.pattern];
         blocking.push('sit in the ' + (pat ? pat.label : filter.pattern) + ' family');
@@ -2204,8 +2233,9 @@
     $('#key-body').innerHTML = renderBarlineBody() +
       '<p class="colophon">' +
       esc(data.menu.cocktails.length + ' drinks, ' + data.bar.ingredients.length +
-          ' ingredients. Every code here is the one from the printed menu; the ' +
-          'recipes are generated from it, so the two cannot drift apart.') +
+          ' ingredients. The codes are the ones off the printed menu, with the ' +
+          'long drinks written in the same shorthand; every recipe is generated ' +
+          'from its code, so the two cannot drift apart.') +
       '</p>' +
       '<p class="sign">© 2026 <a href="https://imti.co/resume/" ' +
         'rel="noopener">Craig Johnston</a></p>';
@@ -2279,9 +2309,7 @@
       filter.family = null;
       filter.q = '';
       if (filter.pattern && patternIdOf(d) !== filter.pattern) filter.pattern = null;
-      if (filter.method === 'stirred' || filter.method === 'shaken') {
-        if (d.method !== filter.method) filter.method = 'all';
-      }
+      if (methodFilterOn() && d.method !== filter.method) filter.method = 'all';
       if (shelfGate() && !canPour(d, heldNow())) { filter.pourable = false; filter.shared = false; }
     }
     open = {};
@@ -2925,7 +2953,10 @@
     'nick-nora', 'nick-nora-twist', 'nick-nora-pick', 'nick-nora-wheel',
     'rocks', 'rocks-twist', 'rocks-pick', 'rocks-wheel',
     'rocks-cube', 'rocks-cube-twist', 'rocks-cube-pick', 'rocks-cube-wheel',
-    'rocks-ice'
+    'rocks-ice',
+    'highball', 'highball-twist', 'highball-wheel', 'highball-pick',
+    'highball-ice', 'highball-ice-twist', 'highball-ice-wheel',
+    'highball-ice-pick'
   ];
 
   function loadGlassArt() {
@@ -2954,6 +2985,7 @@
       if (i.stand_in) standInBy[i.id] = i.stand_in;
     });
     data.menu.cocktails.forEach(function (d) { cocktailBy[d.id] = d; });
+    data.menu.methods.forEach(function (m) { methodBy[m.id] = m; });
     data.kin.patterns.forEach(function (p) { patternBy[p.id] = p; });
     data.notation.glasses.forEach(function (g) { glassBy[g.code] = g; });
     data.notation.garnishes.forEach(function (g) { garnishBy[g.code] = g; });

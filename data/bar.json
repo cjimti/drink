@@ -1,13 +1,14 @@
 {
-  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `bit` is the ingredient's place in a shared shelf code and is never renamed or reused (a dropped ingredient's bit goes into `retired_bits`), `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand, `shelf` overrides the name where the bottle and the pour want different words for the same thing, `notes` is a house recipe for making that bottle. The checkbox selects the bottle, the rest of the row reveals the notes when there are any. `bottles` is the shopping list for that type, grouped by quality; selecting a brand selects the parent, and clearing the last brand clears it. `catalog` marks a type that is on the shopping list before any drink calls for it. `stand_in` is the short list of bottles the house will pour in place of this one, close enough that the drink is still the drink; a build gates on the bottle it names or on anything standing in for it, and each direction is written out on its own rather than inferred. `shelves` are named starting points on the Bar tab: one tap selects a listed set of ingredients, additively, and the drinks each would pour is computed live, never written down here. Garnish is stocked like anything else (the letter lives in the serve token, and notation.json says which bottle it calls for), but it is optional, so it never decides whether a drink can be poured.",
+  "note": "The bar. Every ingredient any drink on the menu can call for. `kind` groups the shelf, `bit` is the ingredient's place in a shared shelf code and is never renamed or reused (a dropped ingredient's bit goes into `retired_bits`), `unit` tells the notation parser how to read a bare number, `staple` marks what is assumed always on hand, `shelf` overrides the name where the bottle and the pour want different words for the same thing, `notes` is a house recipe for making that bottle. The checkbox selects the bottle, the rest of the row reveals the notes when there are any. `bottles` is the shopping list for that type, grouped by quality; selecting a brand selects the parent, and clearing the last brand clears it. `catalog` marks a type that is on the shopping list before any drink calls for it. `stand_in` is the short list of bottles the house will pour in place of this one, close enough that the drink is still the drink; a build gates on the bottle it names or on anything standing in for it, and each direction is written out on its own rather than inferred. `shelves` are named starting points on the Bar tab: one tap selects a listed set of ingredients, additively, and the drinks each would pour is computed live, never written down here. Garnish is stocked like anything else (the letter lives in the serve token, and notation.json says which bottle it calls for), but it is optional, so it never decides whether a drink can be poured. Mint is both at once. The `m` in a serve token is a garnish and gates nothing. The Mojito muddles mint into the build with `unit: none` and no amount, and a build entry always gates.",
   "bottles_copy": "When it comes to base liquor, anything above excellent is made for sipping neat. This does not mean the quality of the bottles in the solid or elevated lists is poor, quite the opposite: staples like Four Roses Bourbon and Beefeater London Dry Gin are nearly perfect representations of their categories, but that kind of makes them boring for a neat sip, yet a solid foundation for a cocktail expecting their familiar flavor profile.",
   "kinds": [
-    { "id": "base",     "label": "Base spirits",  "blurb": "Ten bottles carry the whole menu." },
+    { "id": "base",     "label": "Base spirits",  "blurb": "The spirits. Everything else is what you pour with them." },
     { "id": "vermouth", "label": "Vermouth",      "blurb": "Two bottles. Refrigerate them." },
     { "id": "modifier", "label": "Modifiers",     "blurb": "Where the range actually comes from." },
     { "id": "bitters",  "label": "Bitters",       "blurb": "Measured in dashes." },
     { "id": "syrup",    "label": "Syrups",        "blurb": "Made at home. Weigh everything; a kitchen scale is required. Three to four weeks in the fridge, sealed." },
     { "id": "juice",    "label": "Citrus",        "blurb": "Squeezed to order. The peel is the garnish." },
+    { "id": "mixer",    "label": "Mixers",        "blurb": "Cold and opened tonight. A flat mixer is a dead drink." },
     { "id": "garnish",  "label": "Garnish",       "blurb": "The tail of every code. Optional, so it is never counted against a drink." },
     { "id": "other",    "label": "Other",         "blurb": "" }
   ],
@@ -186,7 +187,6 @@
       ]
     },
     { "bit": 21, "id": "champagne",      "name": "Champagne",          "short": "Champagne",   "kind": "modifier" },
-    { "bit": 22, "id": "ginger-beer",    "name": "Ginger beer",        "short": "ginger beer", "kind": "modifier" },
     { "bit": 23, "id": "cream",          "name": "Cream",              "short": "cream",       "kind": "modifier" },
     { "bit": 24, "id": "chartreuse",     "name": "Chartreuse",         "short": "Chartreuse",  "kind": "modifier",
       "bottles": [
@@ -267,10 +267,14 @@
     { "bit": 37, "id": "lime",           "name": "Lime juice",         "short": "lime",        "kind": "juice",  "staple": true, "shelf": "Limes" },
     { "bit": 38, "id": "grapefruit",     "name": "Grapefruit juice",   "short": "grapefruit",  "kind": "juice",  "shelf": "Grapefruits" },
 
+    { "bit": 48, "id": "soda-water",    "name": "Soda water",          "short": "soda",        "kind": "mixer",   "shelf": "Soda water" },
+    { "bit": 49, "id": "tonic",         "name": "Tonic water",         "short": "tonic",       "kind": "mixer" },
+    { "bit": 22, "id": "ginger-beer",   "name": "Ginger beer",         "short": "ginger beer", "kind": "mixer" },
+
     { "bit": 39, "id": "cherry",        "name": "Cocktail cherries",   "short": "cherries",    "kind": "garnish", "staple": true },
     { "bit": 40, "id": "orange",        "name": "Oranges",             "short": "orange",      "kind": "garnish", "staple": true },
     { "bit": 41, "id": "olive",         "name": "Olives",              "short": "olives",      "kind": "garnish", "staple": true },
-    { "bit": 42, "id": "mint",          "name": "Mint",                "short": "mint",        "kind": "garnish", "staple": true },
+    { "bit": 42, "id": "mint",          "name": "Mint",                "short": "mint",        "kind": "garnish", "unit": "none", "staple": true },
     { "bit": 43, "id": "sugar",         "name": "Sugar",               "short": "sugar",       "kind": "garnish", "staple": true },
     { "bit": 44, "id": "salt",          "name": "Salt",                "short": "salt",        "kind": "garnish", "staple": true },
     { "bit": 45, "id": "cinnamon",      "name": "Cinnamon",            "short": "cinnamon",    "kind": "garnish", "staple": true },

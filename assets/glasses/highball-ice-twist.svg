@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 270" fill="none" color="#111110">
+  <!-- Highball, iced, citrus twist on the rim. -->
+  <g stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M72 106h56l-4 150H76z"/>
+    <path d="M84 244h32"/>
+    <rect x="78" y="210" width="26" height="28" rx="3"/>
+    <rect x="102" y="214" width="20" height="24" rx="3"/>
+    <rect x="82" y="180" width="24" height="26" rx="3"/>
+    <rect x="102" y="184" width="20" height="22" rx="3"/>
+    <path d="M108 104c21-33 54-27 51 3-3 21-24 24-30 6-5-12 12-15 21-3 6 9-3 21-18 24"/>
+  </g>
+</svg>

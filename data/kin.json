@@ -146,7 +146,8 @@
         "toronto",
         "cornerstone",
         "improved-cocktail",
-        "sazerac"
+        "sazerac",
+        "mint-julep"
       ]
     },
     {
@@ -194,7 +195,34 @@
         "french-75",
         "air-mail",
         "queen-bee",
-        "fernet-and-ginger"
+        "seelbach",
+        "champagne-cocktail",
+        "death-in-the-afternoon",
+        "negroni-sbagliato"
+      ]
+    },
+    {
+      "id": "highball",
+      "label": "Highball",
+      "blurb": "Spirit and a mixer, built over ice. The Gin & Tonic, the Scotch and Soda, and the Mule are the same pour in different bottles.",
+      "namesake": "gin-and-tonic",
+      "members": [
+        "gin-and-tonic",
+        "scotch-and-soda",
+        "vodka-soda",
+        "whiskey-highball",
+        "dark-and-stormy",
+        "gin-rickey",
+        "kentucky-mule",
+        "mezcal-mule",
+        "moscow-mule",
+        "mojito",
+        "gin-fizz",
+        "tom-collins",
+        "elderflower-collins",
+        "paloma",
+        "fernet-and-ginger",
+        "americano"
       ]
     }
   ],
@@ -262,6 +290,10 @@
         {
           "id": "sazerac",
           "why": "rye and simple syrup for aged rum and demerara syrup"
+        },
+        {
+          "id": "mint-julep",
+          "why": "bourbon and simple syrup for aged rum and demerara syrup"
         }
       ]
     },
@@ -587,6 +619,10 @@
         {
           "id": "sazerac",
           "why": "rye and simple syrup for bourbon and demerara syrup"
+        },
+        {
+          "id": "mint-julep",
+          "why": "simple syrup for demerara syrup"
         }
       ]
     },
@@ -1060,6 +1096,10 @@
         {
           "id": "cornerstone",
           "why": "cachaça and Fernet for rye and maraschino liqueur"
+        },
+        {
+          "id": "mint-julep",
+          "why": "bourbon for rye"
         }
       ]
     },
@@ -1089,6 +1129,10 @@
         {
           "id": "cornerstone",
           "why": "cachaça and grenadine for rye and simple syrup"
+        },
+        {
+          "id": "mint-julep",
+          "why": "bourbon for rye"
         }
       ]
     },
@@ -1414,6 +1458,10 @@
         {
           "id": "sazerac",
           "why": "rye for scotch"
+        },
+        {
+          "id": "mint-julep",
+          "why": "bourbon for scotch"
         }
       ]
     },
@@ -2413,6 +2461,10 @@
           "why": "scotch and simple syrup for cachaça and grenadine"
         },
         {
+          "id": "mint-julep",
+          "why": "bourbon and simple syrup for cachaça and grenadine"
+        },
+        {
           "id": "improved-cocktail",
           "why": "rye and maraschino liqueur for cachaça and Fernet"
         },
@@ -2485,6 +2537,10 @@
         {
           "id": "sazerac",
           "why": "simple syrup for demerara syrup"
+        },
+        {
+          "id": "mint-julep",
+          "why": "bourbon and simple syrup for rye and demerara syrup"
         }
       ]
     },
@@ -2773,19 +2829,39 @@
       ]
     },
     "fernet-and-ginger": {
-      "pattern": "sparkling",
+      "pattern": "highball",
       "kin": [
         {
-          "id": "french-75",
-          "why": "Champagne for ginger beer"
+          "id": "elderflower-collins",
+          "why": "elderflower liqueur and soda water for Fernet and ginger beer"
         },
         {
-          "id": "air-mail",
-          "why": "Champagne for ginger beer"
+          "id": "gin-and-tonic",
+          "why": "tonic water for ginger beer"
         },
         {
-          "id": "queen-bee",
-          "why": "elderflower liqueur and Champagne for Fernet and ginger beer"
+          "id": "scotch-and-soda",
+          "why": "soda water for ginger beer"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "soda water for ginger beer"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "soda water for ginger beer"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "with aged rum and lime juice"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "soda water for ginger beer"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "with bourbon and lime juice"
         }
       ]
     },
@@ -2838,8 +2914,20 @@
           "why": "vodka and lemon juice for aged rum and lime juice"
         },
         {
-          "id": "fernet-and-ginger",
-          "why": "ginger beer for Champagne"
+          "id": "seelbach",
+          "why": "bourbon for aged rum"
+        },
+        {
+          "id": "champagne-cocktail",
+          "why": "cognac for aged rum"
+        },
+        {
+          "id": "death-in-the-afternoon",
+          "why": "with absinthe"
+        },
+        {
+          "id": "negroni-sbagliato",
+          "why": "with sweet vermouth and Campari"
         }
       ]
     },
@@ -3406,12 +3494,24 @@
           "why": "aged rum and lime juice for vodka and lemon juice"
         },
         {
+          "id": "seelbach",
+          "why": "bourbon and orange liqueur for vodka and elderflower liqueur"
+        },
+        {
+          "id": "champagne-cocktail",
+          "why": "cognac for vodka"
+        },
+        {
+          "id": "death-in-the-afternoon",
+          "why": "with absinthe"
+        },
+        {
           "id": "french-75",
           "why": "gin and simple syrup for vodka and honey syrup"
         },
         {
-          "id": "fernet-and-ginger",
-          "why": "Fernet and ginger beer for elderflower liqueur and Champagne"
+          "id": "negroni-sbagliato",
+          "why": "with sweet vermouth and Campari"
         }
       ]
     },
@@ -3464,8 +3564,20 @@
           "why": "vodka and honey syrup for gin and simple syrup"
         },
         {
-          "id": "fernet-and-ginger",
-          "why": "ginger beer for Champagne"
+          "id": "seelbach",
+          "why": "bourbon for gin"
+        },
+        {
+          "id": "champagne-cocktail",
+          "why": "cognac for gin"
+        },
+        {
+          "id": "death-in-the-afternoon",
+          "why": "with absinthe"
+        },
+        {
+          "id": "negroni-sbagliato",
+          "why": "with sweet vermouth and Campari"
         }
       ]
     },
@@ -4872,6 +4984,710 @@
         {
           "id": "kings-jubilee",
           "why": "light rum and lemon juice for gin and lime juice"
+        }
+      ]
+    },
+    "champagne-cocktail": {
+      "pattern": "sparkling",
+      "kin": [
+        {
+          "id": "seelbach",
+          "why": "bourbon for cognac"
+        },
+        {
+          "id": "death-in-the-afternoon",
+          "why": "with absinthe"
+        },
+        {
+          "id": "negroni-sbagliato",
+          "why": "with sweet vermouth and Campari"
+        },
+        {
+          "id": "queen-bee",
+          "why": "vodka for cognac"
+        },
+        {
+          "id": "air-mail",
+          "why": "aged rum for cognac"
+        },
+        {
+          "id": "french-75",
+          "why": "gin for cognac"
+        }
+      ]
+    },
+    "whiskey-highball": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "gin-and-tonic",
+          "why": "gin and tonic water for bourbon and soda water"
+        },
+        {
+          "id": "scotch-and-soda",
+          "why": "scotch for bourbon"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "vodka for bourbon"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and ginger beer for bourbon and soda water"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "gin for bourbon"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "ginger beer for soda water"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and ginger beer for bourbon and soda water"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka and ginger beer for bourbon and soda water"
+        }
+      ]
+    },
+    "mint-julep": {
+      "pattern": "old-fashioned",
+      "kin": [
+        {
+          "id": "old-fashioned",
+          "why": "demerara syrup for simple syrup"
+        },
+        {
+          "id": "rum-old-fashioned",
+          "why": "aged rum and demerara syrup for bourbon and simple syrup"
+        },
+        {
+          "id": "scotch-old-fashioned",
+          "why": "scotch for bourbon"
+        },
+        {
+          "id": "toronto",
+          "why": "rye and demerara syrup for bourbon and simple syrup"
+        },
+        {
+          "id": "cornerstone",
+          "why": "cachaça and grenadine for bourbon and simple syrup"
+        },
+        {
+          "id": "improved-cocktail",
+          "why": "rye for bourbon"
+        },
+        {
+          "id": "sazerac",
+          "why": "rye for bourbon"
+        }
+      ]
+    },
+    "kentucky-mule": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum for bourbon"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "gin and soda water for bourbon and ginger beer"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal for bourbon"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka for bourbon"
+        },
+        {
+          "id": "gin-and-tonic",
+          "why": "gin and tonic water for bourbon and ginger beer"
+        },
+        {
+          "id": "scotch-and-soda",
+          "why": "scotch and soda water for bourbon and ginger beer"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "vodka and soda water for bourbon and ginger beer"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "soda water for ginger beer"
+        }
+      ]
+    },
+    "seelbach": {
+      "pattern": "sparkling",
+      "kin": [
+        {
+          "id": "champagne-cocktail",
+          "why": "cognac for bourbon"
+        },
+        {
+          "id": "death-in-the-afternoon",
+          "why": "with absinthe"
+        },
+        {
+          "id": "queen-bee",
+          "why": "vodka and elderflower liqueur for bourbon and orange liqueur"
+        },
+        {
+          "id": "negroni-sbagliato",
+          "why": "with sweet vermouth and Campari"
+        },
+        {
+          "id": "air-mail",
+          "why": "aged rum for bourbon"
+        },
+        {
+          "id": "french-75",
+          "why": "gin for bourbon"
+        }
+      ]
+    },
+    "scotch-and-soda": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "gin-and-tonic",
+          "why": "gin and tonic water for scotch and soda water"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "vodka for scotch"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "bourbon for scotch"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and ginger beer for scotch and soda water"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "gin for scotch"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon and ginger beer for scotch and soda water"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and ginger beer for scotch and soda water"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka and ginger beer for scotch and soda water"
+        }
+      ]
+    },
+    "mojito": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "gin-fizz",
+          "why": "gin and lemon juice for light rum and lime juice"
+        },
+        {
+          "id": "tom-collins",
+          "why": "gin and lemon juice for light rum and lime juice"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and ginger beer for light rum and soda water"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "gin for light rum"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon and ginger beer for light rum and soda water"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and ginger beer for light rum and soda water"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka and ginger beer for light rum and soda water"
+        },
+        {
+          "id": "paloma",
+          "why": "tequila for light rum"
+        }
+      ]
+    },
+    "dark-and-stormy": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "gin-rickey",
+          "why": "gin and soda water for aged rum and ginger beer"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon for aged rum"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal for aged rum"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka for aged rum"
+        },
+        {
+          "id": "gin-and-tonic",
+          "why": "gin and tonic water for aged rum and ginger beer"
+        },
+        {
+          "id": "scotch-and-soda",
+          "why": "scotch and soda water for aged rum and ginger beer"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "vodka and soda water for aged rum and ginger beer"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "bourbon and soda water for aged rum and ginger beer"
+        }
+      ]
+    },
+    "paloma": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "gin-fizz",
+          "why": "gin and lemon juice for tequila, grapefruit juice, and lime juice"
+        },
+        {
+          "id": "tom-collins",
+          "why": "gin and lemon juice for tequila, grapefruit juice, and lime juice"
+        },
+        {
+          "id": "mojito",
+          "why": "light rum for tequila"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and ginger beer for tequila and soda water"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "gin for tequila"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon and ginger beer for tequila and soda water"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and ginger beer for tequila and soda water"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka and ginger beer for tequila and soda water"
+        }
+      ]
+    },
+    "mezcal-mule": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum for mezcal"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "gin and soda water for mezcal and ginger beer"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon for mezcal"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka for mezcal"
+        },
+        {
+          "id": "gin-and-tonic",
+          "why": "gin and tonic water for mezcal and ginger beer"
+        },
+        {
+          "id": "scotch-and-soda",
+          "why": "scotch and soda water for mezcal and ginger beer"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "vodka and soda water for mezcal and ginger beer"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "bourbon and soda water for mezcal and ginger beer"
+        }
+      ]
+    },
+    "moscow-mule": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum for vodka"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "gin and soda water for vodka and ginger beer"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon for vodka"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal for vodka"
+        },
+        {
+          "id": "gin-and-tonic",
+          "why": "gin and tonic water for vodka and ginger beer"
+        },
+        {
+          "id": "scotch-and-soda",
+          "why": "scotch and soda water for vodka and ginger beer"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "soda water for ginger beer"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "bourbon and soda water for vodka and ginger beer"
+        }
+      ]
+    },
+    "vodka-soda": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "gin-and-tonic",
+          "why": "gin and tonic water for vodka and soda water"
+        },
+        {
+          "id": "scotch-and-soda",
+          "why": "scotch for vodka"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "bourbon for vodka"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and ginger beer for vodka and soda water"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "gin for vodka"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon and ginger beer for vodka and soda water"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and ginger beer for vodka and soda water"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "ginger beer for soda water"
+        }
+      ]
+    },
+    "gin-and-tonic": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "scotch-and-soda",
+          "why": "scotch and soda water for gin and tonic water"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "vodka and soda water for gin and tonic water"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "bourbon and soda water for gin and tonic water"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and ginger beer for gin and tonic water"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "soda water for tonic water"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon and ginger beer for gin and tonic water"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and ginger beer for gin and tonic water"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka and ginger beer for gin and tonic water"
+        }
+      ]
+    },
+    "gin-rickey": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and ginger beer for gin and soda water"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon and ginger beer for gin and soda water"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and ginger beer for gin and soda water"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka and ginger beer for gin and soda water"
+        },
+        {
+          "id": "gin-and-tonic",
+          "why": "tonic water for soda water"
+        },
+        {
+          "id": "scotch-and-soda",
+          "why": "scotch for gin"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "vodka for gin"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "bourbon for gin"
+        }
+      ]
+    },
+    "tom-collins": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "gin-fizz",
+          "why": "the same pour"
+        },
+        {
+          "id": "elderflower-collins",
+          "why": "with elderflower liqueur"
+        },
+        {
+          "id": "mojito",
+          "why": "light rum and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "paloma",
+          "why": "tequila, grapefruit juice, and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "lime juice for lemon juice"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and lime juice for gin and lemon juice"
+        }
+      ]
+    },
+    "elderflower-collins": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "gin-fizz",
+          "why": "with simple syrup"
+        },
+        {
+          "id": "tom-collins",
+          "why": "with simple syrup"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "lime juice for lemon juice"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "moscow-mule",
+          "why": "vodka and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "mojito",
+          "why": "light rum and lime juice for gin and lemon juice"
+        }
+      ]
+    },
+    "americano": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "fernet-and-ginger",
+          "why": "ginger beer for soda water"
+        },
+        {
+          "id": "elderflower-collins",
+          "why": "with gin and lemon juice"
+        },
+        {
+          "id": "gin-and-tonic",
+          "why": "tonic water for soda water"
+        },
+        {
+          "id": "scotch-and-soda",
+          "why": "with scotch"
+        },
+        {
+          "id": "vodka-soda",
+          "why": "with vodka"
+        },
+        {
+          "id": "whiskey-highball",
+          "why": "with bourbon"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "ginger beer for soda water"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "with gin and lime juice"
+        }
+      ]
+    },
+    "negroni-sbagliato": {
+      "pattern": "sparkling",
+      "kin": [
+        {
+          "id": "death-in-the-afternoon",
+          "why": "with absinthe"
+        },
+        {
+          "id": "champagne-cocktail",
+          "why": "with cognac"
+        },
+        {
+          "id": "seelbach",
+          "why": "with bourbon and orange liqueur"
+        },
+        {
+          "id": "queen-bee",
+          "why": "with vodka and lemon juice"
+        },
+        {
+          "id": "air-mail",
+          "why": "with aged rum and lime juice"
+        },
+        {
+          "id": "french-75",
+          "why": "with gin and lemon juice"
+        }
+      ]
+    },
+    "death-in-the-afternoon": {
+      "pattern": "sparkling",
+      "kin": [
+        {
+          "id": "champagne-cocktail",
+          "why": "with cognac"
+        },
+        {
+          "id": "negroni-sbagliato",
+          "why": "with sweet vermouth and Campari"
+        },
+        {
+          "id": "seelbach",
+          "why": "with bourbon and orange liqueur"
+        },
+        {
+          "id": "queen-bee",
+          "why": "with vodka and lemon juice"
+        },
+        {
+          "id": "air-mail",
+          "why": "with aged rum and lime juice"
+        },
+        {
+          "id": "french-75",
+          "why": "with gin and lemon juice"
+        }
+      ]
+    },
+    "gin-fizz": {
+      "pattern": "highball",
+      "kin": [
+        {
+          "id": "tom-collins",
+          "why": "the same pour"
+        },
+        {
+          "id": "elderflower-collins",
+          "why": "with elderflower liqueur"
+        },
+        {
+          "id": "mojito",
+          "why": "light rum and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "paloma",
+          "why": "tequila, grapefruit juice, and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "dark-and-stormy",
+          "why": "aged rum and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "gin-rickey",
+          "why": "lime juice for lemon juice"
+        },
+        {
+          "id": "kentucky-mule",
+          "why": "bourbon and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "mezcal-mule",
+          "why": "mezcal and lime juice for gin and lemon juice"
         }
       ]
     }

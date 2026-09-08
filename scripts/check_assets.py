@@ -43,6 +43,58 @@ def check_ids(html, js):
     return dangling, len(wanted)
 
 
+GLASS_DIR = ROOT / "assets" / "glasses"
+
+
+def js_function(js, name):
+    """One top-level function of app.js, found by matching its braces."""
+    try:
+        start = js.index("function " + name + "(")
+    except ValueError:
+        raise SystemExit(f"  GLASS  app.js has no {name}() any more; "
+                         f"check_glasses reads the art names out of it") from None
+    depth = 0
+    for i in range(js.index("{", start), len(js)):
+        depth += 1 if js[i] == "{" else -1 if js[i] == "}" else 0
+        if not depth:
+            return js[start:i + 1]
+    return js[start:]
+
+
+def check_glasses(js):
+    """Every drawing a serve token can ask for exists, and none is spare.
+
+    `pickGlassArt` turns the glass letter into a filename stem and
+    `garnishArt` turns whatever follows it into a suffix. Cross the two and
+    that is every name the app can build. A name with no file behind it
+    fails the way static sites fail: `renderGlass` finds nothing in
+    `glassMarkup`, returns an empty string, and the row loses its icon on
+    somebody's phone with nothing in the console. Both lists are read off
+    the app so there is no second copy here to go stale. This one reports
+    rather than prints, because test_checks.py runs it over broken sources
+    and a passing pipeline should say nothing about them.
+    """
+    stems = re.findall(r"return extra \? '[a-z-]+' \+ extra : '([a-z-]+)';",
+                       js_function(js, "pickGlassArt"))
+    suffixes = set(re.findall(r"return '([a-z]*)';",
+                              js_function(js, "garnishArt")))
+
+    wanted = set(stems)
+    wanted |= {f"{stem}-{suf}" for stem in stems for suf in suffixes if suf}
+
+    listed = re.search(r"var GLASS_FILES = \[(.*?)\];", js, re.S).group(1)
+    listed = {n.strip() for n in listed.replace("'", "").split(",") if n.strip()}
+    have = {f.stem for f in GLASS_DIR.glob("*.svg")}
+
+    errs = [f"assets/glasses/{n}.svg: a serve token reaches it, nothing draws it"
+            for n in sorted(wanted - have)]
+    errs += [f"{n}: drawn but never fetched, so GLASS_FILES has to name it"
+             for n in sorted(wanted - listed)]
+    errs += [f"{n}: fetched by GLASS_FILES and not in assets/glasses"
+             for n in sorted(listed - have)]
+    return errs, len(wanted)
+
+
 WELL_KNOWN = [
     "robots.txt",
     "sitemap.xml",
@@ -105,11 +157,15 @@ def main():
     dangling, n_ids = check_ids(html, js)
     worker = check_worker(js, sw)
     well = check_well_known()
+    glass, n_glass = check_glasses(js)
+    for e in glass:
+        print(f"  GLASS  {e}")
 
-    if missing or dangling or worker or well:
+    if missing or dangling or worker or well or glass:
         return 1
 
     print(f"  assets  {n_refs} local reference(s) resolve, {n_ids} element id(s) exist")
+    print(f"  glass   {n_glass} drawing(s) a serve token can ask for, all present")
     print(f"  well    {len(WELL_KNOWN)} crawler/agent file(s) present")
     print("  worker  registration guarded, eviction present in app.js and sw.js")
     return 0

@@ -4,16 +4,18 @@
 > in house shorthand, decoded in the browser, with a shelf that shows
 > what you can pour tonight.
 
-One person's shelf, pouring for guests and for himself. Two methods,
-stirred and shaken. The menu is large because the bottles overlap,
-not because the bar is. 132 drinks (74 stirred, 58 shaken), 48 ingredients.
+One person's shelf, pouring for guests and for himself.
+Three methods, stirred, shaken, and built. The menu is large because the bottles
+overlap, not because the bar is.
+152 drinks (74 stirred, 59 shaken, 19 built), 50 ingredients.
 
 The printed card writes a contextual shorthand called Barline. A
 bare number is ounces beside a spirit and dashes beside bitters;
-`q` is a quarter ounce and `Q` is three quarters; the last token is
-glass plus garnish, matched longest-first. Each drink in the JSON
-carries both `code` (the card) and `build` (the same drink spelled
-out). Ids are stable: never renamed, never reused.
+`q` is a quarter ounce and `Q` is three quarters; `t` is a top, so
+fill the glass with the mixer. The last token is glass plus garnish,
+matched longest-first. Each drink in the JSON carries both `code`
+(the card) and `build` (the same drink spelled out). Ids are stable:
+never renamed, never reused.
 
 ## Start here
 
@@ -159,11 +161,34 @@ out). Ids are stable: never renamed, never reused.
 - [Alexander](https://fewbottles.com/#drink/alexander): `1,1,1,c`; Gin; gin, cacao, cream
 - [Campari Alexander](https://fewbottles.com/#drink/campari-alexander): `1,1,1,c`; Gin; Campari, cacao, cream
 - [Last Word](https://fewbottles.com/#drink/last-word): `Q,Q,Q,Q,cc`; Gin; gin, Chartreuse, maraschino, lime
+- [Gin Fizz](https://fewbottles.com/#drink/gin-fizz): `2,1,h,t,h`; Gin; gin, lemon, simple, soda
 - [Queen Elizabeth](https://fewbottles.com/#drink/queen-elizabeth): `1h,Q,Q,c`; Vermouth; dry verm., Bénédictine, lime
 - [Dry Vermouth Sour](https://fewbottles.com/#drink/dry-vermouth-sour): `2,Q,h,c`; Vermouth; dry verm., lemon, simple, egg white
 
+## Built
+
+- [Dark and Stormy](https://fewbottles.com/#drink/dark-and-stormy): `2,h,t,HLw`; Aged Rum; aged rum, lime, ginger beer
+- [Champagne Cocktail](https://fewbottles.com/#drink/champagne-cocktail): `b,3,h,t,hl`; Cognac; sugar, Angostura, cognac, Champagne
+- [Whiskey Highball](https://fewbottles.com/#drink/whiskey-highball): `2,t,Hl`; Bourbon; bourbon, soda
+- [Mint Julep](https://fewbottles.com/#drink/mint-julep): `2,q,Rm`; Bourbon; bourbon, simple, mint
+- [Kentucky Mule](https://fewbottles.com/#drink/kentucky-mule): `2,h,t,HLw`; Bourbon; bourbon, lime, ginger beer
+- [Seelbach](https://fewbottles.com/#drink/seelbach): `1,h,7,7,t,ho`; Bourbon; bourbon, orange liq., Angostura, Peychaud's, Champagne
+- [Scotch and Soda](https://fewbottles.com/#drink/scotch-and-soda): `2,t,H`; Scotch; scotch, soda
+- [Mojito](https://fewbottles.com/#drink/mojito): `2,Q,h,t,Hm`; Light Rum; light rum, lime, simple, mint, soda
+- [Paloma](https://fewbottles.com/#drink/paloma): `2,1,h,h,t,HS`; Tequila; tequila, grapefruit, lime, simple, soda
+- [Mezcal Mule](https://fewbottles.com/#drink/mezcal-mule): `2,h,t,HLw`; Mezcal; mezcal, lime, ginger beer
+- [Moscow Mule](https://fewbottles.com/#drink/moscow-mule): `2,h,t,HLw`; Vodka; vodka, lime, ginger beer
+- [Vodka Soda](https://fewbottles.com/#drink/vodka-soda): `2,t,HLw`; Vodka; vodka, soda
+- [Gin & Tonic](https://fewbottles.com/#drink/gin-and-tonic): `2,t,HLw`; Gin; gin, tonic
+- [Gin Rickey](https://fewbottles.com/#drink/gin-rickey): `2,h,t,HL`; Gin; gin, lime, soda
+- [Tom Collins](https://fewbottles.com/#drink/tom-collins): `2,1,h,t,Hlc`; Gin; gin, lemon, simple, soda
+- [Elderflower Collins](https://fewbottles.com/#drink/elderflower-collins): `1h,Q,Q,t,Hl`; Gin; gin, elderflower, lemon, soda
+- [Americano](https://fewbottles.com/#drink/americano): `1h,1h,t,Ho`; Vermouth; Campari, sweet verm., soda
+- [Negroni Sbagliato](https://fewbottles.com/#drink/negroni-sbagliato): `1,1,t,Ro`; Vermouth; Campari, sweet verm., Champagne
+- [Death in the Afternoon](https://fewbottles.com/#drink/death-in-the-afternoon): `1h,t,h`; Vermouth; absinthe, Champagne
+
 ## Optional
 
-- [Kin patterns](https://fewbottles.com/data/kin.json): Martini, Sour, Daisy, Negroni, Old-Fashioned, Fancy, Vermouth, Sparkling
+- [Kin patterns](https://fewbottles.com/data/kin.json): Martini, Sour, Daisy, Negroni, Old-Fashioned, Fancy, Vermouth, Sparkling, Highball
 - [Craig Johnston](https://imti.co/): who pours
 - [Source](https://github.com/cjimti/drink): the repository

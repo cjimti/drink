@@ -52,6 +52,8 @@ def read_amount(token, ingredient):
         return "one"
     if token == "r":
         return "rinse"
+    if token == "t":
+        return "top with"
     m = re.fullmatch(r"(\d*)b", token)
     if m:
         n = int(m.group(1) or "1")
@@ -71,6 +73,33 @@ def read_amount(token, ingredient):
     if token.isdigit():
         return f"{token} oz"
     return token
+
+
+COUNT_WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"}
+
+
+def method_words(menu):
+    """`Three methods, stirred, shaken, and built`.
+
+    The card had two methods and then it had three, so the sentence is
+    read off `methods` and the prose carries no count of its own.
+    """
+    names = [m["id"] for m in menu["methods"]]
+    if len(names) == 1:
+        listed = names[0]
+    elif len(names) == 2:
+        listed = f"{names[0]} and {names[1]}"
+    else:
+        listed = ", ".join(names[:-1]) + ", and " + names[-1]
+    head = COUNT_WORDS.get(len(names), str(len(names)))
+    return f"{head} method{'' if len(names) == 1 else 's'}, {listed}"
+
+
+def method_counts(menu):
+    """`74 stirred, 59 shaken, 19 built`."""
+    return ", ".join(
+        f"{sum(1 for d in menu['cocktails'] if d['method'] == m['id'])} {m['id']}"
+        for m in menu["methods"])
 
 
 def ingredient_line(drink, by_id):
@@ -106,7 +135,6 @@ def decode_build(drink, by_id):
 
 def write_llms(menu, bar, notation, kin):
     n = len(menu["cocktails"])
-    stirred = sum(1 for d in menu["cocktails"] if d["method"] == "stirred")
     by_id = {i["id"]: i for i in bar["ingredients"]}
     families = {f["id"]: f["label"] for f in menu["families"]}
     lines = [
@@ -116,18 +144,19 @@ def write_llms(menu, bar, notation, kin):
         "> in house shorthand, decoded in the browser, with a shelf that shows",
         "> what you can pour tonight.",
         "",
-        "One person's shelf, pouring for guests and for himself. Two methods,",
-        "stirred and shaken. The menu is large because the bottles overlap,",
-        "not because the bar is. "
-        + f"{n} drinks ({stirred} stirred, {n - stirred} shaken), "
+        "One person's shelf, pouring for guests and for himself.",
+        method_words(menu) + ". The menu is large because the bottles",
+        "overlap, not because the bar is.",
+        f"{n} drinks ({method_counts(menu)}), "
         + f"{len(bar['ingredients'])} ingredients.",
         "",
         "The printed card writes a contextual shorthand called Barline. A",
         "bare number is ounces beside a spirit and dashes beside bitters;",
-        "`q` is a quarter ounce and `Q` is three quarters; the last token is",
-        "glass plus garnish, matched longest-first. Each drink in the JSON",
-        "carries both `code` (the card) and `build` (the same drink spelled",
-        "out). Ids are stable: never renamed, never reused.",
+        "`q` is a quarter ounce and `Q` is three quarters; `t` is a top, so",
+        "fill the glass with the mixer. The last token is glass plus garnish,",
+        "matched longest-first. Each drink in the JSON carries both `code`",
+        "(the card) and `build` (the same drink spelled out). Ids are stable:",
+        "never renamed, never reused.",
         "",
         "## Start here",
         "",
@@ -178,7 +207,6 @@ def write_llms(menu, bar, notation, kin):
 
 def write_full(menu, bar, notation, kin):
     n = len(menu["cocktails"])
-    stirred = sum(1 for d in menu["cocktails"] if d["method"] == "stirred")
     by_id = {i["id"]: i for i in bar["ingredients"]}
     families = {f["id"]: f["label"] for f in menu["families"]}
     codes = garnish_codes(notation)
@@ -195,7 +223,7 @@ def write_full(menu, bar, notation, kin):
         "> Classic drinks from one small home bar, decoded from the house",
         "> shorthand on the printed card.",
         "",
-        f"{n} drinks, {stirred} stirred, {n - stirred} shaken, "
+        f"{n} drinks, {method_counts(menu)}, "
         f"{len(bar['ingredients'])} ingredients. "
         "The interactive app is " + ORIGIN + "/. "
         "This file is the same menu spelled out, so nothing has to run JavaScript.",
@@ -203,9 +231,10 @@ def write_full(menu, bar, notation, kin):
         "Barline reads left to right in build order, base spirit first, and",
         "ends with one token for glass plus garnish. A bare number is ounces",
         "beside a spirit and dashes beside bitters. `h` `q` `Q` are 1/2, 1/4,",
-        "3/4 oz. The last token is matched longest-first, so `ccin` is a coupe",
-        "with grated cinnamon. Garnish is optional; it never gates a drink.",
-        "Egg white takes no measure.",
+        "3/4 oz, and `t` is a top: fill the glass with the mixer over the ice",
+        "already in it. The last token is matched longest-first, so `ccin` is",
+        "a coupe with grated cinnamon. Garnish is optional; it never gates a",
+        "drink. Egg white takes no measure.",
         "",
     ]
 

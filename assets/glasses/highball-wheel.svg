@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 270" fill="none" color="#111110">
+  <!-- Highball, no ice, citrus wheel on the rim. -->
+  <g stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M72 106h56l-4 150H76z"/>
+    <path d="M84 244h32"/>
+    <circle cx="132" cy="104" r="23"/>
+    <path d="M109 104h46"/>
+    <path d="M132 81v46"/>
+    <path d="M115.7 87.7l32.6 32.6"/>
+    <path d="M148.3 87.7l-32.6 32.6"/>
+  </g>
+</svg>

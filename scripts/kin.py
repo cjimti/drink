@@ -57,16 +57,19 @@ OVERRIDE = {
     # classifier files a Fancy. It is an Old-Fashioned: rye, sugar,
     # bitters, with Fernet in the bitter slot.
     "toronto": "old-fashioned",
+    # Spirit and sugar with no bitters, so the ratio ladder has nothing
+    # to catch it. It is an Old-Fashioned with mint muddled in.
+    "mint-julep": "old-fashioned",
 }
 
 # Modifier bottles play four different jobs, and `kind: modifier` cannot
 # tell them apart. Campari is a pillar; absinthe is an accent; champagne
-# is a top; the rest are liqueurs in the sugar slot.
+# is a sparkler; the rest are liqueurs in the sugar slot. A mixer is its
+# own kind, so it never needs a line here.
 MOD_ROLE = {
     "campari": "bitter",
     "absinthe": "absinthe",
     "champagne": "sparkling",
-    "ginger-beer": "sparkling",
     "orange-liqueur": "liqueur",
     "maraschino": "liqueur",
     "benedictine": "liqueur",
@@ -86,6 +89,7 @@ KIND_ROLE = {
     "bitters": "bitters",
     "syrup": "syrup",
     "juice": "citrus",
+    "mixer": "top",
     "other": "egg",
 }
 
@@ -141,6 +145,12 @@ PATTERNS = [
         "namesake": "french-75",
         "blurb": "A sour with champagne in it. The French 75 is the one people know.",
     },
+    {
+        "id": "highball",
+        "label": "Highball",
+        "namesake": "gin-and-tonic",
+        "blurb": "Spirit and a mixer, built over ice. The Gin & Tonic, the Scotch and Soda, and the Mule are the same pour in different bottles.",
+    },
 ]
 
 
@@ -165,12 +175,15 @@ BARSPOON = 0.125
 
 
 def to_oz(token, unit):
-    """Ounces for ratio math. Dashes, rinses, and unmeasured things
+    """Ounces for ratio math. Dashes, rinses, tops, and unmeasured things
     return 0 — they are flags, not volume. Ten dashes of Angostura is
-    still bitters, not a third of a Manhattan."""
+    still bitters, not a third of a Manhattan, and a highball topped with
+    soda is not four ounces of soda water."""
     if token is None:
         return 0.0
     if token == "r":
+        return 0.0
+    if token == "t":
         return 0.0
     m = re.fullmatch(r"(\d*)b", token)
     if m:
@@ -229,25 +242,28 @@ def snap(oz):
 
 # ── per drink ───────────────────────────────────────────────
 
-def analyse(d, by_id):
-    bags = defaultdict(float)
-    flags = set()
-    bottles = []  # (id, role, oz)
+def classify(bags, flags):
+    """The named shape.
 
-    for entry in d["build"]:
-        iid, amt = entry[0], entry[1]
-        ing = by_id[iid]
-        role = role_of(ing)
-        if role is None:
-            continue
-        oz = to_oz(amt, ing.get("unit"))
-        bags[role] += oz
-        bottles.append((iid, role, oz))
-        if role in ("bitters", "absinthe", "egg") or amt is None:
-            flags.add(role)
-        if amt == "r":
-            flags.add("rinse")
+    Two shapes are visible before anything is weighed, so they answer
+    here and never reach the ladder. A mixer in the glass is a highball.
+    A top of champagne is a sparkling drink, which is where a reader
+    goes looking for it.
+    """
+    if "top" in flags:
+        return "highball"
+    if "sparkling" in flags:
+        return "sparkling"
+    return classify_by_ratio(bags, flags)
 
+
+def classify_by_ratio(bags, flags):
+    """The named shape, as one ladder of ratios.
+
+    The order of the tests is the definition: the first that fires wins,
+    so a Negroni is caught before the vermouth branch could call it a
+    Martini.
+    """
     spirit = bags["spirit"]
     vermouth = bags["vermouth"]
     citrus = bags["citrus"]
@@ -258,7 +274,7 @@ def analyse(d, by_id):
 
     # Vermouth as the base (Duplex, Dry Vermouth Sour): there is no
     # spirit bottle, so the vermouth *is* the drink. Leave bags as they
-    # are — the classifier branches on spirit==0 separately.
+    # are: this branches on spirit==0 separately.
 
     if sparkling >= PILLAR:
         pattern = "sparkling"
@@ -293,23 +309,60 @@ def analyse(d, by_id):
     else:
         pattern = "other"
 
+    return pattern
+
+
+def analyse(d, by_id):
+    bags = defaultdict(float)
+    flags = set()
+    bottles = []  # (id, role, oz)
+
+    for entry in d["build"]:
+        iid, amt = entry[0], entry[1]
+        ing = by_id[iid]
+        role = role_of(ing)
+        if role is None:
+            continue
+        oz = to_oz(amt, ing.get("unit"))
+        # A mixer fills the glass, so its volume is not part of the ratio,
+        # whether the card writes it as a top or as four ounces. Having one
+        # at all is the shape.
+        if role == "top":
+            oz = 0.0
+            flags.add("top")
+        bags[role] += oz
+        bottles.append((iid, role, oz))
+        if role in ("bitters", "absinthe", "egg") or amt is None:
+            flags.add(role)
+        if amt == "r":
+            flags.add("rinse")
+        # Champagne topped to the rim has no measure either, and what it
+        # makes is a sparkling drink, so it files there.
+        if amt == "t" and role == "sparkling":
+            flags.add("sparkling")
+
+    pattern = classify(bags, flags)
+
     skeleton = []
     for role in ("spirit", "vermouth", "bitter", "liqueur", "syrup",
                  "citrus", "sparkling"):
         q = snap(bags[role])
         if q:
             skeleton.append(f"{role}:{q:g}")
-    for flag in ("bitters", "absinthe", "egg"):
+    for flag in ("bitters", "absinthe", "egg", "top", "sparkling"):
         if flag in flags:
             skeleton.append(flag)
     skeleton = "+".join(skeleton) or "empty"
 
     vec = [
-        snap(spirit), snap(vermouth), snap(bitter), snap(liqueur),
-        snap(syrup), snap(citrus), snap(sparkling),
+        snap(bags["spirit"]), snap(bags["vermouth"]), snap(bags["bitter"]),
+        snap(bags["liqueur"]), snap(bags["syrup"]), snap(bags["citrus"]),
+        snap(bags["sparkling"]),
         1.0 if "bitters" in flags else 0.0,
         1.0 if "absinthe" in flags else 0.0,
         1.0 if "egg" in flags else 0.0,
+        1.0 if "top" in flags else 0.0,
+        1.0 if "sparkling" in flags else 0.0,
     ]
 
     return {
@@ -381,7 +434,7 @@ def why(focus, other, ingredients):
 
     lr, gr = roles(lost), roles(gained)
     order = ("spirit", "vermouth", "citrus", "liqueur", "syrup",
-             "bitter", "sparkling", "absinthe", "bitters", "egg")
+             "bitter", "sparkling", "top", "absinthe", "bitters", "egg")
     # A true swap is the same job in both glasses (gin for bourbon).
     both = [r for r in order if r in lr and r in gr]
     big = [r for r in both if r not in ("bitters", "egg")]
