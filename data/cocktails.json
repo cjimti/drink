@@ -23,7 +23,8 @@
     { "id": "vodka",        "label": "Vodka" },
     { "id": "gin",          "label": "Gin" },
     { "id": "vermouth",     "label": "Vermouth" },
-    { "id": "fernet",       "label": "Fernet" }
+    { "id": "fernet",       "label": "Fernet" },
+    { "id": "absinthe",     "label": "Absinthe" }
   ],
 
   "cocktails": [
@@ -1312,7 +1313,8 @@
       "refs": [
         { "title": "Difford's Guide, Negroni Sbagliato", "url": "https://www.diffordsguide.com/cocktails/recipe/2515/negroni-sbagliato" }
       ] },
-    { "id": "death-in-the-afternoon", "name": "Death in the Afternoon", "method": "built", "family": "vermouth", "code": "1h,t,h", "serve": "h",
+
+    { "id": "death-in-the-afternoon", "name": "Death in the Afternoon", "method": "built", "family": "absinthe", "code": "1h,t,h", "serve": "h",
       "build": [["absinthe","1h"],["champagne","t"]],
       "taste": "An ounce and a half of absinthe with Champagne poured onto it. The wine goes cloudy as the anise louches, and that milkiness is the trick of it. Anise, wormwood, and fennel over dry bubbles, in a tall glass with no ice. It drinks easier than its proof.",
       "history": "Hemingway contributed it to So Red the Nose, or Breath in the Afternoon, a 1935 collection of cocktails by authors, and named it after his 1932 book on bullfighting. His own instruction: pour one jigger of absinthe into a Champagne glass, add iced Champagne until it attains the proper opalescent milkiness, and drink three to five of these slowly. He credited the recipe to himself and three officers of HMS Danae, after seven hours in the water trying to get Captain Bra Saunders' fishing boat off a bank. This card pours an ounce and a half of absinthe and tops with Champagne.",

@@ -198,7 +198,7 @@ never renamed, never reused.
 - [Elderflower Collins](https://fewbottles.com/#drink/elderflower-collins): `1h,Q,Q,t,Hl`; Gin; gin, elderflower, lemon, soda
 - [Americano](https://fewbottles.com/#drink/americano): `1h,1h,t,Ho`; Vermouth; Campari, sweet verm., soda
 - [Negroni Sbagliato](https://fewbottles.com/#drink/negroni-sbagliato): `1,1,t,Ro`; Vermouth; Campari, sweet verm., Champagne
-- [Death in the Afternoon](https://fewbottles.com/#drink/death-in-the-afternoon): `1h,t,h`; Vermouth; absinthe, Champagne
+- [Death in the Afternoon](https://fewbottles.com/#drink/death-in-the-afternoon): `1h,t,h`; Absinthe; absinthe, Champagne
 
 ## Optional
 
