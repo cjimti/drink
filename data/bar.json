@@ -189,6 +189,9 @@
     { "bit": 21, "id": "champagne",      "name": "Champagne",          "short": "Champagne",   "kind": "modifier" },
     { "bit": 23, "id": "cream",          "name": "Cream",              "short": "cream",       "kind": "modifier" },
     { "bit": 24, "id": "chartreuse",     "name": "Chartreuse",         "short": "Chartreuse",  "kind": "modifier",
+      "notes": {
+        "copy": "Green and yellow are the same liqueur at two strengths. Green is 110 proof and runs hot, herbal, and anise-heavy; yellow is 80 proof, softer, and honeyed. Each drink says which one it was written for, but the bottles are scarce and dear enough that the house pours whichever one is open. Either ticks this box."
+      },
       "bottles": [
         { "id": "green-chartreuse",        "name": "Green Chartreuse",                                           "price": 70, "tier": "excellent" },
         { "id": "yellow-chartreuse",       "name": "Yellow Chartreuse",                                          "price": 70, "tier": "excellent" }

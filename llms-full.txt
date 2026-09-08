@@ -3,7 +3,7 @@
 > Classic drinks from one small home bar, decoded from the house
 > shorthand on the printed card.
 
-165 drinks, 80 stirred, 66 shaken, 19 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
+174 drinks, 86 stirred, 69 shaken, 19 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
 
 Barline reads left to right in build order, base spirit first, and
 ends with one token for glass plus garnish. A bare number is ounces
@@ -350,6 +350,21 @@ The Cock 'n' Bull Special is named for Jack Morgan's British-style pub on Hollyw
 
 - [Difford's Guide, Cock N' Bull](https://www.diffordsguide.com/cocktails/recipe/30469/cock-n-bull)
 
+#### Fanciulli
+
+`2,Q,q,cl` · stirred · Bourbon · Martini family
+
+- 2 oz Bourbon
+- 3/4 oz Sweet vermouth
+- 1/4 oz Fernet
+- Coupe, Lemon twist
+
+Two ounces of bourbon, three-quarters of sweet vermouth, and a quarter ounce of Fernet standing where the bitters would be. That quarter is enough to run mint and bitter bark the whole length of the drink. Stirred, coupe, lemon twist. A Manhattan with menthol in it.
+
+Albert Stevens Crockett prints the Fanciulli in Old Waldorf Bar Days in 1931, recording what the Waldorf bar poured before Prohibition. The name is usually read as Francesco Fanciulli, the Italian-born composer who took the United States Marine Band over from John Philip Sousa in 1892; Crockett weighed and rejected a link to Puccini's La fanciulla del West, noting that the drink's origin considerably antedates the premiere of that opera at the Metropolitan on 10 December 1910. The old formula is two parts whiskey to one each of sweet vermouth and Fernet-Branca; most bars now pour a quarter ounce. This card pours two ounces of bourbon, three-quarters of sweet vermouth, and a quarter of Fernet, coupe, lemon twist.
+
+- [Difford's Guide, Fanciulli](https://www.diffordsguide.com/cocktails/recipe/25114/fanciulli)
+
 ### Rye
 
 #### Old Pal
@@ -569,6 +584,24 @@ Chad Solomon made the Bensonhurst in 2006 while working at Milk & Honey in Manha
 
 - [Difford's Guide, Bensonhurst](https://www.diffordsguide.com/cocktails/recipe/541/bensonhurst)
 
+#### Greenpoint
+
+`2,h,h,1,1,cl` · stirred · Rye · Martini family
+
+- 2 oz Rye
+- 1/2 oz Chartreuse
+- 1/2 oz Sweet vermouth
+- 1 dash Angostura bitters
+- 1 dash Orange bitters
+- Coupe, Lemon twist
+
+Two ounces of rye with a half ounce each of yellow Chartreuse and sweet vermouth, the two of them splitting the sweet slot evenly under the whiskey. A dash each of Angostura and orange bitters. Stirred, coupe, lemon twist. Rye spice, then honey and herbs, then grape, with the bitters holding the seam.
+
+Michael McIlroy made the Greenpoint at Milk & Honey in New York in 2006, one of the Brooklyn neighborhood riffs on the 1909 Brooklyn cocktail that came out of that bar. Saveur prints a version that appears to come from McIlroy himself, with a full ounce of Punt e Mes and a teaspoon of yellow Chartreuse; the one in Sam Ross's Bartender's Choice, the closest thing to a Milk & Honey book, uses plain sweet vermouth and two dashes of Angostura. The half-and-half spec is the one that spread. This card pours two ounces of rye, a half ounce each of yellow Chartreuse and sweet vermouth, and a dash each of Angostura and orange bitters, coupe, lemon twist.
+
+- [Punch, The Greenpoint](https://punchdrink.com/recipes/greenpoint/)
+- [Difford's Guide, Greenpoint](https://www.diffordsguide.com/cocktails/recipe/3635/greenpoint)
+
 ### Scotch
 
 #### Bobby Burns
@@ -752,6 +785,22 @@ An ounce and a half of cachaça, half an ounce of grenadine, a quarter of Fernet
 Brett Adams and Jacob Grier print the Cornerstone in Raising the Bar (2022), in the Fernet chapter: an ounce and a half of cachaça, half an ounce of grenadine, a quarter of Fernet, two dashes of orange bitters, orange twist. A drink of this name does not appear in the pre-1970 manuals. It drinks as an Old-Fashioned on cane spirit, grenadine in the sugar slot, Fernet as the bitter. This card keeps that pour.
 
 - [Willamette Week, Raising the Bar](https://www.wweek.com/drink/2023/03/29/a-new-book-by-two-local-mixologists-tells-you-how-to-stock-your-bar-cart-one-bottle-at-a-time/)
+
+#### Rabo de Galo
+
+`2,h,h,Ro` · stirred · Cachaça · Negroni family
+
+- 2 oz Cachaça
+- 1/2 oz Sweet vermouth
+- 1/2 oz Cynar
+- Rocks, iced, Orange twist
+
+Two ounces of cachaça with a half ounce each of sweet vermouth and Cynar. The cachaça is grassy and raw sugar, the vermouth rounds it, and the Cynar puts artichoke bitterness on the end. Stirred, rocks with ice, orange twist. It gets colder and wider as the cube goes.
+
+The Rabo de Galo, rooster's tail, took hold in São Paulo in the mid-1950s after Cinzano opened a vermouth factory there and set about persuading Brazilians to mix the imported wine with their own cachaça. It was a shot in the pés-sujos, the dirty-feet bars, before it was a cocktail, poured about two parts cachaça to one of vermouth and thrown back. Cynar came later, and São Paulo bartenders now pour it beside the vermouth or in place of it; Derivan Ferreira de Souza started a national competition for the drink in 2017. This card pours two ounces of cachaça and a half ounce each of sweet vermouth and Cynar, over ice with an orange twist.
+
+- [Punch, Brazil's Favorite Cachaça Cocktail Is the Rabo de Galo](https://punchdrink.com/articles/rabo-de-gala-cachaca-cocktail-recipe-brazil/)
+- [Difford's Guide, Rabo de Galo](https://www.diffordsguide.com/cocktails/recipe/3889/rabo-de-galo)
 
 ### Tequila
 
@@ -1226,6 +1275,37 @@ Giovanni Raimondo made the Cardinale at the Excelsior Hotel in Rome in 1950, for
 
 - [Punch, What Is the Cardinale Cocktail?](https://punchdrink.com/articles/next-best-negroni-cardinale-cocktail-recipe/)
 
+#### Alaska
+
+`2,h,1,cl` · stirred · Gin · Fancy family
+
+- 2 oz Gin
+- 1/2 oz Chartreuse
+- 1 dash Orange bitters
+- Coupe, Lemon twist
+
+Two ounces of gin to a half ounce of yellow Chartreuse, so the liqueur is a fifth of the pour: honey, dried herbs, and a faint saffron cast in the glass. One dash of orange bitters. Stirred, coupe, lemon twist. Juniper first, sweetness second, and an herbal finish that outlasts both.
+
+The Alaska first appears in Jacques Straub's Manual of Mixed Drinks in 1913, made with Old Tom gin, yellow Chartreuse, and orange bitters. Harry Craddock prints it in The Savoy Cocktail Book in 1930 with more gin and less Chartreuse, and adds a note: so far as can be ascertained this delectable potion is NOT the staple diet of the Esquimaux, and it was probably first thought of in South Carolina, hence its name. David Embury, in 1948, records it as sometimes called the Oriental and prefers it drier still. This card pours two ounces of gin, a half ounce of yellow Chartreuse, and one dash of orange bitters, coupe, lemon twist.
+
+- [Imbibe, Rediscovering the Alaska Cocktail](https://imbibemagazine.com/rediscovering-the-alaska-cocktail/)
+- [Difford's Guide, Alaska (Savoy Recipe)](https://www.diffordsguide.com/cocktails/recipe/33/alaska-savoy-recipe)
+
+#### Angel Face
+
+`1,1,1,c` · stirred · Gin · Fancy family
+
+- 1 oz Gin
+- 1 oz Apple brandy
+- 1 oz Apricot liqueur
+- Coupe
+
+Equal ounces of gin, apple brandy, and apricot, three bottles at the same weight. Stirred, coupe. Juniper and orchard apple with apricot over the top, and since the apricot is a liqueur it is the sugar in the drink as well as the fruit. Three ounces of spirit and nothing to lengthen it, so it drinks warm and slow.
+
+Harry Craddock prints the Angel Face in The Savoy Cocktail Book in 1930 as a third each of dry gin, apricot brandy, and Calvados, shaken and strained into a cocktail glass. His apricot brandy meant the drier eau-de-vie rather than the sweetened liqueur most bars reach for now, which is why the modern version reads sweeter than his did. The name gets attached to Abe Angel Face Kaminsky, who robbed Detroit speakeasies, though nothing ties him to the glass. This card keeps the equal ounces and stirs it, since there is no juice, egg, or syrup carrying it, coupe.
+
+- [Difford's Guide, Angel Face](https://www.diffordsguide.com/cocktails/recipe/521/angel-face)
+
 ### Vermouth
 
 #### Duplex
@@ -1341,6 +1421,22 @@ Stephen Cole made the Bitter Giuseppe at The Violet Hour in Chicago in 2007, whe
 
 - [Punch, Bitter Giuseppe](https://punchdrink.com/recipes/bitter-giuseppe/)
 - [Difford's Guide, Bitter Giuseppe](https://www.diffordsguide.com/cocktails/recipe/4856/bitter-giuseppe)
+
+#### Adonis
+
+`1h,Q,2,co` · stirred · Vermouth · Vermouth family
+
+- 1 1/2 oz Sherry
+- 3/4 oz Sweet vermouth
+- 2 dashes Orange bitters
+- Coupe, Orange twist
+
+An ounce and a half of sherry to three-quarters of sweet vermouth, two fortified wines and nothing stronger, so it pours low. Two dashes of orange bitters. Stirred, coupe, orange twist. Nutty dry wine under the vermouth's grape and sugar, light enough to drink before dinner.
+
+The Adonis is named for William Gill's Adonis, a musical burlesque that opened in Chicago in the summer of 1884 and moved to the Bijou Theatre in New York that September with Henry E. Dixey in the title role. The Waldorf is usually credited with the drink. The first print record is a Pearls from Billy, the Bartender column in the New York Sun on 27 March 1887, which puts the making of it around 1885 or 1886. It is the sweet half of the pair of nineteenth-century sherry aperitifs, the Bamboo being the dry one. This card pours an ounce and a half of sherry, three-quarters of sweet vermouth, and two dashes of orange bitters, coupe, orange twist.
+
+- [Punch, Adonis](https://punchdrink.com/recipes/adonis/)
+- [Difford's Guide, Adonis](https://www.diffordsguide.com/cocktails/recipe/18/adonis)
 
 ### Fernet
 
@@ -2079,6 +2175,23 @@ The Margarita's three ingredients take mezcal as readily as tequila. Difford's a
 - [The Oxford Companion to Spirits and Cocktails, The Margarita](https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-360)
 - [Difford's Guide, History of the Margarita cocktail](https://www.diffordsguide.com/g/1138/margarita-cocktail/origins-and-history)
 
+#### Mezcal Sour
+
+`2,Q,h,Rl` · shaken · Mezcal · Sour family
+
+- 2 oz Mezcal
+- 3/4 oz Lime juice
+- 1/2 oz Honey syrup
+- one Egg white
+- Rocks, iced, Lemon twist
+
+Two ounces of mezcal, three-quarters of lime, a half ounce of honey syrup, egg white. The foam carries the smoke up first, then the lime arrives, and the honey sits under all of it. Shaken, rocks with ice, lemon twist. The house sour ratio with mezcal in the whiskey's place.
+
+The sour is the older shape: spirit, citrus, and sugar, printed by Jerry Thomas in 1862, with egg white a European habit that reached American bars later. Mezcal came to it late. Artisanal mezcal barely existed in the United States until Ron Cooper founded Del Maguey in 1995 and began importing single-village bottlings, and the sour built on it belongs to the revival that followed rather than to any one bar or year; Difford's dates its own spec to March 2025, and most others are undated house pours. This card uses the same ratio as the Whiskey Sour and the Gin Sour, with honey syrup for the sugar and a lemon twist over the ice.
+
+- [Difford's Guide, Mezcal Sour](https://www.diffordsguide.com/cocktails/recipe/33255/mezcal-sour)
+- [Difford's Guide, Del Maguey Single Village Mezcal](https://www.diffordsguide.com/producers/1451/del-maguey-single-village-mezcal)
+
 ### Vodka
 
 #### Lemon Drop
@@ -2144,6 +2257,22 @@ An ounce each of vodka, orange liqueur, and lime. A third of the glass is lime j
 Two accounts, a decade apart. Peter Miller, writing in Ski in October 1979, put the drink out of Florida in the early to mid 1970s and moving from there to New York, and printed the earliest known recipe: an ounce and a half of pre-chilled vodka, a dash of lime, and one drop of Cointreau, served with no ice because everything in it was already frozen. John Mariani, in Motorboating and Sailing for January 1989, credited Tony Lauriano at Les Pyrenees in New York in 1972, who called it the Jesus Christ Superstar until customers found the name strange. Montebello Brands was bottling an Original Kamikaze Cocktail by 1975. This card pours an ounce each of vodka, orange liqueur, and lime, shaken, coupe, lime twist.
 
 - [Vintage American Cocktails, Kamikaze](https://vintageamericancocktails.com/kamikaze/)
+
+#### Vodka Gimlet
+
+`2,Q,h,c` · shaken · Vodka · Sour family
+
+- 2 oz Vodka
+- 3/4 oz Lime juice
+- 1/2 oz Simple syrup
+- Coupe
+
+Two ounces of vodka to three-quarters of lime and a half ounce of simple, the Gimlet's pour exactly. The lime is the flavor and the vodka is the cold and the length behind it. Shaken, coupe. Tart, thinly sweetened, short.
+
+The Gimlet was gin and Rose's lime cordial, a navy drink that Harry MacElhone printed under the name in 1922 and that Raymond Chandler set loose in fiction, half gin and half Rose's, in The Long Goodbye in 1953. Vodka took the gin's slot as vodka took the American well; Difford's dates the substitution to the 1990s and the early 2000s and notes that gin has since taken the drink back. This card pours the Gimlet's spec with the bottle changed: two ounces of vodka, three-quarters of fresh lime, a half ounce of simple, coupe.
+
+- [Difford's Guide, Gimlet cocktail](https://www.diffordsguide.com/encyclopedia/445/cocktails/gimlet-cocktail)
+- [The Oxford Companion to Spirits and Cocktails, A Gimlet](https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-324)
 
 ### Gin
 
@@ -2428,6 +2557,23 @@ The Last Word is credited to the Detroit Athletic Club around 1915, and to Frank
 
 - [Punch, Last Word](https://punchdrink.com/recipes/last-word/)
 - [Difford's Guide, Last Word](https://www.diffordsguide.com/cocktails/recipe/1158/last-word)
+
+#### Barbary Coast
+
+`Q,Q,Q,Q,c` · shaken · Gin · Fancy family
+
+- 3/4 oz Gin
+- 3/4 oz Scotch
+- 3/4 oz Crème de cacao
+- 3/4 oz Cream
+- Coupe
+
+Three-quarters each of gin, Scotch, white crème de cacao, and cream, so the two spirits are half the glass and the cream is a quarter of it. Shaken, coupe. Chocolate and smoke over a thin cream body, with juniper coming up behind the whisky.
+
+The Barbary Coast is a Prohibition-era drink with no known author. Harry Craddock prints it in The Savoy Cocktail Book in 1930 as equal parts gin, Scotch, crème de cacao, and cream, and Crosby Gaige runs the same drink in his 1945 Cocktail Guide and Ladies' Companion under the name Death and Mr. Morgenthau. The name is San Francisco's: the nine blocks around Pacific Street that worked as a red-light district for sailors from the 1850s until the city shut it down. This card pours three-quarters of each, shaken, coupe.
+
+- [Difford's Guide, Barbary Coast](https://www.diffordsguide.com/cocktails/recipe/170/barbary-coast)
+- [cocktail virgin, Barbary Coast](https://cocktailvirgin.blogspot.com/2021/01/barbary-coast.html)
 
 #### Gin Fizz
 
