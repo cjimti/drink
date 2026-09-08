@@ -157,6 +157,16 @@ def run_house(failures):
     report("house/bigint clean", check_style.check_bigint(app), False,
            failures)
 
+    broken = app.replace("function methodLine(id, serve) {",
+                         "function methodLine(id) {")
+    report("house/method line arity", check_style.check_method_line(broken),
+           True, failures)
+    broken = app.replace("methodLine(d.method, d.serve)", "methodLine(d.method)")
+    report("house/method line call", check_style.check_method_line(broken),
+           True, failures)
+    report("house/method line clean", check_style.check_method_line(app),
+           False, failures)
+
     broken = app.replace("/^#drink\\/([a-z0-9-]+)$/", "/^#drink\\/([a-z]+)$/")
     report("house/drink route", check_style.check_drink_links(broken), True,
            failures)
@@ -229,7 +239,7 @@ def main():
     if failures:
         return 1
     n = (len(css_cases()) + len(js_cases()) + len(py_cases())
-         + len(size_cases()) + 11 + 5 + 3 + 2)
+         + len(size_cases()) + 14 + 5 + 3 + 2)
     print(f"  test    {n} case(s): every rule fails when it is broken")
     return 0
 

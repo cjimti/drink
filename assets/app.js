@@ -1026,7 +1026,20 @@
     built: 'Build in the glass over ice, then lift once with a barspoon.'
   };
 
-  function methodLine(id) {
+  /* Most built drinks are packed with ice, but the Champagne Cocktail,
+     the Seelbach and Death in the Afternoon are poured into a dry glass,
+     and telling somebody to build those over ice is a wrong instruction,
+     not a rounding error. The uppercase glass letter is the one carrying
+     ice, so the line reads off the serve token the same way the drawing
+     does, rather than off a list of ids that would go stale. */
+  var BUILT_DRY = 'Build in the glass with no ice, then top.';
+
+  function icedGlass(serve) {
+    return serve[0] === 'R' || serve[0] === 'H';
+  }
+
+  function methodLine(id, serve) {
+    if (id === 'built' && !icedGlass(serve)) return BUILT_DRY;
     var m = methodBy[id];
     return METHOD_HOW[id] || (m ? m.blurb : id);
   }
@@ -1056,7 +1069,7 @@
     var s = readServe(d.serve);
     html += '<div class="serve">' +
       '<div class="serve__row"><span class="serve__k">Method</span><span>' +
-        esc(methodLine(d.method)) +
+        esc(methodLine(d.method, d.serve)) +
       '</span></div>' +
       '<div class="serve__row"><span class="serve__k">Glass</span><span>' +
         esc(s.glass) + (s.gloss ? ' (' + esc(s.gloss) + ')' : '') +
