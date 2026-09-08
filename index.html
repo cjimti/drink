@@ -125,35 +125,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="toptab is-active" href="#menu" data-view="menu">Menu</a>
     <a class="toptab" href="#bar" data-view="bar">Bar<span class="toptab__count" id="top-count" hidden></span></a>
     <a class="toptab" href="#key" data-view="key">Key</a>
+    <a class="toptab" href="#info" data-view="info">Info</a>
   </nav>
-  <button type="button" class="topbar__about" id="about-open"
-          aria-haspopup="dialog" aria-controls="about" aria-expanded="false">
-    About
-  </button>
+  <a class="topbar__version" id="top-version" href="#info">dev</a>
 </header>
-
-<dialog class="about" id="about" aria-labelledby="about-title">
-  <div class="about__sheet">
-    <div class="about__head">
-      <h2 class="about__title" id="about-title">About</h2>
-      <button type="button" class="about__close" data-about-close>Close</button>
-    </div>
-    <p class="about__tag">Cocktail maxxing on a budget.</p>
-    <div class="about__copy">
-      <p>You only need a few bottles to start exploring the fundamentals of classic cocktails.</p>
-      <p>Juice with vodka is a regression. Plenty of modern drinks came out of these older shapes, and those flavor profiles are still terribly underrated.</p>
-      <p>This is a small utility. Broad categories, few ingredients, little expense. The complete catalog of classic and modern drinks, with every niche bottle named, can wait until you know what you actually like.</p>
-      <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Select what you have. See what opens. Buy the bottle that unlocks the most.</p>
-    </div>
-    <h3 class="about__k">Analytics</h3>
-    <div class="about__copy">
-      <p>This site is a hobby. I run Google Analytics on it so I can see how it gets used: which tab someone opened, which drink they expanded, which bottle they selected, whether a menu was printed or shared. That is the whole list.</p>
-      <p>It tells me nothing about who you are. There is no account, no sign-in, no name attached to any of it. Your shelf stays on your phone unless you share it yourself. I do not sell the numbers and I do not market to anyone. I read them so I know which parts of this are worth more work. So far nobody has ever opened a Tip Top, and it is a great drink.</p>
-      <p>The events are in the source: <a href="https://github.com/cjimti/drink/blob/main/assets/app.js" rel="noopener"><code>track()</code> in assets/app.js</a>. A content blocker stops all of it and the site works exactly the same.</p>
-    </div>
-    <p class="sign">© 2026 <a href="https://imti.co/resume/" rel="noopener">Craig Johnston</a></p>
-  </div>
-</dialog>
 
 <main id="main">
 
@@ -171,6 +146,55 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section class="view" id="view-key" hidden aria-label="Notation key">
     <div id="key-body"></div>
+  </section>
+
+  <section class="view" id="view-info" hidden aria-label="Info">
+    <p class="info__tag">Cocktail maxxing on a budget.</p>
+    <div class="info__copy">
+      <p>You only need a few bottles to start exploring the fundamentals of classic cocktails.</p>
+      <p>Juice with vodka is a regression. Plenty of modern drinks came out of these older shapes, and those flavor profiles are still terribly underrated.</p>
+      <p>This is a small utility. Broad categories, few ingredients, little expense. The complete catalog of classic and modern drinks, with every niche bottle named, can wait until you know what you actually like.</p>
+      <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Select what you have. See what opens. Buy the bottle that unlocks the most.</p>
+    </div>
+
+    <h2 class="info__k">Your shelf</h2>
+    <div class="info__copy">
+      <p>Tick what you own on the Bar tab. The menu then knows what you can pour, and the number beside a bottle you do not have is how many new drinks buying it opens. Tap that number to see them.</p>
+    </div>
+
+    <h2 class="info__k">Reading a drink</h2>
+    <div class="info__copy">
+      <p>Tap a drink for the recipe. The small code beside the name is the shorthand off my printed menu, and the Key tab decodes every letter of it.</p>
+    </div>
+
+    <h2 class="info__k">Sharing</h2>
+    <div class="info__copy">
+      <p>Share menu turns your shelf into one link. Opening somebody's link shows you what their bar pours and leaves your own shelf alone until you tap Make this my shelf. A single drink shares the same way, from the Share tab inside its recipe.</p>
+    </div>
+
+    <h2 class="info__k">Printing</h2>
+    <div class="info__copy">
+      <p>Print menu gives you the list you are looking at in black and white, two columns on US Letter. The ticks decide whether the glass, the recipe, the taste, the history and the bar instructions come with it.</p>
+    </div>
+
+    <h2 class="info__k">Offline</h2>
+    <div class="info__copy">
+      <p>Add it to your home screen and it keeps working with no signal. Your shelf is stored on your phone. There is no account and nothing to sign into.</p>
+    </div>
+
+    <h2 class="info__k">Analytics</h2>
+    <div class="info__copy">
+      <p>This site is a hobby. I run Google Analytics on it so I can see how it gets used: which tab someone opened, which drink they expanded, which bottle they selected, whether a menu was printed or shared. That is the whole list.</p>
+      <p>It tells me nothing about who you are. There is no account, no sign-in, no name attached to any of it. Your shelf stays on your phone unless you share it yourself. I do not sell the numbers and I do not market to anyone. I read them so I know which parts of this are worth more work. So far nobody has ever opened a Tip Top, and it is a great drink.</p>
+      <p>The events are in the source: <a href="https://github.com/cjimti/drink/blob/main/assets/app.js" rel="noopener"><code>track()</code> in assets/app.js</a>. A content blocker stops all of it and the site works exactly the same.</p>
+    </div>
+
+    <h2 class="info__k">Version</h2>
+    <div class="info__copy">
+      <p>You are running <code id="info-version">dev</code>. Every release is at <a href="https://github.com/cjimti/drink/releases" rel="noopener">github.com/cjimti/drink/releases</a>.</p>
+    </div>
+
+    <p class="sign">© 2026 <a href="https://imti.co/resume/" rel="noopener">Craig Johnston</a></p>
   </section>
 
   <p class="loading" id="loading">Pouring…</p>
@@ -193,6 +217,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a class="tab" href="#key" data-view="key">
     <span class="tab__glyph tab__glyph--key" aria-hidden="true"></span>
     <span class="tab__label">Key</span>
+  </a>
+  <a class="tab" href="#info" data-view="info">
+    <span class="tab__glyph tab__glyph--info" aria-hidden="true"></span>
+    <span class="tab__label">Info</span>
   </a>
 </nav>
 

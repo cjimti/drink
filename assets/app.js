@@ -28,6 +28,13 @@
   var INTRO_STORE = 'drink.intro.v1';
   var SHARE_PARAM = 's';  /* fewbottles.com/?s=<shelf code> */
 
+  /* Stamped with the tag at deploy time, the way sw.js is. Unstamped is a
+     working copy, and says so. The test is a shape rather than the token
+     spelled out a second time, because the deploy seds for that token and
+     it must appear exactly once. */
+  var VERSION = '__VERSION__';
+  var versionLabel = /^v\d/.test(VERSION) ? VERSION : 'dev';
+
   var FRACTION = { h: '1/2', q: '1/4', Q: '3/4' };
 
   var data = {};
@@ -2256,7 +2263,7 @@
 
   /* ── routing ───────────────────────────────────────────── */
 
-  var VIEWS = ['menu', 'bar', 'key'];
+  var VIEWS = ['menu', 'bar', 'key', 'info'];
 
   function show(view) {
     if (VIEWS.indexOf(view) < 0) view = 'menu';
@@ -2292,7 +2299,6 @@
   var DRINK_HASH = /^#drink\/([a-z0-9-]+)$/;
 
   function route() {
-    if (aboutDlg.open) aboutDlg.close();
     var deep = DRINK_HASH.exec(location.hash);
     if (!deep) {
       show((location.hash || '#menu').slice(1));
@@ -2866,8 +2872,8 @@
 
     /* Escape dismisses the rail, the way it dismisses any other panel.
        Not from inside a field, where the browser has its own meaning for
-       it, and not while the About dialog is up and owns the key. */
-    if (e.key === 'Escape' && asideLive() && !aboutDlg.open
+       it. */
+    if (e.key === 'Escape' && asideLive()
         && !/^(INPUT|TEXTAREA)$/.test(e.target.tagName || '')) {
       var open1 = Object.keys(open)[0];
       if (open1) toggleDrink(open1);
@@ -2922,35 +2928,14 @@
     }, 700);
   });
 
-  /* ── about ─────────────────────────────────────────────── */
+  /* ── version ───────────────────────────────────────────── */
 
-  var aboutDlg = $('#about');
-  var aboutBtn = $('#about-open');
-
-  function setAboutOpen(on) {
-    aboutBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+  /* The same label in the top bar and in the Info sentence, so a working
+     copy reads dev in both and a deploy reads the tag in both. */
+  function showVersion() {
+    $('#top-version').textContent = versionLabel;
+    $('#info-version').textContent = versionLabel;
   }
-
-  aboutBtn.addEventListener('click', function () {
-    if (aboutDlg.open) {
-      aboutDlg.close();
-      return;
-    }
-    aboutDlg.showModal();
-    setAboutOpen(true);
-    track('about_open');
-  });
-
-  aboutDlg.addEventListener('close', function () {
-    setAboutOpen(false);
-    track('about_close');
-  });
-
-  aboutDlg.addEventListener('click', function (e) {
-    if (e.target === aboutDlg || e.target.closest('[data-about-close]')) {
-      aboutDlg.close();
-    }
-  });
 
   window.addEventListener('hashchange', route);
 
@@ -3018,6 +3003,7 @@
     openSharedLink();
 
     $('#loading').hidden = true;
+    showVersion();
     repaintMenu();
     refreshCount();
     route();

@@ -1,8 +1,11 @@
 name: Deploy to Pages
 
+# Only a tag ships. The live site is a thing that was decided on, not
+# whatever landed on main this afternoon.
+
 on:
   push:
-    branches: [main]
+    tags: ['v*']
   workflow_dispatch:
 
 permissions:
@@ -26,8 +29,14 @@ jobs:
       - name: Verify
         run: make check
 
-      - name: Stamp service worker cache version
-        run: sed -i "s/__BUILD__/${GITHUB_SHA::12}/" sw.js
+      # The tag is the version and there is nowhere else it is written.
+      # sw.js keys its cache on __BUILD__; app.js prints __VERSION__ in
+      # the top bar and on the Info tab. Dispatched off a branch this is
+      # the branch name, which is honest and harmless.
+      - name: Stamp the tag
+        run: |
+          sed -i "s/__BUILD__/${GITHUB_REF_NAME}/" sw.js
+          sed -i "s/__VERSION__/${GITHUB_REF_NAME}/" assets/app.js
 
       - uses: actions/configure-pages@v5
 
@@ -37,3 +46,22 @@ jobs:
 
       - id: deploy
         uses: actions/deploy-pages@v4
+
+  # needs: deploy is the point. A release should only exist for something
+  # that actually went live. There is no artifact to attach: the site is
+  # the repo, and the tag is the archive GitHub already makes.
+  release:
+    needs: deploy
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" --repo "$REPO" \
+            --title "$GITHUB_REF_NAME" --generate-notes --verify-tag \
+            || gh release view "$GITHUB_REF_NAME" --repo "$REPO" > /dev/null

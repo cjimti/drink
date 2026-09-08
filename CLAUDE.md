@@ -347,7 +347,18 @@ is the price. Do not raise a limit to make a new function fit.
 - **Never commit, push, or deploy unless asked in that message.** Build,
   run `make verify`, then stop and show the diff. Enabling Pages, running
   `gh api` writes, and re-running a failed deploy are all the same
-  category: not yours to decide.
+  category: not yours to decide. **Tagging is in that category too.**
+  Cutting a tag now publishes the site and creates a release, so it is
+  the user's call, never the model's.
+- **Only a tag ships.** A push to `main` runs `make check` and deploys
+  nothing; pushing a `v*` tag runs the checks, stamps the tag into
+  `sw.js` and `assets/app.js`, deploys Pages, and then creates the
+  GitHub release from generated notes, so a release cannot exist for
+  something that never went live. The tag is the only place a version is
+  written: no `VERSION` file, nothing in `manifest.webmanifest`. `sw.js`
+  keys its cache on `__BUILD__` and `app.js` prints `__VERSION__`, each
+  of which appears exactly once in its file because the deploy `sed`s
+  for it. Unstamped is a working copy and reads `dev`.
 - `make verify` before showing work. It is the whole pipeline.
 - **Adversarially review your own diff before you call it done.** After
   `make verify` passes and before the diff goes up, read the change back

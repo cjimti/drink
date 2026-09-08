@@ -114,10 +114,15 @@ serves on **8010** so the origins never overlap. If a page ever loads
 with nothing listening on the port, that is what you are looking at;
 `make unstick` prints the manual recovery.
 
-Push to `main` and GitHub Pages deploys the site. That is the origin
-for fewbottles.com. `drink.shoephone.net` is a Cloudflare Worker that
-evicts the old service worker and 301s here — it does not serve the
-menu, and a content push does not need `wrangler`.
+Pushes to `main` run `make check` and deploy nothing. Pushing a `v*` tag
+runs the same checks, stamps the tag into `sw.js` and `assets/app.js`,
+deploys to GitHub Pages, and then cuts a GitHub release for that tag with
+generated notes. The tag is the only place a version is written: the app
+prints it in the top bar and on the Info tab, and an unstamped working
+copy reads `dev`. GitHub Pages is the origin for fewbottles.com.
+`drink.shoephone.net` is a Cloudflare Worker that evicts the old service
+worker and 301s here — it does not serve the menu, and a content push
+does not need `wrangler`.
 
 ## What is counted
 
@@ -127,7 +132,7 @@ which bottle was selected, whether a menu was printed or shared. There is
 no account and no name to attach any of it to, the shelf itself never
 leaves your phone unless you share it, and nothing is sold to anyone. A
 content blocker stops all of it and the site works exactly the same. The
-same statement is in About on the site.
+same statement is on the Info tab on the site.
 
 The events are the `track()` calls in `assets/app.js`. `make events`
 prints the current list, which is better than a copy here that goes stale
