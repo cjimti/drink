@@ -1099,7 +1099,7 @@
     var panes = [{ id: 'recipe', label: 'Recipe' }];
     if (d.taste) panes.push({ id: 'taste', label: 'Taste' });
     if (d.history) panes.push({ id: 'history', label: 'History' });
-    if (data.kin) panes.push({ id: 'kin', label: 'Kin' });
+    if (data.kin) panes.push({ id: 'kin', label: 'Related' });
     panes.push({ id: 'share', label: 'Share' });
 
     var html = '<div class="recipe-tabs" role="tablist" aria-label="' +
@@ -1161,7 +1161,7 @@
     }
     if (pat && pat.members && pat.members.length > 1) {
       html += '<button type="button" class="kin-more" data-see-pattern="' + esc(pat.id) + '">' +
-        plural(pat.members.length, 'drink', 'drinks') + ' in this family' +
+        plural(pat.members.length, 'drink', 'drinks') + ' of this shape' +
         ' <span aria-hidden="true">&rarr;</span></button>';
     }
     return html + '</div>';
@@ -1296,7 +1296,7 @@
       if (methodFilterOn()) blocking.push('are ' + filter.method);
       if (filter.pattern) {
         var pat = patternBy[filter.pattern];
-        blocking.push('sit in the ' + (pat ? pat.label : filter.pattern) + ' family');
+        blocking.push('are the ' + (pat ? pat.label : filter.pattern) + ' shape');
       }
       if (filter.q) blocking.push('match “' + filter.q + '”');
 
@@ -1398,7 +1398,7 @@
           esc(tonight ? nightTitle() : cardTitle()) + '</h1>' +
         '<p class="tonight__print-of">' + drinks + '</p>' +
       '</div>' +
-      hitRow('', ' data-tonight="open"', 'Tonight', 'big type for the bar', false) +
+      hitRow('', ' data-tonight="open"', 'Big type', 'for a phone by the bottles', false) +
       revealHit('share', 'Share menu', 'QR code or link', shareOpen) +
       renderSharePane(held) +
       revealHit('print', 'Print menu', drinks, shown) +
@@ -1415,7 +1415,7 @@
           printOptBtn('recipe', 'Recipe') +
           printOptBtn('taste', 'Taste') +
           printOptBtn('history', 'History') +
-          printOptBtn('barline', 'Barline') +
+          printOptBtn('barline', 'Shorthand key') +
         '</div>' +
         '<div class="tonight__acts">' +
           '<button class="btn" data-print="1">Print or save as PDF</button>' +
@@ -1800,7 +1800,7 @@
     var seg = [{ id: 'all', label: 'All' }].concat(data.menu.methods.map(function (m) {
       return { id: m.id, label: m.label };
     }));
-    if (data.kin) seg.push({ id: 'families', label: 'Families' });
+    if (data.kin) seg.push({ id: 'families', label: 'Shapes' });
 
     var html = renderIntro() + '<div class="filters">' +
       '<div class="seg' + (seg.length > 3 ? ' seg--wide' : '') + '">' + seg.map(function (s) {
@@ -2058,7 +2058,7 @@
     var top = nextBottles(held);
     if (!top.length) return '';
 
-    var html = '<section class="next"><h2 class="next__h">Next bottles</h2>';
+    var html = '<section class="next"><h2 class="next__h">One more bottle</h2>';
 
     top.forEach(function (r) {
       var name = r.i.shelf || r.i.name;
@@ -2092,7 +2092,7 @@
     if (!presets || !presets.length || viewingShared()) return '';
 
     var html = '<section class="starters">' +
-      '<h2 class="starters__h">Start from a shelf</h2>' +
+      '<h2 class="starters__h">Start from a kind of bottle</h2>' +
       '<p class="starters__note">Each one adds its bottles. Nothing gets ' +
       'removed, so they stack. The figure is what this one would add to ' +
       'what you already have.</p>';

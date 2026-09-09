@@ -33,7 +33,7 @@ liqueur, at +8, then Bénédictine at +6 and maraschino liqueur at +5.
 
 **Turns the shelf into a menu.** The count on the Bar tab is a way in,
 not a statistic — tapping it opens the list it counts. Print menu is a
-reveal on that list: name the card, keep the glass icon or drop it,
+reveal on that list: name the menu, keep the glass icon or drop it,
 tick recipe / taste / history if you want them on paper, and add a
 Barline sheet if a guest needs the key. Two columns on letter, a QR
 back to the site. Share menu, above it, is the same list as a link: the
