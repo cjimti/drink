@@ -64,6 +64,7 @@
   var shared = null;      /* { have, code } once a shared link has been opened; stays for the session */
   var introDone = false;  /* the first-run strip has been dismissed, for good */
   var shelfView = 'mine'; /* 'mine' or a named shelf id; session only, never saved */
+  var loadedShelf = null; /* the named shelf with a chip on the Menu, once one has been switched to; session only */
   var shelfOpen = null;   /* named shelf whose Switch / Add choice is open, session only */
   var startersOpen = false; /* Starter Shelves reveal on the Bar tab, session only */
   var printOpts = { icon: true, recipe: false, taste: false, history: false, barline: false };
@@ -93,9 +94,10 @@
   function asideLive() { return WIDE.matches && !tonight; }
 
   function emptyFilter() {
-    /* pourable is the My Shelf chip: the list gated by your shelf, or by
-       the named shelf you are looking at. shared is Shared menu: the same
-       gate against the shelf someone sent. One at a time. */
+    /* pourable and shared are the chip row's one choice, which shelf the
+       list is gated on: neither is All bottles, pourable is My Shelf or
+       the named shelf you loaded, shared is the shelf someone sent. One
+       at a time, and only ever set through selectMenu. */
     return { method: 'all', family: null, pattern: null, pourable: false, shared: false, q: '' };
   }
 
@@ -907,6 +909,14 @@
     return location.origin + location.pathname + '?' + SHARE_PARAM + '=' + code;
   }
 
+  /* The link the Share pane carries: the shelf the list is gated on as
+     one number, or the bare address when the whole card is up. */
+  function menuUrl() {
+    if (!shelfGate()) return location.origin + location.pathname;
+    var code = shelfCode(heldNow());
+    return code && code !== '0' ? shareUrl(code) : '';
+  }
+
   function shareTitle() {
     return cardTitle() === 'Your menu' ? 'Tonight\u2019s menu' : cardTitle();
   }
@@ -967,19 +977,58 @@
     }).join(', ');
   }
 
-  /* The shelf chip is named for the shelf it gates on, so on a named
-     shelf nothing on the row says your own bottles are still there. One
-     more chip on its left, carrying what those bottles pour, and the way
-     back is a tap from the list rather than a trip to the Bar tab. It
-     carries no tick because it is the way out, not the gate that is on.
+  /* Which menu the chip row has selected. 'all' is the whole card,
+     'shelf' is gated on the shelf that is up (yours, or the named one
+     you loaded), 'shared' on the one somebody sent. */
+  function menuMode() {
+    if (filter.shared) return 'shared';
+    return filter.pourable ? 'shelf' : 'all';
+  }
 
-     A shared menu already has its own second chip and leaves the first
-     one reading My Shelf, so this is only for a named shelf. */
-  function mineChip() {
-    if (shelfView === 'mine') return '';
-    var n = stocked().length ? pourableCount(have) : null;
-    return '<button class="chip chip--pour" data-shelf-mine="1">My Shelf' +
-      (n === null ? '' : ' \u00b7 ' + n) + '</button>';
+  function selectMenu(mode) {
+    filter.pourable = mode === 'shelf';
+    filter.shared = mode === 'shared';
+  }
+
+  /* Everything but the shelf choice: the segments, a bottle, a shape, a
+     search. Clear drops these and leaves the menu you chose alone. */
+  function otherFiltersOn() {
+    return !!(filter.family || filter.pattern || filter.q || filter.method !== 'all');
+  }
+
+  function shelfChip(on, attr, label, n) {
+    return '<button class="chip chip--pour' + (on ? ' is-on' : '') + '" ' + attr + '>' +
+      (on ? '\u2713 ' : '') + esc(label) + ' \u00b7 ' + n + '</button>';
+  }
+
+  /* The menus, one chip each, and one of them always on. All bottles is
+     the card as printed and the one a first visit lands on. My Shelf is
+     what your bottles pour. The third is the way to the starter shelves
+     until one is loaded, and then it is that shelf, so the row reads
+     All bottles, My Shelf, Gin shelf, and going back to My Shelf keeps
+     the Gin chip: the three are a switch, not a detour. A shared link
+     adds a fourth for the session. Each carries the drinks it counts, the same figure as
+     the Menu tab's badge, so the two never disagree. */
+  function renderShelfChips() {
+    var mode = menuMode();
+    var named = loadedShelf ? presetById(loadedShelf) : null;
+    var html = shelfChip(mode === 'all', 'data-menu-all="1"', 'All bottles',
+        data.menu.cocktails.length) +
+      shelfChip(mode === 'shelf' && shelfView === 'mine', 'data-shelf-mine="1"', 'My Shelf',
+        pourableCount(have));
+    if (named) {
+      html += shelfChip(mode === 'shelf' && shelfView === named.id,
+        'data-shelf-switch="' + esc(named.id) + '"',
+        named.label, pourableCount(namedHave(named.id)));
+    } else if ((data.bar.shelves || []).length) {
+      html += '<button class="chip chip--pour" data-starters-go="1">Starter Shelves ' +
+        '<span aria-hidden="true">&rarr;</span></button>';
+    }
+    if (shared) {
+      html += shelfChip(mode === 'shared', 'data-shared="1"', 'Shared menu',
+        pourableCount(shared.have));
+    }
+    return html;
   }
 
   /* Which bottles get a chip in the filter row. Anything else can still be
@@ -1380,7 +1429,7 @@
             ? 'none of them ' + esc(blocking.join(', nor ')) + '.'
             : 'none of them match the other filters.') +
         '</p>' +
-        '<button class="btn" data-clearothers="1">Drop the other filters</button>' +
+        '<button class="btn" data-clear="1">Drop the other filters</button>' +
         '</div>';
     }
 
@@ -1396,10 +1445,11 @@
     return '<p class="empty">Nothing on the menu matches that.</p>';
   }
 
-  /* With the shelf filter on, this stops being a filtered list and starts
-     being a menu. Print menu is a reveal on that list: closed it is a
-     row, open it is the card title, the include ticks, and the way onto
-     paper. */
+  /* Whichever menu the chip row has selected is the one that goes on
+     paper or out as a link: the whole card, yours, a named shelf, or
+     the one somebody sent. Print menu is a reveal on the list: closed it
+     is a row, open it is the card title, the include ticks, and the way
+     onto paper. */
   function printOptBtn(id, label) {
     var on = !!printOpts[id];
     return '<button type="button" class="tonight__opt' + (on ? ' is-on' : '') + '"' +
@@ -1412,15 +1462,16 @@
   /* Share menu is the reveal above Print. The QR and the link are the
      same thing, the shelf as one number on the end of the address, so
      whoever scans or taps opens this list live, on their own phone. */
-  function renderSharePane(held) {
-    var code = shelfCode(held);
-    if (!code || code === '0') return '';
-    var url = shareUrl(code);
+  function renderSharePane() {
+    var url = menuUrl();
+    if (!url) return '';
     var qr = qrSvg(url);
     var body = shareTitle() + ' ' + url;
     return '<div class="tonight__pane" id="share-pane"' + (shareOpen ? '' : ' hidden') + '>' +
-      '<p class="tonight__note">Scan it, or send the link. It carries the shelf ' +
-        'but not the brands, so they get this same list on their own phone.</p>' +
+      '<p class="tonight__note">Scan it, or send the link. ' +
+        (shelfGate()
+          ? 'It carries the shelf but not the brands, so they get this same list on their own phone.'
+          : 'It opens the whole card on their own phone.') + '</p>' +
       '<div class="share">' +
         (qr ? '<div class="share__qr">' + qr + '</div>' : '') +
         '<div class="share__side">' +
@@ -1461,8 +1512,16 @@
     return (menuTitle || '').replace(/\s+/g, ' ').trim() || 'Tonight';
   }
 
-  function renderMasthead(n, held) {
+  function printNote(held) {
+    if (!shelfGate()) return 'Every drink on the card, written out in full.';
     var bottles = stocked(held).length;
+    var whose = viewingShared() ? 'this shelf' : editing() ? 'your shelf' : viewName();
+    var has = viewingShared() ? 'they have' : editing() ? 'you have' : 'it has';
+    return 'Every drink the ' + plural(bottles, 'bottle', 'bottles') +
+      ' on ' + whose + ' will pour, written out in full. Garnish where ' + has + ' it.';
+  }
+
+  function renderMasthead(n, held) {
     var shown = printOpen;
     var drinks = n + ' ' + (n === 1 ? 'drink' : 'drinks');
     return '<div class="tonight">' +
@@ -1473,16 +1532,14 @@
       '</div>' +
       hitRow('', ' data-tonight="open"', 'Big type', 'for a phone by the bottles', false) +
       revealHit('share', 'Share menu', 'QR code or link', shareOpen) +
-      renderSharePane(held) +
+      renderSharePane() +
       revealHit('print', 'Print menu', drinks, shown) +
       '<div class="tonight__pane" id="print-pane"' + (shown ? '' : ' hidden') + '>' +
         '<label class="tonight__field" for="menu-title">Menu title</label>' +
         '<input class="tonight__title" id="menu-title" type="text" maxlength="72" ' +
           'placeholder="Home St. Bar" autocomplete="off" ' +
           'spellcheck="true" enterkeyhint="done" value="' + esc(menuTitle) + '">' +
-        '<p class="tonight__note">Every drink the ' + plural(bottles, 'bottle', 'bottles') +
-          ' on ' + (viewingShared() ? 'this' : 'your') + ' shelf will pour, written out in ' +
-          'full. Garnish where ' + (viewingShared() ? 'they have' : 'you have') + ' it.</p>' +
+        '<p class="tonight__note">' + esc(printNote(held)) + '</p>' +
         '<div class="tonight__opts">' +
           printOptBtn('icon', 'Icon') +
           printOptBtn('recipe', 'Recipe') +
@@ -1492,7 +1549,9 @@
         '</div>' +
         '<div class="tonight__acts">' +
           '<button class="btn" data-print="1">Print or save as PDF</button>' +
-          '<button class="btn" data-pourable="1">Show all ' + data.menu.cocktails.length + '</button>' +
+          (shelfGate()
+            ? '<button class="btn" data-menu-all="1">Show all ' + data.menu.cocktails.length + '</button>'
+            : '') +
         '</div>' +
       '</div></div>';
   }
@@ -1801,13 +1860,17 @@
       '<p class="card__note">' + esc(plural(bottles, 'bottle', 'bottles') +
         ' on ' + whoseShelf() + '.') + '</p>';
 
+    /* The Bar tab's One more bottle, one size down. On a named shelf the
+       same box sits over it: the figures are true of that shelf, and the
+       one shelf they could be bought for is a tap away. */
     var next = viewingShared() ? [] : nextBottles(held);
     if (next.length) {
-      html += '<p class="card__k">Next bottle suggestions</p>' +
-        (editing() ? '' : '<p class="card__note card__note--lock">' +
-          esc('Selecting one changes My Shelf, so go back to it first.') + '</p>');
+      var lock = !editing();
+      html += '<div class="card__more' + (lock ? ' is-locked' : '') + '">' +
+        '<p class="card__k">' + esc(nextHead(next)) + '</p>';
       next.forEach(function (r) { html += renderRailNext(r, held); });
-      html += '<div class="card__acts"><a class="btn" href="#bar">Open the Bar tab</a></div>';
+      html += nextLock(lock) + '</div>' +
+        '<div class="card__acts"><a class="btn" href="#bar">Open the Bar tab</a></div>';
     }
     return html + '</div>';
   }
@@ -1866,7 +1929,7 @@
       return;
     }
 
-    var html = pre + (shelfGate() ? renderMasthead(list.length, held) : '');
+    var html = pre + renderMasthead(list.length, held);
     var secs = menuSections(list, held, showShelf);
     html += PRINT_SPLIT ? splitSections(secs) : joinSections(secs);
 
@@ -1959,34 +2022,8 @@
       html += '</div>';
     }
 
-    html += renderBottleChips() + '<div class="chips">';
-
-    /* Carry the shelf count on the control itself. The Bar tab shows the
-       same number, and the two disagreeing with no explanation is exactly
-       how this filter looked broken.
-
-       The chip is named for the shelf it gates on, so a named shelf says
-       its own name here. Reading the Gin shelf while the chip says My
-       Shelf is the same disagreement, in words. */
-    var mine = viewHave();
-    var canNow = stocked(mine).length ? pourableCount(mine) : null;
-
-    html += mineChip();
-    html += '<button class="chip chip--pour' + (filter.pourable ? ' is-on' : '') +
-        '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + esc(viewName()) +
-        (canNow === null ? '' : ' · ' + canNow) + '</button>';
-
-    /* Once a shared link has been opened its menu is a second chip for
-       the rest of the session, so the two are a switch, not a detour. */
-    if (shared) {
-      html += '<button class="chip chip--pour' + (filter.shared ? ' is-on' : '') +
-        '" data-shared="1">' + (filter.shared ? '✓ ' : '') + 'Shared menu · ' +
-        pourableCount(shared.have) + '</button>';
-    }
-
-    html +=
-      (filter.family || filter.pattern || filter.q || filter.method !== 'all' || shelfGate()
-        ? '<button class="chip" data-clear="1">Clear</button>' : '') +
+    html += renderBottleChips() + '<div class="chips">' + renderShelfChips() +
+      (otherFiltersOn() ? '<button class="chip" data-clear="1">Clear</button>' : '') +
       '</div>' +
       '<p class="filters__note"><b>' + n + '</b> of ' + data.menu.cocktails.length + ' shown</p>' +
       '</div>';
@@ -1996,6 +2033,13 @@
     document.querySelectorAll('#filters .chips').forEach(function (el, i) {
       if (i < chipX.length) el.scrollLeft = chipX[i];
     });
+
+    /* A shared link lands with its chip fourth in a row three chips
+       wide. The one that is on is the one that explains the list, so
+       it is never left off the edge. Nearest moves nothing that is
+       already in view. */
+    var on = document.querySelector('#filters .chip--pour.is-on');
+    if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
 
   /* ── bar view ──────────────────────────────────────────── */
@@ -2536,6 +2580,7 @@
     /* The shell is viewport-tall and #main is what scrolls, so the
        window has nowhere to go. */
     $('#main').scrollTop = 0;
+    if (view === 'bar') landOnStarters();
     track('view_tab', { tab: view });
   }
 
@@ -2577,7 +2622,7 @@
       filter.q = '';
       if (filter.pattern && patternIdOf(d) !== filter.pattern) filter.pattern = null;
       if (methodFilterOn() && d.method !== filter.method) filter.method = 'all';
-      if (shelfGate() && !canPour(d, heldNow())) { filter.pourable = false; filter.shared = false; }
+      if (shelfGate() && !canPour(d, heldNow())) selectMenu('all');
     }
     open = {};
     open[id] = true;
@@ -2587,25 +2632,36 @@
     if (el) el.scrollIntoView({ block: 'center' });
   }
 
-  /* The same figure on the phone tab bar and on the wide-screen top bar,
-     both on Menu. It counts drinks, not bottles, so it belongs on the tab
-     that holds the drinks: the badge is the answer, and the Bar tab is
-     where you go to change it. One of the two is always hidden, and a
-     badge that disagrees with the Bar tab is how the pourable filter last
-     looked broken. */
-  function refreshCount() {
-    var held = heldNow();
-    var can = pourableCount(held);
-    var on = stocked(held).length > 0;
-    [$('#tab-count'), $('#top-count')].forEach(function (badge) {
-      if (on) badge.textContent = can;
-      badge.hidden = !on;
+  /* Two badges, on the phone tab bar and again on the wide-screen top
+     bar, both reading the menu the chip row has selected. Menu counts
+     the drinks on it, Bar the bottles it is made from. All bottles is
+     the whole card over the whole shelf; My Shelf and a named shelf are
+     what they pour over what they hold; a shared link is the sender's.
+     The pair moves together, so neither can disagree with the other or
+     with the chip that is on. */
+  function setBadges(ids, n) {
+    ids.forEach(function (id) {
+      var badge = $(id);
+      badge.textContent = n;
+      badge.hidden = false;
     });
   }
 
+  function refreshCount() {
+    var all = !shelfGate();
+    var held = heldNow();
+    setBadges(['#tab-count', '#top-count'],
+      all ? data.menu.cocktails.length : pourableCount(held));
+    setBadges(['#tab-bar-count', '#top-bar-count'],
+      all ? data.bar.ingredients.length : stocked(held).length);
+  }
+
+  /* The badges read the same choice the chip row shows, so they repaint
+     with it. */
   function repaintMenu() {
     renderFilters();
     renderMenu();
+    refreshCount();
   }
 
   /* Everything that puts a link somewhere else: the shelf out of the
@@ -2615,7 +2671,7 @@
      handled the click. */
   function shareAction(t) {
     if (t.dataset.shareCopy) {
-      var url = shareUrl(shelfCode(heldNow()));
+      var url = menuUrl();
       var said = function () { flashLabel(t, 'Copied', 'Copy link'); };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(said, function () { selectShareUrl(t); });
@@ -2633,7 +2689,7 @@
     }
 
     if (t.dataset.shareNative) {
-      navigator.share({ title: shareTitle(), url: shareUrl(shelfCode(heldNow())) })
+      navigator.share({ title: shareTitle(), url: menuUrl() })
         .catch(function () { /* dismissed */ });
       track('share_native');
       return true;
@@ -2649,7 +2705,7 @@
       shared = null;
       dropSharedLink();
       filter = emptyFilter();
-      filter.pourable = true;
+      selectMenu('shelf');
       shelfView = 'mine';
       barOrder = null;
       afterShelf(false);
@@ -2833,7 +2889,7 @@
       var id = t.dataset.nextSee;
       track('bar_next', { bottle_id: id, drinks: marginalGain(id, heldNow()) });
       filter = emptyFilter();
-      filter.pourable = true;
+      selectMenu('shelf');
       filter.family = hasChip(ing[id] || {}) ? id : null;
       /* A bottle whose unlocks are all drinks it does not itself lead
          filters the list to nothing. Drop the chip and land on the menu. */
@@ -2842,9 +2898,11 @@
         filter.family = null;
       }
     } else if (t.dataset.seemenu) {
-      /* From the count on the Bar tab to the menu it is counting. */
+      /* From the count on the Bar tab to the menu it is counting, which
+         is the sender's when that is the shelf the tab was showing. */
+      var theirs = viewingShared();
       filter = emptyFilter();
-      filter.pourable = true;
+      selectMenu(theirs ? 'shared' : 'shelf');
       track('see_pourable');
     } else {
       return false;
@@ -2864,7 +2922,6 @@
       return;
     }
     var y = $('#main').scrollTop;
-    refreshCount();
     repaintMenu();
     $('#main').scrollTop = y;
   }
@@ -2960,29 +3017,74 @@
     return true;
   }
 
-  /* Back to your own bottles, from a named shelf or from a shelf someone
-     sent. A shared link is a view the same way, so this drops that gate
-     too and leaves the list on the menu your shelf pours. */
+  /* Back to your own bottles, from the chip, from a named shelf or from
+     a shelf someone sent. Choosing a shelf is choosing a menu, so the
+     list is gated on it without a second tap. A shelf that pours nothing
+     gates too, since the list already says so in words: Staples only
+     reading nothing yet is the answer, and a menu of 174 drinks beside a
+     Bar tab saying Staples only is the two tabs disagreeing again. */
   function switchToMine() {
     shelfView = 'mine';
     shelfOpen = null;
     barOrder = null;
-    if (filter.shared) {
-      filter.shared = false;
-      filter.pourable = true;
-    }
+    selectMenu('shelf');
     afterShelf(false);
+    track('filter', { filter_type: 'menu', filter_value: 'mine' });
     return true;
   }
 
-  /* Choosing a shelf is choosing a menu, so the list is gated on it
-     without a second tap. A shelf that pours nothing gates too, since the
-     list already says so in words: Staples only reading nothing yet is
-     the answer, and a menu of 174 drinks beside a Bar tab saying Staples
-     only is the two tabs disagreeing again. */
-  function gateMenuOnShelf() {
-    filter.pourable = true;
-    filter.shared = false;
+  /* The Starter Shelves chip: the Bar tab, opened on the shelves rather
+     than the top of the shelf. One shot, then the tab lands where it
+     always has. */
+  var jumpStarters = false;
+
+  function goStarters() {
+    startersOpen = true;
+    jumpStarters = true;
+    location.hash = '#bar';
+    track('bar_starters', { open: true });
+    return true;
+  }
+
+  /* The tally is sticky over the shelf on a phone, so the section goes
+     just under it. On a wide screen the shelves sit in the rail, already
+     on screen, and scrolling the list would move the wrong thing. */
+  function landOnStarters() {
+    if (!jumpStarters) return;
+    jumpStarters = false;
+    if (WIDE.matches) return;
+    var main = $('#main');
+    var sec = document.querySelector('.starters');
+    var tally = document.querySelector('.tally');
+    if (!sec) return;
+    main.scrollTop += sec.getBoundingClientRect().top - main.getBoundingClientRect().top -
+      (tally ? tally.offsetHeight : 0) - 8;
+  }
+
+  /* The chips that are not a shelf of yours: the whole card, the one
+     somebody sent, the way to the starter shelves, and Clear, which
+     drops every other filter and keeps the menu you chose. The chips
+     select rather than toggle: with All bottles on the row there is
+     always a way off a menu, so a tap on the one already on stays put. */
+  function menuAction(t) {
+    if (t.dataset.menuAll) {
+      selectMenu('all');
+      track('filter', { filter_type: 'menu', filter_value: 'all' });
+    } else if (t.dataset.shared) {
+      selectMenu('shared');
+      track('filter', { filter_type: 'menu', filter_value: 'shared' });
+    } else if (t.dataset.startersGo) {
+      return goStarters();
+    } else if (t.dataset.clear) {
+      var mode = menuMode();
+      filter = emptyFilter();
+      selectMenu(mode);
+      track('filter', { filter_type: 'clear', filter_value: 'others' });
+    } else {
+      return false;
+    }
+    repaintMenu();
+    return true;
   }
 
   function applyShelf(id, how) {
@@ -2997,9 +3099,10 @@
       shelfView = 'mine';
     } else {
       shelfView = id;
+      loadedShelf = id;
       barOrder = null;
     }
-    gateMenuOnShelf();
+    selectMenu('shelf');
     afterShelf(false);
     track('bar_preset', {
       action: preset.id,
@@ -3043,7 +3146,7 @@
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
-      '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-shelf],[data-starters-open],[data-seemenu],' +
+      '[data-menu-all],[data-shared],[data-starters-go],[data-clear],[data-bottle],[data-brand],[data-note],[data-bar],[data-shelf],[data-starters-open],[data-seemenu],' +
       '[data-next-jump],[data-next-see],' +
       '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
       '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
@@ -3129,44 +3232,10 @@
       return;
     }
 
-    if (t.dataset.pourable) {
-      filter.pourable = !filter.pourable;
-      filter.shared = false;
-      track('filter', { filter_type: 'pourable', filter_value: filter.pourable ? 'on' : 'off' });
-      repaintMenu();
-      return;
-    }
-
-    if (t.dataset.shared) {
-      filter.shared = !filter.shared;
-      filter.pourable = false;
-      track('filter', { filter_type: 'shared', filter_value: filter.shared ? 'on' : 'off' });
-      repaintMenu();
-      return;
-    }
-
+    if (menuAction(t)) return;
     if (jumpAction(t)) return;
-
     if (printAction(t)) return;
     if (shareAction(t)) return;
-
-    /* Keep the shelf filter, drop whatever else was excluding things. */
-    if (t.dataset.clearothers) {
-      var keepShared = filter.shared;
-      filter = emptyFilter();
-      if (keepShared) filter.shared = true; else filter.pourable = true;
-      track('filter', { filter_type: 'clear', filter_value: 'others' });
-      repaintMenu();
-      return;
-    }
-
-    if (t.dataset.clear) {
-      filter = emptyFilter();
-      track('filter', { filter_type: 'clear', filter_value: 'all' });
-      repaintMenu();
-      return;
-    }
-
     barAction(t);
   });
 
@@ -3312,7 +3381,6 @@
     $('#loading').hidden = true;
     showVersion();
     repaintMenu();
-    refreshCount();
     route();
   }).catch(function (err) {
     $('#loading').textContent = 'Could not load the menu. ' + err;

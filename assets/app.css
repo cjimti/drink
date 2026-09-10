@@ -2027,8 +2027,11 @@ button.card__fig { cursor: pointer; }
   line-height: 1.55;
 }
 
-/* Why the tick beside a suggestion is greyed, said where the tick is. */
-.card__note--lock { margin: 6px 0 0; font-size: 13px; color: var(--faint); }
+/* The suggestions, so the Bar tab's lock box has something to sit over.
+   Same veil, same box, same way back: the rail is that panel one size
+   down, and a greyed tick with a line of small print is not. */
+.card__more { position: relative; }
+.card__more.is-locked .card__opens { opacity: .45; }
 
 .card__k {
   margin: 22px 0 0;

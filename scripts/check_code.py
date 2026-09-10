@@ -55,7 +55,7 @@ BUDGET = {
         why="the QR spec written small — placement, masking and format "
             "bits in the order the standard states them"),
     "assets/app.js:<document click>": dict(
-        lines=128, complexity=28,
+        lines=94, complexity=22,
         why="one delegated click handler for the whole app. A new control "
             "adds a branch that calls a named function; it does not grow "
             "the handler"),
