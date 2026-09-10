@@ -2426,7 +2426,7 @@
     var who = viewingShared() ? 'a shelf someone sent you' : viewName();
     return '<div class="bar-view">' +
       '<p class="bar-view__copy">You are looking at ' + esc(who) +
-        '. Selecting a bottle changes My Shelf, so go back to it first.</p>' +
+        '. Switch back to My Shelf to select and deselect bottles.</p>' +
       '<button type="button" class="btn" data-shelf-mine="1">Back to My Shelf</button>' +
       '</div>';
   }
