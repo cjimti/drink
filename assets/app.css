@@ -1104,7 +1104,7 @@ noscript.fallback a { color: var(--brass); }
   color: var(--muted);
 }
 
-.tally__acts { display: flex; gap: 8px; margin-top: 15px; }
+.tally__acts { display: flex; gap: 8px; margin-top: 15px; align-items: center; flex-wrap: wrap; }
 
 /* The three bottles worth buying next. Same figure as the rows below it,
    lifted out of a long shelf, with the drinks it opens read out. Brass on
@@ -1124,6 +1124,7 @@ noscript.fallback a { color: var(--brass); }
 .next__row {
   padding: 9px 0;
   border-bottom: 1px solid var(--hair);
+  cursor: pointer;
 }
 
 .next__top {
@@ -1201,6 +1202,21 @@ noscript.fallback a { color: var(--brass); }
   text-align: left;
   padding: 10px 0;
   cursor: pointer;
+}
+
+.starter--mine { cursor: default; }
+button.starter--mine { cursor: pointer; }
+.starter--mine.is-on .starter__label,
+.starter-block.is-current .starter__label { color: var(--brass); }
+
+.starter-block { border-bottom: 1px solid var(--hair); }
+.starter-block .starter { border-bottom: 0; }
+
+.starter__choice {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 0 0 12px;
 }
 
 .starter__text { flex: 1; min-width: 0; }
@@ -2085,24 +2101,49 @@ button.card__fig { cursor: pointer; }
        against the window. */
     max-height: calc(100dvh - var(--topbar-h));
     min-height: calc(100dvh - var(--topbar-h) - 40px);
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
     padding: 12px 0 0 calc(var(--railgap) / 2);
     border-left: 1px solid var(--hair);
   }
 
-  /* A panel that ends flush with the fold reads as cut off. */
-  .menu-aside > *:last-child,
-  .bar-rail > *:last-child { margin-bottom: 24px; }
+  /* The recipe rail still scrolls as one piece. The bar rail does not:
+     a sticky tally inside an overflowing rail sits in a stacking
+     context over the list, so One more bottle and Shelves stop taking
+     clicks, and the overlay scrollbar paints on the figures. */
+  .menu-aside {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    padding-right: 12px;
+  }
 
-  /* The rail is what follows you down the page now, and the count follows
-     you down the rail: on a tall shelf the rail scrolls inside itself, and
-     a count that scrolls away is a count you cannot watch move. */
+  /* A panel that ends flush with the fold reads as cut off. */
+  .menu-aside > *:last-child { margin-bottom: 24px; }
+
+  .bar-rail {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* The count stays put at the top of the rail. The list below it is
+     what scrolls, with room on the right so the overlay scrollbar
+     cannot sit on the figures. */
   .bar-rail .tally {
+    position: relative;
+    z-index: 0;
+    flex: none;
     margin: 0;
     padding: 0;
     background: var(--ground);
     border-bottom: 1px solid var(--rule);
+  }
+  .bar-rail .tally__body {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    padding: 17px 12px 24px 0;
   }
   .bar-rail .tally__hit,
   .bar-rail .tally__fig { flex-wrap: wrap; min-height: 0; padding: 2px 0 14px; }
@@ -2190,7 +2231,7 @@ button.card__fig { cursor: pointer; }
   }
 
   .topbar, .tabbar, .menu-aside, .night, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
-  .shared, .tally__acts, .starters, .next, .drink__missing, .loading, .bottle__more, .shelf__copy,
+  .shared, .tally__acts, .bar-reset, .starters, .next, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-panel--share, .recipe-refs {
     display: none !important;
@@ -2231,12 +2272,17 @@ button.card__fig { cursor: pointer; }
      left edge and every other drink pulled into the margin beside it. */
   .drink { border-left: 0; padding-left: 0; margin-left: 0; }
   .bar-rail {
+    display: block;
     position: static;
     max-height: none;
     min-height: 0;
     overflow: visible;
     padding: 0;
     border-left: 0;
+  }
+  .bar-rail .tally__body {
+    overflow: visible;
+    padding: 17px 0 2px;
   }
 
   /* Tonight is a screen mode. Printing from it prints the card: the
