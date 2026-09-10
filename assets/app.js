@@ -967,6 +967,21 @@
     }).join(', ');
   }
 
+  /* The shelf chip is named for the shelf it gates on, so on a named
+     shelf nothing on the row says your own bottles are still there. One
+     more chip on its left, carrying what those bottles pour, and the way
+     back is a tap from the list rather than a trip to the Bar tab. It
+     carries no tick because it is the way out, not the gate that is on.
+
+     A shared menu already has its own second chip and leaves the first
+     one reading My Shelf, so this is only for a named shelf. */
+  function mineChip() {
+    if (shelfView === 'mine') return '';
+    var n = stocked().length ? pourableCount(have) : null;
+    return '<button class="chip chip--pour" data-shelf-mine="1">My Shelf' +
+      (n === null ? '' : ' \u00b7 ' + n) + '</button>';
+  }
+
   /* Which bottles get a chip in the filter row. Anything else can still be
      a family filter, but nothing on screen would show it was on, and a
      filter you cannot see is a filter you cannot turn off. */
@@ -1956,6 +1971,7 @@
     var mine = viewHave();
     var canNow = stocked(mine).length ? pourableCount(mine) : null;
 
+    html += mineChip();
     html += '<button class="chip chip--pour' + (filter.pourable ? ' is-on' : '') +
         '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + esc(viewName()) +
         (canNow === null ? '' : ' · ' + canNow) + '</button>';
