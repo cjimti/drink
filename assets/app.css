@@ -415,22 +415,31 @@ noscript.fallback a { color: var(--brass); }
 }
 .filters__note b { color: var(--brass); font-weight: 500; }
 
-/* Off on a phone: down there the chip row is a scroller and there is
-   nothing to reveal. */
-.chips__more {
-  display: none;
-  appearance: none;
-  background: transparent;
-  border: 0;
-  padding: 7px 0 0;
+/* The word over the shelf row. It is the only label in the block, so
+   it is set like a heading and the reveal below the bottle chips is
+   set like a chip, and the two cannot be mistaken for each other. */
+.filters__h {
+  margin: 14px 0 0;
   color: var(--faint);
   font-family: var(--display);
   font-weight: 700;
   font-size: 9.5px;
   letter-spacing: .15em;
   text-transform: uppercase;
-  cursor: pointer;
 }
+.filters__h + .chips { margin-top: 5px; }
+
+/* Off on a phone: down there the chip row is a scroller and there is
+   nothing to reveal. Where it shows it is a chip with a chevron, so it
+   reads as the button it is and not as a heading over the next row. */
+.chips__more {
+  display: none;
+  margin-top: 6px;
+  border-style: dashed;
+  color: var(--faint);
+}
+.chips__more::after { content: '\25BE'; margin-left: 6px; }
+.chips__more[aria-expanded="true"]::after { content: '\25B4'; }
 .chips__more:hover { color: var(--muted); }
 
 /* ── Method + family headings ─────────────────────────────── */
@@ -1854,9 +1863,6 @@ body.is-tonight .tonight__pane,
 body.is-tonight .drink__code,
 body.is-tonight .recipe-tabs { display: none; }
 
-/* Only what pours is on the card, exactly as paper does it. */
-body.is-tonight .drink.is-short { display: none; }
-
 /* The card title, in the treatment print gives it. */
 body.is-tonight .tonight { padding-bottom: 14px; border-bottom: 3px solid var(--rule); }
 body.is-tonight .tonight__print { display: block; }
@@ -2147,7 +2153,7 @@ button.card__fig { cursor: pointer; }
      bug, so this is the chip height twice plus the gap between them. */
   .chips--bottle { max-height: 60px; overflow: hidden; }
   .chips--bottle.is-all { max-height: none; }
-  .chips__more { display: block; text-align: left; padding-bottom: 4px; }
+  .chips__more { display: block; justify-self: start; }
 
   /* The method control and the search field are each half a line; on a
      phone they are two full-width rows because there is no width to
@@ -2395,9 +2401,8 @@ button.card__fig { cursor: pointer; }
   }
 
   /* Tonight is a screen mode. Printing from it prints the card: the
-     shorthand comes back, so does every drink the shelf is short of, and
-     the type goes back to the size paper wants. */
-  body.is-tonight .drink.is-short { display: block; }
+     shorthand comes back, and the type goes back to the size paper
+     wants. */
   body.is-tonight .drink__code { display: block; }
   body.is-tonight .drink__name { font-size: 8.5pt; }
   body.is-tonight .drink__line { font-size: 8.5pt; }

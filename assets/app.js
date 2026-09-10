@@ -990,6 +990,15 @@
     filter.shared = mode === 'shared';
   }
 
+  /* Whether the card wears the shelf: brass on what pours, a dim row and
+     a Need line on what is short, a struck ingredient in the recipe. Only
+     when a shelf is the menu. All bottles is the card as printed whatever
+     is stocked, because a greyed row under it reads as a shelf the chip
+     does not name. */
+  function shelfShown(held) {
+    return menuMode() !== 'all' && stocked(held).length > 0;
+  }
+
   /* Everything but the shelf choice: the segments, a bottle, a shape, a
      search. Clear drops these and leaves the menu you chose alone. */
   function otherFiltersOn() {
@@ -1174,7 +1183,7 @@
   }
 
   function renderPours(d, held) {
-    var shelfInUse = stocked().length > 0;
+    var shelfInUse = shelfShown(held);
     var html = '';
 
     d.build.forEach(function (p) {
@@ -1918,7 +1927,7 @@
 
   function renderMenu() {
     var held = heldNow();
-    var showShelf = stocked(held).length > 0;
+    var showShelf = shelfShown(held);
     var list = data.menu.cocktails.filter(function (d) { return matches(d, held); });
     var pre = viewingShared() ? renderSharedBanner(held) : '';
     renderAside(held, showShelf);
@@ -1982,7 +1991,7 @@
         '" data-family="' + esc(i.id) + '">' + esc(i.short) + '</button>';
     });
     return html + '</div>' +
-      '<button type="button" class="chips__more" data-chips="1"' +
+      '<button type="button" class="chip chips__more" data-chips="1"' +
       ' aria-expanded="' + (all ? 'true' : 'false') + '">' +
       (all ? 'Fewer filters' : 'All ' + chipped.length + ' bottle filters') +
       '</button>';
@@ -2022,7 +2031,11 @@
       html += '</div>';
     }
 
-    html += renderBottleChips() + '<div class="chips">' + renderShelfChips() +
+    /* The last row is one choice, which shelf the list is gated on, and
+       a row of three pills with no word over it reads as more filters. */
+    html += renderBottleChips() +
+      '<p class="filters__h" id="shelf-h">Shelf</p>' +
+      '<div class="chips" role="group" aria-labelledby="shelf-h">' + renderShelfChips() +
       (otherFiltersOn() ? '<button class="chip" data-clear="1">Clear</button>' : '') +
       '</div>' +
       '<p class="filters__note"><b>' + n + '</b> of ' + data.menu.cocktails.length + ' shown</p>' +
