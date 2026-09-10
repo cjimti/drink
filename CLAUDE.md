@@ -191,6 +191,21 @@ tier costs. Three, never more, and never ranked by usage count. It waits
 for a shelf worth improving on — from nothing every figure is zero, and
 a heading over three `+0` rows is worse than no heading.
 
+**Three rows, always, while anything is still short.** Single bottles run
+out long before the menu does: gin and tonic pour the Gin and Tonic, and
+from there no one bottle opens a thing. The rows that singles leave empty
+go to the smallest sets that do open something, and a set is selected in
+one tap like a bottle. The candidates are the drinks themselves, since a
+set worth naming is exactly what some drink is short of; any other set is
+one of those with a bottle nobody needed added on top. Fewest bottles
+first, then the biggest unlock, then what the rest of the menu wants,
+which is the tie-break doing the real work: from one spirit almost every
+pair opens exactly one drink, and without it the row is whichever drink
+the card happens to print first. The heading says `One more bottle` while
+every row is one bottle and `What to buy next` once a row names a set,
+because a heading that says one bottle over a pair is a lie about what it
+is asking you to buy.
+
 The print stylesheet forces the light palette outright. What theme a
 phone happens to be in must never decide how much toner a menu costs.
 Paper is US Letter (8.5 × 11), two columns, a small QR to
