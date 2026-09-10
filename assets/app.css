@@ -1204,6 +1204,31 @@ noscript.fallback a { color: var(--brass); }
   cursor: pointer;
 }
 
+/* Reading somebody else's shelf, or a named one. Every control that
+   would add a bottle stands down rather than quietly writing to the
+   shelf you are not looking at. The message says which way back. */
+.bar-view {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.bar-view__copy {
+  margin: 0 0 11px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.bottle__stock[disabled],
+.brand__hit[disabled],
+.next__name[disabled],
+.btn[disabled] {
+  cursor: default;
+  opacity: .45;
+}
+.btn[disabled]:hover { color: var(--muted); border-color: var(--rule); }
+.next.is-locked .next__what,
+.next.is-locked .next__buy { opacity: .45; }
+
 .starter--mine { cursor: default; }
 button.starter--mine { cursor: pointer; }
 .starter--mine.is-on .starter__label,
@@ -1929,6 +1954,9 @@ button.card__fig { cursor: pointer; }
   line-height: 1.55;
 }
 
+/* Why the tick beside a suggestion is greyed, said where the tick is. */
+.card__note--lock { margin: 6px 0 0; font-size: 13px; color: var(--faint); }
+
 .card__k {
   margin: 22px 0 0;
   /* clear: the how-to's lead sits under a headline, not beside it */
@@ -2231,7 +2259,7 @@ button.card__fig { cursor: pointer; }
   }
 
   .topbar, .tabbar, .menu-aside, .night, .filters, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
-  .shared, .tally__acts, .bar-reset, .starters, .next, .drink__missing, .loading, .bottle__more, .shelf__copy,
+  .shared, .tally__acts, .bar-reset, .bar-view, .starters, .next, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-panel--share, .recipe-refs {
     display: none !important;

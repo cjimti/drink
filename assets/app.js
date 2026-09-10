@@ -92,8 +92,9 @@
   function asideLive() { return WIDE.matches && !tonight; }
 
   function emptyFilter() {
-    /* pourable is My menu: the list gated by your shelf. shared is Shared
-       menu: the same gate against the shelf someone sent. One at a time. */
+    /* pourable is the My Shelf chip: the list gated by your shelf, or by
+       the named shelf you are looking at. shared is Shared menu: the same
+       gate against the shelf someone sent. One at a time. */
     return { method: 'all', family: null, pattern: null, pourable: false, shared: false, q: '' };
   }
 
@@ -348,21 +349,37 @@
      overwrite My Shelf. Shared menu is the sender's, in memory. */
   function viewingShared() { return !!(shared && filter.shared); }
 
+  function presetById(id) {
+    return (data.bar.shelves || []).filter(function (p) { return p.id === id; })[0] || null;
+  }
+
   function namedHave(id) {
-    var preset = (data.bar.shelves || []).filter(function (p) {
-      return p.id === id;
-    })[0];
+    var preset = presetById(id);
     var h = {};
     if (!preset) return h;
     preset.ingredients.forEach(function (sid) { if (ing[sid]) h[sid] = true; });
     return h;
   }
 
-  function heldNow() {
-    if (viewingShared()) return shared.have;
-    if (shelfView !== 'mine') return namedHave(shelfView);
-    return have;
+  /* The shelf the Bar tab and the shelf chip are on, whatever a shared
+     link is doing: yours, or the named one you are looking at. */
+  function viewHave() { return shelfView === 'mine' ? have : namedHave(shelfView); }
+
+  function viewName() {
+    var p = shelfView === 'mine' ? null : presetById(shelfView);
+    return p ? p.label : 'My Shelf';
   }
+
+  function heldNow() {
+    return viewingShared() ? shared.have : viewHave();
+  }
+
+  /* Only My Shelf can be edited. A named shelf and a shelf someone sent
+     are things you read, so every control that would add a bottle is
+     disabled while one of them is up. A tick that silently landed on
+     your own shelf while you were reading another is worse than a tick
+     that does not happen. */
+  function editing() { return shelfView === 'mine' && !viewingShared(); }
 
   /* Either menu gates the list on a shelf; only which shelf differs. */
   function shelfGate() { return filter.pourable || filter.shared; }
@@ -1439,7 +1456,7 @@
   }
 
   /* What a guest sees over a shared list. Their own shelf, if they have
-     one, is not touched until they say so; the My menu chip is the way
+     one, is not touched until they say so; the My Shelf chip is the way
      back to it. */
   function renderSharedBanner(held) {
     var b = stocked(held).length;
@@ -1602,6 +1619,7 @@
       '<div class="card__buy">' +
         '<button type="button" class="bottle__stock card__box"' +
           ' data-bottle="' + esc(r.i.id) + '" aria-pressed="false"' +
+          (editing() ? '' : ' disabled') +
           ' aria-label="' + esc('Select ' + name) + '">' +
           '<span class="bottle__box"></span>' +
         '</button>' +
@@ -1632,7 +1650,7 @@
          'not how many recipes mention it.'
     },
     {
-      h: 'My menu',
+      h: 'My Shelf',
       t: 'Narrows the list to the drinks your own bottles make. Print that for ' +
          'the counter, or send your shelf to a guest as a link.'
     }
@@ -1655,6 +1673,13 @@
       '</div></div>';
   }
 
+  /* Whose bottles the rail is counting. Yours, a sender's, or the named
+     shelf you are looking at. */
+  function whoseShelf() {
+    if (viewingShared()) return 'their shelf';
+    return editing() ? 'your shelf' : viewName();
+  }
+
   /* What the shelf pours right now, and the one bottle that would move
      that number most. The figure is the same one the Bar tab prints, in
      the same treatment, and it leads to the list it counts. */
@@ -1675,11 +1700,13 @@
         ? '<button type="button" class="card__fig" data-seemenu="1">' + figure + '</button>'
         : '<div class="card__fig">' + figure + '</div>') +
       '<p class="card__note">' + esc(plural(bottles, 'bottle', 'bottles') +
-        (viewingShared() ? ' on their shelf.' : ' on your shelf.')) + '</p>';
+        ' on ' + whoseShelf() + '.') + '</p>';
 
     var next = viewingShared() ? [] : nextBottles(held);
     if (next.length) {
-      html += '<p class="card__k">Next bottle suggestions</p>';
+      html += '<p class="card__k">Next bottle suggestions</p>' +
+        (editing() ? '' : '<p class="card__note card__note--lock">' +
+          esc('Selecting one changes My Shelf, so go back to it first.') + '</p>');
       next.forEach(function (r) { html += renderRailNext(r, held); });
       html += '<div class="card__acts"><a class="btn" href="#bar">Open the Bar tab</a></div>';
     }
@@ -1837,11 +1864,16 @@
 
     /* Carry the shelf count on the control itself. The Bar tab shows the
        same number, and the two disagreeing with no explanation is exactly
-       how this filter looked broken. */
-    var canNow = stocked().length ? pourableCount(have) : null;
+       how this filter looked broken.
+
+       The chip is named for the shelf it gates on, so a named shelf says
+       its own name here. Reading the Gin shelf while the chip says My
+       Shelf is the same disagreement, in words. */
+    var mine = viewHave();
+    var canNow = stocked(mine).length ? pourableCount(mine) : null;
 
     html += '<button class="chip chip--pour' + (filter.pourable ? ' is-on' : '') +
-        '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + 'My menu' +
+        '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + esc(viewName()) +
         (canNow === null ? '' : ' · ' + canNow) + '</button>';
 
     /* Once a shared link has been opened its menu is a second chip for
@@ -1900,17 +1932,18 @@
     i.bottles.forEach(function (b) {
       (byTier[b.tier] || (byTier[b.tier] = [])).push(b);
     });
+    var lock = !editing();
     var html = '<div class="brands">';
     TIER_ORDER.forEach(function (tier) {
       var list = byTier[tier];
       if (!list) return;
       html += '<h3 class="brands__tier">' + esc(TIER_LABEL[tier]) + '</h3>';
       list.forEach(function (b) {
-        var on = !!own[b.id];
+        var on = !lock && !!own[b.id];
         var meta = brandMeta(b);
         html += '<div class="brand' + (on ? ' is-on' : '') + '">' +
           '<button type="button" class="brand__hit" data-brand="' + esc(b.id) +
-            '" data-parent="' + esc(i.id) + '"' +
+            '" data-parent="' + esc(i.id) + '"' + (lock ? ' disabled' : '') +
             ' aria-pressed="' + (on ? 'true' : 'false') + '"' +
             ' aria-label="' + esc(b.name) + '">' +
             '<span class="bottle__box"></span>' +
@@ -1967,6 +2000,7 @@
       (shown ? ' is-open' : '') + (hasPane ? ' has-note' : '') + '">' +
       '<div class="bottle__row">' +
       '<button type="button" class="bottle__stock" data-bottle="' + esc(i.id) + '"' +
+        (editing() ? '' : ' disabled') +
         ' aria-pressed="' + (on ? 'true' : 'false') + '"' +
         ' aria-label="' + esc(name) + '">' +
         '<span class="bottle__box"></span>' +
@@ -2072,14 +2106,21 @@
     var top = nextBottles(held);
     if (!top.length) return '';
 
-    var html = '<section class="next"><h2 class="next__h">One more bottle</h2>';
+    /* The figures are true of the shelf on screen, so they stay legible
+       on a named shelf. Tapping one selects a bottle, which is an edit,
+       so that half of the row stands down with the ticks below it. */
+    var lock = !editing();
+    var html = '<section class="next' + (lock ? ' is-locked' : '') +
+      '"><h2 class="next__h">One more bottle</h2>';
 
     top.forEach(function (r) {
       var name = r.i.shelf || r.i.name;
       var buy = nextBuyLine(r.i);
-      html += '<div class="next__row" data-next-jump="' + esc(r.i.id) + '">' +
+      html += '<div class="next__row"' +
+          (lock ? '' : ' data-next-jump="' + esc(r.i.id) + '"') + '>' +
         '<div class="next__top">' +
-          '<button type="button" class="next__name" data-next-jump="' + esc(r.i.id) + '">' +
+          '<button type="button" class="next__name" data-next-jump="' + esc(r.i.id) + '"' +
+            (lock ? ' disabled' : '') + '>' +
             esc(name) + '</button>' +
           '<button type="button" class="next__gain bottle__gain" ' +
             'data-next-see="' + esc(r.i.id) + '" ' +
@@ -2162,7 +2203,11 @@
     if (!barOrder) freezeBarOrder(held, gains);
 
     var note;
-    if (!bottles) {
+    if (!editing()) {
+      note = 'Looking at ' + (viewingShared() ? 'a shelf someone sent you' : viewName()) +
+             '. My Shelf keeps its own bottles, and nothing below can be ' +
+             'selected until you go back to it.';
+    } else if (!bottles) {
       note = 'Select what is on the shelf, or start from one of the shelves ' +
              'below. Every bottle then shows what it would add.';
     } else if (!can) {
@@ -2192,7 +2237,7 @@
       '<p class="tally__note">' + esc(note) + '</p>' +
       renderNext(held) +
       renderShelves() +
-      '</div></div><div class="bar-shelves">';
+      '</div></div><div class="bar-shelves">' + renderViewNote();
 
     data.bar.kinds.forEach(function (k) {
       var rows = data.bar.ingredients.filter(function (i) { return i.kind === k.id; });
@@ -2223,12 +2268,26 @@
   /* Foot of the shelf, not the rail: on a laptop these sit under the
      last section, not beside it. */
   function renderResetActs() {
+    var lock = editing() ? '' : ' disabled';
     return '<section class="shelf bar-reset">' +
       '<h2 class="shelf__h">Reset the shelf</h2>' +
       '<div class="tally__acts">' +
-        '<button class="btn" data-bar="all">Stock everything</button>' +
-        '<button class="btn" data-bar="none">Clear the shelf</button>' +
+        '<button class="btn" data-bar="all"' + lock + '>Stock everything</button>' +
+        '<button class="btn" data-bar="none"' + lock + '>Clear the shelf</button>' +
       '</div></section>';
+  }
+
+  /* The same message where the greyed ticks are. The rail says it too,
+     but on a phone the rail is a screen above the bottles, so a guest
+     who scrolled down to select one would find no reason for the grey. */
+  function renderViewNote() {
+    if (editing()) return '';
+    var who = viewingShared() ? 'a shelf someone sent you' : viewName();
+    return '<div class="bar-view">' +
+      '<p class="bar-view__copy">You are looking at ' + esc(who) +
+        '. Selecting a bottle changes My Shelf, so go back to it first.</p>' +
+      '<button type="button" class="btn" data-shelf-mine="1">Back to My Shelf</button>' +
+      '</div>';
   }
 
   /* ── key view ──────────────────────────────────────────── */
@@ -2609,15 +2668,16 @@
   /* Every figure the Bar tab prints is a way through to the list it is
      counting. A number that does not lead anywhere is trivia. */
   function jumpAction(t) {
-    /* The name goes to the row, which is where the tick is. Sending
-       someone to a list they cannot act on is the same trivia. */
+    /* The suggestion selects the bottle. The list it names is already on
+       the row, so a trip to the shelf to tick the same box is a tap this
+       already knows the answer to. Only My Shelf takes it. */
     if (t.dataset.nextJump) {
+      if (!editing()) return true;
       var id = t.dataset.nextJump;
       track('bar_next', {
         bottle_id: id,
-        drinks: marginalGain(id, heldNow())
+        drinks: marginalGain(id, have)
       });
-      showMine();
       have[id] = true;
       saveHave();
       afterShelf(true);
@@ -2627,7 +2687,7 @@
     /* The figure goes to the drinks it counts, filtered to that bottle. */
     if (t.dataset.nextSee) {
       var id = t.dataset.nextSee;
-      track('bar_next', { bottle_id: id, drinks: marginalGain(id, have) });
+      track('bar_next', { bottle_id: id, drinks: marginalGain(id, heldNow()) });
       filter = emptyFilter();
       filter.pourable = true;
       filter.family = hasChip(ing[id] || {}) ? id : null;
@@ -2663,12 +2723,6 @@
     refreshCount();
     repaintMenu();
     $('#main').scrollTop = y;
-  }
-
-  function showMine() {
-    if (shelfView === 'mine') return;
-    shelfView = 'mine';
-    barOrder = null;
   }
 
   /* Every figure on the shelf is relative to what is stocked, so selecting
@@ -2714,7 +2768,7 @@
      last one unticks it again. An unknown bottle still ticks the type on
      its own, which is what the row's own checkbox is for. */
   function brandAction(t) {
-    showMine();
+    if (!editing()) return true;
     var brand = t.dataset.brand;
     var parent = t.dataset.parent;
     own[brand] = !own[brand];
@@ -2729,7 +2783,7 @@
   }
 
   function bottleAction(t) {
-    showMine();
+    if (!editing()) return true;
     var id = t.dataset.bottle;
     have[id] = !have[id];
     if (!have[id]) {
@@ -2751,10 +2805,17 @@
     return true;
   }
 
+  /* Back to your own bottles, from a named shelf or from a shelf someone
+     sent. A shared link is a view the same way, so this drops that gate
+     too and leaves the list on the menu your shelf pours. */
   function switchToMine() {
     shelfView = 'mine';
     shelfOpen = null;
     barOrder = null;
+    if (filter.shared) {
+      filter.shared = false;
+      filter.pourable = true;
+    }
     afterShelf(false);
     return true;
   }
@@ -2798,6 +2859,7 @@
 
     /* Stocking everything says nothing about which brands are on the
        shelf, so the brand ticks stand. Clearing the shelf clears them. */
+    if (t.dataset.bar && !editing()) return true;
     if (t.dataset.bar === 'all') {
       data.bar.ingredients.forEach(function (i) { have[i.id] = true; });
       saveHave();
@@ -2808,7 +2870,6 @@
     } else {
       return false;
     }
-    shelfView = 'mine';
     barOrder = null;
     afterShelf(false);
     track('bar_bulk', { action: t.dataset.bar });
