@@ -46,6 +46,10 @@
   --railgap: 36px;
   --topbar-h: 52px;
   --tabbar-h: 58px;
+  /* The tail under every view. A sticky rail has to subtract it: the
+     grid area ends there, so anything taller gets shoved up at the end
+     of the scroll. */
+  --viewtail: 40px;
 
   color-scheme: dark;
 }
@@ -233,7 +237,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Layout ───────────────────────────────────────────────── */
 
-.view { max-width: var(--measure); margin: 0 auto; padding: 0 var(--pad) 40px; }
+.view { max-width: var(--measure); margin: 0 auto; padding: 0 var(--pad) var(--viewtail); }
 
 /* Below 900px this is the whole Menu view and the aside is not rendered;
    above it, the two are the grid's cells. */
@@ -1155,6 +1159,10 @@ noscript.fallback a { color: var(--brass); }
   padding: 0;
   cursor: pointer;
 }
+
+/* A set's figure is a figure, not a way through: there is no one chip to
+   filter the menu by, so it does not pretend to be tappable. */
+span.next__gain { cursor: default; }
 
 .next__what,
 .next__buy {
@@ -2126,9 +2134,15 @@ button.card__fig { cursor: pointer; }
     top: 0;
     align-self: start;
     /* #main is the scroll container, so this sticks against that and not
-       against the window. */
-    max-height: calc(100dvh - var(--topbar-h));
-    min-height: calc(100dvh - var(--topbar-h) - 40px);
+       against the window.
+
+       One height, not a range. A sticky box can never leave its
+       containing block, and the grid area stops at the tail under the
+       view, so a rail even a pixel taller than the room left there is
+       pushed up by the difference the moment you reach the end of the
+       shelf. What goes off the top is the count, which is the one thing
+       on this tab that is supposed to stay put. */
+    height: calc(100dvh - var(--topbar-h) - var(--viewtail));
     padding: 12px 0 0 calc(var(--railgap) / 2);
     border-left: 1px solid var(--hair);
   }
@@ -2302,8 +2316,7 @@ button.card__fig { cursor: pointer; }
   .bar-rail {
     display: block;
     position: static;
-    max-height: none;
-    min-height: 0;
+    height: auto;
     overflow: visible;
     padding: 0;
     border-left: 0;

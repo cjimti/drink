@@ -469,14 +469,40 @@
     return data.menu.cocktails.filter(function (d) { return canPour(d, held); }).length;
   }
 
+  /* This shelf with those bottles added. The answer to every figure on
+     the Bar tab is a diff against it. */
+  function withBottles(held, ids) {
+    var out = {};
+    Object.keys(held).forEach(function (k) { out[k] = held[k]; });
+    ids.forEach(function (id) { out[id] = true; });
+    return out;
+  }
+
   /* What one more bottle is worth, in drinks. This is the number the
      whole bar is organised around, so it is the number on the shelf. */
   function marginalGain(id, held) {
     if (held[id]) return 0;
-    var withIt = {};
-    Object.keys(held).forEach(function (k) { withIt[k] = held[k]; });
-    withIt[id] = true;
-    return pourableCount(withIt) - pourableCount(held);
+    return rowGain([id], held);
+  }
+
+  /* The same question put to a set rather than a bottle. */
+  function rowGain(ids, held) {
+    return pourableCount(withBottles(held, ids)) - pourableCount(held);
+  }
+
+  function subsetOf(small, big) {
+    return small.every(function (id) { return big.indexOf(id) >= 0; });
+  }
+
+  /* Every drink this shelf cannot pour, each as the bottles it is short
+     of. Sorted so two drinks short of the same pair read as one set. */
+  function shortOf(held) {
+    var out = [];
+    data.menu.cocktails.forEach(function (d) {
+      var miss = missingFor(d, held);
+      if (miss.length) out.push(miss.slice().sort());
+    });
+    return out;
   }
 
   /* How many drinks this named shelf pours on its own. The figure is
@@ -1592,21 +1618,78 @@
     return gainsMemo.val;
   }
 
-  /* The three bottles worth buying next: biggest unlock first, then the
-     one more drinks already want, then the order the shelf is written in.
+  /* Two bottles worth nothing apart can be worth a drink together, and a
+     shelf reaches that state early: gin and tonic pour the Gin and Tonic,
+     and from there not one bottle on the shelf opens anything on its own.
+     The list used to go quiet there, which is a dead end on the one panel
+     whose job is to say what to buy. So when single bottles run out, the
+     smallest sets that do open something take the empty rows.
+
+     The candidates are the drinks. A set worth naming is exactly what
+     some drink is short of, because any other set is one of those with a
+     bottle nobody needed added on top. So take each short drink's missing
+     bottles as a candidate set, and count the drinks that set pours.
+     Fewest bottles first, then the biggest unlock: the cheapest way out
+     of the dead end leads. */
+  function comboRows(held, want) {
+    if (want < 1) return [];
+    var short = shortOf(held);
+    var seen = {};
+    var out = [];
+    short.forEach(function (miss) {
+      var key = miss.join(',');
+      if (miss.length < 2 || seen[key]) return;
+      seen[key] = true;
+      out.push({ ids: miss, gain: 0, uses: 0, n: out.length });
+    });
+    out.forEach(function (c) {
+      c.gain = short.filter(function (m) { return subsetOf(m, c.ids); }).length;
+      c.uses = c.ids.reduce(function (n, id) { return n + usageCount(id); }, 0);
+    });
+    /* Fewest bottles, then the biggest unlock, then the bottles the rest
+       of the menu wants most. That last one is doing the real work here:
+       a shelf holding one spirit is two bottles away from a hundred
+       drinks and nearly all of those pairs open exactly one, so without
+       it the row is whichever drink the card happens to print first.
+       Lime and simple syrup beat Benedictine and bourbon because the
+       next drink after them wants lime and simple syrup too. */
+    return out.sort(function (a, b) {
+      if (a.ids.length !== b.ids.length) return a.ids.length - b.ids.length;
+      if (b.gain !== a.gain) return b.gain - a.gain;
+      if (b.uses !== a.uses) return b.uses - a.uses;
+      return a.n - b.n;
+    }).slice(0, want);
+  }
+
+  /* The three buys worth making next: biggest unlock first, then the one
+     more drinks already want, then the order the shelf is written in.
+     Single bottles fill the list, and sets fill what they leave.
      The Bar tab and the Menu's rail both read this, so the two lists
      cannot rank the same shelf differently. */
   function nextBottles(held) {
     var gains = gainsFor(held);
-    return data.bar.ingredients.filter(function (i) {
+    var top = data.bar.ingredients.filter(function (i) {
       return !held[i.id] && gains[i.id] > 0;
     }).map(function (i, n) {
-      return { i: i, gain: gains[i.id], uses: usageCount(i.id), n: n };
+      return { ids: [i.id], gain: gains[i.id], uses: usageCount(i.id), n: n };
     }).sort(function (a, b) {
       if (b.gain !== a.gain) return b.gain - a.gain;
       if (b.uses !== a.uses) return b.uses - a.uses;
       return a.n - b.n;
     }).slice(0, 3);
+    return top.concat(comboRows(held, 3 - top.length));
+  }
+
+  /* A row is one bottle or a set of them, and reads the same either way. */
+  function rowName(r) {
+    return r.ids.map(function (id) {
+      return ing[id].shelf || ing[id].name;
+    }).join(' + ');
+  }
+
+  function rowBuyLines(r) {
+    return r.ids.map(function (id) { return nextBuyLine(ing[id]); })
+      .filter(function (b) { return !!b; });
   }
 
   /* One suggestion: the shelf's own checkbox, the name, what it would
@@ -1614,11 +1697,11 @@
      bottle in without a trip to the Bar tab. The figure above moves, and
      the list behind it re-gates. */
   function renderRailNext(r, held) {
-    var name = r.i.shelf || r.i.name;
+    var name = rowName(r);
     return '<div class="card__next">' +
       '<div class="card__buy">' +
         '<button type="button" class="bottle__stock card__box"' +
-          ' data-bottle="' + esc(r.i.id) + '" aria-pressed="false"' +
+          ' data-next-jump="' + esc(r.ids.join(',')) + '" aria-pressed="false"' +
           (editing() ? '' : ' disabled') +
           ' aria-label="' + esc('Select ' + name) + '">' +
           '<span class="bottle__box"></span>' +
@@ -1626,7 +1709,7 @@
         '<span class="card__buy-name">' + esc(name) + '</span>' +
         '<span class="card__buy-n">+' + r.gain + '</span>' +
       '</div>' +
-      '<p class="card__opens">' + esc(unlockedLine(unlockedBy(r.i.id, held))) + '</p>' +
+      '<p class="card__opens">' + esc(unlockedLine(unlockedBy(r.ids, held))) + '</p>' +
       '</div>';
   }
 
@@ -2060,10 +2143,8 @@
      which, so the three best get their names read out. Counted the same
      way the figure is: pour the menu with the bottle on the shelf and diff
      it against the menu without. */
-  function unlockedBy(id, held) {
-    var withIt = {};
-    Object.keys(held).forEach(function (k) { withIt[k] = held[k]; });
-    withIt[id] = true;
+  function unlockedBy(ids, held) {
+    var withIt = withBottles(held, ids);
     return data.menu.cocktails.filter(function (d) {
       return canPour(d, withIt) && !canPour(d, held);
     });
@@ -2111,27 +2192,50 @@
        so that half of the row stands down with the ticks below it. */
     var lock = !editing();
     var html = '<section class="next' + (lock ? ' is-locked' : '') +
-      '"><h2 class="next__h">One more bottle</h2>';
+      '"><h2 class="next__h">' + esc(nextHead(top)) + '</h2>';
 
-    top.forEach(function (r) {
-      var name = r.i.shelf || r.i.name;
-      var buy = nextBuyLine(r.i);
-      html += '<div class="next__row"' +
-          (lock ? '' : ' data-next-jump="' + esc(r.i.id) + '"') + '>' +
-        '<div class="next__top">' +
-          '<button type="button" class="next__name" data-next-jump="' + esc(r.i.id) + '"' +
-            (lock ? ' disabled' : '') + '>' +
-            esc(name) + '</button>' +
-          '<button type="button" class="next__gain bottle__gain" ' +
-            'data-next-see="' + esc(r.i.id) + '" ' +
-            'aria-label="' + esc('See the ' + name + ' drinks') + '">+' + r.gain + '</button>' +
-        '</div>' +
-        '<p class="next__what">' + esc(unlockedLine(unlockedBy(r.i.id, held))) + '</p>' +
-        (buy ? '<p class="next__buy">' + esc(buy) + '</p>' : '') +
-        '</div>';
-    });
+    top.forEach(function (r) { html += nextRow(r, held, lock); });
 
     return html + '</section>';
+  }
+
+  /* One bottle each is the usual answer and says so. A row naming a pair
+     under a heading that says one bottle is the panel lying about what it
+     is asking you to buy. */
+  function nextHead(top) {
+    var set = top.some(function (r) { return r.ids.length > 1; });
+    return set ? 'What to buy next' : 'One more bottle';
+  }
+
+  /* A bottle's figure leads to the drinks it opens, filtered to that
+     bottle. A set has no single chip to filter on, and the drinks it
+     opens are named on the row already, so its figure is just a figure. */
+  function nextGain(r, name) {
+    if (r.ids.length > 1) {
+      return '<span class="next__gain bottle__gain">+' + r.gain + '</span>';
+    }
+    return '<button type="button" class="next__gain bottle__gain" ' +
+      'data-next-see="' + esc(r.ids[0]) + '" ' +
+      'aria-label="' + esc('See the ' + name + ' drinks') + '">+' + r.gain + '</button>';
+  }
+
+  function nextRow(r, held, lock) {
+    var name = rowName(r);
+    var jump = r.ids.join(',');
+    var buys = rowBuyLines(r).map(function (b) {
+      return '<p class="next__buy">' + esc(b) + '</p>';
+    }).join('');
+    return '<div class="next__row"' +
+        (lock ? '' : ' data-next-jump="' + esc(jump) + '"') + '>' +
+      '<div class="next__top">' +
+        '<button type="button" class="next__name" data-next-jump="' + esc(jump) + '"' +
+          (lock ? ' disabled' : '') + '>' +
+          esc(name) + '</button>' +
+        nextGain(r, name) +
+      '</div>' +
+      '<p class="next__what">' + esc(unlockedLine(unlockedBy(r.ids, held))) + '</p>' +
+      buys +
+      '</div>';
   }
 
   /* My Shelf is what is ticked and is kept when you look at another
@@ -2673,12 +2777,12 @@
        already knows the answer to. Only My Shelf takes it. */
     if (t.dataset.nextJump) {
       if (!editing()) return true;
-      var id = t.dataset.nextJump;
+      var ids = t.dataset.nextJump.split(',');
       track('bar_next', {
-        bottle_id: id,
-        drinks: marginalGain(id, have)
+        bottle_id: t.dataset.nextJump,
+        drinks: rowGain(ids, have)
       });
-      have[id] = true;
+      ids.forEach(function (id) { have[id] = true; });
       saveHave();
       afterShelf(true);
       return true;
@@ -2820,10 +2924,18 @@
     return true;
   }
 
+  /* Choosing a shelf is choosing a menu, so the list is gated on it
+     without a second tap. A shelf that pours nothing gates too, since the
+     list already says so in words: Staples only reading nothing yet is
+     the answer, and a menu of 174 drinks beside a Bar tab saying Staples
+     only is the two tabs disagreeing again. */
+  function gateMenuOnShelf() {
+    filter.pourable = true;
+    filter.shared = false;
+  }
+
   function applyShelf(id, how) {
-    var preset = (data.bar.shelves || []).filter(function (p) {
-      return p.id === id;
-    })[0];
+    var preset = presetById(id);
     if (!preset) return true;
     shelfOpen = null;
     if (how === 'add') {
@@ -2836,6 +2948,7 @@
       shelfView = id;
       barOrder = null;
     }
+    gateMenuOnShelf();
     afterShelf(false);
     track('bar_preset', {
       action: preset.id,
