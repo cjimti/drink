@@ -5,6 +5,7 @@ A typo'd href on a static site fails silently — the page just loses its
 stylesheet on someone's phone. Catch it before the deploy does not.
 """
 import re
+import struct
 import sys
 from pathlib import Path
 
@@ -95,6 +96,45 @@ def check_glasses(js):
     return errs, len(wanted)
 
 
+TOOL_DIR = ROOT / "assets" / "tools"
+# What make-tools.py writes: half the generator's frame, RGBA (colour type 6).
+PLATE = (624, 936, 6)
+
+
+def plate_headers():
+    """(width, height, colour type) of every PNG in assets/tools, off IHDR."""
+    out = {}
+    for f in sorted(TOOL_DIR.glob("*.png")):
+        head = f.read_bytes()[:29]
+        w, h, _, ctype = struct.unpack(">IIBB", head[16:26])
+        out[f.name] = (w, h, ctype)
+    return out
+
+
+def check_plates(html, sw, headers):
+    """Every tool plate is converted, on the Info tab, and in the shell.
+
+    The generator writes an opaque 832x1248 frame with a letter in the
+    corner; make-tools.py turns that into ink on nothing at half size.
+    Serving the raw frame puts a black rectangle on the light theme, so a
+    plate still in the generator's shape fails here with the command to
+    run. A plate nothing shows is dead weight, like a stocked bottle no
+    drink uses, and one the worker does not cache is a broken picture the
+    first time the help tab opens with no signal.
+    """
+    errs = []
+    for name, (w, h, ctype) in headers.items():
+        if (w, h, ctype) != PLATE:
+            errs.append(f"assets/tools/{name} is {w}x{h} colour type "
+                        f"{ctype}, not ink on nothing: run make tools")
+        if f'src="assets/tools/{name}"' not in html:
+            errs.append(f"assets/tools/{name}: on disk, shown nowhere")
+        if f"'assets/tools/{name}'" not in sw:
+            errs.append(f"assets/tools/{name}: not in the worker's SHELL, "
+                        f"so it is missing offline")
+    return errs
+
+
 WELL_KNOWN = [
     "robots.txt",
     "sitemap.xml",
@@ -160,12 +200,17 @@ def main():
     glass, n_glass = check_glasses(js)
     for e in glass:
         print(f"  GLASS  {e}")
+    plates = plate_headers()
+    plate = check_plates(html, sw, plates)
+    for e in plate:
+        print(f"  PLATE  {e}")
 
-    if missing or dangling or worker or well or glass:
+    if missing or dangling or worker or well or glass or plate:
         return 1
 
     print(f"  assets  {n_refs} local reference(s) resolve, {n_ids} element id(s) exist")
     print(f"  glass   {n_glass} drawing(s) a serve token can ask for, all present")
+    print(f"  plates  {len(plates)} tool plate(s) converted, shown and cached")
     print(f"  well    {len(WELL_KNOWN)} crawler/agent file(s) present")
     print("  worker  registration guarded, eviction present in app.js and sw.js")
     return 0

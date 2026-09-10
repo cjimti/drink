@@ -213,6 +213,27 @@ def run_glasses(failures):
            failures)
 
 
+def run_plates(failures):
+    """Every tool plate is converted, shown on the Info tab, and cached."""
+    html = (ROOT / "index.html").read_text()
+    sw = (ROOT / "sw.js").read_text()
+    plates = check_assets.plate_headers()
+    report("plate/clean", check_assets.check_plates(html, sw, plates), False,
+           failures)
+
+    raw = dict(plates, **{"barspoon.png": (832, 1248, 2)})
+    report("plate/unconverted", check_assets.check_plates(html, sw, raw),
+           True, failures)
+
+    spare = dict(plates, **{"muddler.png": check_assets.PLATE})
+    report("plate/shown nowhere", check_assets.check_plates(html, sw, spare),
+           True, failures)
+
+    broken = sw.replace("  'assets/tools/barspoon.png',\n", "")
+    report("plate/not cached", check_assets.check_plates(html, broken, plates),
+           True, failures)
+
+
 def run_lexer(failures):
     """Stripping the real files leaves every bracket balanced."""
     for f in ("assets/app.js", "sw.js"):
@@ -232,14 +253,14 @@ def main():
     """Every case, then the count."""
     failures = []
     for run in (run_css, run_js, run_py, run_house, run_menu, run_glasses,
-                run_lexer):
+                run_plates, run_lexer):
         run(failures)
     for f in failures:
         print(f"  TEST    {f}")
     if failures:
         return 1
     n = (len(css_cases()) + len(js_cases()) + len(py_cases())
-         + len(size_cases()) + 14 + 5 + 3 + 2)
+         + len(size_cases()) + 14 + 5 + 3 + 4 + 2)
     print(f"  test    {n} case(s): every rule fails when it is broken")
     return 0
 

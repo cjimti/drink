@@ -2,7 +2,7 @@
 
 .DEFAULT_GOAL := verify
 .PHONY: verify check json syntax lint code style test menu kin llms assets \
-        serve icons events stats clean
+        serve icons tools events stats clean
 
 ## verify — run every check, then stamp the review-gate sentinel
 verify: check
@@ -92,6 +92,12 @@ events:
 icons:
 	@python3 scripts/make-icons.py
 	@python3 scripts/make-og.py
+
+## tools — turn freshly generated plates in assets/tools into ink on
+##         nothing: corner letter painted out, alpha off the drawing,
+##         half size. Safe to run on plates already converted.
+tools:
+	@python3 scripts/make-tools.py
 
 ## unstick — a worker from an earlier session is answering for this origin
 unstick:
