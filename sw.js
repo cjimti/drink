@@ -29,7 +29,21 @@ var SHELL = [
   'assets/app.js',
   'assets/icon.svg',
   'assets/icon-180.png',
-  'manifest.webmanifest'
+  'manifest.webmanifest',
+  /* The plates on the Info tab. A help page that loses its pictures
+     the first time it is opened with no signal is not much help. */
+  'assets/tools/boston-shaker.png',
+  'assets/tools/japanese-jigger.png',
+  'assets/tools/hawthorne-strainer.png',
+  'assets/tools/barspoon.png',
+  'assets/tools/citrus-peeler.png',
+  'assets/tools/paring-knife.png',
+  'assets/tools/bitters-bottles.png',
+  'assets/tools/bottle-pourers.png',
+  'assets/tools/bar-mat.png',
+  'assets/tools/nick-nora.png',
+  'assets/tools/rocks-glass.png',
+  'assets/tools/highball-glass.png'
 ];
 
 self.addEventListener('install', function (e) {

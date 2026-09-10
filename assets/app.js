@@ -140,7 +140,8 @@
     'bottle_id', 'brand_id', 'stocked', 'open', 'action',
     'bottles', 'drinks',
     'named', 'icon', 'recipe', 'taste', 'history', 'barline',
-    'opt', 'on'
+    'opt', 'on',
+    'section'
   ];
 
   function track(name, params) {
@@ -2593,6 +2594,7 @@
     /* The shell is viewport-tall and #main is what scrolls, so the
        window has nowhere to go. */
     $('#main').scrollTop = 0;
+    if (view === 'info') spyInfo();
     if (view === 'bar') landOnStarters();
     track('view_tab', { tab: view });
   }
@@ -2603,8 +2605,14 @@
      drink and the menu it is already showing. An id nothing answers to
      opens the Menu and says nothing. */
   var DRINK_HASH = /^#drink\/([a-z0-9-]+)$/;
+  var INFO_HASH = /^#info\/([a-z-]+)$/;
 
   function route() {
+    var sect = INFO_HASH.exec(location.hash);
+    if (sect) {
+      revealInfo(sect[1]);
+      return;
+    }
     var deep = DRINK_HASH.exec(location.hash);
     if (!deep) {
       show((location.hash || '#menu').slice(1));
@@ -2616,6 +2624,57 @@
       history.replaceState(null, '',
         location.pathname + location.search + '#menu');
     } catch (e) { /* file:// */ }
+  }
+
+  /* #info/<section> is the same kind of way in. It opens the Info tab at
+     that section and then reads #info in the address, so the index chips
+     can be plain links and the back button does not bounce. A name
+     nothing answers to opens the top of the tab and says nothing. */
+  var spyHold = null;
+
+  function revealInfo(name) {
+    if ($('#view-info').hidden) show('info');
+    var main = $('#main');
+    var before = main.scrollTop;
+    var el = document.getElementById('info-' + name);
+    if (el) {
+      el.scrollIntoView({ block: 'start' });
+      track('info_section', { section: name });
+    } else {
+      main.scrollTop = 0;
+    }
+    /* The section you asked for is the one that is on, whatever the
+       line says: a short last section never crosses it. The hold lasts
+       until the scroll the jump itself causes has been read, so it is
+       only set when the jump actually moved something. */
+    spyHold = el && main.scrollTop !== before ? name : null;
+    spyInfo();
+    try {
+      history.replaceState(null, '',
+        location.pathname + location.search + '#info');
+    } catch (e) { /* file:// */ }
+  }
+
+  /* The index reads where you are. The section whose heading has passed
+     the line under the sticky row is the one that is on; at the end of
+     the scroll it is the last one, since a short last section never
+     reaches the line on its own. */
+  function spyInfo() {
+    var main = $('#main');
+    var line = main.getBoundingClientRect().top + 70;
+    var sections = document.querySelectorAll('.info__s');
+    if (!sections.length) return;
+    var current = sections[0].id.slice(5);
+    sections.forEach(function (s) {
+      if (s.getBoundingClientRect().top <= line) current = s.id.slice(5);
+    });
+    var ended = main.scrollTop > 0 &&
+      main.scrollTop + main.clientHeight >= main.scrollHeight - 2;
+    if (ended) current = sections[sections.length - 1].id.slice(5);
+    if (spyHold) current = spyHold;
+    document.querySelectorAll('.info__jump').forEach(function (a) {
+      a.classList.toggle('is-on', a.dataset.info === current);
+    });
   }
 
   /* ── wiring ────────────────────────────────────────────── */
@@ -3323,10 +3382,21 @@
      copy reads dev in both and a deploy reads the tag in both. */
   function showVersion() {
     $('#top-version').textContent = versionLabel;
-    $('#info-version').textContent = versionLabel;
+    $('#version-label').textContent = versionLabel;
   }
 
   window.addEventListener('hashchange', route);
+
+  var spyQueued = false;
+  $('#main').addEventListener('scroll', function () {
+    if (spyQueued || $('#view-info').hidden) return;
+    spyQueued = true;
+    requestAnimationFrame(function () {
+      spyQueued = false;
+      spyInfo();
+      spyHold = null;
+    });
+  }, { passive: true });
 
   /* Crossing 900px moves the open recipe between the row and the aside.
      Nothing about the drink changes; only where it is read. */

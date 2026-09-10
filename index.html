@@ -127,7 +127,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="toptab" href="#key" data-view="key">Key</a>
     <a class="toptab" href="#info" data-view="info">Info</a>
   </nav>
-  <a class="topbar__version" id="top-version" href="#info">dev</a>
+  <a class="topbar__version" id="top-version" href="#info/version">dev</a>
 </header>
 
 <main id="main">
@@ -149,52 +149,187 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <section class="view" id="view-info" hidden aria-label="Info">
-    <p class="info__tag">Cocktail maxxing on a budget.</p>
-    <div class="info__copy">
-      <p>You only need a few bottles to start exploring the fundamentals of classic cocktails.</p>
-      <p>Juice with vodka is a regression. Plenty of modern drinks came out of these older shapes, and those flavor profiles are still terribly underrated.</p>
-      <p>This is a small utility. Broad categories, few ingredients, little expense. The complete catalog of classic and modern drinks, with every niche bottle named, can wait until you know what you actually like.</p>
-      <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Select what you have. See what opens. Buy the bottle that unlocks the most.</p>
-    </div>
+    <nav class="info__nav" id="info-nav" aria-label="Info sections">
+      <a class="info__jump" href="#info/about" data-info="about">About</a>
+      <a class="info__jump" href="#info/using" data-info="using">Using it</a>
+      <a class="info__jump" href="#info/tools" data-info="tools">Tools</a>
+      <a class="info__jump" href="#info/glassware" data-info="glassware">Glassware</a>
+      <a class="info__jump" href="#info/analytics" data-info="analytics">Analytics</a>
+      <a class="info__jump" href="#info/version" data-info="version">Version</a>
+    </nav>
+    <div class="info__body" id="info-body">
 
-    <h2 class="info__k">Your shelf</h2>
-    <div class="info__copy">
-      <p>Tick what you own on the Bar tab. The menu then knows what you can pour, and the number beside a bottle you do not have is how many new drinks buying it opens. Tap that number to see them.</p>
-    </div>
+    <section class="info__s" id="info-about">
+      <p class="info__tag">Cocktail maxxing on a budget.</p>
+      <div class="info__copy">
+        <p>You only need a few bottles to start exploring the fundamentals of classic cocktails.</p>
+        <p>Juice with vodka is a regression. Plenty of modern drinks came out of these older shapes, and those flavor profiles are still terribly underrated.</p>
+        <p>This is a small utility. Broad categories, few ingredients, little expense. The complete catalog of classic and modern drinks, with every niche bottle named, can wait until you know what you actually like.</p>
+        <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Select what you have. See what opens. Buy the bottle that unlocks the most.</p>
+      </div>
+    </section>
 
-    <h2 class="info__k">Reading a drink</h2>
-    <div class="info__copy">
-      <p>Tap a drink for the recipe. The small code beside the name is the shorthand off my printed menu, and the Key tab decodes every letter of it.</p>
-    </div>
+    <section class="info__s" id="info-using">
+      <h2 class="info__h">Using it</h2>
 
-    <h2 class="info__k">Sharing</h2>
-    <div class="info__copy">
-      <p>Share menu turns your shelf into one link. Opening somebody's link shows you what their bar pours and leaves your own shelf alone until you tap Make this my shelf. A single drink shares the same way, from the Share tab inside its recipe.</p>
-    </div>
+      <div class="info__topics">
+        <div class="info__topic">
+          <h3 class="info__k">Your shelf</h3>
+          <div class="info__copy">
+            <p>Tick what you own on the Bar tab. The menu then knows what you can pour, and the number beside a bottle you do not have is how many new drinks buying it opens. Tap that number to see them.</p>
+          </div>
+        </div>
+        <div class="info__topic">
+          <h3 class="info__k">Reading a drink</h3>
+          <div class="info__copy">
+            <p>Tap a drink for the recipe. The small code beside the name is the shorthand off my printed menu, and the Key tab decodes every letter of it.</p>
+          </div>
+        </div>
+        <div class="info__topic">
+          <h3 class="info__k">Sharing</h3>
+          <div class="info__copy">
+            <p>Share menu turns your shelf into one link. Opening somebody's link shows you what their bar pours and leaves your own shelf alone until you tap Make this my shelf. A single drink shares the same way, from the Share tab inside its recipe.</p>
+          </div>
+        </div>
+        <div class="info__topic">
+          <h3 class="info__k">Printing</h3>
+          <div class="info__copy">
+            <p>Print menu gives you the list you are looking at in black and white, two columns on US Letter. The ticks decide whether the glass, the recipe, the taste, the history and the shorthand key come with it.</p>
+          </div>
+        </div>
+        <div class="info__topic">
+          <h3 class="info__k">Offline</h3>
+          <div class="info__copy">
+            <p>Add it to your home screen and it keeps working with no signal. Your shelf is stored on your phone. There is no account and nothing to sign into.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <h2 class="info__k">Printing</h2>
-    <div class="info__copy">
-      <p>Print menu gives you the list you are looking at in black and white, two columns on US Letter. The ticks decide whether the glass, the recipe, the taste, the history and the shorthand key come with it.</p>
-    </div>
+    <section class="info__s" id="info-tools">
+      <h2 class="info__h">Tools</h2>
+      <div class="info__copy">
+        <p>These are the tools I use. Nothing on the menu needs anything else.</p>
+      </div>
 
-    <h2 class="info__k">Offline</h2>
-    <div class="info__copy">
-      <p>Add it to your home screen and it keeps working with no signal. Your shelf is stored on your phone. There is no account and nothing to sign into.</p>
-    </div>
+      <ol class="tools">
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/boston-shaker.png" width="624" height="936" alt="Line drawing of a two-tin Boston shaker, the small tin seated at an angle in the large one." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Boston shaker</h3>
+            <p class="tool__copy">Two metal tins. The small one goes into the big one at an angle and a slap on the side breaks the seal. I shake every shaken drink in this and stir the stirred ones in the big tin. I do not own a mixing glass.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/japanese-jigger.png" width="624" height="936" alt="Line drawing of a tall double-ended Japanese jigger." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Japanese jigger</h3>
+            <p class="tool__copy">Two ounces on one side and one ounce on the other, with the measurements etched on the inside where you can see them while you pour. The 2 oz side is marked at 1, 1 1/2 and 2. The 1 oz side is marked at 1/4, 1/2, 3/4 and 1. That covers every measurement in these recipes. I use two of them. Most of the sticky ingredients are an ounce or less, so I measure those on the 1 oz side of the second jigger and never have to flip a sticky jigger back over to the 2 oz side.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/hawthorne-strainer.png" width="624" height="936" alt="Line drawing of a Hawthorne strainer, the coiled spring around its rim." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Hawthorne strainer</h3>
+            <p class="tool__copy">The spring fits inside the rim of the tin and holds the ice back while the drink pours through. I use it for stirred and shaken drinks both. Pushing the gate forward tightens the gap when a shaken drink has ice shards in it.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/barspoon.png" width="624" height="936" alt="Line drawing of a long twisted barspoon with a teardrop bowl." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Barspoon</h3>
+            <p class="tool__copy">Long and twisted with a teardrop bowl. A b in the shorthand is one level barspoon. The twist lets it spin between two fingers in the tin without pushing the ice around.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/citrus-peeler.png" width="624" height="936" alt="Line drawing of a Y-shaped citrus peeler." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Citrus peeler</h3>
+            <p class="tool__copy">A Y peeler. It takes a wide, thin strip of peel and leaves the pith on the fruit. That strip is the twist: l is lemon, L is lime, o is orange.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/paring-knife.png" width="624" height="936" alt="Line drawing of a small pointed paring knife." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Paring knife</h3>
+            <p class="tool__copy">A small pointed knife. I halve citrus with it before juicing and cut lime wheels and apple fans with it. Lw is a lime wheel and a is an apple fan.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/bitters-bottles.png" width="624" height="936" alt="Line drawing of three dasher bottles with narrow spouts." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Dasher bottles</h3>
+            <p class="tool__copy">Bitters come in bottles that give an uneven dash. A dasher bottle gives the same dash every time, so 2 dashes of Angostura is the same amount in every drink.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/bottle-pourers.png" width="624" height="936" alt="Line drawing of two speed pourers." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Pourers</h3>
+            <p class="tool__copy">Speed pourers in the bottles I open most. A pourer gives a thin, steady stream, so a jigger fills to the line without a glug.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/bar-mat.png" width="624" height="936" alt="Line drawing of a rubber bar mat, a grid of raised studs inside a rounded rim." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Bar mat</h3>
+            <p class="tool__copy">A rubber mat to build drinks on. It catches drips and keeps a wet tin from sliding around.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
 
-    <h2 class="info__k">Analytics</h2>
-    <div class="info__copy">
-      <p>This site is a hobby. I run Google Analytics on it so I can see how it gets used: which tab someone opened, which drink they expanded, which bottle they selected, whether a menu was printed or shared. That is the whole list.</p>
-      <p>It tells me nothing about who you are. There is no account, no sign-in, no name attached to any of it. Your shelf stays on your phone unless you share it yourself. I do not sell the numbers and I do not market to anyone. I read them so I know which parts of this are worth more work. So far nobody has ever opened a Tip Top, and it is a great drink.</p>
-      <p>The events are in the source: <a href="https://github.com/cjimti/drink/blob/main/assets/app.js" rel="noopener"><code>track()</code> in assets/app.js</a>. A content blocker stops all of it and the site works exactly the same.</p>
-    </div>
+    <section class="info__s" id="info-glassware">
+      <h2 class="info__h">Glassware</h2>
+      <div class="info__copy">
+        <p>Three glasses cover the whole menu. The rocks glass and the highball are a given. The third is a Nick &amp; Nora, and it is the one I want to make a case for.</p>
+      </div>
 
-    <h2 class="info__k">Version</h2>
-    <div class="info__copy">
-      <p>You are running <code id="info-version">dev</code>. Every release is at <a href="https://github.com/cjimti/drink/releases" rel="noopener">github.com/cjimti/drink/releases</a>.</p>
-    </div>
+      <ol class="tools">
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/nick-nora.png" width="624" height="936" alt="Line drawing of a Nick and Nora glass, a small stemmed bowl on a thin stem." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Nick &amp; Nora</h3>
+            <p class="tool__copy">The c in the shorthand. A small stemmed glass with a bowl more upright than a coupe. Every drink served up goes in one of these, no ice.</p>
+            <p class="tool__copy">It is the perfect catch-all for the coupe. A Margarita is as elegant in it as a neat sherry, and you would feel silly sipping sherry from an audacious Margarita glass. The Martini glass is a versatile coupe too, but an odd choice for a dessert wine. Everything looks elegant in a Nick &amp; Nora.</p>
+            <p class="tool__copy">Nothing here stops you amassing an impressive collection of specialty glassware. I am only saying that a couple of rocks glasses and a couple of Nick &amp; Noras in the fridge means you are ready at a moment's notice to serve anything chilled.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/rocks-glass.png" width="624" height="936" alt="Line drawing of a short rocks tumbler with a thick base." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Rocks glass</h3>
+            <p class="tool__copy">The r and the R. A short tumbler with a heavy base. r is empty, R has ice: one large cube, or cubes, depending on the drink.</p>
+          </div>
+        </li>
+        <li class="tool">
+          <img class="tool__plate" src="assets/tools/highball-glass.png" width="624" height="936" alt="Line drawing of a tall highball tumbler." loading="lazy">
+          <div class="tool__text">
+            <h3 class="tool__name">Highball glass</h3>
+            <p class="tool__copy">The h and the H. A tall glass. h is a fizz with no ice, so the foam has room. H is packed with ice with the mixer poured over it.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
 
-    <p class="sign">© 2026 <a href="https://imti.co/resume/" rel="noopener">Craig Johnston</a></p>
+    <section class="info__s" id="info-analytics">
+      <h2 class="info__h">Analytics</h2>
+      <div class="info__copy">
+        <p>This site is a hobby. I run Google Analytics on it so I can see how it gets used: which tab someone opened, which drink they expanded, which bottle they selected, whether a menu was printed or shared. That is the whole list.</p>
+        <p>It tells me nothing about who you are. There is no account, no sign-in, no name attached to any of it. Your shelf stays on your phone unless you share it yourself. I do not sell the numbers and I do not market to anyone. I read them so I know which parts of this are worth more work. So far nobody has ever opened a Tip Top, and it is a great drink.</p>
+        <p>The events are in the source: <a href="https://github.com/cjimti/drink/blob/main/assets/app.js" rel="noopener"><code>track()</code> in assets/app.js</a>. A content blocker stops all of it and the site works exactly the same.</p>
+      </div>
+    </section>
+
+    <section class="info__s" id="info-version">
+      <h2 class="info__h">Version</h2>
+      <div class="info__copy">
+        <p>You are running <code id="version-label">dev</code>. Every release is at <a href="https://github.com/cjimti/drink/releases" rel="noopener">github.com/cjimti/drink/releases</a>.</p>
+      </div>
+      <p class="sign">© 2026 <a href="https://imti.co/resume/" rel="noopener">Craig Johnston</a></p>
+    </section>
+
+    </div>
   </section>
 
   <p class="loading" id="loading">Pouring…</p>
