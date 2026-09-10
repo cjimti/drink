@@ -1035,6 +1035,14 @@ noscript.fallback a { color: var(--brass); }
 
 /* ── Bar ──────────────────────────────────────────────────── */
 
+/* On a phone the rail is not a rail, and it must not be a box either. A
+   sticky child can never leave its containing block, so a wrapper that
+   ends above the bottles takes the count off the screen a shelf and a
+   half down. `contents` hands the tally and its body straight to
+   `#bar-body`, which runs the length of the tab, and the count sticks
+   for the whole scroll. The 900px block puts the box back. */
+.bar-rail { display: contents; }
+
 /* The count is the only reason to tick anything, so it does not scroll
    away. It rides the top of the shelf and goes up under your thumb as
    you stock bottles, which is the whole feeling this tab is selling. */
