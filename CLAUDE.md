@@ -266,14 +266,34 @@ row in the list does not.
 
 Opening a shared link is **reading, not adopting**. The sender's shelf is
 held in memory for the session and the list opens gated on it, with a
-banner over the top. The chip row then carries two menus: My menu is
-the list your shelf pours, Shared menu is the list theirs pours, and
-tapping one switches off the other. The guest's own shelf in
+banner over the top. The chip row then carries a fourth menu, Shared
+menu, the list their shelf pours, beside the three it always has (see
+The chip row below). The guest's own shelf in
 `localStorage` is not touched until they tap Make this my shelf, which
 replaces it (brand ticks included, since brands do not travel) and
 drops the parameter from the address. The service worker matches
 navigations with `ignoreSearch` so a shared link opens offline from the
 cached shell.
+
+## The chip row
+
+The last row of chips over the Menu list is one choice: which shelf the
+list is gated on. `All bottles` is the whole card and where a first
+visit lands. `My Shelf` is what your bottles pour. The third chip is
+`Starter Shelves` until a named shelf is loaded, and takes you to that
+list on the Bar tab; once one is loaded it is that shelf, so the row
+reads All bottles, My Shelf, Gin shelf. A shared link adds `Shared
+menu` for the session. They select rather than toggle, since with All
+bottles on the row there is always a way off a menu. Each chip carries
+the drinks it counts.
+
+The two tab badges read the same choice. Menu is the drinks on the
+selected menu and Bar is the bottles it is made from: every drink and
+every bottle under All bottles, what a shelf pours and what it holds
+otherwise. Print, Share and Big type follow the same choice, so under
+All bottles the sheet is the whole card and the link is the bare
+address. `Clear` drops the other filters and keeps the menu you chose.
+`selectMenu` is the only place the two gate flags are written.
 
 ## Families
 

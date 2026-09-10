@@ -146,7 +146,7 @@ def run_house(failures):
     report("house/track key", check_style.check_track(broken), True, failures)
     report("house/track clean", check_style.check_track(app), False, failures)
 
-    broken = app.replace("[data-pourable],", "")
+    broken = app.replace("[data-shared],", "")
     report("house/dead branch", check_style.check_delegation(broken), True,
            failures)
     report("house/wiring clean", check_style.check_delegation(app), False,
