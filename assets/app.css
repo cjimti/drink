@@ -1113,7 +1113,7 @@ noscript.fallback a { color: var(--brass); }
 /* The three bottles worth buying next. Same figure as the rows below it,
    lifted out of a long shelf, with the drinks it opens read out. Brass on
    the number and nowhere else, because the number is the earned part. */
-.next { margin-top: 19px; }
+.next { margin-top: 19px; position: relative; }
 
 .next__h {
   font-family: var(--display);
@@ -1164,6 +1164,53 @@ noscript.fallback a { color: var(--brass); }
    filter the menu by, so it does not pretend to be tappable. */
 span.next__gain { cursor: default; }
 
+.next__lead {
+  margin: 0 0 7px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--faint);
+  line-height: 1.45;
+}
+
+/* A named shelf is somebody else's arithmetic. The figures stay on the
+   page because they are true of the shelf being read, and the box sits
+   over them saying whose shelf that is and how to get back to one where
+   buying a bottle means something. */
+.next__lock {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The veil, not a lid. The figures behind it are true of the shelf being
+   read and stay readable through it; what they are not is buyable. */
+.next__lock::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ground);
+  opacity: .74;
+}
+
+.next__lock-box {
+  position: relative;
+  padding: 14px 16px;
+  border: 1px solid var(--rule);
+  background: var(--sunk);
+  text-align: center;
+}
+
+.next__lock-copy {
+  margin: 0 0 11px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 .next__what,
 .next__buy {
   margin: 2px 0 0;
@@ -1195,6 +1242,12 @@ span.next__gain { cursor: default; }
   color: var(--faint);
   line-height: 1.45;
 }
+
+/* The one reveal treatment the site has, inside the shelves block. The
+   row sits under My Shelf and reads as the next line of the same list,
+   so it takes that list's hairline and its tighter row height. */
+.starters .tonight__hit { padding: 11px 0; border-bottom: 1px solid var(--hair); }
+.starters .tonight__pane { padding: 0; }
 
 .starter {
   display: flex;
@@ -1743,11 +1796,15 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
     linear-gradient(currentColor, currentColor) 50% 6.5px / 1.5px 5px no-repeat;
 }
 
+/* Clear of the glyph, not over it. The Bar glyph is three vertical
+   strokes and lost nothing to a badge sitting on its corner; the Menu
+   glyph is three rules, and a badge over the end of one reads as a
+   broken drawing rather than a count. */
 .tab__count {
   position: absolute;
   top: 7px;
   left: 50%;
-  margin-left: 6px;
+  margin-left: 10px;
   min-width: 17px;
   padding: 0 4px;
   border-radius: 999px;

@@ -65,6 +65,7 @@
   var introDone = false;  /* the first-run strip has been dismissed, for good */
   var shelfView = 'mine'; /* 'mine' or a named shelf id; session only, never saved */
   var shelfOpen = null;   /* named shelf whose Switch / Add choice is open, session only */
+  var startersOpen = false; /* Starter Shelves reveal on the Bar tab, session only */
   var printOpts = { icon: true, recipe: false, taste: false, history: false, barline: false };
 
   /* WebKit has never paginated CSS multicol (WebKit bug 15546, open
@@ -964,6 +965,21 @@
       var i = ing[p[0]];
       return i ? i.short : p[0];
     }).join(', ');
+  }
+
+  /* The shelf chip is named for the shelf it gates on, so on a named
+     shelf nothing on the row says your own bottles are still there. One
+     more chip on its left, carrying what those bottles pour, and the way
+     back is a tap from the list rather than a trip to the Bar tab. It
+     carries no tick because it is the way out, not the gate that is on.
+
+     A shared menu already has its own second chip and leaves the first
+     one reading My Shelf, so this is only for a named shelf. */
+  function mineChip() {
+    if (shelfView === 'mine') return '';
+    var n = stocked().length ? pourableCount(have) : null;
+    return '<button class="chip chip--pour" data-shelf-mine="1">My Shelf' +
+      (n === null ? '' : ' \u00b7 ' + n) + '</button>';
   }
 
   /* Which bottles get a chip in the filter row. Anything else can still be
@@ -1955,6 +1971,7 @@
     var mine = viewHave();
     var canNow = stocked(mine).length ? pourableCount(mine) : null;
 
+    html += mineChip();
     html += '<button class="chip chip--pour' + (filter.pourable ? ' is-on' : '') +
         '" data-pourable="1">' + (filter.pourable ? '✓ ' : '') + esc(viewName()) +
         (canNow === null ? '' : ' · ' + canNow) + '</button>';
@@ -2192,11 +2209,27 @@
        so that half of the row stands down with the ticks below it. */
     var lock = !editing();
     var html = '<section class="next' + (lock ? ' is-locked' : '') +
-      '"><h2 class="next__h">' + esc(nextHead(top)) + '</h2>';
+      '"><h2 class="next__h">' + esc(nextHead(top)) + '</h2>' +
+      '<p class="next__lead">Choose from recommended bottles to grow ' +
+      'your menu.</p>';
 
     top.forEach(function (r) { html += nextRow(r, held, lock); });
 
-    return html + '</section>';
+    return html + nextLock(lock) + '</section>';
+  }
+
+  /* Greyed rows with nothing saying why is how this panel looks broken.
+     A named shelf is somebody else's arithmetic, so the box sits over the
+     figures and hands back the one shelf they could be bought for. */
+  function nextLock(lock) {
+    if (!lock) return '';
+    return '<div class="next__lock">' +
+      '<div class="next__lock-box">' +
+        '<p class="next__lock-copy">' + esc('You are viewing ' + viewName()) +
+          '</p>' +
+        '<button type="button" class="btn" data-shelf-mine="1">' +
+        'Switch to My Shelf</button>' +
+      '</div></div>';
   }
 
   /* One bottle each is the usual answer and says so. A row naming a pair
@@ -2290,11 +2323,15 @@
 
     var html = '<section class="starters">' +
       '<h2 class="starters__h">Shelves</h2>' +
-      '<p class="starters__note">My Shelf stays yours. Tap another to look ' +
-      'at it, or to add its bottles.</p>';
-    html += renderMine();
+      '<p class="starters__note">My Shelf stays yours. Open a starter shelf ' +
+      'to look at it, or to add its bottles.</p>' +
+      renderMine() +
+      revealHit('starters', 'Starter Shelves',
+        plural(presets.length, 'shelf', 'shelves'), startersOpen) +
+      '<div class="tonight__pane" id="starters-pane"' +
+        (startersOpen ? '' : ' hidden') + '>';
     presets.forEach(function (p) { html += renderNamedShelf(p); });
-    return html + '</section>';
+    return html + '</div></section>';
   }
 
   function renderBar() {
@@ -2312,8 +2349,8 @@
              '. My Shelf keeps its own bottles, and nothing below can be ' +
              'selected until you go back to it.';
     } else if (!bottles) {
-      note = 'Select what is on the shelf, or start from one of the shelves ' +
-             'below. Every bottle then shows what it would add.';
+      note = 'Select what is on the shelf, or open Starter Shelves below ' +
+             'and start from one. Every bottle then shows what it would add.';
     } else if (!can) {
       note = 'Not enough yet. The figures below are drinks a bottle would ' +
              'unlock, not drinks that only use it.';
@@ -2389,7 +2426,7 @@
     var who = viewingShared() ? 'a shelf someone sent you' : viewName();
     return '<div class="bar-view">' +
       '<p class="bar-view__copy">You are looking at ' + esc(who) +
-        '. Selecting a bottle changes My Shelf, so go back to it first.</p>' +
+        '. Switch back to My Shelf to select and deselect bottles.</p>' +
       '<button type="button" class="btn" data-shelf-mine="1">Back to My Shelf</button>' +
       '</div>';
   }
@@ -2550,9 +2587,12 @@
     if (el) el.scrollIntoView({ block: 'center' });
   }
 
-  /* The same figure on the phone tab bar and on the wide-screen top bar.
-     One of the two is always hidden, and a badge that disagrees with the
-     Bar tab is how the pourable filter last looked broken. */
+  /* The same figure on the phone tab bar and on the wide-screen top bar,
+     both on Menu. It counts drinks, not bottles, so it belongs on the tab
+     that holds the drinks: the badge is the answer, and the Bar tab is
+     where you go to change it. One of the two is always hidden, and a
+     badge that disagrees with the Bar tab is how the pourable filter last
+     looked broken. */
   function refreshCount() {
     var held = heldNow();
     var can = pourableCount(held);
@@ -2901,6 +2941,17 @@
     return true;
   }
 
+  /* Five ways to replace your shelf, on screen every time, is the wrong
+     weight for something you use once. The row says how many are behind
+     it and stays closed until you want one. Session only: coming back to
+     the tab comes back to the shelf, not to the shortcuts. */
+  function toggleStarters() {
+    startersOpen = !startersOpen;
+    afterShelf(true);
+    track('bar_starters', { open: startersOpen });
+    return true;
+  }
+
   /* Opening the choice does not edit the shelf. */
   function revealShelf(t) {
     var id = t.dataset.shelf;
@@ -2965,6 +3016,7 @@
     if (t.dataset.note) return noteAction(t);
     if (t.dataset.brand) return brandAction(t);
     if (t.dataset.bottle) return bottleAction(t);
+    if (t.dataset.startersOpen) return toggleStarters();
     if (t.dataset.shelfMine) return switchToMine();
     if (t.dataset.shelfSwitch) return applyShelf(t.dataset.shelfSwitch, 'switch');
     if (t.dataset.shelfAdd) return applyShelf(t.dataset.shelfAdd, 'add');
@@ -2991,7 +3043,7 @@
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-recipe-tab],[data-drink],[data-method],[data-family],[data-pattern],' +
-      '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-shelf],[data-seemenu],' +
+      '[data-pourable],[data-shared],[data-clear],[data-clearothers],[data-bottle],[data-brand],[data-note],[data-bar],[data-shelf],[data-starters-open],[data-seemenu],' +
       '[data-next-jump],[data-next-see],' +
       '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
       '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
