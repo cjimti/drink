@@ -336,6 +336,69 @@ def check_bigint(src):
     return []
 
 
+def js_markup(src):
+    """The HTML app.js writes, with everything that is not a string blanked.
+
+    Only the inside of a string literal survives, so a tag named in a
+    comment is not markup and `a > b` is not the end of a tag. Offsets
+    are kept, so a line counted off this text is the line in the file,
+    and the run of literals that builds one element reads as one string
+    with the expressions between them blanked out.
+    """
+    stripped = jslex.strip(src)
+    out = [c if c == "\n" else " " for c in src]
+    i, n = 0, len(src)
+    while i < n:
+        if stripped[i] not in "'\"`":
+            i += 1
+            continue
+        end = stripped.find(stripped[i], i + 1)
+        if end < 0:
+            break
+        for k in range(i + 1, end):
+            if src[k] != "\n":
+                out[k] = src[k]
+        i = end + 1
+    return "".join(out)
+
+
+# A toggle says pressed; a tab in a tablist says selected. Either is a
+# state a screen reader reads out; a class is not.
+STATE_ATTRS = ("aria-pressed", "aria-selected")
+
+
+def check_pressed(src):
+    """A button that goes on says so to a screen reader, not just to CSS.
+
+    `is-on` is the whole of selected state on the segments, the bottle
+    chips, the shape chips and the shelf chips. Sighted, that is a brass
+    fill; with VoiceOver it is nothing at all, so the Stirred segment
+    reads exactly like the Shaken one beside it. The recipe tabs and the
+    print ticks already carried their state, which is why this was easy
+    to miss: the pattern was here, just not everywhere.
+
+    So: wherever a `<button>` this file writes takes ` is-on`, the same
+    open tag carries `aria-pressed` (or `aria-selected`, for the tabs).
+    A `<div>` that takes the class is skipped, because the button inside
+    it is the control and carries the state itself.
+    """
+    markup = js_markup(src)
+    errs = []
+    for m in re.finditer(r"\sis-on\b", markup):
+        open_at = markup.rfind("<", 0, m.start())
+        if open_at < 0 or not re.match(r"<button\b", markup[open_at:open_at + 8]):
+            continue
+        close_at = markup.find(">", m.end())
+        tag = markup[open_at:close_at if close_at > 0 else len(markup)]
+        if any(a in tag for a in STATE_ATTRS):
+            continue
+        n = src.count("\n", 0, m.start()) + 1
+        errs.append(f"assets/app.js:{n} a button takes `is-on` with no "
+                    f"aria-pressed on the same tag — selected state a "
+                    f"screen reader cannot hear")
+    return errs
+
+
 def check_method_line(src):
     """The instruction has to agree with the glass it is poured into.
 
@@ -432,6 +495,7 @@ def main():
     errs += check_delegation(js)
     errs += check_track(js)
     errs += check_bigint(js)
+    errs += check_pressed(js)
     errs += check_method_line(js)
     errs += check_drink_links(js)
     errs += check_dashes(shipped_files())
@@ -447,6 +511,7 @@ def main():
           f"{len(pages)} static page(s)")
     print("  wiring  every click branch reachable, every track() key known, "
           "every drink id addressable")
+    print("  state   every button that goes on says so, not just in CSS")
     print(f"  copy    no em dash in the {len(shipped_files())} file(s) the "
           f"site serves")
     return 0
