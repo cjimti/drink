@@ -1976,6 +1976,9 @@ body.is-tonight .tonight__print-title {
   text-transform: uppercase;
   line-height: 1.15;
   color: var(--bone);
+  /* A title is one field of free text and can be one long word.
+     Wrap it rather than let it run under the edge of the screen. */
+  overflow-wrap: anywhere;
 }
 
 body.is-tonight .tonight__print-of {
@@ -2757,6 +2760,7 @@ body.page .topbar { position: sticky; top: 0; }
     margin: 0;
     line-height: 1.15;
     color: #000;
+    overflow-wrap: anywhere;
   }
   .tonight__print-of {
     font-family: var(--display);

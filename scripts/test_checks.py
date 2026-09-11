@@ -186,6 +186,54 @@ def run_house(failures):
            failures)
 
 
+def pressed_cases():
+    """(name, js, should it be reported) for the pressed-state rule."""
+    chip = ("function f(on) {\n"
+            "  return '<button class=\"chip' + (on ? ' is-on' : '') +\n"
+            "    '\" data-family=\"gin\"%s>' + 'Gin' + '</button>';\n"
+            "}\n")
+    return [
+        ("chip with no state", chip % "", True),
+        ("chip that says pressed",
+         chip % "' + ' aria-pressed=\"true\"' + '", False),
+        ("tab that says selected",
+         "function f(on) {\n"
+         "  return '<button role=\"tab\" class=\"recipe-tab' +\n"
+         "    (on ? ' is-on' : '') + '\" aria-selected=\"true\">x</button>';\n"
+         "}\n", False),
+        ("wrapper around the button",
+         "function f(on) {\n"
+         "  return '<div class=\"brand' + (on ? ' is-on' : '') + '\">' +\n"
+         "    '<button aria-pressed=\"true\">x</button></div>';\n"
+         "}\n", False),
+        ("a button talked about in a comment",
+         "function f() {\n"
+         "  /* a <button> with is-on and no state would be wrong */\n"
+         "  return 1;\n"
+         "}\n", False),
+    ]
+
+
+def run_pressed(failures):
+    """Selected state a screen reader can hear, on the fixtures and the app.
+
+    The app itself is mutated as well as the fixtures: the fixtures say
+    what the rule means, and stripping the real segment's aria-pressed
+    says the rule is pointed at the file it claims to check.
+    """
+    for name, js, expected in pressed_cases():
+        report(f"pressed/{name}", check_style.check_pressed(js), expected,
+               failures)
+    app = (ROOT / "assets" / "app.js").read_text()
+    broken = app.replace(
+        """'" data-method="' + s.id + '"' +\n"""
+        """          ' aria-pressed="' + (on ? 'true' : 'false') + '">' +""",
+        """'" data-method="' + s.id + '">' +""")
+    report("pressed/segment stripped", check_style.check_pressed(broken),
+           True, failures)
+    report("pressed/clean", check_style.check_pressed(app), False, failures)
+
+
 def run_menu(failures):
     """A top has to sit beside something that can fill a glass."""
     bar = check_menu.load("bar.json")
@@ -305,7 +353,8 @@ def run_lexer(failures):
 def main():
     """Every case, then the count."""
     failures = []
-    for run in (run_css, run_js, run_py, run_house, run_menu, run_glasses,
+    for run in (run_css, run_js, run_py, run_house, run_pressed,
+                run_menu, run_glasses,
                 run_plates, run_pages, run_lexer, run_worker):
         run(failures)
     for f in failures:
@@ -313,7 +362,8 @@ def main():
     if failures:
         return 1
     n = (len(css_cases()) + len(js_cases()) + len(py_cases())
-         + len(size_cases()) + 14 + 5 + 3 + 4 + 2 + 3)
+         + len(size_cases()) + len(pressed_cases()) + 2
+         + 14 + 5 + 3 + 4 + 2 + 3)
     print(f"  test    {n} case(s): every rule fails when it is broken")
     return 0
 

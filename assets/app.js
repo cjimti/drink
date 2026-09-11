@@ -28,6 +28,12 @@
   var INTRO_STORE = 'drink.intro.v1';
   var SHARE_PARAM = 's';  /* fewbottles.com/?s=<shelf code> */
 
+  /* One number for the menu title's length: the input's maxlength and the
+     ceiling a stored title is read back under. The input guards typing
+     only, and a title can arrive from an older build or a hand-edited
+     store, so the read is where the limit is actually kept. */
+  var TITLE_MAX = 72;
+
   /* Stamped with the tag at deploy time, the way sw.js is. Unstamped is a
      working copy, and says so. The test is a shape rather than the token
      spelled out a second time, because the deploy seds for that token and
@@ -292,7 +298,8 @@
 
   function loadMenuTitle() {
     try {
-      menuTitle = (localStorage.getItem(TITLE_STORE) || '').replace(/\s+/g, ' ').trim();
+      menuTitle = (localStorage.getItem(TITLE_STORE) || '')
+        .replace(/\s+/g, ' ').trim().slice(0, TITLE_MAX);
     } catch (e) { menuTitle = ''; }
   }
 
@@ -1046,8 +1053,10 @@
   }
 
   function shelfChip(on, attr, label, n) {
-    return '<button class="chip chip--pour' + (on ? ' is-on' : '') + '" ' + attr + '>' +
-      (on ? '\u2713 ' : '') + esc(label) + ' \u00b7 ' + n + '</button>';
+    return '<button class="chip chip--pour' + (on ? ' is-on' : '') + '" ' + attr +
+      ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
+      (on ? '<span aria-hidden="true">\u2713 </span>' : '') +
+      esc(label) + ' \u00b7 ' + n + '</button>';
   }
 
   /* The menus, one chip each, and one of them always on. All bottles is
@@ -1585,7 +1594,8 @@
       revealHit('print', 'Print menu', drinks, shown) +
       '<div class="tonight__pane" id="print-pane"' + (shown ? '' : ' hidden') + '>' +
         '<label class="tonight__field" for="menu-title">Menu title</label>' +
-        '<input class="tonight__title" id="menu-title" type="text" maxlength="72" ' +
+        '<input class="tonight__title" id="menu-title" type="text" ' +
+          'maxlength="' + TITLE_MAX + '" ' +
           'placeholder="Home St. Bar" autocomplete="off" ' +
           'spellcheck="true" enterkeyhint="done" value="' + esc(menuTitle) + '">' +
         '<p class="tonight__note">' + esc(printNote(held)) + '</p>' +
@@ -2027,8 +2037,11 @@
     var all = chipsOpen || !!filter.family;
     var html = '<div class="chips chips--bottle' + (all ? ' is-all' : '') + '">';
     chipped.forEach(function (i) {
-      html += '<button class="chip' + (filter.family === i.id ? ' is-on' : '') +
-        '" data-family="' + esc(i.id) + '">' + esc(i.short) + '</button>';
+      var on = filter.family === i.id;
+      html += '<button class="chip' + (on ? ' is-on' : '') +
+        '" data-family="' + esc(i.id) + '"' +
+        ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
+        esc(i.short) + '</button>';
     });
     return html + '</div>' +
       '<button type="button" class="chip chips__more" data-chips="1"' +
@@ -2056,8 +2069,11 @@
 
     var html = renderIntro() + '<div class="filters">' +
       '<div class="seg' + (seg.length > 3 ? ' seg--wide' : '') + '">' + seg.map(function (s) {
-        return '<button class="seg__b' + (filter.method === s.id ? ' is-on' : '') +
-          '" data-method="' + s.id + '">' + esc(s.label) + '</button>';
+        var on = filter.method === s.id;
+        return '<button class="seg__b' + (on ? ' is-on' : '') +
+          '" data-method="' + s.id + '"' +
+          ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
+          esc(s.label) + '</button>';
       }).join('') + '</div>' +
       '<input class="search" id="q" type="search" placeholder="Name, ingredient, or code…" ' +
         'value="' + esc(filter.raw) + '" autocomplete="off" spellcheck="false">';
@@ -2065,8 +2081,11 @@
     if (filter.method === 'families' && data.kin) {
       html += '<div class="chips">';
       data.kin.patterns.forEach(function (p) {
-        html += '<button class="chip' + (filter.pattern === p.id ? ' is-on' : '') +
-          '" data-pattern="' + esc(p.id) + '">' + esc(p.label) + '</button>';
+        var on = filter.pattern === p.id;
+        html += '<button class="chip' + (on ? ' is-on' : '') +
+          '" data-pattern="' + esc(p.id) + '"' +
+          ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
+          esc(p.label) + '</button>';
       });
       html += '</div>';
     }
@@ -2614,7 +2633,10 @@
     if (VIEWS.indexOf(view) < 0) view = 'menu';
     VIEWS.forEach(function (v) { $('#view-' + v).hidden = v !== view; });
     document.querySelectorAll('.tab, .toptab').forEach(function (t) {
-      t.classList.toggle('is-active', t.dataset.view === view);
+      var here = t.dataset.view === view;
+      t.classList.toggle('is-active', here);
+      if (here) t.setAttribute('aria-current', 'page');
+      else t.removeAttribute('aria-current');
     });
     /* Every view repaints on the way in. The menu depends on the shelf,
        and the shelf is edited on another tab. Rendering it once at boot
