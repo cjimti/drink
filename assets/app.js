@@ -3017,6 +3017,35 @@
     return false;
   }
 
+  /* The three ticks that make a printed row taller. Icon and the
+     shorthand key leave the rows the height they were. */
+  var WEIGHED_OPTS = ['recipe', 'taste', 'history'];
+
+  /* One paper tick. On WebKit the two print columns are cut by hand,
+     and the cut is weighed per row at the moment the list renders, so
+     ticking Recipe afterwards leaves a balance struck for one-line rows
+     and the second column runs long. Recut it, keeping the scroll the
+     way the shelf does. Chrome and Firefox have real multicol and
+     balance per sheet, so there is nothing there to redo. */
+  function printOptAction(t) {
+    var opt = t.dataset.printOpt;
+    printOpts[opt] = !printOpts[opt];
+    savePrintOpts();
+    applyPrintFlags();
+    track('print_opt', { opt: opt, on: !!printOpts[opt] });
+
+    if (PRINT_SPLIT && WEIGHED_OPTS.indexOf(opt) >= 0) {
+      var y = $('#main').scrollTop;
+      repaintMenu();
+      $('#main').scrollTop = y;
+      return true;
+    }
+
+    t.classList.toggle('is-on', !!printOpts[opt]);
+    t.setAttribute('aria-pressed', printOpts[opt] ? 'true' : 'false');
+    return true;
+  }
+
   /* The two reveals in the masthead, the paper ticks, and the dialog
      itself. All of it is about what leaves the phone as a page. */
   function printAction(t) {
@@ -3031,16 +3060,7 @@
       return true;
     }
 
-    if (t.dataset.printOpt) {
-      var opt = t.dataset.printOpt;
-      printOpts[opt] = !printOpts[opt];
-      savePrintOpts();
-      applyPrintFlags();
-      t.classList.toggle('is-on', !!printOpts[opt]);
-      t.setAttribute('aria-pressed', printOpts[opt] ? 'true' : 'false');
-      track('print_opt', { opt: opt, on: !!printOpts[opt] });
-      return true;
-    }
+    if (t.dataset.printOpt) return printOptAction(t);
 
     if (!t.dataset.print) return false;
 

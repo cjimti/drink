@@ -187,6 +187,13 @@ def check_worker(js, sw):
         errs.append("sw.js installs its shell without a version query — an edge cache can hand it the previous release for ten minutes after a tag")
     if "if (res.ok)" not in sw:
         errs.append("sw.js caches responses without checking res.ok — a 404 or a 5xx would be pinned until the next tag")
+    shell = re.search(r"var SHELL = \[(.*?)\];", sw, re.S)
+    if "'offline.html'" not in (shell.group(1) if shell else ""):
+        errs.append("sw.js does not cache offline.html with the shell — the one page a dead link can fall back on has to be there before the signal goes")
+    elif not (ROOT / "offline.html").exists():
+        errs.append("sw.js caches offline.html and the file is not in the repo — the install would throw and nothing would cache at all")
+    if "caches.match('offline.html')" not in sw or "req.mode !== 'navigate'" not in sw:
+        errs.append("sw.js never serves offline.html — a drink link opened with no signal lands on the browser's error page")
 
     for e in errs:
         print(f"  WORKER {e}")
