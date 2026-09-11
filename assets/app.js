@@ -98,7 +98,13 @@
        list is gated on: neither is All bottles, pourable is My Shelf or
        the named shelf you loaded, shared is the shelf someone sent. One
        at a time, and only ever set through selectMenu. */
-    return { method: 'all', family: null, pattern: null, pourable: false, shared: false, q: '' };
+    /* q is the term the matcher uses, folded and trimmed. raw is exactly
+       what was typed, because the text in the box is the visitor's, not
+       the app's. setSearch writes both, so they cannot drift. */
+    return {
+      method: 'all', family: null, pattern: null,
+      pourable: false, shared: false, q: '', raw: ''
+    };
   }
 
   /* The shelf's running order, fixed on the way into the tab. See
@@ -252,9 +258,21 @@
 
   /* ── the shelf ─────────────────────────────────────────── */
 
+  /* Anything that parses and is truthy used to pass, whatever its type.
+     A store holding `true`, `1`, `"gin"` or `[]` from a hand edit or an
+     older shape then left a tick writing a property onto a boolean, and
+     no bottle could be ticked again until storage was cleared by hand.
+     A guard, not a migration: the bad value stands until the next save
+     overwrites it. */
+  function plainObject(v) {
+    return Object.prototype.toString.call(v) === '[object Object]';
+  }
+
   function loadHave() {
-    try { have = JSON.parse(localStorage.getItem(STORE)) || {}; }
-    catch (e) { have = {}; }
+    try {
+      var v = JSON.parse(localStorage.getItem(STORE));
+      have = plainObject(v) ? v : {};
+    } catch (e) { have = {}; }
   }
 
   function saveHave() {
@@ -262,8 +280,10 @@
   }
 
   function loadOwn() {
-    try { own = JSON.parse(localStorage.getItem(BRAND_STORE)) || {}; }
-    catch (e) { own = {}; }
+    try {
+      var v = JSON.parse(localStorage.getItem(BRAND_STORE));
+      own = plainObject(v) ? v : {};
+    } catch (e) { own = {}; }
   }
 
   function saveOwn() {
@@ -1010,6 +1030,13 @@
      does not name. */
   function shelfShown(held) {
     return menuMode() !== 'all' && stocked(held).length > 0;
+  }
+
+  /* One write for both halves of the search. Anything that clears the
+     term clears the text in the box with it. */
+  function setSearch(raw) {
+    filter.raw = raw;
+    filter.q = raw.trim().toLowerCase();
   }
 
   /* Everything but the shelf choice: the segments, a bottle, a shape, a
@@ -2033,7 +2060,7 @@
           '" data-method="' + s.id + '">' + esc(s.label) + '</button>';
       }).join('') + '</div>' +
       '<input class="search" id="q" type="search" placeholder="Name, ingredient, or code…" ' +
-        'value="' + esc(filter.q) + '" autocomplete="off" spellcheck="false">';
+        'value="' + esc(filter.raw) + '" autocomplete="off" spellcheck="false">';
 
     if (filter.method === 'families' && data.kin) {
       html += '<div class="chips">';
@@ -2704,7 +2731,7 @@
     if (!d) return;
     if (!matches(d, heldNow())) {
       filter.family = null;
-      filter.q = '';
+      setSearch('');
       if (filter.pattern && patternIdOf(d) !== filter.pattern) filter.pattern = null;
       if (methodFilterOn() && d.method !== filter.method) filter.method = 'all';
       if (shelfGate() && !canPour(d, heldNow())) selectMenu('all');
@@ -2742,11 +2769,59 @@
       all ? data.bar.ingredients.length : stocked(held).length);
   }
 
+  /* ── focus across a repaint ────────────────────────────── */
+
+  /* Every list is written back as innerHTML, so the control that had
+     focus is destroyed and focus falls to <body>. On a keyboard that is
+     one tick per trip from the top of the page, and a shelf is fifty of
+     them. The data- attribute a control already carries is its name
+     across a repaint; an index would not do, because a repaint adds and
+     drops rows. The nearest id above it says which list it was in, since
+     a drink row and the aside's Close both carry data-drink. */
+  var SAFE_ID = /^[A-Za-z][-\w]*$/;
+
+  function focusPath(el) {
+    if (!el || !el.attributes || el === document.body) return '';
+    var sel = '';
+    for (var i = 0; i < el.attributes.length; i++) {
+      var a = el.attributes[i];
+      if (a.name.indexOf('data-') !== 0) continue;
+      if (/["\\]/.test(a.value)) return '';
+      sel += '[' + a.name + '="' + a.value + '"]';
+    }
+    if (!sel) return SAFE_ID.test(el.id || '') ? '#' + el.id : '';
+    var box = el.closest('[id]');
+    return (box && SAFE_ID.test(box.id) ? '#' + box.id + ' ' : '') + sel;
+  }
+
+  /* What was typed is the visitor's, and so is where the caret sits in
+     it. Only a text field has one, and asking for it is how we know. */
+  function caretOf(el) {
+    if (!el || typeof el.selectionStart !== 'number') return null;
+    return [el.selectionStart, el.selectionEnd];
+  }
+
+  function keepFocus(fn) {
+    var was = document.activeElement;
+    var path = focusPath(was);
+    var caret = path ? caretOf(was) : null;
+    fn();
+    if (!path) return;
+    var el = document.querySelector(path);
+    if (!el || el === document.activeElement) return;
+    /* Never scroll on the way back. The repaint has already put the
+       scroll where it belongs. */
+    el.focus({ preventScroll: true });
+    if (caret && el.setSelectionRange) el.setSelectionRange(caret[0], caret[1]);
+  }
+
   /* The badges read the same choice the chip row shows, so they repaint
      with it. */
   function repaintMenu() {
-    renderFilters();
-    renderMenu();
+    keepFocus(function () {
+      renderFilters();
+      renderMenu();
+    });
     refreshCount();
   }
 
@@ -2820,7 +2895,7 @@
       recipePane[id] = 'recipe';
       track('drink_open', { drink_id: id, drink_name: drinkName(id) });
     }
-    renderMenu();
+    keepFocus(renderMenu);
     syncTitle();
   }
 
@@ -2858,6 +2933,22 @@
   document.addEventListener('visibilitychange', function () {
     if (tonight) nightWake(!document.hidden);
   });
+
+  /* Escape means nothing inside a text field; the browser has its own
+     use for it there. */
+  function inField(t) {
+    return /^(INPUT|TEXTAREA)$/.test((t && t.tagName) || '');
+  }
+
+  /* Big type is the whole screen with one Done button on it, so Escape
+     is the way out it did not have. asideLive() is false while it is
+     on, which is why the rail's Escape never reached it. Focus goes
+     back to the control that opened it. */
+  function closeTonight() {
+    setTonight(false);
+    var back = document.querySelector('[data-tonight="open"]');
+    if (back) back.focus({ preventScroll: true });
+  }
 
   function fromDrinkId(t) {
     var row = t.closest('.drink');
@@ -3028,7 +3119,7 @@
        dumps you at the top of a panel you did not leave. */
     var pane = railPane();
     var paneY = pane ? pane.scrollTop : 0;
-    renderBar();
+    keepFocus(renderBar);
     pane = railPane();
     if (pane) pane.scrollTop = paneY;
     if (keepScroll) $('#main').scrollTop = y;
@@ -3248,7 +3339,7 @@
 
     if (t.dataset.chips) {
       chipsOpen = !chipsOpen;
-      renderFilters();
+      keepFocus(renderFilters);
       return;
     }
 
@@ -3298,7 +3389,7 @@
       filter.method = 'families';
       filter.pattern = t.dataset.seePattern;
       filter.family = null;
-      filter.q = '';
+      setSearch('');
       track('see_pattern', { pattern: t.dataset.seePattern });
       repaintMenu();
       $('#main').scrollTop = 0;
@@ -3315,7 +3406,7 @@
       introDone = true;
       saveIntro();
       track('intro', { action: 'dismiss' });
-      renderFilters();
+      keepFocus(renderFilters);
       return;
     }
 
@@ -3333,11 +3424,13 @@
       return;
     }
 
-    /* Escape dismisses the rail, the way it dismisses any other panel.
-       Not from inside a field, where the browser has its own meaning for
-       it. */
-    if (e.key === 'Escape' && asideLive()
-        && !/^(INPUT|TEXTAREA)$/.test(e.target.tagName || '')) {
+    if (e.key === 'Escape' && tonight && !inField(e.target)) {
+      closeTonight();
+      return;
+    }
+
+    /* Escape dismisses the rail, the way it dismisses any other panel. */
+    if (e.key === 'Escape' && asideLive() && !inField(e.target)) {
       var open1 = Object.keys(open)[0];
       if (open1) toggleDrink(open1);
       return;
@@ -3376,7 +3469,7 @@
     }
 
     if (e.target.id !== 'q') return;
-    filter.q = e.target.value.trim().toLowerCase();
+    setSearch(e.target.value);
     /* Repaint the list but leave the field alone, or the caret jumps. */
     renderMenu();
     var note = document.querySelector('.filters__note');
@@ -3414,8 +3507,18 @@
   }, { passive: true });
 
   /* Crossing 900px moves the open recipe between the row and the aside.
-     Nothing about the drink changes; only where it is read. */
-  WIDE.addEventListener('change', function () {
+     Nothing about the drink changes; only where it is read.
+
+     Safari 13 and older put `change` on a MediaQueryList through
+     addListener alone. This line runs before the fetch that paints, so a
+     throw here leaves the page sitting on Pouring with nothing to say.
+     The layout is a bonus; booting is not. */
+  function onWide(fn) {
+    if (WIDE.addEventListener) WIDE.addEventListener('change', fn);
+    else if (WIDE.addListener) WIDE.addListener(fn);
+  }
+
+  onWide(function () {
     if (!$('#view-menu').hidden) repaintMenu();
   });
 
