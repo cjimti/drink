@@ -125,10 +125,11 @@ def check_tokens(css, dark):
 
 
 class Page(HTMLParser):
-    """index.html, walked once for the accessibility rules that matter."""
+    """A page, walked once for the accessibility rules that matter."""
 
-    def __init__(self):
+    def __init__(self, name="index.html"):
         super().__init__(convert_charrefs=True)
+        self.name = name
         self.errs, self.ids, self.open_ctrl, self.text = [], [], None, ""
         self.attrs_seen, self.refs = {}, []
 
@@ -140,25 +141,25 @@ class Page(HTMLParser):
             self.ids.append((a["id"], n))
         for key in a:
             if key.startswith("on"):
-                self.errs.append(f"index.html:{n} inline {key}= handler — "
+                self.errs.append(f"{self.name}:{n} inline {key}= handler — "
                                  f"the app wires its own events")
         if tag == "img" and "alt" not in a:
-            self.errs.append(f"index.html:{n} <img> with no alt")
+            self.errs.append(f"{self.name}:{n} <img> with no alt")
         if tag == "html" and not a.get("lang"):
-            self.errs.append(f"index.html:{n} <html> with no lang")
+            self.errs.append(f"{self.name}:{n} <html> with no lang")
         if tag == "a" and a.get("target") == "_blank" \
                 and "noopener" not in a.get("rel", ""):
-            self.errs.append(f"index.html:{n} target=_blank without "
+            self.errs.append(f"{self.name}:{n} target=_blank without "
                              f"rel=noopener")
         if tag == "button":
             if "type" not in a:
-                self.errs.append(f"index.html:{n} <button> with no type — "
+                self.errs.append(f"{self.name}:{n} <button> with no type — "
                                  f"it defaults to submit")
             self.open_ctrl = (n, a)
             self.text = ""
         if tag == "dialog" and not (a.get("aria-label")
                                     or a.get("aria-labelledby")):
-            self.errs.append(f"index.html:{n} <dialog> with no accessible "
+            self.errs.append(f"{self.name}:{n} <dialog> with no accessible "
                              f"name")
         for key in ("aria-labelledby", "aria-controls", "aria-describedby"):
             for ref in a.get(key, "").split():
@@ -173,7 +174,7 @@ class Page(HTMLParser):
             named = self.text.strip() or a.get("aria-label") \
                 or a.get("aria-labelledby") or a.get("title")
             if not named:
-                self.errs.append(f"index.html:{n} <button> with no "
+                self.errs.append(f"{self.name}:{n} <button> with no "
                                  f"accessible name")
             self.open_ctrl = None
 
@@ -207,6 +208,34 @@ def check_html(html, js):
     if mains != 1:
         errs.append(f"index.html {mains} <main> — the app shell has one")
     return errs
+
+
+def check_page(name, html):
+    """A drink page: the same walk, plus a title, a description, one main."""
+    p = Page(name)
+    p.feed(html)
+    errs = list(p.errs)
+    metas = {m.get("name") or m.get("property"): m
+             for m in p.attrs_seen.get("meta", [])}
+    if "description" not in metas:
+        errs.append(f"{name} <meta name=description> missing")
+    if not p.attrs_seen.get("title"):
+        errs.append(f"{name} <title> missing")
+    if len(p.attrs_seen.get("main", [])) != 1:
+        errs.append(f"{name} needs exactly one <main>")
+    seen = set()
+    for i, n in p.ids:
+        if i in seen:
+            errs.append(f"{name}:{n} duplicate id #{i}")
+        seen.add(i)
+    return errs
+
+
+def page_files():
+    """The pages pages.py writes, and the one GitHub serves for a miss."""
+    names = ["404.html"] + sorted(str(p.relative_to(ROOT))
+                                  for p in (ROOT / "drink").glob("*/index.html"))
+    return {n: (ROOT / n).read_text() for n in names}
 
 
 def js_handler(src, stripped):
@@ -341,7 +370,9 @@ def shipped_files():
     """Everything the site actually serves, as {name: text}."""
     names = SHIPPED + sorted(str(p.relative_to(ROOT))
                              for p in (ROOT / "data").glob("*.json"))
-    return {n: (ROOT / n).read_text() for n in names}
+    out = {n: (ROOT / n).read_text() for n in names}
+    out.update(page_files())
+    return out
 
 
 def check_dashes(texts):
@@ -363,10 +394,11 @@ def check_dashes(texts):
 
 
 def check_drink_links(src):
-    """Every drink id is reachable at the address the Copy button hands out.
+    """Every drink id is reachable at the address its page links back to.
 
-    `#drink/<id>` is a link people send each other, and the route that
-    reads it back is one regex in app.js. Tighten that regex, or loosen
+    `#drink/<id>` is the way into the app from a drink page, and the
+    form older links still carry; the route that reads it back is one
+    regex in app.js. Tighten that regex, or loosen
     the slug rule in check_menu.py, and some drink quietly stops opening
     from its own link. So the check runs the app's own pattern over the
     real menu rather than restating it here.
@@ -394,6 +426,9 @@ def main():
     errs += theme_errs
     errs += check_tokens(css, dark)
     errs += check_html(html, js)
+    pages = page_files()
+    for name, text in pages.items():
+        errs += check_page(name, text)
     errs += check_delegation(js)
     errs += check_track(js)
     errs += check_bigint(js)
@@ -408,7 +443,8 @@ def main():
 
     print(f"  style   {len(dark)} token(s), {len(light)} with a light "
           f"counterpart, no literal colour outside them")
-    print("  a11y    labels, alt text and unique ids in index.html")
+    print(f"  a11y    labels, alt text and unique ids in index.html and "
+          f"{len(pages)} static page(s)")
     print("  wiring  every click branch reachable, every track() key known, "
           "every drink id addressable")
     print(f"  copy    no em dash in the {len(shipped_files())} file(s) the "

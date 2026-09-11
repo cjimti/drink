@@ -161,6 +161,17 @@
     return (cocktailBy[id] && cocktailBy[id].name) || id;
   }
 
+  /* The tab reads the drink that is open, so a bookmark says which one.
+     The address does not follow: #drink/<id> is a way in, not state. */
+  var BASE_TITLE = document.title;
+
+  function syncTitle() {
+    var ids = Object.keys(open);
+    var onMenu = !$('#view-menu').hidden;
+    var d = onMenu && ids.length === 1 ? cocktailBy[ids[0]] : null;
+    document.title = d ? d.name + ', few bottles' : BASE_TITLE;
+  }
+
   /* The lowercase form a bottle takes inside a sentence. `short` is the
      field for it, and the shelf already reads that way in "Need simple". */
   function shortName(id) {
@@ -949,12 +960,13 @@
     setTimeout(function () { el.textContent = back; }, 1600);
   }
 
-  /* One drink, addressable: fewbottles.com/#drink/<id>. A hash never
-     reaches the server and the worker matches navigations ignoring the
-     query, so a drink link opens offline from the cached shell like any
-     other address here. */
+  /* One drink, addressable: fewbottles.com/drink/<id>/. That is a page
+     of its own, written by scripts/pages.py, with the recipe in the HTML
+     and the card image in its meta tags, because a hash never reaches
+     whatever unfurls a link in a thread. The page links back in here as
+     #drink/<id>, which still opens the drink expanded. */
   function drinkUrl(id) {
-    return location.origin + location.pathname + '#drink/' + id;
+    return location.origin + '/drink/' + id + '/';
   }
 
   /* Fallback for a clipboard that says no: leave the link selected. */
@@ -2596,6 +2608,7 @@
     $('#main').scrollTop = 0;
     if (view === 'info') spyInfo();
     if (view === 'bar') landOnStarters();
+    syncTitle();
     track('view_tab', { tab: view });
   }
 
@@ -2700,6 +2713,7 @@
     open[id] = true;
     recipePane[id] = pane || (data.kin ? 'kin' : 'recipe');
     repaintMenu();
+    syncTitle();
     var el = document.getElementById('drink-' + id);
     if (el) el.scrollIntoView({ block: 'center' });
   }
@@ -2807,6 +2821,7 @@
       track('drink_open', { drink_id: id, drink_name: drinkName(id) });
     }
     renderMenu();
+    syncTitle();
   }
 
   var wakeLock = null;

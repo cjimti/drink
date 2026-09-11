@@ -249,11 +249,36 @@ the standard written small — byte mode, level M — and is checked against
 a reference library module for module; do not swap it for a CDN.
 
 **One drink shares the same way.** A drink has its own address,
-`fewbottles.com/#drink/<id>`, and the Share tab — last in the recipe
+`fewbottles.com/drink/<id>/`, and the Share tab — last in the recipe
 strip, after Kin — is the same card at a smaller size: the QR for
 somebody standing in front of you with their own phone, the link for a
 thread. A cocktail id is a stable key precisely because these links live
 in other people's messages, exactly like a shelf bit.
+
+**That address is a page, not a hash.** A hash never leaves the phone:
+iMessage, Messages, X, Slack and Googlebot all fetch the address before
+the `#` and read the meta tags they find there, with no JavaScript run.
+So `scripts/pages.py` writes `drink/<id>/index.html` for every drink,
+and `scripts/cards.py` draws `assets/cards/<id>.png`, the 1200 by 630
+picture the link unfurls into: name, ingredient lines, method and glass,
+the shorthand, and the glass art the serve token calls for. The page
+carries the drink's title and description, the card in its og and
+twitter tags, a Recipe block of JSON-LD on the same `#person` and
+`#website` ids `index.html` uses, the recipe in the HTML, links to its
+kin, and a link into the app at `#drink/<id>`. It does not redirect,
+because a redirect is what makes a crawler index the front page
+instead. Both are generated and committed, like `kin.json`: `make pages`
+and `make cards` regenerate, `make verify` refuses a stale, missing or
+orphaned one. Each card carries a hash of what it was drawn from in a
+PNG text chunk, so the check reads 174 headers without Pillow and CI
+holds the line with nothing installed; rendering needs Pillow and
+rsvg-convert, like `make icons`. `sitemap.xml` is written by the same
+script and lists every page. `404.html` is what GitHub serves for an
+address nothing answers to, a drink dropped from the menu included.
+
+The old `#drink/<id>` form still opens the drink and always will; the
+page is what the Share tab hands out now. The tab title follows the one
+drink that is open, so a bookmark says which. The address does not.
 
 Opening `#drink/<id>` is a **way in, not state.** It shows the Menu with
 that drink expanded and centred, dropping any filter that would hide it,
@@ -344,7 +369,7 @@ hide behind. It runs, in order:
   checker sleeps through it. A linter nobody has seen fail passes
   everything.
 - `menu` — codes match builds, `kin.json` matches the builds, the agent
-  dumps match the menu.
+  dumps, the drink pages and the share cards match the menu.
 - `assets` — every file `index.html` asks for exists, every id the app
   reaches for is rendered, the worker safeguards are still in place.
 

@@ -156,7 +156,8 @@ def write_llms(menu, bar, notation, kin):
         "fill the glass with the mixer. The last token is glass plus garnish,",
         "matched longest-first. Each drink in the JSON carries both `code`",
         "(the card) and `build` (the same drink spelled out). Ids are stable:",
-        "never renamed, never reused.",
+        "never renamed, never reused. Every drink has a page of its own at",
+        "/drink/<id>/, with the recipe in the HTML and a Recipe block of JSON-LD.",
         "",
         "## Start here",
         "",
@@ -181,10 +182,10 @@ def write_llms(menu, bar, notation, kin):
             for d in in_family:
                 line = ingredient_line(d, by_id)
                 fam = families.get(d["family"], d["family"])
-                # Each drink links to its own address on the site, not
-                # to the dump: #drink/<id> opens that drink expanded.
+                # Each drink links to its own page, readable with nothing
+                # running; the page links on into the app.
                 lines.append(
-                    f"- [{d['name']}]({ORIGIN}/#drink/{d['id']}): "
+                    f"- [{d['name']}]({ORIGIN}/drink/{d['id']}/): "
                     f"`{d['code']}`; {fam}; {line}"
                 )
         lines.append("")

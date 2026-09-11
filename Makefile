@@ -1,8 +1,8 @@
 # fewbottles.com — no build step, so `verify` is the whole pipeline.
 
 .DEFAULT_GOAL := verify
-.PHONY: verify check json syntax lint code style test menu kin llms assets \
-        serve icons tools events stats clean
+.PHONY: verify check json syntax lint code style test menu kin llms pages \
+        cards assets serve icons tools events stats clean
 
 ## verify — run every check, then stamp the review-gate sentinel
 verify: check
@@ -48,12 +48,14 @@ syntax:
 	@echo "  syntax  scripts/*.py"
 
 ## menu — every shorthand code agrees with the build it stands for,
-##         data/kin.json still matches those builds, and the agent
-##         dumps still match the menu
+##         data/kin.json still matches those builds, the agent dumps,
+##         the drink pages and the share cards still match the menu
 menu:
 	@python3 scripts/check_menu.py
 	@python3 scripts/kin.py --check
 	@python3 scripts/llms.py --check
+	@python3 scripts/pages.py --check
+	@python3 scripts/cards.py --check
 
 ## kin — regenerate data/kin.json from the builds
 kin:
@@ -62,6 +64,15 @@ kin:
 ## llms — regenerate llms.txt and llms-full.txt from the menu
 llms:
 	@python3 scripts/llms.py
+
+## pages — regenerate drink/<id>/index.html for every drink, and the sitemap
+pages:
+	@python3 scripts/pages.py
+
+## cards — redraw whichever share cards in assets/cards are stale.
+##         Needs Pillow and rsvg-convert, like icons; the check does not.
+cards:
+	@python3 scripts/cards.py
 
 ## assets — every file index.html asks for is actually here
 assets:
