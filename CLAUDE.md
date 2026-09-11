@@ -462,6 +462,13 @@ is the price. Do not raise a limit to make a new function fit.
   `updateViaCache: 'none'` and pokes `update()` on foreground; a worker
   that drops an old cache navigates its clients onto the new one.
   `check_assets.py` fails the build if those are missing.
+- Cloudflare and GitHub's edge both hold a file for ten minutes after a
+  deploy, and `cache: 'reload'` skips only the browser's copy. So the
+  worker fetches its shell with `?v=<version>` on the end, which no edge
+  has seen, and everything outside the shell (drink pages, glasses,
+  cards, data) is network-first with the cached copy as the fallback.
+  Only a response that said ok is stored. `check_assets.py` holds all
+  three.
 - Symptom to recognise: the page loads, or shows stale content, with
   nothing listening on the port. Check `lsof -nP -iTCP:<port>` before
   believing anything the browser shows you. `make unstick` prints the
