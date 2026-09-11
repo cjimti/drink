@@ -299,6 +299,14 @@ def run_worker(failures):
     report("worker/caches a 404", check_assets.check_worker(js, blind),
            True, failures)
 
+    adrift = sw.replace("  'offline.html',\n", "")
+    report("worker/no offline page", check_assets.check_worker(js, adrift),
+           True, failures)
+
+    unrouted = sw.replace("req.mode !== 'navigate'", "false")
+    report("worker/offline page never served",
+           check_assets.check_worker(js, unrouted), True, failures)
+
 
 PAGE = ('<html lang="en"><head><title>t</title>'
         '<meta name="description" content="d"></head>'

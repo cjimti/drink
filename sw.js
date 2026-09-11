@@ -34,6 +34,10 @@ function fresh(path) {
 var SHELL = [
   './',
   'index.html',
+  /* What a navigation falls back on when there is no signal and no copy
+     of the page asked for. Cached with the shell so it is always there
+     by the time it is needed. */
+  'offline.html',
   'assets/app.css',
   'assets/app.js',
   'assets/icon.svg',
@@ -118,6 +122,17 @@ self.addEventListener('fetch', function (e) {
     return res;
   }
 
+  /* A link to a drink this phone has never opened, tapped with no
+     signal, has no cached copy to fall back on and lands on the
+     browser's own error page. The shell carries one page for that. */
+  function offlineOr(hit, req) {
+    if (hit) return hit;
+    if (req.mode !== 'navigate') return Response.error();
+    return caches.match('offline.html').then(function (page) {
+      return page || Response.error();
+    });
+  }
+
   var isData = /\/data\/.*\.json$/.test(url.pathname);
   var isShell = SHELL_PATHS.indexOf(url.pathname) >= 0;
   /* A shared menu arrives as /?s=<code>, and a drink link can carry a
@@ -136,7 +151,11 @@ self.addEventListener('fetch', function (e) {
     e.respondWith(
       fetch(req, isData ? { cache: 'no-store' } : undefined)
         .then(function (res) { return keep(req, res); })
-        .catch(function () { return caches.match(req, opts); })
+        .catch(function () {
+          return caches.match(req, opts).then(function (hit) {
+            return offlineOr(hit, req);
+          });
+        })
     );
     return;
   }

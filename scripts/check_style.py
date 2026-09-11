@@ -232,8 +232,9 @@ def check_page(name, html):
 
 
 def page_files():
-    """The pages pages.py writes, and the one GitHub serves for a miss."""
-    names = ["404.html"] + sorted(str(p.relative_to(ROOT))
+    """The pages pages.py writes, the one GitHub serves for a miss, and
+    the one the worker serves when there is no signal."""
+    names = ["404.html", "offline.html"] + sorted(str(p.relative_to(ROOT))
                                   for p in (ROOT / "drink").glob("*/index.html"))
     return {n: (ROOT / n).read_text() for n in names}
 
