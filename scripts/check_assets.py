@@ -141,6 +141,7 @@ WELL_KNOWN = [
     "llms.txt",
     "llms-full.txt",
     "humans.txt",
+    "404.html",
     "assets/og.png",
     "assets/qr.svg",
 ]

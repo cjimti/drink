@@ -2490,6 +2490,147 @@ button.card__fig { cursor: pointer; }
   margin: 0.5in 0.55in 0.7in;
 }
 
+/* ── Drink pages ──────────────────────────────────────────
+   drink/<id>/index.html, written by scripts/pages.py. One drink on a
+   page of its own, readable with nothing running, so a link unfurls in
+   a thread and a crawler can read the recipe. Same shell, same tokens;
+   the body is a page rather than the viewport-tall app box, so it
+   scrolls like one. */
+
+body.page {
+  display: block;
+  height: auto;
+  overflow: visible;
+}
+body.page .topbar { position: sticky; top: 0; }
+/* A page has no tab bar under it, so the top tabs show as soon as the
+   brand and four words fit on one line. On a phone the brand is the way
+   back, and the button under the recipe is the way in. */
+@media (min-width: 640px) {
+  body.page .topbar__tabs { display: flex; padding-left: 18px; }
+}
+
+.page__main {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 30px var(--pad) var(--viewtail);
+}
+
+.page__eyebrow,
+.page__section h2 {
+  margin: 0 0 10px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.page__name {
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--bone);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.page__code {
+  margin: 12px 0 18px;
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: .06em;
+}
+
+.page__pours {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+.page__method,
+.page__serve {
+  margin: 0 0 6px;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.page__lead {
+  margin: 18px 0 0;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.page__open { margin: 24px 0 30px; }
+
+.page__section {
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hair);
+}
+.page__section p {
+  margin: 0 0 12px;
+  line-height: 1.55;
+}
+.page__note { color: var(--muted); }
+
+.page__kin {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.page__kin li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 9px 0;
+  border-top: 1px solid var(--hair);
+}
+.page__kin a {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.page__kin a:hover { color: var(--brass); }
+.page__why {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.page__all {
+  margin-top: 30px;
+  color: var(--muted);
+}
+.page__all a,
+.page__foot a {
+  color: var(--bone);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.page__all a:hover,
+.page__foot a:hover { color: var(--brass); }
+
+.page__foot {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 18px var(--pad) calc(24px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--rule);
+  font-size: 14px;
+  color: var(--muted);
+}
+.page__foot p { margin: 0; }
+
 @media print {
   :root {
     --ground: #FFFFFF;
@@ -2808,4 +2949,8 @@ button.card__fig { cursor: pointer; }
   .drink__code { color: var(--faint); }
 
   a[href]::after { content: ""; }
+
+  /* A drink page prints as the recipe. The way into the app and the
+     way back out are screen things. */
+  .page__open, .page__all, .page__foot { display: none !important; }
 }

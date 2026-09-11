@@ -20,7 +20,9 @@ import check_assets                                          # noqa: E402
 import check_code                                            # noqa: E402
 import check_menu                                            # noqa: E402
 import check_style                                           # noqa: E402
+import cards                                                 # noqa: E402
 import jslex                                                 # noqa: E402
+import pages                                                 # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -234,6 +236,41 @@ def run_plates(failures):
            True, failures)
 
 
+PAGE = ('<html lang="en"><head><title>t</title>'
+        '<meta name="description" content="d"></head>'
+        '<body><main><img src="a" alt="a"></main></body></html>')
+
+
+def run_pages(failures):
+    """A drink page is a real page, and every page and card is current."""
+    report("page/clean", check_style.check_page("x.html", PAGE), False,
+           failures)
+    report("page/no alt", check_style.check_page(
+        "x.html", PAGE.replace(' alt="a"', "")), True, failures)
+    report("page/no description", check_style.check_page(
+        "x.html", PAGE.replace('<meta name="description" content="d">', "")),
+        True, failures)
+    report("page/two mains", check_style.check_page(
+        "x.html", PAGE.replace("</main>", "</main><main></main>")), True,
+        failures)
+
+    texts, present = pages.render(), pages.on_disk()
+    report("pages/clean", pages.check_texts(texts, present), False, failures)
+    stale = dict(texts, **{next(iter(texts)): "not what pages.py writes\n"})
+    report("pages/stale", pages.check_texts(stale, present), True, failures)
+    report("pages/orphan", pages.check_texts(
+        texts, present | {"drink/nothing-here/index.html"}), True, failures)
+
+    want, have = cards.wanted(), cards.on_disk()
+    report("cards/clean", cards.check_cards(want, have), False, failures)
+    first = next(iter(want))
+    stale = dict(want, **{first: (want[first][0], "0000000000000000")})
+    report("cards/stale", cards.check_cards(stale, have), True, failures)
+    report("cards/orphan", cards.check_cards(
+        want, dict(have, **{"nothing-here": ROOT / "assets" / "og.png"})),
+        True, failures)
+
+
 def run_lexer(failures):
     """Stripping the real files leaves every bracket balanced."""
     for f in ("assets/app.js", "sw.js"):
@@ -253,7 +290,7 @@ def main():
     """Every case, then the count."""
     failures = []
     for run in (run_css, run_js, run_py, run_house, run_menu, run_glasses,
-                run_plates, run_lexer):
+                run_plates, run_pages, run_lexer):
         run(failures)
     for f in failures:
         print(f"  TEST    {f}")
