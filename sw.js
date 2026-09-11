@@ -22,6 +22,15 @@ if (self.location.protocol !== 'https:') {
 var VERSION = '__BUILD__';
 var CACHE = 'drink-' + VERSION;
 
+/* cache: 'reload' skips the browser's cache and nothing else. Cloudflare
+   and GitHub's own edge both hold a file for ten minutes after a deploy,
+   so a worker installing in that window would fetch the previous
+   release's shell and pin it under the new cache name until the next
+   tag. A query nobody has asked for before misses every edge. */
+function fresh(path) {
+  return path + (path.indexOf('?') < 0 ? '?' : '&') + 'v=' + VERSION;
+}
+
 var SHELL = [
   './',
   'index.html',
@@ -46,6 +55,10 @@ var SHELL = [
   'assets/tools/highball-glass.png'
 ];
 
+var SHELL_PATHS = SHELL.map(function (path) {
+  return new URL(path, self.location.href).pathname;
+});
+
 self.addEventListener('install', function (e) {
   e.waitUntil(
     caches.open(CACHE)
@@ -54,7 +67,7 @@ self.addEventListener('install', function (e) {
            filling a new shell from that copy would stamp the old app into
            the new cache. */
         return Promise.all(SHELL.map(function (path) {
-          return fetch(path, { cache: 'reload' }).then(function (res) {
+          return fetch(fresh(path), { cache: 'reload' }).then(function (res) {
             if (!res.ok) throw new Error(path);
             return c.put(path, res);
           });
@@ -95,31 +108,42 @@ self.addEventListener('fetch', function (e) {
      phone keeps an old sw.js after a deploy. */
   if (/\/sw\.js$/.test(url.pathname)) return;
 
-  var isData = /\/data\/.*\.json$/.test(url.pathname);
+  /* Store a copy only when the network said yes. A 404 or a 5xx that
+     got cached would be served cache-first until the next tag. */
+  function keep(req, res) {
+    if (res.ok) {
+      var copy = res.clone();
+      caches.open(CACHE).then(function (c) { c.put(req, copy); });
+    }
+    return res;
+  }
 
-  if (isData) {
+  var isData = /\/data\/.*\.json$/.test(url.pathname);
+  var isShell = SHELL_PATHS.indexOf(url.pathname) >= 0;
+  /* A shared menu arrives as /?s=<code>, and a drink link can carry a
+     query too. The cached copy is keyed on the path, so a navigation has
+     to match on the path alone or every link opened offline misses the
+     cache it is standing next to. */
+  var opts = req.mode === 'navigate' ? { ignoreSearch: true } : undefined;
+
+  /* The shell was fetched fresh at install and is keyed to this version,
+     so it is safe cache-first. Everything else, a drink page, a glass, a
+     card, the data, goes to the network first and falls back to the copy
+     from last time. That is what stops an edge cache serving the old
+     release for ten minutes after a deploy from being pinned here for
+     good, and it keeps the offline copy no more than one visit old. */
+  if (!isShell) {
     e.respondWith(
-      fetch(req, { cache: 'no-store' }).then(function (res) {
-        var copy = res.clone();
-        caches.open(CACHE).then(function (c) { c.put(req, copy); });
-        return res;
-      }).catch(function () { return caches.match(req); })
+      fetch(req, isData ? { cache: 'no-store' } : undefined)
+        .then(function (res) { return keep(req, res); })
+        .catch(function () { return caches.match(req, opts); })
     );
     return;
   }
 
-  /* A shared menu arrives as /?s=<code>. The shell is cached under './',
-     so a navigation has to match on the path alone or every shared link
-     opened offline misses the cache it is standing next to. */
-  var opts = req.mode === 'navigate' ? { ignoreSearch: true } : undefined;
-
   e.respondWith(
     caches.match(req, opts).then(function (hit) {
-      return hit || fetch(req).then(function (res) {
-        var copy = res.clone();
-        caches.open(CACHE).then(function (c) { c.put(req, copy); });
-        return res;
-      });
+      return hit || fetch(req).then(function (res) { return keep(req, res); });
     })
   );
 });

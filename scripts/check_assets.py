@@ -183,6 +183,10 @@ def check_worker(js, sw):
         errs.append("sw.js cannot take itself out when it wakes up off https")
     if sw.count(".navigate(") < 2:
         errs.append("sw.js must navigate clients both off https and when a new cache replaces an old one")
+    if "fetch(fresh(path)" not in sw or "'v=' + VERSION" not in sw:
+        errs.append("sw.js installs its shell without a version query — an edge cache can hand it the previous release for ten minutes after a tag")
+    if "if (res.ok)" not in sw:
+        errs.append("sw.js caches responses without checking res.ok — a 404 or a 5xx would be pinned until the next tag")
 
     for e in errs:
         print(f"  WORKER {e}")

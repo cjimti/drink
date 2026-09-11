@@ -236,6 +236,22 @@ def run_plates(failures):
            True, failures)
 
 
+def run_worker(failures):
+    """The worker keeps every safeguard, and loses each one on purpose."""
+    js = (ROOT / "assets" / "app.js").read_text()
+    sw = (ROOT / "sw.js").read_text()
+    report("worker/clean", check_assets.check_worker(js, sw), False, failures)
+
+    stale = sw.replace("fetch(fresh(path), { cache: 'reload' })",
+                       "fetch(path, { cache: 'reload' })")
+    report("worker/shell not fresh", check_assets.check_worker(js, stale),
+           True, failures)
+
+    blind = sw.replace("if (res.ok) {", "if (true) {")
+    report("worker/caches a 404", check_assets.check_worker(js, blind),
+           True, failures)
+
+
 PAGE = ('<html lang="en"><head><title>t</title>'
         '<meta name="description" content="d"></head>'
         '<body><main><img src="a" alt="a"></main></body></html>')
@@ -290,14 +306,14 @@ def main():
     """Every case, then the count."""
     failures = []
     for run in (run_css, run_js, run_py, run_house, run_menu, run_glasses,
-                run_plates, run_pages, run_lexer):
+                run_plates, run_pages, run_lexer, run_worker):
         run(failures)
     for f in failures:
         print(f"  TEST    {f}")
     if failures:
         return 1
     n = (len(css_cases()) + len(js_cases()) + len(py_cases())
-         + len(size_cases()) + 14 + 5 + 3 + 4 + 2)
+         + len(size_cases()) + 14 + 5 + 3 + 4 + 2 + 3)
     print(f"  test    {n} case(s): every rule fails when it is broken")
     return 0
 

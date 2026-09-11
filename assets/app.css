@@ -2502,6 +2502,17 @@ body.page {
   height: auto;
   overflow: visible;
 }
+/* The shell makes #main the one thing that scrolls, with
+   overscroll-behavior: contain so a flick at the end of the list does
+   not pull the page. A drink page has no shell: the document scrolls.
+   But #main was still an overflow: auto box with contain on it, and a
+   scroll container that cannot scroll still catches the wheel in
+   Firefox and WebKit, so nothing moved. Make it an ordinary block. */
+body.page #main {
+  overflow: visible;
+  overscroll-behavior: auto;
+  scrollbar-gutter: auto;
+}
 body.page .topbar { position: sticky; top: 0; }
 /* A page has no tab bar under it, so the top tabs show as soon as the
    brand and four words fit on one line. On a phone the brand is the way
