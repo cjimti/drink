@@ -426,14 +426,28 @@ is the price. Do not raise a limit to make a new function fit.
   Cutting a tag now publishes the site and creates a release, so it is
   the user's call, never the model's.
 - **Only a tag ships.** A push to `main` runs `make check` and deploys
-  nothing; pushing a `v*` tag runs the checks, stamps the tag into
-  `sw.js` and `assets/app.js`, deploys Pages, and then creates the
-  GitHub release from generated notes, so a release cannot exist for
-  something that never went live. The tag is the only place a version is
-  written: no `VERSION` file, nothing in `manifest.webmanifest`. `sw.js`
-  keys its cache on `__BUILD__` and `app.js` prints `__VERSION__`, each
-  of which appears exactly once in its file because the deploy `sed`s
-  for it. Unstamped is a working copy and reads `dev`.
+  nothing; pushing a `v*` tag runs the checks, stages the site, deploys
+  Pages, and then creates the GitHub release from generated notes, so a
+  release cannot exist for something that never went live. The tag is
+  the only place a version is written: no `VERSION` file, nothing in
+  `manifest.webmanifest`. `sw.js` keys its cache on `__BUILD__` and
+  `app.js` prints `__VERSION__`, each of which appears exactly once in
+  its file because the deploy stamps it. Unstamped is a working copy and
+  reads `dev`.
+- **The origin carries what the site serves, not the repo.**
+  `scripts/stage.py` copies `SERVED` into `_site`, and only that is
+  uploaded: this file, the Makefile and the checkers are not on
+  fewbottles.com. It stamps the copy, never the tree: the two tokens
+  above, and `?v=<tag>` on the `app.css` and `app.js` tags in
+  `index.html`, `404.html`, `offline.html` and every drink page, because
+  the edge holds js and css for four hours and a visitor with no worker
+  would get the new page against the old script. Any stamp that does not
+  land exactly once fails the deploy before the upload.
+  `check_assets.py` holds both ends: the tree carries each token once and
+  no `?v=`, and every local thing the site links is inside `SERVED`, so a
+  new asset directory cannot be left off. The worker matches shell files
+  on the path alone for that reason. `make stage V=v9.9.9 DEST=<empty
+  dir>` rehearses a release on a laptop.
 - `make verify` before showing work. It is the whole pipeline.
 - **Adversarially review your own diff before you call it done.** After
   `make verify` passes and before the diff goes up, read the change back

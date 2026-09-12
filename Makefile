@@ -2,7 +2,7 @@
 
 .DEFAULT_GOAL := verify
 .PHONY: verify check json syntax lint code style test menu kin llms pages \
-        cards assets serve icons tools events stats clean
+        cards assets stage serve icons tools events stats clean
 
 ## verify — run every check, then stamp the review-gate sentinel
 verify: check
@@ -78,6 +78,13 @@ cards:
 assets:
 	@python3 scripts/check_assets.py
 
+## stage — rehearse the deploy: copy what the site serves into DEST and
+##         stamp it with V, exactly as a tag does. DEST must be empty.
+V ?= v0.0.0
+DEST ?= _site
+stage:
+	@python3 scripts/stage.py $(V) $(DEST)
+
 ## serve — fetch() needs http://, not file://; sends no-store so edits show up
 ##
 ## Port 8010, not 8000, and that is deliberate. A service worker owns a
@@ -124,4 +131,4 @@ unstick:
 	@echo "worker automatically, so this should not come up twice."
 
 clean:
-	@rm -rf scripts/__pycache__ .claude/.last-verify-passed
+	@rm -rf scripts/__pycache__ .claude/.last-verify-passed _site

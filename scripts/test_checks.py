@@ -24,6 +24,7 @@ import cards                                                 # noqa: E402
 import jslex                                                 # noqa: E402
 import llms                                                  # noqa: E402
 import pages                                                 # noqa: E402
+import stage                                                 # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -454,6 +455,15 @@ def run_glasses(failures):
     report("glass/no drawing", check_assets.check_glasses(broken)[0], True,
            failures)
 
+    # A drawing every boot fetches and nothing ever shows. Only the new
+    # message counts here: the file is gone too, and that rule would
+    # report it on its own.
+    broken = app.replace("'rocks-cube-wheel',\n",
+                         "'rocks-cube-wheel',\n    'rocks-ice',\n")
+    report("glass/fetched, never asked for",
+           [e for e in check_assets.check_glasses(broken)[0]
+            if "no serve token" in e], True, failures)
+
 
 def run_plates(failures):
     """Every tool plate is converted, shown on the Info tab, and cached."""
@@ -545,9 +555,18 @@ def run_worker(failures):
     report("worker/shell not fresh", check_assets.check_worker(js, stale),
            True, failures)
 
-    blind = sw.replace("if (res.ok) {", "if (true) {")
+    blind = sw.replace("if (res.status === 200) {", "if (true) {")
     report("worker/caches a 404", check_assets.check_worker(js, blind),
            True, failures)
+
+    partial = sw.replace("if (res.status === 200) {", "if (res.ok) {")
+    report("worker/caches a 206", check_assets.check_worker(js, partial),
+           True, failures)
+
+    strict = sw.replace("caches.match(req, { ignoreSearch: true })",
+                        "caches.match(req, opts)")
+    report("worker/shell matched on the query",
+           check_assets.check_worker(js, strict), True, failures)
 
     adrift = sw.replace("  'offline.html',\n", "")
     report("worker/no offline page", check_assets.check_worker(js, adrift),
@@ -556,6 +575,96 @@ def run_worker(failures):
     unrouted = sw.replace("req.mode !== 'navigate'", "false")
     report("worker/offline page never served",
            check_assets.check_worker(js, unrouted), True, failures)
+
+
+def run_stamps(failures):
+    """Each release stamp has one place to land, and the tree is unstamped."""
+    texts = check_assets.served_texts()
+    report("stamp/clean", check_assets.check_stamps(texts), False, failures)
+
+    sw = texts["sw.js"]
+    twice = dict(texts, **{"sw.js": "/* __BUILD__ */\n" + sw})
+    report("stamp/build twice", check_assets.check_stamps(twice), True,
+           failures)
+    gone = dict(texts, **{"assets/app.js": texts["assets/app.js"].replace(
+        "'__VERSION__'", "'dev'")})
+    report("stamp/version gone", check_assets.check_stamps(gone), True,
+           failures)
+    tagged = dict(texts, **{"index.html": texts["index.html"].replace(
+        'src="assets/app.js"', 'src="assets/app.js?v=v1.4.0"')})
+    report("stamp/tag stamped in the tree",
+           check_assets.check_stamps(tagged), True, failures)
+    page = "drink/martini/index.html"
+    tagged = dict(texts, **{page: texts[page].replace(
+        'href="/assets/app.css"', 'href="/assets/app.css?v=v1.4.0"')})
+    report("stamp/page stamped in the tree",
+           check_assets.check_stamps(tagged), True, failures)
+
+
+def stage_error(fn):
+    """What a stage call refused with, or nothing when it went through."""
+    try:
+        fn()
+    except stage.StageError as e:
+        return str(e)
+    return ""
+
+
+def run_stage(failures):
+    """The deploy's own stamping refuses anything but one of each."""
+    sw = (ROOT / "sw.js").read_text()
+    report("stage/one build", stage_error(
+        lambda: stage.stamp("sw.js", sw, "__BUILD__", "v9.9.9")), False,
+        failures)
+    report("stage/build twice", stage_error(
+        lambda: stage.stamp("sw.js", "/* __BUILD__ */\n" + sw, "__BUILD__",
+                            "v9.9.9")), True, failures)
+    report("stage/build nowhere", stage_error(
+        lambda: stage.stamp("sw.js", "var VERSION = 'dev';", "__BUILD__",
+                            "v9.9.9")), True, failures)
+
+    names = set(stage.tracked())
+    out = stage.stamped("v9.9.9", names)
+    page = out["drink/martini/index.html"]
+    report("stage/page stamped",
+           "" if 'href="/assets/app.css?v=v9.9.9"' in page
+           else "the page's stylesheet carries no version", False, failures)
+    report("stage/index stamped",
+           "" if 'src="assets/app.js?v=v9.9.9"' in out["index.html"]
+           else "the script tag carries no version", False, failures)
+    report("stage/nothing unserved", sorted(
+        n for n in names if n.split("/")[0] not in stage.SERVED), False,
+        failures)
+    report("stage/stamped file not staged", stage_error(
+        lambda: stage.stamped("v9.9.9", names - {"offline.html"})), True,
+        failures)
+    report("stage/quote in the version", stage_error(
+        lambda: stage.stage("v1'x", ROOT / "nowhere")), True, failures)
+
+
+def run_served(failures):
+    """Everything the site points at is something the deploy uploads."""
+    texts = check_assets.served_texts()
+    sw, man = texts["sw.js"], check_assets.manifest()
+    refs = check_assets.references(texts, sw, man)
+    report("served/clean", check_assets.check_served(refs, stage.SERVED),
+           False, failures)
+
+    page = "drink/martini/index.html"
+    linked = dict(texts, **{page: texts[page].replace(
+        "</main>", '<a href="../../CLAUDE.md">notes</a></main>')})
+    report("served/page links the notes", check_assets.check_served(
+        check_assets.references(linked, sw, man), stage.SERVED), True,
+        failures)
+    report("served/drink pages left off", check_assets.check_served(
+        refs, [s for s in stage.SERVED if s != "drink"]), True, failures)
+    no_fonts = [s for s in stage.SERVED if s != "assets"] + sorted(
+        n for n in stage.tracked()
+        if n.startswith("assets/") and not n.startswith("assets/fonts/"))
+    report("served/fonts left off",
+           check_assets.check_served(refs, no_fonts), True, failures)
+    report("served/a name with nothing behind it", check_assets.check_served(
+        refs, stage.SERVED + ["asset"]), True, failures)
 
 
 PAGE = ('<html lang="en"><head><title>t</title>'
@@ -632,7 +741,8 @@ def main():
                 run_pressed, run_names, run_menu, run_methods,
                 run_mixer_method,
                 run_method_line, run_glasses, run_fonts, run_manifest,
-                run_plates, run_pages, run_lexer, run_worker):
+                run_plates, run_pages, run_lexer, run_worker, run_stamps,
+                run_stage, run_served):
         run(failures)
     for f in failures:
         print(f"  TEST    {f}")
