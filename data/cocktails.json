@@ -108,14 +108,6 @@
         { "title": "The Oxford Companion to Spirits and Cocktails, The Brandy Crusta", "url": "https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-266" },
         { "title": "Difford's Guide, Brandy Crusta", "url": "https://www.diffordsguide.com/cocktails/recipe/310/brandy-crusta" }
       ] },
-    { "id": "ritz", "name": "Ritz", "method": "stirred", "family": "cognac", "code": "Q,h,q,q,3,cfo", "serve": "cfo",
-      "build": [["cognac","Q"],["maraschino","h"],["demerara","q"],["lemon","q"],["angostura","3"]],
-      "taste": "Three-quarters of an ounce of cognac, so this is a small drink. Half an ounce of maraschino is the sweet and the cherry; a quarter each of demerara and lemon. Three dashes of Angostura is a lot of bark for so little spirit. Stirred, coupe, flamed orange twist.",
-      "history": "Dale DeGroff built a Ritz Cocktail at Aurora in New York in 1985, later printed in The Craft of the Cocktail (2002) as a tribute to the Ritz drinks of Paris and Madrid: three-quarters cognac, half orange liqueur, a quarter each of maraschino and lemon, topped with Champagne, and a flamed orange twist. This menu keeps the small cognac, the maraschino, the lemon, and the flamed twist. It drops the Champagne and the orange liqueur, adds a quarter of demerara and three dashes of Angostura, and stirs it.",
-      "refs": [
-        { "title": "Imbibe, Ritz Cocktail", "url": "https://imbibemagazine.com/recipe/ritz-cocktail/" },
-        { "title": "Difford's Guide, Ritz Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/1677/ritz-cocktail" }
-      ] },
 
     { "id": "old-fashioned", "name": "Old-Fashioned", "method": "stirred", "family": "bourbon", "code": "2,1b,2,R", "serve": "R",
       "build": [["bourbon","2"],["demerara","1b"],["angostura","2"]],
@@ -792,6 +784,14 @@
       "history": "The earliest known recipe is in Drinks Long and Short, published in London in 1925 by Nina Toye and A. H. Adair, written out for a party of six: three glasses of brandy, one of the herbal liqueur, and one and a half of sweetened lemon juice, shaken with Angostura. Harry Craddock printed the same proportions in the 1930 The Savoy Cocktail Book with cognac named in place of brandy. No creator is documented; historians place the drink in the first half of the 1920s and treat it as French, named for the avenue between the Arc de Triomphe and the Place de la Concorde. This menu pours an ounce and a half of cognac, half an ounce of Chartreuse, three-quarters of lemon, a quarter of simple, and a dash of Angostura, shaken, coupe, lemon twist.",
       "refs": [
         { "title": "Coqtail, Champs-Elysees cocktail recipe and story", "url": "https://www.coqtail.com/en/champs-elysees-cocktail-recipe-story/" }
+      ] },
+    { "id": "ritz", "name": "Ritz", "method": "shaken", "family": "cognac", "code": "Q,h,q,q,3,2,cfo", "serve": "cfo",
+      "build": [["cognac","Q"],["maraschino","h"],["demerara","q"],["lemon","q"],["angostura","3"],["champagne","2"]],
+      "taste": "Three-quarters of an ounce of cognac, half an ounce of maraschino for the sweet and the cherry, a quarter each of demerara and lemon, three dashes of Angostura. Shaken, then two ounces of Champagne, so the wine is the biggest pour in the glass. Coupe, flamed orange twist. Dry and bubbly, cherry and bark over a little brandy, with burnt orange on the surface.",
+      "history": "Dale DeGroff built a Ritz Cocktail at Aurora in New York in 1985, later printed in The Craft of the Cocktail (2002) as a tribute to the Ritz drinks of Paris and Madrid: three-quarters cognac, half orange liqueur, a quarter each of maraschino and lemon, topped with Champagne, and a flamed orange twist. This menu keeps the small cognac, the maraschino, the lemon, the Champagne, and the flamed twist. It drops the orange liqueur and adds a quarter of demerara and three dashes of Angostura. The printed card left the Champagne off, and the menu restored it in 2026, because three-quarters of an ounce of cognac is DeGroff's measure for a drink with two ounces of wine on top.",
+      "refs": [
+        { "title": "Imbibe, Ritz Cocktail", "url": "https://imbibemagazine.com/recipe/ritz-cocktail/" },
+        { "title": "Difford's Guide, Ritz Cocktail", "url": "https://www.diffordsguide.com/cocktails/recipe/1677/ritz-cocktail" }
       ] },
 
     { "id": "buster-brown", "name": "Buster Brown", "method": "shaken", "family": "bourbon", "code": "2,Q,h,3,co", "serve": "co",

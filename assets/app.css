@@ -199,7 +199,11 @@
   --body: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --pad: 20px;
+  /* Every page asks for viewport-fit=cover, so a phone on its side draws
+     under the notch and leaves the inset to the page. All side padding
+     reads this one token, so it clears the inset on both sides. With no
+     inset (a desktop, paper) it is 20px, as it always was. */
+  --pad: max(20px, env(safe-area-inset-left), env(safe-area-inset-right));
   --measure: 660px;
   /* The wide layout is two fixed tracks, not a column that stretches. A
      drink row is a name on the left and its code on the right, and past
@@ -673,13 +677,21 @@ noscript.fallback a { color: var(--brass); }
 .seg__b:last-child { border-right: 0; }
 .seg__b.is-on { background: var(--bone); color: var(--ground); }
 
-/* Five segments (All / Stirred / Shaken / Built / Families) on a phone.
-   Tracking drops a little so FAMILIES still sits on one line: the five
-   need 313px of the 350px a 390 wide phone leaves inside the padding. */
+/* Five segments (All / Stirred / Shaken / Built / Shapes) on a phone.
+   Tracking drops a little so the five sit on one line in the 348px a
+   390 wide phone leaves inside the padding. */
 .seg--wide .seg__b {
   letter-spacing: .11em;
   font-size: 10px;
   padding: 9px 2px;
+}
+
+/* Under about 330px wide, STIRRED at that tracking needs 57px and an even
+   fifth of the row is less, so flex hands out five unequal buttons and
+   the longest labels touch their rules. Tighter tracking gives the room
+   back without shrinking the type. */
+@media (max-width: 339px) {
+  .seg--wide .seg__b { letter-spacing: .05em; }
 }
 
 .search {
@@ -1094,7 +1106,9 @@ noscript.fallback a { color: var(--brass); }
 
 .pour {
   display: grid;
-  grid-template-columns: 74px 1fr;
+  /* Eleven DM Mono advances at the amount's 12.5px: `2 barspoons` is
+     the longest amount the decoder writes, and a mono advance is .6em. */
+  grid-template-columns: 84px 1fr;
   gap: 0 12px;
   padding: 6px 0;
   border-bottom: 1px solid var(--hair);
@@ -2131,6 +2145,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   display: flex;
   height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
   padding-bottom: env(safe-area-inset-bottom);
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
   background: var(--ground);
   border-top: 1px solid var(--rule);
 }
@@ -3133,7 +3148,9 @@ body.page .topbar { position: sticky; top: 0; }
     margin: 0;
   }
   .print-card .pour {
-    grid-template-columns: 5.2em 1fr;
+    /* Eleven DM Mono advances at the 8pt amount is 52.8pt, which is
+       `2 barspoons`. An em here is the row's 10pt, not the amount's. */
+    grid-template-columns: 54pt 1fr;
     padding: 2.5pt 0;
     gap: 0 8px;
   }
