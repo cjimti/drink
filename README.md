@@ -130,7 +130,7 @@ does not need `wrangler`.
 
 The site runs Google Analytics through Google Tag Manager, and counts
 what gets used, in aggregate: which tab opened, which drink was expanded,
-which bottle was selected, whether a menu was printed or shared. There is
+which bottle was ticked, whether a menu was printed or shared. There is
 no account and no name to attach any of it to, the shelf itself never
 leaves your phone unless you share it, and nothing is sold to anyone. A
 content blocker stops all of it and the site works exactly the same. The
