@@ -133,6 +133,18 @@
 
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
 
+  /* One spelling for searching, so benedictine finds Benedictine and
+     Bénédictine alike. NFD splits a letter from the accent riding on
+     it and the range strips the accent, which is the whole of it: no
+     table, no transliteration, and a keyboard with no é still reaches
+     the eighteen drinks that call for the bottle. A browser without
+     normalize keeps the fold it has always had. */
+  function fold(s) {
+    s = String(s);
+    if (!s.normalize) return s.toLowerCase();
+    return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
   /* Named events for Google Tag Manager. The snippet in index.html
      owns dataLayer; we only push. Each event is one thing a person
      did, with the ids the reports will group by. Skip http so a
@@ -1048,7 +1060,7 @@
   function setSearch(raw) {
     filter.raw = raw;
     filter.code = raw.trim();
-    filter.q = filter.code.toLowerCase();
+    filter.q = fold(filter.code);
   }
 
   /* Everything but the shelf choice: the segments, a bottle, a shape, a
@@ -1114,12 +1126,13 @@
     if (filter.pattern && patternIdOf(d) !== filter.pattern) return false;
     if (shelfGate() && !canPour(d, held)) return false;
     if (filter.q) {
-      /* A name and an ingredient fold, so rye finds Rye. A code does not,
-         because case is what the shorthand spends instead of a second
-         letter: q is a quarter and Q is three quarters, h a half ounce
-         and H a packed highball. Folded, every one of those searches
-         returned the other one's drinks as well, which is no answer. */
-      var hay = (d.name + ' ' + ingredientLine(d)).toLowerCase();
+      /* A name and an ingredient fold, so rye finds Rye and benedictine
+         finds Bénédictine. A code does not, because case is what the
+         shorthand spends instead of a second letter: q is a quarter and
+         Q is three quarters, h a half ounce and H a packed highball.
+         Folded, every one of those searches returned the other one's
+         drinks as well, which is no answer. */
+      var hay = fold(d.name + ' ' + ingredientLine(d));
       if (hay.indexOf(filter.q) < 0 && d.code.indexOf(filter.code) < 0) return false;
     }
     return true;
@@ -1480,7 +1493,10 @@
         var pat = patternBy[filter.pattern];
         blocking.push('are the ' + (pat ? pat.label : filter.pattern) + ' shape');
       }
-      if (filter.q) blocking.push('match “' + filter.q + '”');
+      /* Quote the term back the way it was typed. q is folded for
+         matching, and a visitor who typed Bénédictine should not be
+         told the app looked for benedictine. */
+      if (filter.q) blocking.push('match “' + filter.code + '”');
 
       return '<div class="empty empty--clash">' +
         '<p>You can pour <b>' + canNow + '</b> ' +

@@ -133,6 +133,37 @@ def run_css(failures):
         report(f"css/{name}", errs, expected, failures)
 
 
+def contrast_cases():
+    """(name, light --faint, should it be reported) for the floor.
+
+    One token, moved, against the real light palette. #A29E96 is the
+    grey the tab labels and the search placeholder were set in until
+    the day somebody read the page outdoors: 2.67:1 on white.
+    """
+    return [
+        ("faint under the floor", "#A29E96", True),
+        ("faint at the floor", "#767268", False),
+    ]
+
+
+def run_contrast(failures):
+    """The palette the app ships, and the same palette with one grey
+    nudged back to where it was."""
+    css = (ROOT / "assets" / "app.css").read_text()
+    _, defined = check_style.check_css(css)
+    _, dark, light = check_style.check_themes(defined)
+    report("contrast/shipped", check_style.check_contrast(
+        (("dark", dark), ("light", light)))[0], False, failures)
+    for name, value, expected in contrast_cases():
+        broken = dict(light, **{"--faint": value})
+        report(f"contrast/{name}",
+               check_style.check_contrast((("light", broken),))[0],
+               expected, failures)
+    report("contrast/not a hex", check_style.check_contrast(
+        (("light", dict(light, **{"--faint": "var(--muted)"})),))[0],
+        True, failures)
+
+
 def run_js(failures):
     """Each JavaScript foot-gun, and its innocent twin."""
     for name, js, expected in js_cases():
@@ -190,8 +221,7 @@ def run_house(failures):
                          "d.code.toLowerCase().indexOf(filter.q)")
     report("house/search folds the code",
            check_style.check_search_case(broken), True, failures)
-    broken = app.replace("var hay = (d.name + ' ' + ingredientLine(d))"
-                         ".toLowerCase();",
+    broken = app.replace("var hay = fold(d.name + ' ' + ingredientLine(d));",
                          "var hay = (d.name + ' ' + ingredientLine(d)\n"
                          "        + ' ' + d.code)\n        .toLowerCase();")
     report("house/search folds over two lines",
@@ -560,9 +590,9 @@ def run_lexer(failures):
 def main():
     """Every case, then the count."""
     failures = []
-    for run in (run_css, run_js, run_py, run_house, run_pressed,
-                run_menu, run_methods, run_mixer_method, run_method_line,
-                run_glasses, run_fonts, run_manifest,
+    for run in (run_css, run_contrast, run_js, run_py, run_house,
+                run_pressed, run_menu, run_methods, run_mixer_method,
+                run_method_line, run_glasses, run_fonts, run_manifest,
                 run_plates, run_pages, run_lexer, run_worker):
         run(failures)
     for f in failures:
