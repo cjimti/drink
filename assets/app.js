@@ -108,10 +108,16 @@
        because the text in the box is the visitor's, not the app's. code
        is that trimmed with its case left alone, which is what a code is
        matched on. q is code folded, for the name and the ingredients.
-       setSearch writes all three, so they cannot drift. */
+       setSearch writes all three, so they cannot drift.
+       unlock is a bottle the shelf lacks: the list is then the drinks
+       buying it would open, which is what its +N figure counts. One shot,
+       dropped by choosing a menu or by any edit to the shelf.
+       sentMiss is the id of a drink a shared link named that the sender
+       cannot pour, so the list left their menu for All bottles and the
+       banner stays to say why. */
     return {
-      method: 'all', family: null, pattern: null,
-      pourable: false, shared: false, q: '', code: '', raw: ''
+      method: 'all', family: null, pattern: null, unlock: null,
+      pourable: false, shared: false, sentMiss: null, q: '', code: '', raw: ''
     };
   }
 
@@ -1052,9 +1058,13 @@
     return filter.pourable ? 'shelf' : 'all';
   }
 
+  /* Choosing a menu is also the way off the two things that only make
+     sense of the menu they were opened on. */
   function selectMenu(mode) {
     filter.pourable = mode === 'shelf';
     filter.shared = mode === 'shared';
+    filter.unlock = null;
+    filter.sentMiss = null;
   }
 
   /* Whether the card wears the shelf: brass on what pours, a dim row and
@@ -1077,7 +1087,8 @@
   /* Everything but the shelf choice: the segments, a bottle, a shape, a
      search. Clear drops these and leaves the menu you chose alone. */
   function otherFiltersOn() {
-    return !!(filter.family || filter.pattern || filter.q || filter.method !== 'all');
+    return !!(filter.family || filter.pattern || filter.unlock || filter.q ||
+      filter.method !== 'all');
   }
 
   function shelfChip(on, attr, label, n) {
@@ -1098,12 +1109,17 @@
   function renderShelfChips() {
     var mode = menuMode();
     var named = loadedShelf ? presetById(loadedShelf) : null;
+    /* A bottle's drinks are not the shelf's, so while that list is up no
+       shelf chip claims it, and tapping the shelf is the way back. The
+       sender's shelf included: a +N on the Bar tab counts against the
+       shelf the tab is showing, and that may be theirs. */
+    var shelf = mode === 'shelf' && !filter.unlock;
     var html = shelfChip(mode === 'all', 'data-menu-all="1"', 'All bottles',
         data.menu.cocktails.length) +
-      shelfChip(mode === 'shelf' && shelfView === 'mine', 'data-shelf-mine="1"', 'My Shelf',
+      shelfChip(shelf && shelfView === 'mine', 'data-shelf-mine="1"', 'My Shelf',
         pourableCount(have));
     if (named) {
-      html += shelfChip(mode === 'shelf' && shelfView === named.id,
+      html += shelfChip(shelf && shelfView === named.id,
         'data-shelf-switch="' + esc(named.id) + '"',
         named.label, pourableCount(namedHave(named.id)));
     } else if ((data.bar.shelves || []).length) {
@@ -1111,8 +1127,13 @@
         '<span aria-hidden="true">&rarr;</span></button>';
     }
     if (shared) {
-      html += shelfChip(mode === 'shared', 'data-shared="1"', 'Shared menu',
+      html += shelfChip(mode === 'shared' && !filter.unlock, 'data-shared="1"', 'Shared menu',
         pourableCount(shared.have));
+    }
+    if (filter.unlock) {
+      html += shelfChip(true, 'data-unlock="' + esc(filter.unlock) + '"',
+        'With ' + rowName({ ids: [filter.unlock] }),
+        unlockedBy([filter.unlock], heldNow()).length);
     }
     return html;
   }
@@ -1131,11 +1152,20 @@
     return filter.method !== 'all' && filter.method !== 'families';
   }
 
+  /* The shelf gate, and under unlock the shelf with that one bottle on
+     it, keeping only what the bottle is the difference for. The same
+     arithmetic as unlockedBy, so the list and the figure agree. */
+  function passesGate(d, held) {
+    if (!shelfGate()) return true;
+    if (!filter.unlock) return canPour(d, held);
+    return canPour(d, withBottles(held, [filter.unlock])) && !canPour(d, held);
+  }
+
   function matches(d, held) {
     if (methodFilterOn() && d.method !== filter.method) return false;
     if (filter.family && needs(d).indexOf(filter.family) < 0) return false;
     if (filter.pattern && patternIdOf(d) !== filter.pattern) return false;
-    if (shelfGate() && !canPour(d, held)) return false;
+    if (!passesGate(d, held)) return false;
     if (filter.q) {
       /* A name and an ingredient fold, so rye finds Rye and benedictine
          finds Bénédictine. A code does not, because case is what the
@@ -1486,13 +1516,25 @@
     return html + '</div>';
   }
 
+  /* What the other filters are standing in the way of: the shelf, or
+     under unlock the drinks one more bottle would open. */
+  function clashLead(held, canNow) {
+    if (filter.unlock) {
+      var k = unlockedBy([filter.unlock], held).length;
+      return esc(rowName({ ids: [filter.unlock] })) + ' opens <b>' + k + '</b> ' +
+        (k === 1 ? 'drink' : 'drinks');
+    }
+    return 'You can pour <b>' + canNow + '</b> ' +
+      (canNow === 1 ? 'drink' : 'drinks') + ' with what is on the shelf';
+  }
+
   /* An empty list has more than one cause, and saying the wrong one sends
      people to the Bar tab to fix a shelf that was never the problem. Work
      out which filter is actually doing the excluding and say so. */
   function renderEmpty(held) {
     var canNow = pourableCount(held);
 
-    if (shelfGate() && canNow > 0) {
+    if (shelfGate() && (canNow > 0 || filter.unlock)) {
       /* Each clause is a full predicate, so they read as a sentence
          however many of them there happen to be. */
       var blocking = [];
@@ -1510,8 +1552,7 @@
       if (filter.q) blocking.push('match “' + filter.code + '”');
 
       return '<div class="empty empty--clash">' +
-        '<p>You can pour <b>' + canNow + '</b> ' +
-          (canNow === 1 ? 'drink' : 'drinks') + ' with what is on the shelf, but ' +
+        '<p>' + clashLead(held, canNow) + ', but ' +
           (blocking.length
             ? 'none of them ' + esc(blocking.join(', nor ')) + '.'
             : 'none of them match the other filters.') +
@@ -1604,6 +1645,10 @@
     var bottles = stocked(held).length;
     var whose = viewingShared() ? 'this shelf' : editing() ? 'your shelf' : viewName();
     var has = viewingShared() ? 'they have' : editing() ? 'you have' : 'it has';
+    if (filter.unlock) {
+      return 'Every drink ' + rowName({ ids: [filter.unlock] }) + ' would add to ' +
+        whose + ', written out in full.';
+    }
     return 'Every drink the ' + plural(bottles, 'bottle', 'bottles') +
       ' on ' + whose + ' will pour, written out in full. Garnish where ' + has + ' it.';
   }
@@ -1650,7 +1695,7 @@
   /* What a guest sees over a shared list. Their own shelf, if they have
      one, is not touched until they say so; the My Shelf chip is the way
      back to it. */
-  function renderSharedBanner(held) {
+  function renderSharedBanner(held, miss) {
     var b = stocked(held).length;
     var n = pourableCount(held);
     var mine = stocked().length > 0;
@@ -1658,6 +1703,7 @@
       '<p class="shared__k">Shared menu</p>' +
       '<p class="shared__copy">Someone sent you their bar: ' +
         plural(b, 'bottle', 'bottles') + ', ' + plural(n, 'drink', 'drinks') + '.' +
+        (miss ? ' ' + drinkName(miss) + ' is not on their shelf.' : '') +
         (mine ? ' Your own shelf is untouched.' : '') + '</p>' +
       '<div class="tonight__acts">' +
         '<button class="btn" data-share-adopt="1">Make this my shelf</button>' +
@@ -1996,6 +2042,9 @@
        several, would put a brass rule on rows it is not answering to. */
     if (id) { open = {}; open[id] = true; }
     if (!id) {
+      /* A drink the filters now hide is closed, the way Close closes it,
+         or the tab goes on naming a drink nobody can see. */
+      if (Object.keys(open).length) { open = {}; syncTitle(); }
       el.removeAttribute('data-open-drink');
       el.innerHTML = renderRailCard(held);
       return;
@@ -2024,7 +2073,8 @@
     var held = heldNow();
     var showShelf = shelfShown(held);
     var list = data.menu.cocktails.filter(function (d) { return matches(d, held); });
-    var pre = viewingShared() ? renderSharedBanner(held) : '';
+    var pre = viewingShared() ? renderSharedBanner(held, null) :
+      filter.sentMiss && shared ? renderSharedBanner(shared.have, filter.sentMiss) : '';
     renderAside(held, showShelf);
     var night = tonight ? renderNightBar() : '';
 
@@ -2256,12 +2306,21 @@
     return html + '</div>';
   }
 
-  function renderBottleStat(on, gain, uses) {
+  /* A figure that opens something is a button to the drinks it counts, so
+     it sits beside the row's reveal and never inside it: a button in a
+     button is invalid, and the click would find the outer one. The
+     greyed in N counts nothing new, so it stays words. */
+  function renderBottleStat(i, on, gain, uses) {
     if (!uses) return '';
-    return on
-      ? '<span class="bottle__in">in ' + uses + '</span>'
-      : '<span class="bottle__gain' + (gain ? '' : ' bottle__gain--flat') + '">' +
-          (gain ? '+' + gain : 'in ' + uses) + '</span>';
+    if (on) return '<span class="bottle__in">in ' + uses + '</span>';
+    if (!gain) return '<span class="bottle__gain bottle__gain--flat">in ' + uses + '</span>';
+    return '<button type="button" class="bottle__gain" data-next-see="' + esc(i.id) + '"' +
+      ' aria-label="' + esc(seeLabel(i.id, gain)) + '">+' + gain + '</button>';
+  }
+
+  function seeLabel(id, gain) {
+    return 'See the ' + plural(gain, 'drink', 'drinks') + ' ' +
+      rowName({ ids: [id] }) + ' opens';
   }
 
   function revealLabel(i, name) {
@@ -2284,22 +2343,23 @@
         ' aria-label="' + esc(name) + '">' +
         '<span class="bottle__box"></span>' +
       '</button>';
+    /* The reveal holds the name only. Its hit area still runs the whole
+       row, stretched under the box and the figure, which sit above it. */
     if (hasPane) {
       html += '<button type="button" class="bottle__hit" data-note="' + esc(i.id) + '"' +
         ' aria-expanded="' + (shown ? 'true' : 'false') + '"' +
         ' aria-controls="note-' + esc(i.id) + '"' +
         ' aria-label="' + esc(revealLabel(i, name)) + '">' +
         '<span class="bottle__name">' + esc(name) + '</span>' +
-        renderBottleStat(on, gain, uses) +
-        '<span class="bottle__more" aria-hidden="true"></span>' +
         '</button>';
     } else {
       html += '<div class="bottle__hit">' +
         '<span class="bottle__name">' + esc(name) + '</span>' +
-        renderBottleStat(on, gain, uses) +
         '</div>';
     }
-    html += '</div>';
+    html += renderBottleStat(i, on, gain, uses) +
+      (hasPane ? '<span class="bottle__more" aria-hidden="true"></span>' : '') +
+      '</div>';
     if (hasPane) html += renderBottleNote(i, shown);
     return html + '</div>';
   }
@@ -2419,16 +2479,15 @@
     return set ? 'What to buy next' : 'One more bottle';
   }
 
-  /* A bottle's figure leads to the drinks it opens, filtered to that
-     bottle. A set has no single chip to filter on, and the drinks it
-     opens are named on the row already, so its figure is just a figure. */
-  function nextGain(r, name) {
+  /* A bottle's figure leads to the drinks it opens. A set's drinks are
+     named on the row already, so its figure is just a figure. */
+  function nextGain(r) {
     if (r.ids.length > 1) {
       return '<span class="next__gain bottle__gain">+' + r.gain + '</span>';
     }
     return '<button type="button" class="next__gain bottle__gain" ' +
       'data-next-see="' + esc(r.ids[0]) + '" ' +
-      'aria-label="' + esc('See the ' + name + ' drinks') + '">+' + r.gain + '</button>';
+      'aria-label="' + esc(seeLabel(r.ids[0], r.gain)) + '">+' + r.gain + '</button>';
   }
 
   function nextRow(r, held, lock) {
@@ -2443,7 +2502,7 @@
         '<button type="button" class="next__name" data-next-jump="' + esc(jump) + '"' +
           (lock ? ' disabled' : '') + '>' +
           esc(name) + '</button>' +
-        nextGain(r, name) +
+        nextGain(r) +
       '</div>' +
       '<p class="next__what">' + esc(unlockedLine(unlockedBy(r.ids, held))) + '</p>' +
       buys +
@@ -2463,8 +2522,10 @@
       '</span>' +
       '<span class="starter__gain' + (can ? '' : ' starter__gain--flat') + '">' +
         can + '</span>';
+    /* Not a control once it is the shelf you are on, but still where
+       focus lands after Switch to My Shelf, so it can take focus. */
     if (on) {
-      return '<div class="starter starter--mine is-on">' + inner + '</div>';
+      return '<div class="starter starter--mine is-on" tabindex="-1">' + inner + '</div>';
     }
     return '<button type="button" class="starter starter--mine" ' +
       'data-shelf-mine="1" aria-label="Switch to My Shelf">' + inner + '</button>';
@@ -2737,6 +2798,16 @@
   var DRINK_HASH = /^#drink\/([a-z0-9-]+)$/;
   var INFO_HASH = /^#info\/([a-z-]+)$/;
 
+  /* Put a hash in the address without a hashchange or a history entry. */
+  function settleHash(hash) {
+    try {
+      history.replaceState(null, '', location.pathname + location.search + hash);
+    } catch (e) { /* file:// */ }
+  }
+
+  /* A hash nothing answers to opens the Menu and reads #menu, so the junk
+     does not sit in the address and the next tap on the Menu tab is not
+     a real hashchange. No hash at all is the bare address and stays it. */
   function route() {
     var sect = INFO_HASH.exec(location.hash);
     if (sect) {
@@ -2745,15 +2816,14 @@
     }
     var deep = DRINK_HASH.exec(location.hash);
     if (!deep) {
-      show((location.hash || '#menu').slice(1));
+      var view = location.hash.slice(1);
+      show(view || 'menu');
+      if (view && VIEWS.indexOf(view) < 0) settleHash('#menu');
       return;
     }
     show('menu');
     revealDrink(deep[1], 'recipe');
-    try {
-      history.replaceState(null, '',
-        location.pathname + location.search + '#menu');
-    } catch (e) { /* file:// */ }
+    settleHash('#menu');
   }
 
   /* #info/<section> is the same kind of way in. It opens the Info tab at
@@ -2779,10 +2849,7 @@
        only set when the jump actually moved something. */
     spyHold = el && main.scrollTop !== before ? name : null;
     spyInfo();
-    try {
-      history.replaceState(null, '',
-        location.pathname + location.search + '#info');
-    } catch (e) { /* file:// */ }
+    settleHash('#info');
   }
 
   /* The index reads where you are. The section whose heading has passed
@@ -2821,10 +2888,11 @@
     if (!d) return;
     if (!matches(d, heldNow())) {
       filter.family = null;
+      filter.unlock = null;
       setSearch('');
       if (filter.pattern && patternIdOf(d) !== filter.pattern) filter.pattern = null;
       if (methodFilterOn() && d.method !== filter.method) filter.method = 'all';
-      if (shelfGate() && !canPour(d, heldNow())) selectMenu('all');
+      if (shelfGate() && !canPour(d, heldNow())) leaveMenuFor(d);
     }
     open = {};
     open[id] = true;
@@ -2833,6 +2901,16 @@
     syncTitle();
     var el = document.getElementById('drink-' + id);
     if (el) el.scrollIntoView({ block: 'center' });
+  }
+
+  /* The drink is not on the shelf the list is gated on, so the list goes
+     to All bottles. A sender's shelf keeps its banner, with a sentence
+     saying why, or the view changes under a guest with nothing said. The
+     sentence names the drink, so it stays true once another is open. */
+  function leaveMenuFor(d) {
+    var sent = viewingShared();
+    selectMenu('all');
+    if (sent) filter.sentMiss = d.id;
   }
 
   /* Two badges, on the phone tab bar and again on the wide-screen top
@@ -2891,17 +2969,69 @@
     return [el.selectionStart, el.selectionEnd];
   }
 
+  /* Two controls remove themselves. The aside's Close turns the aside
+     back into the rail card, and Switch to My Shelf takes away the box
+     it sat in, so the path finds nothing and focus would fall to <body>.
+     Each names where it goes instead, worked out before the repaint,
+     while the control still knows which list it was in. */
+  function focusLanding(was) {
+    if (!was || !was.closest || !was.dataset) return null;
+    if (was.dataset.shelfMine) return shownMine;
+    var aside = was.closest('#menu-aside');
+    var id = aside ? aside.getAttribute('data-open-drink') : null;
+    if (!id || /["\\]/.test(id)) return null;
+    /* Anything inside a recipe that closed, by Close or by Escape. */
+    return function () {
+      if ($('#menu-aside').hasAttribute('data-open-drink')) return null;
+      var row = document.querySelector('#menu-body [data-drink="' + id + '"]');
+      return row && inView(row) ? row : $('#q');
+    };
+  }
+
+  /* After Switch, the My Shelf row in the Shelves list, or on the Menu
+     the My Shelf chip. Only one of the two views is on screen. */
+  function shownMine() {
+    var all = document.querySelectorAll('.starter--mine, #filters [data-shelf-mine]');
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].getClientRects().length) return all[i];
+    }
+    return null;
+  }
+
+  /* Whether an element is on screen in the scroller, and on a phone not
+     under the filters, which stick there. On a wide screen they scroll
+     away with the list, so their bottom is above the top and says
+     nothing. */
+  function inView(el) {
+    var r = el.getBoundingClientRect();
+    var main = $('#main').getBoundingClientRect();
+    var filters = $('#filters').getBoundingClientRect();
+    var sticks = el.closest('#filters') === null && filters.bottom > main.top;
+    var top = sticks ? filters.bottom : main.top;
+    return r.height > 0 && r.top >= top && r.bottom <= main.bottom;
+  }
+
   function keepFocus(fn) {
     var was = document.activeElement;
     var path = focusPath(was);
     var caret = path ? caretOf(was) : null;
+    var landing = path ? focusLanding(was) : null;
     fn();
     if (!path) return;
     var el = document.querySelector(path);
+    var landed = false;
+    if (!el && landing) {
+      el = landing();
+      landed = !!el;
+      caret = null;
+    }
     if (!el || el === document.activeElement) return;
     /* Never scroll on the way back. The repaint has already put the
-       scroll where it belongs. */
+       scroll where it belongs. A landing is somewhere new, and focus
+       nobody can see is no better than focus on <body>, so that one is
+       brought on screen when it is not. */
     el.focus({ preventScroll: true });
+    if (landed && !inView(el)) el.scrollIntoView({ block: 'nearest' });
     if (caret && el.setSelectionRange) el.setSelectionRange(caret[0], caret[1]);
   }
 
@@ -3174,19 +3304,16 @@
       return true;
     }
 
-    /* The figure goes to the drinks it counts, filtered to that bottle. */
+    /* The figure goes to the drinks it counts: the shelf on screen with
+       that bottle added, and only what the bottle opens. */
     if (t.dataset.nextSee) {
       var id = t.dataset.nextSee;
+      if (!ing[id]) return true;
+      var sent = viewingShared();
       track('bar_next', { bottle_id: id, drinks: marginalGain(id, heldNow()) });
       filter = emptyFilter();
-      selectMenu('shelf');
-      filter.family = hasChip(ing[id] || {}) ? id : null;
-      /* A bottle whose unlocks are all drinks it does not itself lead
-         filters the list to nothing. Drop the chip and land on the menu. */
-      var seen = heldNow();
-      if (!data.menu.cocktails.some(function (d) { return matches(d, seen); })) {
-        filter.family = null;
-      }
+      selectMenu(sent ? 'shared' : 'shelf');
+      filter.unlock = id;
     } else if (t.dataset.seemenu) {
       /* From the count on the Bar tab to the menu it is counting, which
          is the sender's when that is the shelf the tab was showing. */
@@ -3207,6 +3334,8 @@
      the Menu that is the list re-gating and the rail naming the next
      bottle; the Bar, hidden, catches up on the way in. */
   function afterShelf(keepScroll) {
+    /* What a bottle would open is a question about the shelf as it was. */
+    filter.unlock = null;
     if (!$('#view-bar').hidden) {
       repaintBar(keepScroll);
       return;
