@@ -409,6 +409,43 @@ noscript.fallback a { color: var(--brass); }
 }
 .intro__no:hover { color: var(--muted); }
 
+/* ── Undo a bulk shelf write ──────────────────────────────── */
+
+/* Stock everything, Clear the shelf and Make this my shelf each replace
+   the whole shelf in one tap. The way back is this, not a confirm
+   dialog: the tap lands, and for twenty seconds there is an Undo under
+   it. Same treatment as the first-run strip, since it is the same kind
+   of aside, and it sits in the shell between the scroller and the tabs
+   rather than floating over the list. */
+.undo {
+  flex: none;
+  padding: 8px var(--pad);
+  background: var(--ground);
+  border-top: 1px solid var(--rule);
+}
+
+.undo__in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 14px;
+  padding: 9px 13px;
+  background: var(--sunk);
+  border-left: 2px solid var(--brass);
+}
+
+.undo__p {
+  margin: 0;
+  min-width: 0;
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.undo__go { flex: none; color: var(--bone); border-color: var(--muted); }
+.undo__go:hover { border-color: var(--bone); }
+
 /* ── Filters ──────────────────────────────────────────────── */
 
 .filters {
@@ -1955,6 +1992,7 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
    `body.is-tonight` and its own furniture is `.night`. */
 
 body.is-tonight .topbar,
+body.is-tonight .undo,
 body.is-tonight .tabbar,
 body.is-tonight #filters,
 body.is-tonight .shared,
@@ -2426,6 +2464,32 @@ button.card__fig { cursor: pointer; }
   #key-body .rules { columns: 2; column-gap: 40px; }
   #key-body .rule { break-inside: avoid; }
 
+  /* The tabs are in the top bar up here, so the strip has no tab bar to
+     sit above. It takes the two tracks the Bar tab takes instead and
+     rides in the second one, so it lands on the rail's own verticals at
+     every width rather than reading as a bar across the window. The
+     grid has to be the same construction and not an approximation of
+     it: above 1200px the list track is a fixed width, the row has a few
+     pixels of slack, and `justify-content` spends half of that on each
+     side.
+
+     `#main` holds its scrollbar track open, so the content inside it is
+     a scrollbar narrower than the window on any platform that still has
+     one. The strip is outside that scroller, so it reserves the same
+     gutter the same way, or the two disagree by a scrollbar. */
+  .undo {
+    padding-inline: max(var(--pad), (100% - var(--wide)) / 2 + var(--pad));
+    overflow: hidden;
+    scrollbar-gutter: stable;
+  }
+  .undo:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, var(--list)) var(--rail);
+    column-gap: var(--railgap);
+    justify-content: center;
+  }
+  .undo__in { grid-column: 2; }
+
   /* Each row is short and never breaks, so columns are safe here. */
   .defs { columns: 2; column-gap: 40px; }
   .def { break-inside: avoid; }
@@ -2659,7 +2723,7 @@ body.page .topbar { position: sticky; top: 0; }
     --plate-invert: 1;
   }
 
-  .topbar, .tabbar, .menu-aside, .night, .filters, .info__nav, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
+  .topbar, .tabbar, .undo, .menu-aside, .night, .filters, .info__nav, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
   .shared, .tally__acts, .bar-reset, .bar-view, .starters, .next, .drink__missing, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-panel--share, .recipe-refs {

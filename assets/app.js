@@ -282,6 +282,7 @@
   }
 
   function saveHave() {
+    dropUndo();
     try { localStorage.setItem(STORE, JSON.stringify(have)); } catch (e) { /* private mode */ }
   }
 
@@ -293,6 +294,7 @@
   }
 
   function saveOwn() {
+    dropUndo();
     try { localStorage.setItem(BRAND_STORE, JSON.stringify(own)); } catch (e) { /* private mode */ }
   }
 
@@ -1496,7 +1498,7 @@
     }
 
     if (filter.pourable) {
-      return '<p class="empty">Nothing yet. Select a few more bottles on the ' +
+      return '<p class="empty">Nothing yet. Tick a few more bottles on the ' +
              '<a href="#bar">Bar tab</a> and the menu fills in.</p>';
     }
 
@@ -1529,7 +1531,7 @@
       '<p class="tonight__note">Scan it, or send the link. ' +
         (shelfGate()
           ? 'It carries the shelf but not the brands, so they get this same list on their own phone.'
-          : 'It opens the whole card on their own phone.') + '</p>' +
+          : 'It opens the whole menu on their own phone.') + '</p>' +
       '<div class="share">' +
         (qr ? '<div class="share__qr">' + qr + '</div>' : '') +
         '<div class="share__side">' +
@@ -1571,7 +1573,7 @@
   }
 
   function printNote(held) {
-    if (!shelfGate()) return 'Every drink on the card, written out in full.';
+    if (!shelfGate()) return 'Every drink on the menu, written out in full.';
     var bottles = stocked(held).length;
     var whose = viewingShared() ? 'this shelf' : editing() ? 'your shelf' : viewName();
     var has = viewingShared() ? 'they have' : editing() ? 'you have' : 'it has';
@@ -1837,7 +1839,7 @@
         '<button type="button" class="bottle__stock card__box"' +
           ' data-next-jump="' + esc(r.ids.join(',')) + '" aria-pressed="false"' +
           (editing() ? '' : ' disabled') +
-          ' aria-label="' + esc('Select ' + name) + '">' +
+          ' aria-label="' + esc('Tick ' + name) + '">' +
           '<span class="bottle__box"></span>' +
         '</button>' +
         '<span class="card__buy-name">' + esc(name) + '</span>' +
@@ -1857,19 +1859,21 @@
     {
       h: 'The menu',
       t: 'Everything on the left is what this bar pours, most of it from a ' +
-         'handful of bottles. Filter the list by bottle, or search for a name, ' +
-         'an ingredient, or a code.'
+         'handful of bottles. Tap a drink for the recipe. The small code beside ' +
+         'its name is the shorthand off my printed menu, and the Key tab ' +
+         'decodes every letter of it.'
     },
     {
       h: 'Your bottles',
-      t: 'Open the Bar tab and select what you own. The figure next to a bottle ' +
-         'you have not selected is how many more drinks it would let you pour, ' +
-         'not how many recipes mention it.'
+      t: 'Tick what you own on the Bar tab. The number beside a bottle you do ' +
+         'not have is how many new drinks buying it opens, not how many recipes ' +
+         'mention it. Tap that number to see them.'
     },
     {
       h: 'My Shelf',
-      t: 'Narrows the list to the drinks your own bottles make. Print that for ' +
-         'the counter, or send your shelf to a guest as a link.'
+      t: 'Narrows the list to the drinks your own bottles make. Print that in ' +
+         'black and white for the counter, or turn it into one link and send it ' +
+         'to a guest.'
     }
   ];
 
@@ -2013,10 +2017,10 @@
   function renderIntro() {
     if (!showIntro()) return '';
     return '<div class="intro">' +
-      '<h2 class="intro__h">Select your bottles, and this becomes your menu.</h2>' +
-      '<p class="intro__p">Open the Bar tab, select what you own, and the list ' +
+      '<h2 class="intro__h">Tick your bottles, and this becomes your menu.</h2>' +
+      '<p class="intro__p">Open the Bar tab, tick what you own, and the list ' +
         'shrinks to what you can pour tonight. Every bottle you have not ' +
-        'selected shows how many drinks it would add.</p>' +
+        'ticked shows how many drinks it would add.</p>' +
       '<div class="intro__acts">' +
         '<button type="button" class="btn intro__go" data-intro-open="1">Open the Bar tab</button>' +
         '<button type="button" class="intro__no" data-intro-dismiss="1">Not now</button>' +
@@ -2463,9 +2467,9 @@
     if (!editing()) {
       note = 'Looking at ' + (viewingShared() ? 'a shelf someone sent you' : viewName()) +
              '. My Shelf keeps its own bottles, and nothing below can be ' +
-             'selected until you go back to it.';
+             'ticked until you go back to it.';
     } else if (!bottles) {
-      note = 'Select what is on the shelf, or open Starter Shelves below ' +
+      note = 'Tick what is on the shelf, or open Starter Shelves below ' +
              'and start from one. Every bottle then shows what it would add.';
     } else if (!can) {
       note = 'Not enough yet. The figures below are drinks a bottle would ' +
@@ -2542,7 +2546,7 @@
     var who = viewingShared() ? 'a shelf someone sent you' : viewName();
     return '<div class="bar-view">' +
       '<p class="bar-view__copy">You are looking at ' + esc(who) +
-        '. Switch back to My Shelf to select and deselect bottles.</p>' +
+        '. Switch back to My Shelf to tick and untick bottles.</p>' +
       '<button type="button" class="btn" data-shelf-mine="1">Back to My Shelf</button>' +
       '</div>';
   }
@@ -2880,10 +2884,12 @@
 
     if (t.dataset.shareAdopt) {
       if (!shared) return true;
+      var snap = shelfSnapshot(t);
       have = {};
       Object.keys(shared.have).forEach(function (k) { have[k] = true; });
       own = {};
       saveHave(); saveOwn();
+      offerUndo(snap, 'Shelf replaced.');
       track('share_adopt', { bottles: stocked().length });
       shared = null;
       dropSharedLink();
@@ -3332,10 +3338,98 @@
     return true;
   }
 
+  /* ── undo a bulk shelf write ────────────────────────────── */
+
+  /* Three buttons rewrite the whole shelf in one tap: Stock everything,
+     Clear the shelf, and Make this my shelf on a link somebody sent. A
+     hand-built shelf of thirty bottles goes the same way as a shelf of
+     three, and until now there was nothing to go back to. The answer is
+     Undo, not a confirm dialog: the tap still lands, and a strip under
+     it holds the shelf as it was for twenty seconds.
+
+     Session only, and on purpose. A shelf you cannot get back after a
+     reload is the shelf you could not get back before; what this buys
+     is the twenty seconds in which you notice. */
+  var UNDO_MS = 20000;
+  var undoSnap = null;   /* { have, own, shared } from just before the write */
+  var undoTimer = null;
+
+  /* Copied, not referenced, so a tick landing a second later cannot
+     reach into the shelf this is holding. `back` is the button that did
+     the write, written the way keepFocus writes one, because Undo takes
+     its own strip off the screen and a keyboard would otherwise be left
+     standing at the top of the document. */
+  function shelfSnapshot(from) {
+    return {
+      have: JSON.parse(JSON.stringify(have)),
+      own: JSON.parse(JSON.stringify(own)),
+      shared: shared,
+      back: focusPath(from)
+    };
+  }
+
+  /* Taken before the write, offered after it, because saving the shelf
+     is what clears a strip already on screen and the new one has to
+     outlive that. One snapshot: a second write replaces the first. */
+  function offerUndo(snap, said) {
+    undoSnap = snap;
+    undoTimer = setTimeout(dropUndo, UNDO_MS);
+    paintUndo(said);
+  }
+
+  /* Every shelf write goes through saveHave or saveOwn, so that is
+     where this is called from: a single tick, a starter shelf and the
+     next bulk write all take the strip away, and so does Undo itself. */
+  function dropUndo() {
+    if (undoTimer) { clearTimeout(undoTimer); undoTimer = null; }
+    undoSnap = null;
+    paintUndo('');
+  }
+
+  function paintUndo(said) {
+    var el = $('#undo');
+    if (!el) return;
+    el.innerHTML = said
+      ? '<div class="undo__in">' +
+          '<p class="undo__p">' + esc(said) + '</p>' +
+          '<button type="button" class="btn undo__go" data-shelf-undo="1">Undo</button>' +
+        '</div>'
+      : '';
+    el.hidden = !said;
+  }
+
+  /* Both stores go back, and so does the link somebody sent: undoing
+     the adopt leaves their shelf readable for the session, which is
+     where you were standing before the tap. */
+  function undoShelf() {
+    var snap = undoSnap;
+    if (!snap) return true;
+    have = snap.have;
+    own = snap.own;
+    saveHave(); saveOwn();
+    if (snap.shared) restoreShared(snap.shared);
+    barOrder = null;
+    afterShelf(false);
+    var back = snap.back && document.querySelector(snap.back);
+    if (back) back.focus({ preventScroll: true });
+    track('bar_bulk', { action: 'undo' });
+    return true;
+  }
+
+  function restoreShared(was) {
+    shared = was;
+    selectMenu('shared');
+    try {
+      history.replaceState(null, '',
+        location.pathname + '?' + SHARE_PARAM + '=' + was.code + location.hash);
+    } catch (e) { /* file:// */ }
+  }
+
   /* Everything that edits the shelf, out of the switch and into one
      place, because the delegate is a switch and a switch that grows
      bodies stops being readable. */
   function barAction(t) {
+    if (t.dataset.shelfUndo) return undoShelf();
     if (t.dataset.note) return noteAction(t);
     if (t.dataset.brand) return brandAction(t);
     if (t.dataset.bottle) return bottleAction(t);
@@ -3348,15 +3442,19 @@
     /* Stocking everything says nothing about which brands are on the
        shelf, so the brand ticks stand. Clearing the shelf clears them. */
     if (t.dataset.bar && !editing()) return true;
+    if (t.dataset.bar !== 'all' && t.dataset.bar !== 'none') return false;
+
+    /* The shelf as it stands, read before the button replaces it. */
+    var snap = shelfSnapshot(t);
     if (t.dataset.bar === 'all') {
       data.bar.ingredients.forEach(function (i) { have[i.id] = true; });
       saveHave();
-    } else if (t.dataset.bar === 'none') {
+      offerUndo(snap, 'Everything stocked.');
+    } else {
       have = {};
       own = {};
       saveHave(); saveOwn();
-    } else {
-      return false;
+      offerUndo(snap, 'Shelf cleared.');
     }
     barOrder = null;
     afterShelf(false);
@@ -3371,7 +3469,7 @@
       '[data-print],[data-print-open],[data-print-opt],[data-kin],[data-see-pattern],' +
       '[data-share-open],[data-share-copy],[data-share-sms],[data-share-native],' +
       '[data-drink-link],[data-drink-share],[data-drink-sms],' +
-      '[data-share-adopt],[data-shelf-mine],[data-shelf-switch],[data-shelf-add],[data-intro-open],[data-intro-dismiss],[data-tonight],[data-chips]');
+      '[data-share-adopt],[data-shelf-undo],[data-shelf-mine],[data-shelf-switch],[data-shelf-add],[data-intro-open],[data-intro-dismiss],[data-tonight],[data-chips]');
     if (!t) return;
 
     if (t.dataset.recipeTab) {

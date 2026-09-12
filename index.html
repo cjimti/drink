@@ -165,7 +165,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>You only need a few bottles to start exploring the fundamentals of classic cocktails.</p>
         <p>Juice with vodka is a regression. Plenty of modern drinks came out of these older shapes, and those flavor profiles are still terribly underrated.</p>
         <p>This is a small utility. Broad categories, few ingredients, little expense. The complete catalog of classic and modern drinks, with every niche bottle named, can wait until you know what you actually like.</p>
-        <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Select what you have. See what opens. Buy the bottle that unlocks the most.</p>
+        <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Tick what you have. See what opens. Buy the bottle that unlocks the most.</p>
       </div>
     </section>
 
@@ -315,7 +315,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section class="info__s" id="info-analytics">
       <h2 class="info__h">Analytics</h2>
       <div class="info__copy">
-        <p>This site is a hobby. I run Google Analytics on it so I can see how it gets used: which tab someone opened, which drink they expanded, which bottle they selected, whether a menu was printed or shared. That is the whole list.</p>
+        <p>This site is a hobby. I run Google Analytics on it so I can see how it gets used: which tab someone opened, which drink they expanded, which bottle they ticked, whether a menu was printed or shared. That is the whole list.</p>
         <p>It tells me nothing about who you are. There is no account, no sign-in, no name attached to any of it. Your shelf stays on your phone unless you share it yourself. I do not sell the numbers and I do not market to anyone. I read them so I know which parts of this are worth more work. So far nobody has ever opened a Tip Top, and it is a great drink.</p>
         <p>The events are in the source: <a href="https://github.com/cjimti/drink/blob/main/assets/app.js" rel="noopener"><code>track()</code> in assets/app.js</a>. A content blocker stops all of it and the site works exactly the same.</p>
       </div>
@@ -334,10 +334,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <p class="loading" id="loading">Pouring…</p>
   <noscript class="fallback">
-    <p>This menu needs JavaScript to decode the house shorthand and select the shelf. The drinks themselves are in <a href="data/cocktails.json">data/cocktails.json</a>. A markdown dump of every recipe is at <a href="llms-full.txt">llms-full.txt</a>, and an index for agents is at <a href="llms.txt">llms.txt</a>.</p>
+    <p>This menu needs JavaScript to decode the house shorthand and work out what your shelf pours. The drinks themselves are in <a href="data/cocktails.json">data/cocktails.json</a>. A markdown dump of every recipe is at <a href="llms-full.txt">llms-full.txt</a>, and an index for agents is at <a href="llms.txt">llms.txt</a>.</p>
   </noscript>
 
 </main>
+
+<!-- Undo for the three buttons that rewrite the whole shelf in one tap.
+     Empty until one of them is pressed; app.js fills it and takes it
+     away again. It sits between the scroller and the tabs, so on a phone
+     it is pinned above the tab bar and on a laptop, where the tabs are
+     in the top bar, it lands at the foot of the rail. -->
+<div class="undo" id="undo" role="status" aria-live="polite" hidden></div>
 
 <nav class="tabbar" aria-label="Sections">
   <a class="tab is-active" href="#menu" data-view="menu" aria-current="page">
