@@ -1,8 +1,9 @@
 /* Offline shell for fewbottles.com. A phone propped against the back bar
    has no business needing signal to show a recipe.
 
-   VERSION is stamped with the commit SHA at deploy time, so every push
-   invalidates the old cache. Shell assets are cache-first, data is
+   VERSION is stamped from the tag at deploy time, and only a tag
+   deploys, so every release invalidates the old cache and a push to
+   main leaves it alone. Shell assets are cache-first, data is
    network-first with a cached fallback. */
 
 /* Dev safety net. A worker that got installed on http://localhost is

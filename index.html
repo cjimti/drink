@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- The old host. The Cloudflare Worker 301s it before any HTML is
+     served, so this never runs on a fresh visit. It runs for the one
+     visitor the Worker cannot reach: a phone still holding that origin's
+     old service worker, which answers this page cache-first. -->
 <script>if (location.hostname === "drink.shoephone.net") location.replace("https://fewbottles.com" + location.pathname + location.search + location.hash);</script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -132,6 +136,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <main id="main">
 
   <section class="view" id="view-menu" aria-label="Menu">
+    <h1 class="sr-only">Menu</h1>
+    <!-- The shown count, spoken. The filter row is rebuilt from innerHTML
+         on every keystroke and a live region that is replaced announces
+         nothing, so the spoken copy lives out here where it survives the
+         repaint. The printed copy in the row carries aria-hidden so the
+         figure is not read twice. -->
+    <p class="sr-only" id="menu-live" role="status" aria-live="polite"></p>
     <div class="menu-main">
       <div id="filters"></div>
       <div id="menu-body"></div>
@@ -140,6 +151,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <section class="view" id="view-bar" hidden aria-label="The bar">
+    <h1 class="sr-only">Bar</h1>
+    <!-- The tally moving is the feature, so it is the one figure worth
+         hearing. Same reason it sits outside #bar-body. -->
+    <p class="sr-only" id="bar-live" role="status" aria-live="polite"></p>
     <div id="bar-body"></div>
   </section>
 
@@ -148,6 +163,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <section class="view" id="view-info" hidden aria-label="Info">
+    <h1 class="sr-only">Info</h1>
     <nav class="info__nav" id="info-nav" aria-label="Info sections">
       <a class="info__jump" href="#info/about" data-info="about">This site</a>
       <a class="info__jump" href="#info/using" data-info="using">Using it</a>
@@ -160,6 +176,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="info__body" id="info-body">
 
     <section class="info__s" id="info-about">
+      <h2 class="info__h">This site</h2>
       <p class="info__tag">Cocktail maxxing on a budget.</p>
       <div class="info__copy">
         <p>You only need a few bottles to start exploring the fundamentals of classic cocktails.</p>
