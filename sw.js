@@ -138,10 +138,11 @@ self.addEventListener('fetch', function (e) {
      phone keeps an old sw.js after a deploy. */
   if (/\/sw\.js$/.test(url.pathname)) return;
 
-  /* Store a copy only when the network said yes. A 404 or a 5xx that
-     got cached would be served cache-first until the next tag. */
+  /* Store a copy only when the network said yes, all of it. A 404 or a
+     5xx that got cached would be served cache-first until the next tag,
+     and a 206 is part of a file stored under the whole file's name. */
   function keep(req, res) {
-    if (res.ok) {
+    if (res.status === 200) {
       var copy = res.clone();
       caches.open(CACHE).then(function (c) { c.put(req, copy); });
     }
@@ -186,8 +187,13 @@ self.addEventListener('fetch', function (e) {
     return;
   }
 
+  /* A release stamps ?v=<tag> onto the stylesheet and script tags, so a
+     page asks for assets/app.js?v=v1.5.0 and the shell stored it under
+     assets/app.js. A shell file is matched on its path alone, or every
+     stamped tag misses the copy it is standing next to and the app does
+     not open offline. */
   e.respondWith(
-    caches.match(req, opts).then(function (hit) {
+    caches.match(req, { ignoreSearch: true }).then(function (hit) {
       return hit || fetch(req).then(function (res) { return keep(req, res); });
     })
   );

@@ -30,26 +30,31 @@ jobs:
         run: make check
 
       # The tag is the version and there is nowhere else it is written.
-      # sw.js keys its cache on __BUILD__; app.js prints __VERSION__ in
-      # the top bar and on the Info tab. Dispatched off a branch this is
-      # the branch name, which is honest and harmless.
-      - name: Stamp the tag
-        run: |
-          sed -i "s/__BUILD__/${GITHUB_REF_NAME}/" sw.js
-          sed -i "s/__VERSION__/${GITHUB_REF_NAME}/" assets/app.js
+      # stage.py copies only what the site serves (its SERVED list is the
+      # one place that is written down) into _site, and stamps the copy:
+      # the cache name in sw.js, the version app.js prints, and ?v= on
+      # the stylesheet and script tags so the edge's four-hour copy of
+      # the last release is never served against this one's pages. Any
+      # stamp that does not land exactly once fails the step before
+      # anything is uploaded. Dispatched off a branch the version is the
+      # branch name, which is honest and harmless. `make stage` rehearses
+      # this on a laptop.
+      - name: Stage and stamp
+        run: python3 scripts/stage.py "$GITHUB_REF_NAME" _site
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - id: deploy
         uses: actions/deploy-pages@v4
 
   # needs: deploy is the point. A release should only exist for something
   # that actually went live. There is no artifact to attach: the site is
-  # the repo, and the tag is the archive GitHub already makes.
+  # the repo's served files, and the tag is the archive GitHub already
+  # makes.
   release:
     needs: deploy
     if: startsWith(github.ref, 'refs/tags/')

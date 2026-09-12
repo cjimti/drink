@@ -117,9 +117,11 @@ with nothing listening on the port, that is what you are looking at;
 `make unstick` prints the manual recovery.
 
 Pushes to `main` run `make check` and deploy nothing. Pushing a `v*` tag
-runs the same checks, stamps the tag into `sw.js` and `assets/app.js`,
-deploys to GitHub Pages, and then cuts a GitHub release for that tag with
-generated notes. The tag is the only place a version is written: the app
+runs the same checks, copies only the files the site serves into `_site`
+with `scripts/stage.py`, stamps the tag into that copy (`sw.js`,
+`assets/app.js`, and a `?v=` on the stylesheet and script tags), deploys
+it to GitHub Pages, and then cuts a GitHub release for that tag with
+generated notes. `make stage V=v9.9.9` rehearses the staging locally. The tag is the only place a version is written: the app
 prints it in the top bar and on the Info tab, and an unstamped working
 copy reads `dev`. GitHub Pages is the origin for fewbottles.com.
 `drink.shoephone.net` is a Cloudflare Worker that evicts the old service

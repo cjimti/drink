@@ -5,10 +5,14 @@ A typo'd href on a static site fails silently — the page just loses its
 stylesheet on someone's phone. Catch it before the deploy does not.
 """
 import json
+import posixpath
 import re
 import struct
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import stage  # noqa: E402  (path set above; there is no package here)
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -17,10 +21,8 @@ def check_files(html):
     """Every local href/src in index.html points at a file that exists."""
     refs = re.findall(r'(?:href|src)="([^"]+)"', html)
     local = [r for r in refs if not r.startswith(("http:", "https:", "//", "#", "data:"))]
-    missing = [r for r in local if not (ROOT / r).exists()]
-
-    for r in missing:
-        print(f"  MISSING {r}")
+    missing = [f"{r}: index.html asks for it, it is not in the repo"
+               for r in local if not (ROOT / r.split("?")[0]).exists()]
     return missing, len(local)
 
 
@@ -39,9 +41,8 @@ def check_ids(html, js):
     present = set(re.findall(r'id="([\w-]+)"', html))
     present |= set(re.findall(r'id="([\w-]+)"', js))
 
-    dangling = sorted(wanted - present)
-    for i in dangling:
-        print(f"  DANGLING #{i} — app.js reaches for it, nothing renders it")
+    dangling = [f"#{i}: app.js reaches for it, nothing renders it"
+                for i in sorted(wanted - present)]
     return dangling, len(wanted)
 
 
@@ -94,6 +95,8 @@ def check_glasses(js):
              for n in sorted(wanted - listed)]
     errs += [f"{n}: fetched by GLASS_FILES and not in assets/glasses"
              for n in sorted(listed - have)]
+    errs += [f"{n}: fetched by GLASS_FILES at every boot and no serve token "
+             f"asks for it" for n in sorted(listed - wanted)]
     return errs, len(wanted)
 
 
@@ -237,10 +240,8 @@ WELL_KNOWN = [
 
 def check_well_known():
     """Crawlers and agents look at well-known paths, not at index.html."""
-    missing = [p for p in WELL_KNOWN if not (ROOT / p).exists()]
-    for p in missing:
-        print(f"  MISSING {p}")
-    return missing
+    return [f"{p}: crawlers and agents ask for it, it is not in the repo"
+            for p in WELL_KNOWN if not (ROOT / p).exists()]
 
 
 def check_worker(js, sw):
@@ -273,8 +274,10 @@ def check_worker(js, sw):
         errs.append("sw.js must navigate clients both off https and when a new cache replaces an old one")
     if "fetch(fresh(path)" not in sw or "'v=' + VERSION" not in sw:
         errs.append("sw.js installs its shell without a version query — an edge cache can hand it the previous release for ten minutes after a tag")
-    if "if (res.ok)" not in sw:
-        errs.append("sw.js caches responses without checking res.ok — a 404 or a 5xx would be pinned until the next tag")
+    if "if (res.status === 200)" not in sw:
+        errs.append("sw.js caches responses without checking for a 200: a 404 or a 5xx would be pinned until the next tag, and a 206 is part of a file stored as the whole")
+    if "caches.match(req, { ignoreSearch: true })" not in sw:
+        errs.append("sw.js matches the shell on the query too: a release stamps ?v=<tag> onto the asset tags, and every one would miss the cache offline")
     shell = re.search(r"var SHELL = \[(.*?)\];", sw, re.S)
     if "'offline.html'" not in (shell.group(1) if shell else ""):
         errs.append("sw.js does not cache offline.html with the shell — the one page a dead link can fall back on has to be there before the signal goes")
@@ -283,8 +286,92 @@ def check_worker(js, sw):
     if "caches.match('offline.html')" not in sw or "req.mode !== 'navigate'" not in sw:
         errs.append("sw.js never serves offline.html — a drink link opened with no signal lands on the browser's error page")
 
-    for e in errs:
-        print(f"  WORKER {e}")
+    return errs
+
+
+def check_stamps(texts):
+    """Every stamp a release makes has exactly one place to land.
+
+    The deploy stamps the tag into the worker's cache name, the version
+    the app prints and the asset tags, and stage.py refuses any count but
+    one. This says so before a tag is pushed rather than after. A tag
+    that already carries a ?v= is the same failure seen from the other
+    side: the stamp would find nothing, so the committed tree has to stay
+    unstamped.
+    """
+    errs = []
+    for name, token, _ in stage.stamps("v0", set(texts)):
+        n = texts[name].count(token) if name in texts else 0
+        if n != 1:
+            errs.append(f"{name}: {token} occurs {n} time(s), and the deploy "
+                        f"stamps it exactly once")
+    errs += [f"{name}: carries a ?v= already; the deploy writes that, the "
+             f"tree never does" for name, text in sorted(texts.items())
+             if name.endswith(".html") and re.search(r"\.(?:css|js)\?v=", text)]
+    return errs
+
+
+SITE = "https://fewbottles.com/"
+NOT_LOCAL = ("http:", "https:", "//", "#", "data:", "mailto:", "sms:")
+
+
+def site_path(name, ref):
+    """The repo path a reference from `name` lands on, or None if offsite.
+
+    A relative reference in a page resolves against that page's folder.
+    One in a script or the manifest resolves against the document that
+    loaded it, which is always the root here.
+    """
+    if ref.startswith(SITE):
+        ref = "/" + ref[len(SITE):]
+    elif ref.startswith(NOT_LOCAL):
+        return None
+    ref = re.split(r"[?#]", ref)[0].rstrip(".,;:")
+    base = posixpath.dirname(name) if name.endswith(".html") else ""
+    path = ref[1:] if ref.startswith("/") else posixpath.join(base, ref)
+    folder = not path or path.endswith("/")
+    path = posixpath.normpath("/" + path).lstrip("/")
+    return posixpath.join(path, "index.html") if folder else path
+
+
+def references(texts, sw, man):
+    """(file, repo path) for every local thing the served files point at.
+
+    Tags in the pages, every fewbottles.com address in any text (the
+    cards in the meta tags, the data the agent dumps name, the sitemap),
+    what app.js fetches, the worker's shell and the manifest's icons.
+    """
+    out = []
+    for name, text in texts.items():
+        refs = re.findall(r'(?:href|src)="([^"]+)"', text) if name.endswith(".html") else []
+        refs += re.findall(re.escape(SITE) + r"[^\"'`\s<>()\[\]]*", text)
+        refs += re.findall(r"fetch\('([^']+)'", text) if name == "assets/app.js" else []
+        out += [(name, site_path(name, r)) for r in refs]
+    shell = re.search(r"var SHELL = \[(.*?)\];", sw, re.S)
+    out += [("sw.js", site_path("sw.js", r))
+            for r in re.findall(r"'([^']+)'", re.sub(
+                r"/\*.*?\*/", "", shell.group(1) if shell else "", flags=re.S))]
+    out += [("manifest.webmanifest", site_path("manifest.webmanifest", r))
+            for r in [man.get("start_url", "./")] + [i["src"] for i in man.get("icons", [])]]
+    return [(name, path) for name, path in out if path is not None]
+
+
+def check_served(refs, served):
+    """Every local thing the site points at is a thing the deploy uploads.
+
+    The origin carries only stage.SERVED. A new directory the pages
+    start linking, left off that list, is a set of 404s that only
+    appears after a tag. A name on the list with nothing behind it is a
+    typo that uploads nothing.
+    """
+    def inside(path):
+        return any(path == s or path.startswith(s + "/") for s in served)
+
+    errs = sorted({f"{name} points at {path}, which the deploy does not "
+                   f"upload: add it to SERVED in scripts/stage.py"
+                   for name, path in refs if not inside(path)})
+    errs += [f"{s}: named in SERVED, not in the repo"
+             for s in served if not (ROOT / s).exists()]
     return errs
 
 
@@ -301,7 +388,8 @@ def served_texts():
     hand-edited page is exactly the kind of thing nobody notices.
     """
     names = ["index.html", "404.html", "offline.html", "sw.js",
-             "assets/app.css", "assets/app.js"]
+             "assets/app.css", "assets/app.js", "llms.txt", "llms-full.txt",
+             "humans.txt", "robots.txt", "sitemap.xml"]
     names += sorted(str(f.relative_to(ROOT))
                     for f in ROOT.glob("drink/*/index.html"))
     return {n: (ROOT / n).read_text() for n in names}
@@ -314,20 +402,24 @@ def main():
 
     missing, n_refs = check_files(html)
     dangling, n_ids = check_ids(html, js)
-    worker = check_worker(js, sw)
-    well = check_well_known()
     glass, n_glass = check_glasses(js)
     fonts, n_faces = check_fonts(css, sw)
-    reported = [("GLASS", glass), ("FONT", fonts),
-                ("FONT", check_offsite(texts)),
-                ("ICON", check_manifest(manifest(), sw))]
+    refs = references(texts, sw, manifest())
     plates = plate_headers()
-    reported.append(("PLATE", check_plates(html, sw, plates)))
+    reported = [("MISSING", missing), ("DANGLING", dangling),
+                ("MISSING", check_well_known()),
+                ("WORKER", check_worker(js, sw)),
+                ("STAMP", check_stamps(texts)),
+                ("SERVED", check_served(refs, stage.SERVED)),
+                ("GLASS", glass), ("FONT", fonts),
+                ("FONT", check_offsite(texts)),
+                ("ICON", check_manifest(manifest(), sw)),
+                ("PLATE", check_plates(html, sw, plates))]
     for tag, errs in reported:
         for e in errs:
             print(f"  {tag:<6} {e}")
 
-    if missing or dangling or worker or well or any(e for _, e in reported):
+    if any(e for _, e in reported):
         return 1
 
     print(f"  assets  {n_refs} local reference(s) resolve, {n_ids} element id(s) exist")
@@ -337,6 +429,9 @@ def main():
     print(f"  plates  {len(plates)} tool plate(s) converted, shown and cached")
     print(f"  well    {len(WELL_KNOWN)} crawler/agent file(s) present")
     print("  worker  registration guarded, eviction present in app.js and sw.js")
+    print("  stamps  every release stamp lands exactly once, the tree is unstamped")
+    print(f"  served  {len(refs)} local reference(s) inside the "
+          f"{len(stage.SERVED)} path(s) the deploy uploads")
     return 0
 
 
