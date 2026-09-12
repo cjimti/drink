@@ -431,6 +431,49 @@ def check_method_line(src):
     return []
 
 
+def check_search_case(src):
+    """A code is searched with the case the visitor typed, on a phone too.
+
+    The shorthand spends case instead of a second letter: `q` is a
+    quarter and `Q` three quarters, `h` a half ounce and `H` a packed
+    highball. The search box folded the code in with the name and the
+    ingredients, so `Q` returned every quarter-ounce drink on the menu
+    and the three-quarter pours were unfindable.
+
+    Two halves, and either one alone is worthless. The matcher has to
+    compare `d.code` without folding it, and the box has to carry
+    `autocapitalize="off"`, because a phone capitalises the first letter
+    of a field by default and `q,h,q` typed would arrive as `Q,h,q`. The
+    second is the one that breaks silently: it is right on the desk and
+    wrong in the hand, which is where this menu is read.
+    """
+    errs = []
+    m = re.search(r"function matches\(", src)
+    if not m:
+        return ["assets/app.js matches is gone"]
+    stripped = jslex.strip(src)
+    start = stripped.index("{", m.end())
+    body = stripped[start:jslex.match_pair(stripped, start)]
+    # By statement rather than by line, so folding the code over two
+    # lines is caught the same as folding it on one.
+    for stmt in body.split(";"):
+        if "d.code" in stmt and "toLowerCase" in stmt:
+            errs.append("assets/app.js matches() folds d.code — `Q` would "
+                        "return every quarter-ounce drink on the menu")
+            break
+    if "d.code" not in body:
+        errs.append("assets/app.js matches() no longer searches the code")
+
+    tag = re.search(r"<input class=\\?\"search\\?\"(.*?)>", js_markup(src), re.S)
+    if not tag:
+        return errs + ["assets/app.js the search box is gone"]
+    if "autocapitalize=" not in tag.group(1):
+        errs.append("assets/app.js the search box has no autocapitalize — a "
+                    "phone would capitalise the first letter and search a "
+                    "code nobody typed")
+    return errs
+
+
 SHIPPED = ["index.html", "assets/app.css", "assets/app.js", "sw.js",
            "llms.txt", "llms-full.txt"]
 
@@ -503,6 +546,7 @@ def main():
     errs += check_bigint(js)
     errs += check_pressed(js)
     errs += check_method_line(js)
+    errs += check_search_case(js)
     errs += check_drink_links(js)
     errs += check_dashes(shipped_files())
 
@@ -517,6 +561,7 @@ def main():
           f"{len(pages)} static page(s)")
     print("  wiring  every click branch reachable, every track() key known, "
           "every drink id addressable")
+    print("  search  a code keeps the case it was typed in, on a phone too")
     print("  state   every button that goes on says so, not just in CSS")
     print(f"  copy    no em dash in the {len(shipped_files())} file(s) the "
           f"site serves")
