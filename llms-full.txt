@@ -3,7 +3,7 @@
 > Classic drinks from one small home bar, decoded from the house
 > shorthand on the printed card.
 
-174 drinks, 86 stirred, 69 shaken, 19 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
+185 drinks, 89 stirred, 72 shaken, 24 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
 
 Barline reads left to right in build order, base spirit first, and
 ends with one token for glass plus garnish. A bare number is ounces
@@ -1306,6 +1306,38 @@ Harry Craddock prints the Angel Face in The Savoy Cocktail Book in 1930 as a thi
 
 - [Difford's Guide, Angel Face](https://www.diffordsguide.com/cocktails/recipe/521/angel-face)
 
+#### Fifty-Fifty
+
+`1h,1h,d,cO` · stirred · Gin · Martini family
+
+- 1 1/2 oz Gin
+- 1 1/2 oz Dry vermouth
+- 1 dash Orange bitters
+- Coupe, Olive
+
+An ounce and a half each of gin and dry vermouth, one dash of orange bitters. Half the drink is wine, so it is softer and lower proof than the Martini and the vermouth's grape and wormwood share the front with the juniper. Stirred, coupe, an olive. Salt from the olive against the wine.
+
+Equal parts was the Martini ratio before Prohibition. Hugo Ensslin prints the Fifty-Fifty in 1917 in Recipes for Mixed Drinks, and Harry Craddock repeats it in the 1930 Savoy Cocktail Book: half gin, half French vermouth. The dry decades pushed the vermouth down to a rinse, and the ratio came back in New York in the late 1990s, at Sasha Petraske's Milk & Honey and then as Audrey Saunders' Fitty-Fitty at the Pegu Club in 2005, with orange bitters. This menu pours an ounce and a half each of gin and dry vermouth and one dash of orange bitters, stirred, coupe, olive.
+
+- [Difford's Guide, Dry Martini (1:1 ratio) Fifty-Fifty](https://www.diffordsguide.com/cocktails/recipe/2162/dry-martini-11-ratio-fifty-fifty)
+- [Punch, The Fifty-Fifty Martini Is Back](https://punchdrink.com/articles/fifty-fifty-martini-cocktail-recipe-is-back/)
+
+#### Dirty Martini
+
+`2,h,q,cO` · stirred · Gin · Martini family
+
+- 2 oz Gin
+- 1/2 oz Dry vermouth
+- 1/4 oz Olive brine
+- Coupe, Olive
+
+Two ounces of gin, half an ounce of dry vermouth, a quarter ounce of brine from the olive jar. The brine is salt and a little vinegar, and it turns the drink savoury and slightly cloudy. Juniper first, then salt, then the vermouth. Stirred, coupe, an olive.
+
+John O'Connor at the Waldorf-Astoria is credited with the first one in 1901, a Martini with olives muddled into it. Brine as a measured ingredient prints by 1930 in G. H. Steele's My New Cocktail Book. Franklin Roosevelt mixed his own at two parts gin to one of vermouth with a spoon of brine and an olive, and poured them for Churchill and Stalin. This menu pours two ounces of gin, half an ounce of dry vermouth, and a quarter ounce of brine, stirred, coupe, olive.
+
+- [Punch, The Dirty Martini Cleans Up Its Act](https://punchdrink.com/articles/dirty-martini-recipe-cleans-up-olive-brine-cocktails-dante-nyc/)
+- [VinePair, The History of Martini Olives](https://vinepair.com/articles/history-martini-olives-superstition/)
+
 ### Vermouth
 
 #### Duplex
@@ -1437,6 +1469,22 @@ The Adonis is named for William Gill's Adonis, a musical burlesque that opened i
 
 - [Punch, Adonis](https://punchdrink.com/recipes/adonis/)
 - [Difford's Guide, Adonis](https://www.diffordsguide.com/cocktails/recipe/18/adonis)
+
+#### Coronation No. 1
+
+`1h,1h,d,2,c` · stirred · Vermouth · Vermouth family
+
+- 1 1/2 oz Sherry
+- 1 1/2 oz Dry vermouth
+- 1 dash Maraschino liqueur
+- 2 dashes Orange bitters
+- Coupe
+
+The Bamboo with maraschino in it: an ounce and a half each of amontillado and dry vermouth, a dash of maraschino, two dashes of orange bitters. Nutty, dry wine, with the maraschino's cherry and almond just showing and the orange bitters on the finish. Stirred, coupe, nothing on top. Low proof, dry, and fragrant.
+
+Named for the coronation of Edward VII, set for June 1902 and put back to August by the King's appendix. It first prints in Charles Mahoney's 1905 Hoffman House Bartender's Guide, credited to Joseph Rose of Murry Bros. Cafe in Newark, New Jersey, where it had taken second prize in the Police Gazette bartenders' contest of 1903. Harry Craddock's 1930 Savoy Cocktail Book has it as half sherry, half French vermouth, a dash of maraschino, two dashes of orange bitters, shaken. This menu stirs it, since there is no juice in it: an ounce and a half each of sherry and dry vermouth, a dash of maraschino, two of orange bitters, coupe.
+
+- [Difford's Guide, Coronation Cocktail No. 1](https://www.diffordsguide.com/cocktails/recipe/470/coronation-cocktail-no1)
 
 ### Fernet
 
@@ -1683,6 +1731,22 @@ The Alexander starts as a gin drink in Hugo Ensslin's 1916 Recipes for Mixed Dri
 - [Difford's Guide, Brandy Alexander](https://www.diffordsguide.com/cocktails/recipe/306/brandy-alexander)
 - [Punch, How to Use Crème de Cacao](https://punchdrink.com/articles/creme-de-cacao-liqueur-cocktail-recipes/)
 
+#### Brandy Milk Punch
+
+`2,2,h,Rcin` · shaken · Cognac · Fancy family
+
+- 2 oz Cognac
+- 2 oz Cream
+- 1/2 oz Simple syrup
+- Rocks, iced, Grated cinnamon
+
+Two ounces of cognac, two of cream, half an ounce of simple, shaken hard and poured over ice in a rocks glass. Cold, rich, and only a little sweet; the cream rounds the brandy and the grape and oak come through it. Grated cinnamon on top is the first thing you taste. The classic grate is nutmeg, and this shelf keeps cinnamon.
+
+Milk punch is colonial: spirit, milk, sugar, and spice, drunk in Britain and America through the eighteenth century. New Orleans kept it as a morning drink, and Brennan's made the brandy version a fixture of the city's brunch, shaken with half-and-half, sugar, and vanilla and dusted with nutmeg. Difford's pours it with cognac and whole milk. This menu pours two ounces of cognac, two of cream, and half an ounce of simple, shaken, over ice, grated cinnamon.
+
+- [Difford's Guide, Brandy Milk Punch](https://www.diffordsguide.com/cocktails/recipe/314/brandy-milk-punch)
+- [Imbibe, Brandy Milk Punch](https://imbibemagazine.com/recipe/brandy-milk-punch-recipe/)
+
 ### Bourbon
 
 #### Buster Brown
@@ -1869,6 +1933,22 @@ Phil Ward built the Final Ward at Death & Co in New York in 2007, a Last Word wi
 
 - [Punch, Final Ward](https://punchdrink.com/recipes/final-ward/)
 - [Difford's Guide, Final Ward](https://www.diffordsguide.com/cocktails/recipe/2478/final-ward)
+
+#### Blinker
+
+`2,1,h,c` · shaken · Rye · Sour family
+
+- 2 oz Rye
+- 1 oz Grapefruit juice
+- 1/2 oz Grenadine
+- Coupe
+
+Two ounces of rye, an ounce of grapefruit, half an ounce of grenadine. The grapefruit is sour and bitter where lemon would be only sour, and the grenadine's pomegranate sits under it as the sugar. Rye spice on top, a pink colour. Shaken, coupe. Drier than it looks.
+
+Patrick Gavin Duffy prints it in 1934 in The Official Mixer's Manual as a long drink: three parts grapefruit juice to two of rye and one of grenadine. David Embury, in 1948, called it not particularly good but not too bad. Ted Haigh recut it in Vintage Spirits and Forgotten Cocktails in 2004 as a short sour, two of rye to one of grapefruit with a teaspoon of raspberry syrup, and that is the shape the revival kept; PDT printed it in 2011. This menu pours two ounces of rye, an ounce of grapefruit, and half an ounce of grenadine, shaken, coupe.
+
+- [Difford's Guide, Blinker](https://www.diffordsguide.com/cocktails/recipe/243/blinker)
+- [Punch, A Forgotten Rye Whiskey Cocktail Makes a Comeback](https://punchdrink.com/articles/blinker-cocktail-rye-whiskey/)
 
 ### Scotch
 
@@ -2627,6 +2707,21 @@ A drink called Dry Vermouth Sour does not appear under that name in the pre-1970
 - [The Oxford Companion to Spirits and Cocktails, The sour](https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-422)
 - [Difford's Guide, Vermouth Cocktail](https://www.diffordsguide.com/cocktails/recipe/5639/vermouth-cocktail)
 
+#### Sherry Cobbler
+
+`3,2b,Hom` · shaken · Vermouth · Vermouth family
+
+- 3 oz Sherry
+- 2 barspoons Sugar
+- Highball, iced, Orange twist, Mint
+
+Three ounces of amontillado and two barspoons of sugar, shaken until the sugar is gone, then poured over a highball packed with ice. Nutty, dry sherry with just enough sugar to taste like fruit, and very cold. The orange goes in over the top and the mint sits under your nose. Low proof and made for a hot afternoon.
+
+David Wondrich found the earliest Cobbler in the 1838 diary of Katherine Jane Ellice, who met it travelling in the United States. Dickens has Martin Chuzzlewit drink one through a straw in 1844, and it was the drink that carried the American bar abroad through the second half of the century. Jerry Thomas prints it in 1862: two wine glasses of sherry, a tablespoonful of sugar, two or three slices of orange, shaken, served on shaved ice with berries on top. This menu pours three ounces of sherry and two barspoons of sugar, shaken, over ice in a highball, orange and mint.
+
+- [Difford's Guide, Sherry Cobbler](https://www.diffordsguide.com/cocktails/recipe/2895/sherry-cobbler)
+- [Difford's Guide, Cobblers](https://www.diffordsguide.com/encyclopedia/1227/cocktails/cobblers)
+
 ## Built
 
 Made in the glass it is served in. Ice, spirit, then the mixer on top; one lift with a barspoon.
@@ -2837,6 +2932,34 @@ Nobody invented this one. It is the highball template with vodka in the spirit s
 
 - [Difford's Guide, Vodka Soda](https://www.diffordsguide.com/cocktails/recipe/4280/vodka-soda)
 
+#### Vodka & Tonic
+
+`2,t,HLw` · built · Vodka · Highball family
+
+- 2 oz Vodka
+- top with Tonic water
+- Highball, iced, Lime wheel
+
+Two ounces of vodka, then tonic to the top of an iced highball. With no juniper in the way the drink is the tonic itself: quinine bitter, a little sweet, cold and long. The lime wheel is a squeeze of oil and acid on the way in, and it is most of what you smell.
+
+Vodka came up in America in the 1940s and 1950s on the back of the Moscow Mule and Smirnoff's advertising, and tonic was the obvious second mixer once gin had shown the way. In Britain it overtook the Gin and Tonic in the 1980s, helped along by television: Arthur Daley in Minder ordered a large V.A.T. often enough that the initials stuck. Difford's pours it long over ice with a lime wedge. This menu pours two ounces of vodka and tops with tonic over ice, lime wheel.
+
+- [Difford's Guide, Vodka & Tonic (VAT)](https://www.diffordsguide.com/cocktails/recipe/10383/vodka-and-tonic-vat)
+
+#### Salty Dog
+
+`2,4,RS` · built · Vodka · Highball family
+
+- 2 oz Vodka
+- 4 oz Grapefruit juice
+- Rocks, iced, Salt rim
+
+Two ounces of vodka and four of fresh grapefruit juice, built over ice in a rocks glass with a salt rim. Grapefruit is bitter and sour at once, and the salt on the rim takes the bitter edge down so the fruit reads sweeter than it is. Cold, tart, and salty at the lip. Without the rim it is a Greyhound.
+
+The Greyhound, gin and grapefruit juice, is in Harry Craddock's 1930 Savoy Cocktail Book. The salt rim arrives in the 1950s and is usually credited to the entertainer George Jessel, who is said to have added it to soften the grapefruit; the drink first prints under this name in the 1962 revised edition of Ted Saucier's Bottoms Up. Gin was the original spirit and vodka took over as it took over everything else in that decade. This menu pours two ounces of vodka and four of grapefruit over ice, salt rim.
+
+- [Difford's Guide, Salty Dog](https://www.diffordsguide.com/cocktails/recipe/1735/salty-dog)
+
 ### Gin
 
 #### Gin & Tonic
@@ -2935,6 +3058,51 @@ An ounce each of Campari and sweet vermouth with sparkling wine on top, over ice
 Sbagliato means bungled. Mirko Stocchetto, at Bar Basso in Milan, reached for the spumante instead of the gin while building a Negroni and kept the result; Difford's dates the mistake to the late 1980s. Bar Basso has served it ever since, in spumante rather than prosecco, in the oversized stemmed chalices Stocchetto designed in the 1980s and licensed to WMF. He died on 10 November 2016 and his family still runs the bar. This menu pours an ounce each of Campari and sweet vermouth, tops with Champagne, and serves it over ice with an orange twist.
 
 - [Difford's Guide, Negroni Sbagliato](https://www.diffordsguide.com/cocktails/recipe/2515/negroni-sbagliato)
+
+#### Campari & Tonic
+
+`1h,t,Ho` · built · Vermouth · Highball family
+
+- 1 1/2 oz Campari
+- top with Tonic water
+- Highball, iced, Orange twist
+
+An ounce and a half of Campari, then tonic to the top of an iced highball. Two bitters meet, gentian and orange peel from the Campari and quinine from the tonic, and the tonic's sugar carries both. Red, dry, and cold. The orange twist sits on the Campari's own orange.
+
+Gaspare Campari made his bitter in Novara in 1860 and the family sold it in Milan from the 1860s on, where it went into soda for the Campari Soda and into vermouth for the Americano. Cutting a bitter liqueur with tonic instead of soda is the Italian aperitivo habit that Punch describes alongside Spain's fortified wines and tonic: the quinine adds a second bitterness and the sugar rounds the first. This menu pours an ounce and a half of Campari and tops with tonic over ice, orange twist.
+
+- [Punch, Pour Some Tonic On It](https://punchdrink.com/articles/beyond-the-gin-and-tonic-cocktail-recipes/)
+- [Difford's Guide, 20 best Campari cocktails](https://www.diffordsguide.com/encyclopedia/2343/cocktails/20-best-campari-cocktails)
+
+#### Vermouth & Tonic
+
+`2,t,Ho` · built · Vermouth · Highball family
+
+- 2 oz Sweet vermouth
+- top with Tonic water
+- Highball, iced, Orange twist
+
+Two ounces of sweet vermouth, then tonic to the top of an iced highball. Wormwood, vanilla, and dried orange from the vermouth over quinine, with the wine's sugar and the tonic's meeting in the middle. Low proof and long; an orange twist on top.
+
+Spain drinks vermouth as its own occasion, la hora del vermut, poured from the tap in bars across Madrid and Barcelona from the late nineteenth century on and served over ice with a slice of orange, an olive, and a splash of soda or tonic. Punch lists tonic with vermouth beside sherry and white port as the Iberian answer to the Gin and Tonic, fortified wine in the spirit's place. This menu pours two ounces of sweet vermouth and tops with tonic over ice, orange twist.
+
+- [Punch, 10 Classic Spanish Cocktail Recipes](https://punchdrink.com/articles/classic-spanish-cocktail-recipes-spain/)
+- [Punch, Pour Some Tonic On It](https://punchdrink.com/articles/beyond-the-gin-and-tonic-cocktail-recipes/)
+
+#### Sherry & Tonic
+
+`2,t,Hl` · built · Vermouth · Highball family
+
+- 2 oz Sherry
+- top with Tonic water
+- Highball, iced, Lemon twist
+
+Two ounces of amontillado, then tonic to the top of an iced highball. The sherry is nutty and bone dry, the tonic is bitter and a little sweet, and together they make a long drink with almost no sugar in it. The lemon twist brightens the nut. It drinks like a cold aperitif from Jerez.
+
+In Andalusia sherry has always been a long drink as well as a wine: fino goes into lemon soda for the Rebujito at the ferias, and fino or amontillado goes into tonic at the bar. Punch groups it with vermouth and white port as the fortified wines Spain and Portugal take with tonic. Amontillado, a fino aged on past its flor, is the bottle this shelf carries, and its nuttiness stands up to the quinine better than a fino would. This menu pours two ounces of sherry and tops with tonic over ice, lemon twist.
+
+- [Difford's Guide, Sherry cocktails](https://www.diffordsguide.com/g/1277/sherry-cocktails)
+- [Punch, Pour Some Tonic On It](https://punchdrink.com/articles/beyond-the-gin-and-tonic-cocktail-recipes/)
 
 ### Absinthe
 

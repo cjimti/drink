@@ -60,6 +60,10 @@ OVERRIDE = {
     # Spirit and sugar with no bitters, so the ratio ladder has nothing
     # to catch it. It is an Old-Fashioned with mint muddled in.
     "mint-julep": "old-fashioned",
+    # Spirit and four ounces of juice over ice, no sugar. The ratio sees
+    # spirit and citrus and files a Sour; it is a long drink with the
+    # juice doing the mixer's job.
+    "salty-dog": "highball",
 }
 
 # Modifier bottles play four different jobs, and `kind: modifier` cannot
