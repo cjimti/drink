@@ -5,9 +5,13 @@
     "source": "transcribed from the printed card, with long drinks added in 2026"
   },
   "methods": [
-    { "id": "stirred", "label": "Stirred", "blurb": "Spirit only. Stir on ice until cold, strain, no dilution past that." },
-    { "id": "shaken",  "label": "Shaken",  "blurb": "Anything with juice, egg, or syrup carrying the drink. Hard shake, double strain." },
-    { "id": "built",   "label": "Built",   "blurb": "Made in the glass it is served in. Ice, spirit, then the mixer on top; one lift with a barspoon." }
+    { "id": "stirred", "label": "Stirred", "blurb": "Spirit only. Stir on ice until cold, strain, no dilution past that.",
+      "how": "Stir with ice until cold, then strain." },
+    { "id": "shaken",  "label": "Shaken",  "blurb": "Anything with juice, egg, or syrup carrying the drink. Hard shake, double strain.",
+      "how": "Shake hard with ice, then strain." },
+    { "id": "built",   "label": "Built",   "blurb": "Made in the glass it is served in. Ice, spirit, then the mixer on top; one lift with a barspoon.",
+      "how": "Build in the glass over ice, then lift once with a barspoon.",
+      "how_dry": "Build in the glass with no ice, then top." }
   ],
   "families": [
     { "id": "aged-rum",     "label": "Aged Rum" },
@@ -650,7 +654,7 @@
         { "title": "Difford's Guide, Bitter Giuseppe", "url": "https://www.diffordsguide.com/cocktails/recipe/4856/bitter-giuseppe" }
       ] },
 
-    { "id": "fernet-and-ginger", "name": "Fernet and Ginger", "method": "stirred", "family": "fernet", "code": "1,4,RLw", "serve": "RLw",
+    { "id": "fernet-and-ginger", "name": "Fernet and Ginger", "method": "built", "family": "fernet", "code": "1,4,RLw", "serve": "RLw",
       "build": [["fernet","1"],["ginger-beer","4"]],
       "taste": "One ounce of Fernet, four ounces of ginger beer, over ice. The ginger beer is the drink; the Fernet is mint and bitter through the spice. Lime squeezed in and dropped. A highball. It sits.",
       "history": "Fernet and ginger beer is a bartender's highball, Fernet-Branca lengthened with ginger, a squeeze of lime. It does not appear under a fixed name in the pre-1970 manuals; it belongs to the Fernet-Branca cult that took hold in San Francisco bars in the 2000s and then everywhere else. Brett Adams and Jacob Grier print it in Raising the Bar (2022) as an ounce of Fernet and four of ginger beer, lime wedge in. This menu keeps that pour, rocks with ice.",
