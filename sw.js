@@ -41,8 +41,33 @@ var SHELL = [
   'assets/app.css',
   'assets/app.js',
   'assets/icon.svg',
+  /* Chrome asks for a 192 and a 512 before it will offer to install,
+     and Android's launcher wants the maskable one or the mark sits
+     in a white circle. An icon missing the first time the site is
+     added with no signal is a blank square on somebody's home
+     screen for good. */
   'assets/icon-180.png',
+  'assets/icon-192.png',
+  'assets/icon-512.png',
+  'assets/icon-512-maskable.png',
   'manifest.webmanifest',
+  /* The three faces. Cached with the shell because the printed
+     menu is what this project preserves, and a phone offline was
+     setting it in Helvetica. latin-ext is here on the same terms:
+     no drink needs it today, and the day one does is the day
+     there is no signal. */
+  'assets/fonts/dm-mono-400-latin-ext.woff2',
+  'assets/fonts/dm-mono-400-latin.woff2',
+  'assets/fonts/dm-mono-500-latin-ext.woff2',
+  'assets/fonts/dm-mono-500-latin.woff2',
+  'assets/fonts/lato-400-italic-latin-ext.woff2',
+  'assets/fonts/lato-400-italic-latin.woff2',
+  'assets/fonts/lato-400-latin-ext.woff2',
+  'assets/fonts/lato-400-latin.woff2',
+  'assets/fonts/lato-700-latin-ext.woff2',
+  'assets/fonts/lato-700-latin.woff2',
+  'assets/fonts/montserrat-500-800-latin-ext.woff2',
+  'assets/fonts/montserrat-500-800-latin.woff2',
   /* The plates on the Info tab. A help page that loses its pictures
      the first time it is opened with no signal is not much help. */
   'assets/tools/boston-shaker.png',

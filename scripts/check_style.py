@@ -77,6 +77,10 @@ def check_css(css):
         prop, value = m.group(1), " ".join(m.group(2).split())
         in_root = any(s.endswith(":root") for s in stack)
         in_print = any("print" in s for s in stack)
+        # @font-face names the face it is loading, not a stack to
+        # set type in. The three tokens are still the only way to
+        # ask for one.
+        in_face = any(s.startswith("@font-face") for s in stack)
 
         if prop.startswith("--"):
             defined.setdefault(" > ".join(stack), {})[prop] = value
@@ -90,7 +94,8 @@ def check_css(css):
             errs.append(f"assets/app.css:{n} {prop} — the design has no "
                         f"shadows")
 
-        if prop == "font-family" and not in_root and "var(--" not in value:
+        if (prop == "font-family" and not (in_root or in_face)
+                and "var(--" not in value):
             errs.append(f"assets/app.css:{n} font-family without a token — "
                         f"use var(--display), var(--body) or var(--mono)")
     return errs, defined
