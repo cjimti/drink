@@ -165,7 +165,8 @@ Adding a drink means running `python3 scripts/kin.py` (or `make kin`)
 so the new one joins its family, then `make llms` so it appears in the
 agent dumps. `make verify` refuses a stale copy of either. A handful of
 drinks the ratio would misfile live as `OVERRIDE` at the top of the
-script; keep that list small.
+script; keep that list small. An entry naming the family the classifier
+already picks fails the build, so a reason nobody needs cannot sit there.
 
 ### Agent files
 

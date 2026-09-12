@@ -75,12 +75,14 @@ BUDGET = {
 
 
 def js_units(path, src):
-    """Every function worth measuring: named declarations and listeners.
+    """Every function worth measuring, however it is written.
 
-    An anonymous callback inside a named function counts toward that
-    function — a render function that maps over three arrays really is
-    doing three things. The delegated event handlers have no name to
-    count toward, so they are units in their own right.
+    Named declarations first, then listeners, then a function assigned
+    to a name and an arrow with a block body. An anonymous callback
+    inside a unit already taken counts toward that unit: a render
+    function that maps over three arrays really is doing three things.
+    Anything left over has nothing to count toward, so it is a unit in
+    its own right, and an arrow of one expression has no body to measure.
     """
     s = jslex.strip(src)
     taken, units = [], []
@@ -105,9 +107,7 @@ def js_units(path, src):
             key=f"{path}:{name}",
             line=src.count("\n", 0, at) + 1,
             lines=body.count("\n") + 1,
-            complexity=1 + len(re.findall(
-                r"\bif\s*\(|\bfor\s*\(|\bwhile\s*\(|\bcase\b|\bcatch\s*\(|"
-                r"&&|\|\||\?[^.]|\?\?", body)),
+            complexity=1 + len(BRANCH.findall(body)),
             nesting=nest,
             args=len([a for a in args.split(",") if a.strip()]),
         ))
@@ -124,7 +124,70 @@ def js_units(path, src):
         event = re.search(r"'([\w-]*)'", src[m.start():m.end()])
         measure(f"<{m.group(1) or '?'} {event.group(1) if event else '?'}>",
                 m.group(2), m.end(), m.start())
+    for m in ASSIGNED.finditer(s):
+        measure(m.group(1), m.group(2), m.end(), m.start())
+    for m in re.finditer(r"=>\s*\{", s):
+        head = js_arrow_head(s, m.start())
+        if head:
+            measure(head[0], head[1], m.start(), head[2])
     return units
+
+
+# One branch each: a condition, a loop, a case, a catch, a short circuit
+# and a ternary. `??` and `??=` are one short circuit, not two ternaries,
+# and `?.` is a property read unless a digit follows, where it is a
+# ternary choosing a decimal.
+BRANCH = re.compile(r"\bif\s*\(|\bfor\s*\(|\bwhile\s*\(|\bcase\b|"
+                    r"\bcatch\s*\(|&&|\|\||\?\?=?|\?(?![?]|\.(?!\d))")
+
+# A plain `=`: not `==`, `=>`, `<=` or `+=`.
+ASSIGN = r"(?<![=!<>+\-*/%&|^?])=(?![=>])"
+
+# `var f = function (a) {`, `x.onload = function (e) {`.
+ASSIGNED = re.compile(r"([\w.$]+)\s*" + ASSIGN + r"\s*(?:async\s+)?"
+                      r"function\b\s*\w*\s*\(([^)]*)\)")
+
+
+def js_arrow_head(s, arrow):
+    """(name, params, offset) for the arrow whose `=>` is at `arrow`.
+
+    `s` is stripped. The parameters are read backwards from the arrow,
+    so a default value holding its own brackets still reads as one list.
+    The name is whatever the arrow is assigned to, or its line when it
+    is assigned to nothing. None for an arrow wrapped around the whole
+    file: `(function () {` is not measured, and `(() => {` is the same
+    wrapper.
+    """
+    j = arrow - 1
+    while j >= 0 and s[j] in " \t\r\n":
+        j -= 1
+    if j < 0:
+        return None
+    if s[j] == ")":
+        depth, i = 0, j
+        while i >= 0:
+            depth += {")": 1, "(": -1}.get(s[i], 0)
+            if depth == 0:
+                break
+            i -= 1
+        if i < 0:
+            return None
+        start, params = i, s[i + 1:j]
+    else:
+        bare = re.search(r"[\w$]+\Z", s[max(0, j - 80):j + 1])
+        if not bare:
+            return None
+        start, params = j + 1 - len(bare.group(0)), bare.group(0)
+    # Only the few characters before the arrow can name it.
+    lead = s[max(0, start - 120):start]
+    lead = lead[:len(lead) - len(re.search(r"(?:async\s+)?\Z", lead).group(0))]
+    if lead.rstrip().endswith("(") and \
+            s[jslex.match_brace(s, s.index("{", arrow)):].lstrip().startswith(")("):
+        return None
+    named = re.search(r"([\w.$]+)\s*" + ASSIGN + r"\s*\Z", lead)
+    line = s.count("\n", 0, arrow) + 1
+    return (named.group(1) if named else f"<arrow {line}>", params,
+            start - len(lead) + named.start() if named else start)
 
 
 def check_size(units):
@@ -165,13 +228,15 @@ JS_BANNED = [
     (r"\bnew\s+Function\s*\(", "new Function()"),
     (r"\bdocument\.write\b", "document.write"),
     (r"\bdebugger\b", "debugger"),
-    (r"\bconsole\.\w+\s*\(", "console.* — a phone is not a terminal"),
+    (r"\bconsole\s*(?:\??\.\s*\w+|\[[^\]]*\])\s*\(",
+     "console.* — a phone is not a terminal"),
     (r"\balert\s*\(|\bconfirm\s*\(|\bwindow\.prompt\s*\(",
      "a modal dialog — it blocks the page and the page has its own"),
     (r"\bparseInt\s*\([^),]*\)", "parseInt without a radix"),
     (r"(?<![=!<>])==(?!=)(?!\s*null)", "== — use === (or == null)"),
     (r"(?<![!<>=])!=(?!=)(?!\s*null)", "!= — use !== (or != null)"),
-    (r"\bsetTimeout\s*\(\s*'", "setTimeout on a string — it is eval"),
+    (r"\b(?:setTimeout|setInterval)\s*\(\s*['\"`]",
+     "a timer on a string — it is eval"),
     (r"\bwith\s*\(", "with()"),
 ]
 

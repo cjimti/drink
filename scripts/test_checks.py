@@ -22,6 +22,7 @@ import check_menu                                            # noqa: E402
 import check_style                                           # noqa: E402
 import cards                                                 # noqa: E402
 import jslex                                                 # noqa: E402
+import kin                                                   # noqa: E402
 import llms                                                  # noqa: E402
 import pages                                                 # noqa: E402
 import stage                                                 # noqa: E402
@@ -47,6 +48,19 @@ def css_cases():
         ("face being loaded", '@font-face { font-family: "Lato"; }',
          False),
         ("undefined token", ".a { color: var(--nope); }", True),
+        ("named colour", ".a { color: red; }", True),
+        ("named colour, any case", ".a { border: 1px solid White; }", True),
+        ("colour in a fallback", ".a { color: var(--brass, gold); }", True),
+        ("color-mix", ".a { color: color-mix(in srgb, var(--brass), "
+                      "transparent); }", True),
+        ("oklch", ".a { color: oklch(70% 0.1 80); }", True),
+        ("currentColor", ".a { border-color: currentColor; }", False),
+        ("transparent", ".a { background: transparent; }", False),
+        ("a colour word in a url", ".a { background: url(tan.png); }", False),
+        ("a colour word in a string", '.a { content: "gold"; }', False),
+        ("drop-shadow", ".a { filter: drop-shadow(0 1px 2px var(--brass)); }",
+         True),
+        ("a filter that is not a shadow", ".a { filter: invert(1); }", False),
     ]
 
 
@@ -68,6 +82,14 @@ def js_cases():
          False),
         ("debugger", "function f() { debugger; }", True),
         ("document.write", "function f() { document.write('x'); }", True),
+        ("console in brackets", "function f() { console['log'](1); }", True),
+        ("console optional", "function f() { console?.warn(1); }", True),
+        ("myconsole", "function f() { myconsole.log(1); }", False),
+        ("timer on a double-quoted string",
+         'function f() { setTimeout("go()", 1); }', True),
+        ("interval on a template", "function f() { setInterval(`go()`, 1); }",
+         True),
+        ("timer on a function", "function f() { setTimeout(go, 1); }", False),
     ]
 
 
@@ -77,7 +99,7 @@ def py_cases():
         ("bare except", '"""d."""\ntry:\n    x = 1\nexcept:\n    pass\n',
          True),
         ("named except", '"""d."""\ntry:\n    x = 1\nexcept ValueError:\n'
-                         '    pass\n', True if False else False),
+                         '    pass\n', False),
         ("mutable default", '"""d."""\ndef f(a=[]):\n    """d."""\n'
                             '    return a\n', True),
         ("immutable default", '"""d."""\ndef f(a=()):\n    """d."""\n'
@@ -103,6 +125,39 @@ def size_cases():
         ("deep function", deep, True),
         ("branchy function", branchy, True),
         ("small function", "function f(a) {\n  return a;\n}\n", False),
+        ("long arrow", "var f = (a, b = g(1)) => {\n" + "  go();\n" * 100 +
+         "};\n", True),
+        ("long arrow callback", "items.forEach(x => {\n" + "  go();\n" * 100 +
+         "});\n", True),
+        ("branchy async arrow", "const f = async (a) => {\n" +
+         "  if (a) { return 1; }\n" * 40 + "};\n", True),
+        ("long assigned function", "var said = function (a) {\n" +
+         "  go();\n" * 100 + "};\n", True),
+        ("long handler on a property", "img.onload = function () {\n" +
+         "  go();\n" * 100 + "};\n", True),
+        ("arrow with eight args", "var f = (a, b, c, d, e, g, h, i) => {\n"
+         "  return a;\n};\n", True),
+        ("one-expression arrow", "var f = (a) =>\n" + "  a +\n" * 100 +
+         "  1;\n", False),
+        ("arrow around the file", "(() => {\n" + "  go();\n" * 100 +
+         "})();\n", False),
+        ("small arrow", "var f = (a) => {\n  return a;\n};\n", False),
+    ]
+
+
+def complexity_cases():
+    """(name, expression, complexity) for the branch count.
+
+    `??` is one short circuit and `?.` is a property read, so a function
+    returning either scores what a plain `||` or a plain read would.
+    """
+    return [
+        ("nullish", "a ?? b", 2),
+        ("nullish assignment", "a ??= b", 2),
+        ("optional chaining", "a?.b", 1),
+        ("ternary", "a ? b : c", 2),
+        ("ternary on a decimal", "a ?.5 : 1", 2),
+        ("both", "a?.b ?? c ? d : e", 3),
     ]
 
 
@@ -174,6 +229,11 @@ def run_js(failures):
         report(f"size/{name}",
                check_code.check_size(check_code.js_units("t.js", js)),
                expected, failures)
+    for name, expr, want in complexity_cases():
+        unit = check_code.js_units("t.js", f"function f(a) {{ return {expr}; }}")
+        got = unit[0]["complexity"] if unit else None
+        report(f"complexity/{name}", "" if got == want else
+               f"{expr} scored {got}, not {want}", False, failures)
 
 
 def run_py(failures):
@@ -253,6 +313,113 @@ def run_house(failures):
     report("house/em dash clean",
            check_style.check_dashes(check_style.shipped_files()), False,
            failures)
+
+
+CLICK = ("document.addEventListener('click', function (e) {\n"
+         "  var t = e.target.closest('%s');\n"
+         "  if (!t) return;\n"
+         "  if (t.dataset.a) return go(t.dataset.aFor);\n"
+         "%s\n"
+         "});\n")
+
+
+def wiring_cases():
+    """(name, selector, branch, should it be reported) for the click wiring.
+
+    Every branch here asks about `data-b`. Selected, each is clean; left
+    out of the selector, each is a dead button, however the asking is
+    written. `data-a-for` is read as a value, after its branch, and is
+    never a branch of its own.
+    """
+    return [
+        ("ternary", "  return t.dataset.b ? go() : stay();"),
+        ("short circuit", "  t.dataset.b === 'x' && go();"),
+        ("negated", "  var on = !!t.dataset.b;"),
+        ("switch", "  switch (t.dataset.b) { case 'x': go(); }"),
+        ("hasAttribute", "  var on = t.hasAttribute('data-b');"),
+        ("in", "  var on = 'b' in t.dataset;"),
+        ("hasAttribute, double quotes", '  var on = t.hasAttribute("data-b");'),
+    ]
+
+
+def run_wiring(failures):
+    """A branch no `if` announces is still a branch the selector must feed."""
+    for name, branch in wiring_cases():
+        report(f"wiring/{name} unselected", check_style.check_delegation(
+            CLICK % ("[data-a]", branch)), True, failures)
+        report(f"wiring/{name} selected", check_style.check_delegation(
+            CLICK % ("[data-a],[data-b]", branch)), False, failures)
+    report("wiring/a value read after the branch",
+           check_style.check_delegation(CLICK % ("[data-a]", "")), False,
+           failures)
+
+
+def run_js_markup(failures):
+    """The ids, references and buttons app.js builds out of strings."""
+    app = (ROOT / "assets" / "app.js").read_text()
+    html = (ROOT / "index.html").read_text()
+    report("aria/app clean", check_style.check_js_refs(html, app), False,
+           failures)
+    broken = app.replace(" id=\"rpanel-' + esc(d.id)",
+                         " id=\"rpane-' + esc(d.id)")
+    report("aria/pane renamed, tab not", check_style.check_js_refs(html, broken),
+           True, failures)
+    broken = app.replace("aria-controls=\"note-'", "aria-controls=\"notes-'")
+    report("aria/note renamed, row not", check_style.check_js_refs(html, broken),
+           True, failures)
+    # `kind + '-pane'` is any pane, so it holds while one survives and
+    # fails only when none does. A shape cannot say which kind it meant.
+    broken = app.replace('id="print-pane"', 'id="print-sheet"')
+    report("aria/one pane renamed", check_style.check_js_refs(html, broken),
+           False, failures)
+    for kind in ("share", "starters"):
+        broken = broken.replace(f'id="{kind}-pane"', f'id="{kind}-sheet"')
+    report("aria/every pane renamed", check_style.check_js_refs(html, broken),
+           True, failures)
+    report("aria/index still resolves against app.js",
+           check_style.check_html(html, app), False, failures)
+    for ref, id_, want in (("rtab-*-*", "rtab-*-*", True),
+                           ("*-pane", "print-pane", True),
+                           ("shelf-h", "shelf-*", True),
+                           ("note-*", "notes-*", False),
+                           ("*-pane", "rtab-*-*", False),
+                           ("note-*", "note-", False),
+                           ("q", "q", True), ("q", "Q", False)):
+        report(f"aria/{ref} names {id_}",
+               "" if check_style.shapes_meet(ref, id_) == want else
+               f"expected {want}", False, failures)
+
+    report("button/app clean", check_style.check_js_buttons(app), False,
+           failures)
+    broken = app.replace("          ' aria-label=\"' + esc('Tick ' + name) + '\">' +",
+                         "          '>' +")
+    report("button/tick loses its label", check_style.check_js_buttons(broken),
+           True, failures)
+    for name, js, expected in (
+            ("empty", "f('<button type=\"button\"></button>');", True),
+            ("joined literals only",
+             "f('<button type=\"button\">' +\n  '</button>');", True),
+            ("text", "f('<button type=\"button\">Undo</button>');", False),
+            ("label", "f('<button type=\"button\" aria-label=\"Close\">"
+                      "</button>');", False),
+            ("an unclosed button beside an empty one",
+             "f('<button type=\"button\">' + x);\n"
+             "g('<button type=\"button\"></button>');", True),
+            ("text from the data",
+             "f('<button type=\"button\">' + esc(n) + '</button>');", False)):
+        report(f"button/{name}", check_style.check_js_buttons(js), expected,
+               failures)
+
+
+def run_kin(failures):
+    """An override the classifier already agrees with is refused."""
+    menu = kin.load("cocktails.json")
+    by_id = {i["id"]: i for i in kin.load("bar.json")["ingredients"]}
+    rows = [kin.analyse(d, by_id) for d in menu["cocktails"]]
+    report("kin/overrides all change something",
+           kin.redundant_overrides(rows, kin.OVERRIDE), False, failures)
+    report("kin/journalist back in OVERRIDE", kin.redundant_overrides(
+        rows, dict(kin.OVERRIDE, journalist="martini")), True, failures)
 
 
 def pressed_cases():
@@ -352,6 +519,12 @@ def run_menu(failures):
                expected, failures)
     report("menu/unreadable amount",
            check_menu.amount_errors("zz", "gin", by_id["gin"]), True, failures)
+    for amt, expected in (("0", True), ("00", True), ("0b", True),
+                          ("0h", True), ("02", True), ("10", False),
+                          ("2b", False), ("b", False), ("1h", False)):
+        report(f"menu/amount {amt}",
+               check_menu.amount_errors(amt, "gin", by_id["gin"]), expected,
+               failures)
 
 
 def method_cases(menu):
@@ -738,7 +911,8 @@ def main():
     """Every case, then the count."""
     failures = []
     for run in (run_css, run_contrast, run_js, run_py, run_house,
-                run_pressed, run_names, run_menu, run_methods,
+                run_pressed, run_names, run_wiring, run_js_markup, run_kin,
+                run_menu, run_methods,
                 run_mixer_method,
                 run_method_line, run_glasses, run_fonts, run_manifest,
                 run_plates, run_pages, run_lexer, run_worker, run_stamps,

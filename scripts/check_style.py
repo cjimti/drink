@@ -31,7 +31,52 @@ import jslex  # noqa: E402  (path set above; there is no package here)
 
 ROOT = Path(__file__).resolve().parent.parent
 
-COLOUR = re.compile(r"#[0-9A-Fa-f]{3,8}\b|\brgba?\(|\bhsla?\(")
+# Every way CSS spells a colour without a token: a hex, a colour
+# function, or one of the named colours. `currentColor` and
+# `transparent` are not in the list, because neither is a colour that
+# could be wrong in one theme.
+NAMED = (
+    "aliceblue antiquewhite aqua aquamarine azure beige bisque black "
+    "blanchedalmond blue blueviolet brown burlywood cadetblue chartreuse "
+    "chocolate coral cornflowerblue cornsilk crimson cyan darkblue darkcyan "
+    "darkgoldenrod darkgray darkgreen darkgrey darkkhaki darkmagenta "
+    "darkolivegreen darkorange darkorchid darkred darksalmon darkseagreen "
+    "darkslateblue darkslategray darkslategrey darkturquoise darkviolet "
+    "deeppink deepskyblue dimgray dimgrey dodgerblue firebrick floralwhite "
+    "forestgreen fuchsia gainsboro ghostwhite gold goldenrod gray green "
+    "greenyellow grey honeydew hotpink indianred indigo ivory khaki "
+    "lavender lavenderblush lawngreen lemonchiffon lightblue lightcoral "
+    "lightcyan lightgoldenrodyellow lightgray lightgreen lightgrey "
+    "lightpink lightsalmon lightseagreen lightskyblue lightslategray "
+    "lightslategrey lightsteelblue lightyellow lime limegreen linen magenta "
+    "maroon mediumaquamarine mediumblue mediumorchid mediumpurple "
+    "mediumseagreen mediumslateblue mediumspringgreen mediumturquoise "
+    "mediumvioletred midnightblue mintcream mistyrose moccasin navajowhite "
+    "navy oldlace olive olivedrab orange orangered orchid palegoldenrod "
+    "palegreen paleturquoise palevioletred papayawhip peachpuff peru pink "
+    "plum powderblue purple rebeccapurple red rosybrown royalblue "
+    "saddlebrown salmon sandybrown seagreen seashell sienna silver skyblue "
+    "slateblue slategray slategrey snow springgreen steelblue tan teal "
+    "thistle tomato turquoise violet wheat white whitesmoke yellow "
+    "yellowgreen").split()
+COLOUR = re.compile(
+    r"#[0-9A-Fa-f]{3,8}\b"
+    r"|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color|color-mix)\("
+    r"|(?<![\w-])(?:" + "|".join(NAMED) + r")(?![\w-])", re.I)
+
+
+def colour_in(value):
+    """The first literal colour in a value, ignoring what cannot be one.
+
+    A token name, a url and a quoted string are all words that may happen
+    to spell `tan` or `gold`, and none of them paints anything. A token's
+    fallback does paint, so only the name inside `var(` is dropped.
+    """
+    bare = re.sub(r"var\(\s*--[\w-]+|url\([^)]*\)|\"[^\"]*\"|'[^']*'", " ",
+                  value)
+    return COLOUR.search(bare)
+
+
 # re.S because a value may wrap: a long gradient is still one
 # declaration, and skipping it would be a hole in the palette rule.
 DECL = re.compile(r"^\s*(--[\w-]+|[a-z-]+)\s*:\s*(.+)$", re.S)
@@ -84,7 +129,7 @@ def check_css(css):
 
         if prop.startswith("--"):
             defined.setdefault(" > ".join(stack), {})[prop] = value
-        elif COLOUR.search(value) and not (in_root or in_print):
+        elif colour_in(value) and not (in_root or in_print):
             errs.append(f"assets/app.css:{n} literal colour in `{prop}` — "
                         f"it will be wrong in one theme; use a token")
 
@@ -93,6 +138,9 @@ def check_css(css):
                 value):
             errs.append(f"assets/app.css:{n} {prop} — the design has no "
                         f"shadows")
+        elif re.search(r"\bdrop-shadow\(", value):
+            errs.append(f"assets/app.css:{n} drop-shadow in `{prop}` — the "
+                        f"design has no shadows")
 
         if (prop == "font-family" and not (in_root or in_face)
                 and "var(--" not in value):
@@ -108,7 +156,7 @@ def check_themes(defined):
                   if "prefers-color-scheme: light" in k), {})
     errs = []
     for name, value in dark.items():
-        if COLOUR.search(value) and name not in light:
+        if colour_in(value) and name not in light:
             errs.append(f"assets/app.css --{name.lstrip('-')} has no light "
                         f"counterpart — light mode is not an inversion, it "
                         f"is written out")
@@ -249,9 +297,9 @@ def check_html(html, js):
     p.feed(html)
     errs = list(p.errs)
 
-    rendered = set(re.findall(r'id="([\w-]+)"', js))
+    ids = {i for i, _ in p.ids} | {shape for shape, _ in js_ids(js)}
     for key, ref, n in p.refs:
-        if ref not in {i for i, _ in p.ids} | rendered:
+        if not resolves(ref, ids):
             errs.append(f"index.html:{n} {key}=\"{ref}\" points at nothing")
 
     seen = {}
@@ -327,6 +375,46 @@ def camel(name):
     return head + "".join(w.capitalize() for w in tail)
 
 
+# A data attribute read as a test rather than as a value: negated, or
+# deciding a ternary or a short circuit, compared or not on the way.
+TESTED = re.compile(
+    r"!\s*t\.dataset\.(\w+)"
+    r"|\bt\.dataset\.(\w+)\s*(?:[!=]==?\s*(?:'\s*'|\"\s*\"|[\w.]+)\s*)?"
+    r"(?:\?(?![.?])|&&|\|\|)")
+
+
+def dataset_guards(src, stripped):
+    """Every data attribute the click code branches on, however it asks.
+
+    An `if`, `while` or `switch` head is a branch. So is a read that is
+    negated or decides a `?`, `&&` or `||`: `return t.dataset.bar ? a() :
+    b()` is a branch with no `if` in it. `t.hasAttribute('data-x')` and
+    `'x' in t.dataset` only ever ask whether it is there, so they count
+    wherever they are written. A plain read such as `var id =
+    t.dataset.recipeFor` is a value taken after the branch, and is not.
+    """
+    guarded = set()
+    for m in re.finditer(r"\b(?:if|while|switch)\s*\(", stripped):
+        cond = stripped[m.end() - 1:
+                        jslex.match_pair(stripped, m.end() - 1, "(", ")")]
+        guarded |= set(re.findall(r"\bt\.dataset\.(\w+)", cond))
+    for m in TESTED.finditer(stripped):
+        guarded.add(m.group(1) or m.group(2))
+    # The attribute name was blanked with the string, so it is read back
+    # off the source at the same offset.
+    blank = r"(?:'\s*'|\"\s*\")"
+    for m in re.finditer(r"\bt\.hasAttribute\(\s*" + blank + r"\s*\)|" +
+                         blank + r"\s+in\s+t\.dataset\b", stripped):
+        name = re.search(r"['\"]([\w-]*)['\"]",
+                         src[m.start():m.end()]).group(1)
+        if m.group(0).startswith("t."):
+            if name.startswith("data-"):
+                guarded.add(camel(name[5:]))
+        else:
+            guarded.add(name)
+    return guarded
+
+
 def check_delegation(src):
     """Every branch of the click handler can actually be reached.
 
@@ -346,11 +434,7 @@ def check_delegation(src):
                 "check_style.py cannot find it any more"]
 
     named = {camel(n) for n in re.findall(r"\[data-([a-z-]+)\]", sel)}
-    guarded = set()
-    for m in re.finditer(r"\bif\s*\(", stripped):
-        cond = stripped[m.end() - 1:
-                        jslex.match_pair(stripped, m.end() - 1, "(", ")")]
-        guarded |= set(re.findall(r"\bt\.dataset\.(\w+)", cond))
+    guarded = dataset_guards(src, stripped)
 
     errs = []
     for key in sorted(guarded - named):
@@ -401,7 +485,13 @@ def check_bigint(src):
     return []
 
 
-def js_markup(src):
+# What an expression between two literals becomes when the holes are
+# kept: a value nobody can read until the page runs, or nothing at all,
+# for the ` + ` and the line break that only join two literals.
+HOLE, JOIN = "\x00", "\x01"
+
+
+def js_markup(src, holes=False):
     """The HTML app.js writes, with everything that is not a string blanked.
 
     Only the inside of a string literal survives, so a tag named in a
@@ -409,9 +499,19 @@ def js_markup(src):
     are kept, so a line counted off this text is the line in the file,
     and the run of literals that builds one element reads as one string
     with the expressions between them blanked out.
+
+    With `holes`, an expression is not blanked to spaces but marked: HOLE
+    where it computes something, JOIN where it is only the `+` and the
+    whitespace and the quotes between two literals. So
+    `id="rtab-' + esc(d.id) + '"` reads as `rtab-` and a hole, which is
+    a shape an aria reference can be matched against.
     """
     stripped = jslex.strip(src)
-    out = [c if c == "\n" else " " for c in src]
+    if holes:
+        out = [c if c == "\n" else JOIN if c in " \t+'\"`" else HOLE
+               for c in stripped]
+    else:
+        out = [c if c == "\n" else " " for c in src]
     i, n = 0, len(src)
     while i < n:
         if stripped[i] not in "'\"`":
@@ -451,6 +551,107 @@ def check_names(name, text):
                 errs.append(f"{name}:{n} <{m.group(1)}> with {key} — ARIA "
                             f"ignores a name on that role; put the words in "
                             f"a .sr-only span instead")
+    return errs
+
+
+REF_KEYS = ("aria-controls", "aria-labelledby", "aria-describedby")
+ATTR = re.compile(r"(?<![\w-])(id|" + "|".join(REF_KEYS) +
+                  r")=\\?\"([^\"<>]{0,200})\"")
+
+
+def js_attrs(src):
+    """(attribute, shape, line) for every id and aria reference app.js writes.
+
+    A shape is the value with `*` where an expression goes: the recipe
+    tab's `id="rtab-' + esc(d.id) + '-' + p.id + '"` is `rtab-*-*`. A
+    reference holding two ids is two shapes.
+    """
+    markup, out = js_markup(src, holes=True), []
+    for m in ATTR.finditer(markup):
+        value = re.sub("[" + JOIN + "\n]", "", m.group(2)).replace("\\", "")
+        value = re.sub(HOLE + "+", "*", value)
+        n = src.count("\n", 0, m.start()) + 1
+        for shape in (value.split() if m.group(1) != "id" else [value]):
+            out.append((m.group(1), shape, n))
+    return out
+
+
+def js_ids(src):
+    """(shape, line) for every id app.js writes that can be matched.
+
+    An id that is nothing but an expression matches every reference, so
+    it is left out rather than allowed to make the rule pass everything.
+    """
+    return [(shape, n) for key, shape, n in js_attrs(src)
+            if key == "id" and shape.strip("*")]
+
+
+def shapes_meet(ref, id_):
+    """True when a reference of one shape can name an id of the other.
+
+    Where one side is a literal, the other has to fit it, `*` being any
+    run: `*-pane` names `print-pane`. Where both are built, they have to
+    be built the same way. `*-pane` and `rtab-*-*` could both spell
+    `rtab-a-pane`, and allowing that would let any built id answer for
+    any built reference.
+    """
+    if "*" in ref and "*" in id_:
+        return ref == id_
+    pattern, text = (ref, id_) if "*" in ref else (id_, ref)
+    return re.fullmatch(".+".join(map(re.escape, pattern.split("*"))),
+                        text) is not None
+
+
+def resolves(ref, ids):
+    """A reference points at an id some page or some render can write.
+
+    A reference that is nothing but an expression cannot be read without
+    running the page, so it is not held to anything.
+    """
+    return not ref.strip("*") or any(shapes_meet(ref, i) for i in ids)
+
+
+def check_js_refs(html, js):
+    """Every aria reference app.js builds points at an id that exists.
+
+    The recipe tabs, the notes, the print and share reveals all build
+    their `aria-controls` out of the same id the pane is written with.
+    Only a literal used to count, so a pane renamed on one side and not
+    the other read as clean while the tab controlled nothing.
+    """
+    p = Page()
+    p.feed(html)
+    ids = {i for i, _ in p.ids} | {shape for shape, _ in js_ids(js)}
+    return [f"assets/app.js:{n} {key}=\"{shape}\" points at nothing"
+            for key, shape, n in js_attrs(js)
+            if key != "id" and not resolves(shape, ids)]
+
+
+# The body stops at the next open tag as well as at the close, so a
+# button whose close is written somewhere else cannot swallow the button
+# after it and take that one out of the check.
+BUTTON = re.compile(r"<button\b((?:[^>\"']|\"[^\"]*\"|'[^']*')*)>"
+                    r"((?:(?!<button\b).)*?)</button>", re.S)
+
+
+def check_js_buttons(src):
+    """Every button app.js writes has a name a screen reader can say.
+
+    Text counts, and so does an expression where the text goes, since a
+    label read out of the data cannot be checked here. A button with an
+    empty body and no aria-label, aria-labelledby or title is read as
+    `button` and nothing else.
+    """
+    markup, errs = js_markup(src, holes=True), []
+    for m in BUTTON.finditer(markup):
+        attrs, body = m.group(1), re.sub(r"<[^>]*>", "", m.group(2))
+        if any(k + "=" in attrs for k in ("aria-label", "aria-labelledby",
+                                           "title")):
+            continue
+        if HOLE in body or body.replace(JOIN, "").strip():
+            continue
+        n = src.count("\n", 0, m.start()) + 1
+        errs.append(f"assets/app.js:{n} <button> with no accessible name")
     return errs
 
 
@@ -626,6 +827,8 @@ def main():
     contrast_errs, ratios = check_contrast((("dark", dark), ("light", light)))
     errs += contrast_errs
     errs += check_html(html, js)
+    errs += check_js_refs(html, js)
+    errs += check_js_buttons(js)
     errs += check_names("index.html", html)
     errs += check_names("assets/app.js", js_markup(js))
     pages = page_files()
@@ -657,7 +860,8 @@ def main():
             f"{k.lstrip('-')} {v:.2f}" for k, v in worst.items())
             + f"  (worst ground, floor {FLOOR})")
     print(f"  a11y    labels, alt text and unique ids in index.html and "
-          f"{len(pages)} static page(s)")
+          f"{len(pages)} static page(s); every button and aria reference "
+          f"app.js builds")
     print("  names   no aria-label on a role that throws one away")
     print("  wiring  every click branch reachable, every track() key known, "
           "every drink id addressable")
