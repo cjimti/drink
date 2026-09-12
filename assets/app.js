@@ -2625,7 +2625,7 @@
           'long drinks written in the same shorthand; every recipe is generated ' +
           'from its code, so the two cannot drift apart.') +
       '</p>' +
-      '<p class="sign">© 2026 <a href="https://imti.co/resume/" ' +
+      '<p class="sign">© 2026 <a href="https://imti.co/" ' +
         'rel="noopener">Craig Johnston</a></p>';
   }
 

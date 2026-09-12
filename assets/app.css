@@ -446,6 +446,17 @@ a { color: inherit; text-decoration: none; }
 .info__copy a { color: var(--bone); border-bottom: 1px solid var(--rule); }
 .info__copy a:hover { color: var(--brass); border-bottom-color: var(--brass); }
 
+/* Craig signs the About block, and nothing else. The italic aside the
+   site uses for a line that is not the argument, with room above it so
+   it reads as a sign-off rather than a fifth paragraph. The name keeps
+   the .info__copy link edge. */
+.info__copy .info__sign {
+  margin-top: 26px;
+  font-family: var(--body);
+  font-style: italic;
+  color: var(--muted);
+}
+
 /* The tools. One row each, the plate on the left at the width a phone
    can spare, the name and a paragraph beside it. Portrait plates in a
    list read like the card's rows, which is the point. */
