@@ -51,12 +51,12 @@ ROOT = Path(__file__).resolve().parent.parent
 # "1h" reads as a bare 1 with trailing junk.
 AMOUNT = re.compile(r"""
     ^(?:
-        \d+[hqQ]      # 1h 1q 1Q 2h — whole ounces plus a fraction
+        [1-9]\d*[hqQ] # 1h 1q 1Q 2h — whole ounces plus a fraction
       | [hqQ]         # h q Q       — a bare fraction
-      | \d*[bd]       # 2b b 1d d   — barspoons, dashes
+      | (?:[1-9]\d*)?[bd] # 2b b 1d d — barspoons, dashes
       | r             # r           — a rinse
       | t             # t           — top with the mixer
-      | \d+           # 2 10        — ounces, or dashes next to bitters
+      | [1-9]\d*      # 2 10        — ounces, or dashes; never 0, never 02
     )$
 """, re.X)
 

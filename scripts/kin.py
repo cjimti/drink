@@ -16,7 +16,7 @@ Two products, both written to data/kin.json:
   in different bottles, or one bottle swapped. The why-line is the swap.
 
 The classifier is the default. OVERRIDE is the handful of drinks where a
-squeeze of lemon or a second brandy would fool a ratio; the build is
+quarter of Fernet or a second base would fool a ratio; the build is
 still the input, the override is just the filing.
 
 `python3 scripts/kin.py` writes the file.
@@ -46,9 +46,6 @@ CAMPARI_PILLAR = 0.4
 # Drinks the ratio would file in the wrong family. Keep this small; if it
 # grows, the classifier is the thing that is wrong.
 OVERRIDE = {
-    # A quarter ounce of lemon in a Martinez. The citrus is a squeeze,
-    # the drink is still spirit-and-vermouth.
-    "journalist": "martini",
     # Two bases, grenadine, and a quarter of absinthe. No juice, no
     # vermouth, no bitters — the classifier has nothing to hang a
     # family on. It drinks as a Fancy: spirit and a sweetener, dressed.
@@ -286,8 +283,8 @@ def classify_by_ratio(bags, flags):
         pattern = "negroni"
     elif citrus >= 0.2 and liqueur >= 0.25 and vermouth < PILLAR:
         # A Crusta's lemon is a quarter ounce, still a daisy. Journalist
-        # has the same squeeze but also a full pour of vermouth, so it
-        # stays a Martini (and OVERRIDE says so).
+        # has the same squeeze but also a full pour of vermouth, so this
+        # rung passes it by and it lands on the Martini one below.
         pattern = "daisy"
     elif citrus >= PILLAR:
         # A real juice pour takes the drink out of the Martini family
@@ -492,7 +489,7 @@ def kin_of(focus, rows, ingredients):
             rank = (1, d, other["id"])
         elif same_pat:
             rank = (2, d, other["id"])
-        elif same_sk or (swap and d < 1.2):
+        elif swap and d < 1.2:
             rank = (3, d, other["id"])
         else:
             continue
@@ -533,6 +530,25 @@ def member_order(pattern_id, namesake, rows):
     return rest
 
 
+def redundant_overrides(rows, overrides):
+    """Overrides naming the family the classifier already picks.
+
+    The Journalist sat in OVERRIDE with a comment about its lemon fooling
+    the ratio, and the ratio filed it a Martini without the entry. An
+    entry that changes nothing still reads as a reason, so it fails.
+    """
+    return sorted(r["id"] for r in rows
+                  if r["classified"] == overrides.get(r["id"]))
+
+
+def refuse_redundant_overrides(rows):
+    """Stop the build on an override the classifier makes for itself."""
+    ids = redundant_overrides(rows, OVERRIDE)
+    if ids:
+        raise SystemExit(f"kin: OVERRIDE changes nothing for {', '.join(ids)}; "
+                         f"the classifier already files it there, drop the entry")
+
+
 def build():
     bar = load("bar.json")
     menu = load("cocktails.json")
@@ -550,6 +566,7 @@ def build():
             raise SystemExit(f"kin: OVERRIDE {cid!r} points at unknown pattern {pat!r}")
 
     rows = [analyse(d, ingredients) for d in cocktails]
+    refuse_redundant_overrides(rows)
     by_row = {r["id"]: r for r in rows}
 
     others = [r for r in rows if r["pattern"] == "other"]
