@@ -7,7 +7,7 @@
 One person's shelf, pouring for guests and for himself.
 Three methods, stirred, shaken, and built. The menu is large because the bottles
 overlap, not because the bar is.
-174 drinks (86 stirred, 69 shaken, 19 built), 50 ingredients.
+185 drinks (89 stirred, 72 shaken, 24 built), 50 ingredients.
 
 The printed card writes a contextual shorthand called Barline. A
 bare number is ounces beside a spirit and dashes beside bitters;
@@ -106,6 +106,8 @@ never renamed, never reused. Every drink has a page of its own at
 - [Cardinale](https://fewbottles.com/drink/cardinale/): `1h,Q,Q,cl`; Gin; gin, Campari, dry verm.
 - [Alaska](https://fewbottles.com/drink/alaska/): `2,h,1,cl`; Gin; gin, Chartreuse, orange bitt.
 - [Angel Face](https://fewbottles.com/drink/angel-face/): `1,1,1,c`; Gin; gin, apple, apricot
+- [Fifty-Fifty](https://fewbottles.com/drink/fifty-fifty/): `1h,1h,d,cO`; Gin; gin, dry verm., orange bitt.
+- [Dirty Martini](https://fewbottles.com/drink/dirty-martini/): `2,h,q,cO`; Gin; gin, dry verm., brine
 - [Duplex](https://fewbottles.com/drink/duplex/): `1h,1h,2,co`; Vermouth; sweet verm., dry verm., orange bitt.
 - [Vermouth Panaché](https://fewbottles.com/drink/vermouth-panache/): `2,1,1,cl`; Vermouth; sweet verm., dry verm., orange bitt.
 - [Diplomat](https://fewbottles.com/drink/diplomat/): `2,1,q,clc`; Vermouth; dry verm., sweet verm., maraschino
@@ -114,6 +116,7 @@ never renamed, never reused. Every drink has a page of its own at
 - [Bamboo](https://fewbottles.com/drink/bamboo/): `1h,1h,d,2,cOl`; Vermouth; sherry, dry verm., Angostura, orange bitt.
 - [Bitter Giuseppe](https://fewbottles.com/drink/bitter-giuseppe/): `2,1,q,6,Rl`; Vermouth; Cynar, sweet verm., lemon, orange bitt.
 - [Adonis](https://fewbottles.com/drink/adonis/): `1h,Q,2,co`; Vermouth; sherry, sweet verm., orange bitt.
+- [Coronation No. 1](https://fewbottles.com/drink/coronation-1/): `1h,1h,d,2,c`; Vermouth; sherry, dry verm., maraschino, orange bitt.
 - [Fernet and Ginger](https://fewbottles.com/drink/fernet-and-ginger/): `1,4,RLw`; Fernet; Fernet, ginger beer
 
 ## Shaken
@@ -131,6 +134,7 @@ never renamed, never reused. Every drink has a page of its own at
 - [Between the Sheets](https://fewbottles.com/drink/between-the-sheets/): `1,1,1,Q,cl`; Cognac; cognac, light rum, orange liq., lemon
 - [Champs-Élysées](https://fewbottles.com/drink/champs-elysees/): `1h,h,Q,q,1,cl`; Cognac; cognac, Chartreuse, lemon, simple, Angostura
 - [Brandy Alexander](https://fewbottles.com/drink/brandy-alexander/): `1,1,1,c`; Cognac; cognac, cacao, cream
+- [Brandy Milk Punch](https://fewbottles.com/drink/brandy-milk-punch/): `2,2,h,Rcin`; Cognac; cognac, cream, simple
 - [Buster Brown](https://fewbottles.com/drink/buster-brown/): `2,Q,h,3,co`; Bourbon; bourbon, lemon, demerara, orange bitt.
 - [Gold Rush](https://fewbottles.com/drink/gold-rush/): `2,Q,Q,R`; Bourbon; bourbon, lemon, honey
 - [Whiskey Sour](https://fewbottles.com/drink/whiskey-sour/): `2,Q,h,Rcl`; Bourbon; bourbon, lemon, demerara, egg white
@@ -142,6 +146,7 @@ never renamed, never reused. Every drink has a page of its own at
 - [Scofflaw](https://fewbottles.com/drink/scofflaw/): `1,1,h,h,1,co`; Rye; rye, dry verm., grenadine, lemon, orange bitt.
 - [Harvest Sour](https://fewbottles.com/drink/harvest-sour/): `1,1,Q,h,ccin`; Rye; rye, apple, lemon, simple, egg white
 - [Final Ward](https://fewbottles.com/drink/final-ward/): `Q,Q,Q,Q,c`; Rye; rye, Chartreuse, maraschino, lemon
+- [Blinker](https://fewbottles.com/drink/blinker/): `2,1,h,c`; Rye; rye, grapefruit, grenadine
 - [Mickie Walker](https://fewbottles.com/drink/mickie-walker/): `1h,h,h,h,cc`; Scotch; scotch, sweet verm., grenadine, lemon
 - [Daiquiri](https://fewbottles.com/drink/daiquiri/): `2,Q,h,c`; Light Rum; light rum, lime, simple
 - [Honeysuckle](https://fewbottles.com/drink/honeysuckle/): `2,Q,Q,c`; Light Rum; light rum, lime, honey
@@ -187,6 +192,7 @@ never renamed, never reused. Every drink has a page of its own at
 - [Gin Fizz](https://fewbottles.com/drink/gin-fizz/): `2,1,h,t,h`; Gin; gin, lemon, simple, soda
 - [Queen Elizabeth](https://fewbottles.com/drink/queen-elizabeth/): `1h,Q,Q,c`; Vermouth; dry verm., Bénédictine, lime
 - [Dry Vermouth Sour](https://fewbottles.com/drink/dry-vermouth-sour/): `2,Q,h,c`; Vermouth; dry verm., lemon, simple, egg white
+- [Sherry Cobbler](https://fewbottles.com/drink/sherry-cobbler/): `3,2b,Hom`; Vermouth; sherry, sugar
 
 ## Built
 
@@ -202,12 +208,17 @@ never renamed, never reused. Every drink has a page of its own at
 - [Mezcal Mule](https://fewbottles.com/drink/mezcal-mule/): `2,h,t,HLw`; Mezcal; mezcal, lime, ginger beer
 - [Moscow Mule](https://fewbottles.com/drink/moscow-mule/): `2,h,t,HLw`; Vodka; vodka, lime, ginger beer
 - [Vodka Soda](https://fewbottles.com/drink/vodka-soda/): `2,t,HLw`; Vodka; vodka, soda
+- [Vodka & Tonic](https://fewbottles.com/drink/vodka-and-tonic/): `2,t,HLw`; Vodka; vodka, tonic
+- [Salty Dog](https://fewbottles.com/drink/salty-dog/): `2,4,RS`; Vodka; vodka, grapefruit
 - [Gin & Tonic](https://fewbottles.com/drink/gin-and-tonic/): `2,t,HLw`; Gin; gin, tonic
 - [Gin Rickey](https://fewbottles.com/drink/gin-rickey/): `2,h,t,HL`; Gin; gin, lime, soda
 - [Tom Collins](https://fewbottles.com/drink/tom-collins/): `2,1,h,t,Hlc`; Gin; gin, lemon, simple, soda
 - [Elderflower Collins](https://fewbottles.com/drink/elderflower-collins/): `1h,Q,Q,t,Hl`; Gin; gin, elderflower, lemon, soda
 - [Americano](https://fewbottles.com/drink/americano/): `1h,1h,t,Ho`; Vermouth; Campari, sweet verm., soda
 - [Negroni Sbagliato](https://fewbottles.com/drink/negroni-sbagliato/): `1,1,t,Ro`; Vermouth; Campari, sweet verm., Champagne
+- [Campari & Tonic](https://fewbottles.com/drink/campari-and-tonic/): `1h,t,Ho`; Vermouth; Campari, tonic
+- [Vermouth & Tonic](https://fewbottles.com/drink/vermouth-and-tonic/): `2,t,Ho`; Vermouth; sweet verm., tonic
+- [Sherry & Tonic](https://fewbottles.com/drink/sherry-and-tonic/): `2,t,Hl`; Vermouth; sherry, tonic
 - [Death in the Afternoon](https://fewbottles.com/drink/death-in-the-afternoon/): `1h,t,h`; Absinthe; absinthe, Champagne
 
 ## Optional

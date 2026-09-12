@@ -276,7 +276,7 @@
 
     { "bit": 39, "id": "cherry",        "name": "Cocktail cherries",   "short": "cherries",    "kind": "garnish", "staple": true },
     { "bit": 40, "id": "orange",        "name": "Oranges",             "short": "orange",      "kind": "garnish", "staple": true },
-    { "bit": 41, "id": "olive",         "name": "Olives",              "short": "olives",      "kind": "garnish", "staple": true },
+    { "bit": 41, "id": "olive",         "name": "Olive brine",         "short": "brine",       "kind": "garnish", "staple": true, "shelf": "Olives" },
     { "bit": 42, "id": "mint",          "name": "Mint",                "short": "mint",        "kind": "garnish", "unit": "none", "staple": true },
     { "bit": 43, "id": "sugar",         "name": "Sugar",               "short": "sugar",       "kind": "garnish", "staple": true },
     { "bit": 44, "id": "salt",          "name": "Salt",                "short": "salt",        "kind": "garnish", "staple": true },
