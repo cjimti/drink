@@ -42,6 +42,8 @@ def css_cases():
         ("bare font stack", ".a { font-family: Helvetica, sans-serif; }",
          True),
         ("token font", ".a { font-family: var(--body); }", False),
+        ("face being loaded", '@font-face { font-family: "Lato"; }',
+         False),
         ("undefined token", ".a { color: var(--nope); }", True),
     ]
 
@@ -284,6 +286,64 @@ def run_plates(failures):
            True, failures)
 
 
+def run_fonts(failures):
+    """Every face is here, cached, and nothing reaches Google for type."""
+    css = (ROOT / "assets" / "app.css").read_text()
+    sw = (ROOT / "sw.js").read_text()
+    report("font/clean", check_assets.check_fonts(css, sw)[0], False, failures)
+
+    gone = css.replace("fonts/lato-400-latin.woff2",
+                       "fonts/lato-400-nowhere.woff2")
+    report("font/no file", check_assets.check_fonts(gone, sw)[0], True,
+           failures)
+
+    adrift = sw.replace("  'assets/fonts/lato-400-latin.woff2',\n", "")
+    report("font/not cached", check_assets.check_fonts(css, adrift)[0], True,
+           failures)
+
+    # A face dropped from the stylesheet and left in assets/fonts is
+    # weight every install pays for and nobody reads.
+    spare = css.replace("url(fonts/lato-700-latin.woff2)", "url()")
+    report("font/on disk, unnamed", check_assets.check_fonts(spare, sw)[0],
+           True, failures)
+
+    report("font/clean off-origin",
+           check_assets.check_offsite({"index.html": "<html></html>"}), False,
+           failures)
+    report("font/loads from Google", check_assets.check_offsite(
+        {"index.html": '<link href="https://fonts.googleapis.com/css2">'}),
+        True, failures)
+
+
+def run_manifest(failures):
+    """The manifest installs, and loses each reason it does on purpose."""
+    sw = (ROOT / "sw.js").read_text()
+    man = check_assets.manifest()
+    report("icon/clean", check_assets.check_manifest(man, sw), False, failures)
+
+    adrift = sw.replace("  'assets/icon-512.png',\n", "")
+    report("icon/not cached", check_assets.check_manifest(man, adrift), True,
+           failures)
+
+    gone = dict(man, icons=[dict(i, src="assets/icon-nowhere.png")
+                            for i in man["icons"]])
+    report("icon/no file", check_assets.check_manifest(gone, sw), True,
+           failures)
+
+    small = dict(man, icons=[i for i in man["icons"]
+                             if i.get("sizes") != "512x512"])
+    report("icon/no 512", check_assets.check_manifest(small, sw), True,
+           failures)
+
+    plain = dict(man, icons=[dict(i, purpose="any") for i in man["icons"]])
+    report("icon/no maskable", check_assets.check_manifest(plain, sw), True,
+           failures)
+
+    locked = dict(man, orientation="portrait")
+    report("icon/orientation locked", check_assets.check_manifest(locked, sw),
+           True, failures)
+
+
 def run_worker(failures):
     """The worker keeps every safeguard, and loses each one on purpose."""
     js = (ROOT / "assets" / "app.js").read_text()
@@ -362,7 +422,7 @@ def main():
     """Every case, then the count."""
     failures = []
     for run in (run_css, run_js, run_py, run_house, run_pressed,
-                run_menu, run_glasses,
+                run_menu, run_glasses, run_fonts, run_manifest,
                 run_plates, run_pages, run_lexer, run_worker):
         run(failures)
     for f in failures:
@@ -371,7 +431,7 @@ def main():
         return 1
     n = (len(css_cases()) + len(js_cases()) + len(py_cases())
          + len(size_cases()) + len(pressed_cases()) + 2
-         + 14 + 5 + 3 + 4 + 2 + 3)
+         + 14 + 5 + 3 + 4 + 2 + 3 + 6 + 6)
     print(f"  test    {n} case(s): every rule fails when it is broken")
     return 0
 

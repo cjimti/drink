@@ -31,9 +31,12 @@ AUTHOR_URL = "https://imti.co/"
 GTM = "GTM-WTFK3CCS"
 KIN_SHOWN = 6
 
-FONTS = ("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500"
-         "&family=Lato:ital,wght@0,400;0,700;1,400"
-         "&family=Montserrat:wght@500;600;700;800&display=swap")
+# The two faces the first screen is set in, served from here. A drink
+# page is where a shared link lands, so it preloads them like the app
+# does. crossorigin is not optional even same-origin: a font is
+# fetched in CORS mode, and a preload that does not say so is fetched
+# twice.
+PRELOAD = ("montserrat-500-800-latin.woff2", "lato-400-latin.woff2")
 
 GTM_HEAD = (
     "<!-- Google Tag Manager -->\n"
@@ -120,10 +123,10 @@ def head(drink, ctx):
         f'<meta name="twitter:image" content="{card}">\n'
         f'<meta name="twitter:image:alt" content="{alt}">\n'
         '<script type="application/ld+json">\n' + ctx["ld"] + "\n</script>\n"
-        '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
-        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-        f'<link rel="stylesheet" href="{FONTS}">\n'
-        '<link rel="stylesheet" href="/assets/app.css">\n'
+        + "".join(f'<link rel="preload" href="/assets/fonts/{f}" '
+                  'as="font" type="font/woff2" crossorigin>\n'
+                  for f in PRELOAD)
+        + '<link rel="stylesheet" href="/assets/app.css">\n'
         "</head>\n")
 
 
