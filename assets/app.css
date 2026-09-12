@@ -173,8 +173,15 @@
   --ground:  #121211;
   --sunk:    #232320;
   --bone:    #FBF8F1;
+  /* Two greys, and every one of the four text tokens clears 4.5:1 on
+     both --ground and --sunk in both palettes. check_style.py computes
+     it and prints the numbers, so a grey nudged for looks fails the
+     build instead of costing somebody the tab labels in daylight. The
+     gap between muted and faint is what keeps them two tiers; light was
+     one flat grey once faint came up to the floor, so muted went down
+     with it. */
   --muted:   #ADA79C;
-  --faint:   #837D72;
+  --faint:   #928C81;
   --rule:    #403E39;
   --hair:    #2C2B27;
   --brass:   #E0B86B;
@@ -217,8 +224,8 @@
     --ground:  #FFFFFF;
     --sunk:    #FAF8F3;
     --bone:    #111110;
-    --muted:   #73706A;
-    --faint:   #A29E96;
+    --muted:   #5F5C56;
+    --faint:   #767268;
     --rule:    #111110;
     --hair:    #E9E6E0;
     --brass:   #946200;
@@ -668,7 +675,14 @@ noscript.fallback a { color: var(--brass); }
   border-radius: 2px;
   color: var(--bone);
   font-family: var(--body);
-  font-size: 15px;
+  /* 16px, and it cannot go under: iOS Safari zooms the page when a
+     focused input is smaller, and this shell is a 100dvh box with no
+     page scroll, so the zoom parks the filter row and the tab bar off
+     screen with no way back. The line box is written out rather than
+     left to the font, so the row is the height it always was and does
+     not jump when Lato arrives over the fallback. */
+  font-size: 16px;
+  line-height: 18px;
   padding: 9px 11px;
 }
 .search::placeholder { color: var(--faint); font-style: italic; }
@@ -2460,23 +2474,17 @@ button.card__fig { cursor: pointer; }
      bug, so this is the chip height twice plus the gap between them. */
   .chips--bottle { max-height: 60px; overflow: hidden; }
   .chips--bottle.is-all { max-height: none; }
-  .chips__more { display: block; justify-self: start; }
+  .chips__more { display: inline-block; }
 
-  /* The method control and the search field are each half a line; on a
-     phone they are two full-width rows because there is no width to
-     share. Here there is. */
-  .filters {
-    display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
-    align-items: center;
-    column-gap: 14px;
-  }
-  .filters > * { grid-column: 1 / -1; }
-  .filters > .seg { grid-column: 1; }
-  .filters > .search { grid-column: 2; margin-top: 0; }
-  .filters > .seg + .search { margin-top: 9px; }
+  /* No two-column filter row here, and that is the measurement, not a
+     preference. The search sat beside the segments once, on the theory
+     that a big screen has width to share. The list column is the
+     measure and the window is not, so the five segments left the box
+     70px at 900 wide and 170px from 1024 up, where the placeholder
+     needs 191px and the visitor read `Name, ingredie`. The search keeps
+     its own row, as it does on a phone.
 
-  /* The phone squeezes the tracking and the padding so four segments fit
+     The phone squeezes the tracking and the padding so four segments fit
      a 390px row. There is room here; give it back. */
   .seg--wide .seg__b { letter-spacing: .15em; font-size: 10.5px; padding: 9px 18px; }
 

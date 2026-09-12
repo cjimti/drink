@@ -118,6 +118,65 @@ def check_themes(defined):
     return errs, dark, light
 
 
+# The text tokens, and the two grounds they are read on. --on-brass is
+# the odd one: it is only ever set on a brass fill, so brass is its
+# ground. 4.5:1 is the WCAG floor for body text, and the labels this
+# palette is thinnest on (the tab bar at 9.5px, the search placeholder)
+# are the ones that need it most.
+TEXT_TOKENS = ("--bone", "--muted", "--faint", "--brass")
+FLOOR = 4.5
+
+
+def luminance(hexcolour):
+    """WCAG relative luminance of a #RRGGBB value."""
+    h = hexcolour.strip().lstrip("#")
+    if len(h) == 3:
+        h = "".join(c * 2 for c in h)
+    out = 0.0
+    for weight, i in ((0.2126, 0), (0.7152, 2), (0.0722, 4)):
+        c = int(h[i:i + 2], 16) / 255
+        out += weight * (c / 12.92 if c <= 0.04045
+                         else ((c + 0.055) / 1.055) ** 2.4)
+    return out
+
+
+def contrast(fg, bg):
+    """The WCAG ratio between two #RRGGBB values, lighter over darker."""
+    a, b = luminance(fg), luminance(bg)
+    hi, lo = max(a, b), min(a, b)
+    return (hi + 0.05) / (lo + 0.05)
+
+
+def check_contrast(palettes):
+    """Every text token is readable on both grounds, in both palettes.
+
+    A grey chosen by eye in a dark room is a grey nobody can read on a
+    phone in daylight, and the tokens that go first are the ones set
+    smallest: the tab-bar labels, the search placeholder, every greyed
+    `in 12` on the shelf. The ratios are computed from the two `:root`
+    blocks and printed on every run, so a nudge shows up as a number
+    rather than as a complaint six months later.
+    """
+    errs, ratios = [], []
+    for theme, pal in palettes:
+        pairs = [(t, g) for t in TEXT_TOKENS for g in ("--ground", "--sunk")]
+        pairs.append(("--on-brass", "--brass"))
+        for token, ground in pairs:
+            fg, bg = pal.get(token), pal.get(ground)
+            if not (fg and bg and fg.startswith("#") and bg.startswith("#")):
+                errs.append(f"assets/app.css {theme} {token} on {ground} "
+                            f"is not a hex pair to measure")
+                continue
+            r = contrast(fg, bg)
+            ratios.append((theme, token, ground, r))
+            if r < FLOOR:
+                errs.append(f"assets/app.css {theme} {token} on {ground} "
+                            f"is {r:.2f}:1, under {FLOOR}: unreadable on a "
+                            f"phone in daylight. Darken it; do not shrink "
+                            f"the text or veil it with opacity")
+    return errs, ratios
+
+
 def check_tokens(css, dark):
     """Every var(--x) names a token something actually defines."""
     errs = []
@@ -537,6 +596,8 @@ def main():
     theme_errs, dark, light = check_themes(defined)
     errs += theme_errs
     errs += check_tokens(css, dark)
+    contrast_errs, ratios = check_contrast((("dark", dark), ("light", light)))
+    errs += contrast_errs
     errs += check_html(html, js)
     pages = page_files()
     for name, text in pages.items():
@@ -557,6 +618,14 @@ def main():
 
     print(f"  style   {len(dark)} token(s), {len(light)} with a light "
           f"counterpart, no literal colour outside them")
+    for theme in ("dark", "light"):
+        worst = {}
+        for t, token, _, r in ratios:
+            if t == theme:
+                worst[token] = min(worst.get(token, r), r)
+        print(f"  contrast {theme:5s} " + "  ".join(
+            f"{k.lstrip('-')} {v:.2f}" for k, v in worst.items())
+            + f"  (worst ground, floor {FLOOR})")
     print(f"  a11y    labels, alt text and unique ids in index.html and "
           f"{len(pages)} static page(s)")
     print("  wiring  every click branch reachable, every track() key known, "
