@@ -1726,9 +1726,13 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
 
 .bottle { border-bottom: 1px solid var(--hair); }
 
+/* The row is the reveal: its button holds the name, and a pseudo-element
+   stretches its hit area over the whole row. The box and a +N figure are
+   buttons of their own and sit above it, so a tap on either is theirs. */
 .bottle__row {
   display: flex;
   align-items: stretch;
+  position: relative;
 }
 
 /* The box is the only stock control. Padding after it is the old gap
@@ -1760,7 +1764,19 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   padding: 11px 0;
   cursor: pointer;
 }
-.bottle:not(.has-note) .bottle__hit { padding-right: 44px; cursor: default; }
+.bottle.has-note .bottle__hit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.bottle.has-note .bottle__hit:focus-visible { outline: none; }
+.bottle.has-note .bottle__hit:focus-visible::after {
+  outline: 2px solid var(--brass);
+  outline-offset: -2px;
+}
+.bottle__row > .bottle__stock { position: relative; z-index: 1; }
+.bottle:not(.has-note) .bottle__row { padding-right: 44px; }
+.bottle:not(.has-note) .bottle__hit { cursor: default; }
 
 .bottle__box {
   flex: none;
@@ -1804,6 +1820,24 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   white-space: nowrap;
 }
 
+.bottle__row > .bottle__gain,
+.bottle__row > .bottle__in { align-self: center; margin-left: 12px; }
+
+/* The figure's own padding is its tap target; the margins take it back
+   so the digits sit where they did. */
+.bottle__row > button.bottle__gain {
+  align-self: stretch;
+  position: relative;
+  z-index: 1;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  margin: 0 -10px 0 2px;
+  padding: 0 10px;
+  line-height: 1;
+  cursor: pointer;
+}
+
 .bottle__more {
   flex: none;
   width: 44px;
@@ -1811,6 +1845,9 @@ a.btn { display: inline-block; text-decoration: none; line-height: normal; }
   position: relative;
   color: var(--faint);
 }
+/* The row's chevron is drawn over the reveal's stretched hit area, so a
+   tap on it has to fall through to the button underneath. */
+.bottle__row > .bottle__more { margin-left: 12px; pointer-events: none; }
 .bottle.is-open .bottle__more,
 .tonight.is-open .bottle__more { color: var(--brass); }
 .bottle__more::after {
