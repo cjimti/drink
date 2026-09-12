@@ -104,8 +104,18 @@ def size_cases():
     ]
 
 
+# Every case that ran, counted where it runs. The tally used to be a sum
+# of literals kept by hand, and it had drifted ten cases low: adding five
+# to run_house left it printing the number it printed before. A count
+# that does not count is worse than no count, because it reads like a
+# receipt. The lexer is not in here on purpose; it gets the property test
+# the docstring describes rather than a case.
+CASES = []
+
+
 def report(name, found, expected, failures):
     """Record one case; print only what went wrong."""
+    CASES.append(name)
     if bool(found) != expected:
         failures.append(f"{name}: expected "
                         f"{'a finding' if expected else 'no finding'}, "
@@ -142,7 +152,11 @@ def run_py(failures):
 
 
 def run_house(failures):
-    """The three app contracts: track keys, click wiring, the shelf BigInt."""
+    """The app contracts: the ones a green pipeline would otherwise hide.
+
+    Track keys, click wiring, the shelf BigInt, the method line's serve
+    token, the case a code is searched in, the drink route, the em dash.
+    """
     app = (ROOT / "assets" / "app.js").read_text()
 
     broken = app.replace("track('view_tab', { tab: view })",
@@ -169,6 +183,27 @@ def run_house(failures):
     report("house/method line call", check_style.check_method_line(broken),
            True, failures)
     report("house/method line clean", check_style.check_method_line(app),
+           False, failures)
+
+    broken = app.replace("d.code.indexOf(filter.code)",
+                         "d.code.toLowerCase().indexOf(filter.q)")
+    report("house/search folds the code",
+           check_style.check_search_case(broken), True, failures)
+    broken = app.replace("var hay = (d.name + ' ' + ingredientLine(d))"
+                         ".toLowerCase();",
+                         "var hay = (d.name + ' ' + ingredientLine(d)\n"
+                         "        + ' ' + d.code)\n        .toLowerCase();")
+    report("house/search folds over two lines",
+           check_style.check_search_case(broken), True, failures)
+    broken = app.replace(" && d.code.indexOf(filter.code) < 0", "")
+    report("house/search drops the code",
+           check_style.check_search_case(broken), True, failures)
+    broken = app.replace('spellcheck="false" \' +\n'
+                         "        'autocapitalize=\"off\" autocorrect=\"off\"",
+                         'spellcheck="false"')
+    report("house/search box capitalises",
+           check_style.check_search_case(broken), True, failures)
+    report("house/search case clean", check_style.check_search_case(app),
            False, failures)
 
     broken = app.replace("/^#drink\\/([a-z0-9-]+)$/", "/^#drink\\/([a-z]+)$/")
@@ -429,10 +464,8 @@ def main():
         print(f"  TEST    {f}")
     if failures:
         return 1
-    n = (len(css_cases()) + len(js_cases()) + len(py_cases())
-         + len(size_cases()) + len(pressed_cases()) + 2
-         + 14 + 5 + 3 + 4 + 2 + 3 + 6 + 6)
-    print(f"  test    {n} case(s): every rule fails when it is broken")
+    print(f"  test    {len(CASES)} case(s): every rule fails when it "
+          f"is broken")
     return 0
 
 

@@ -104,12 +104,14 @@
        list is gated on: neither is All bottles, pourable is My Shelf or
        the named shelf you loaded, shared is the shelf someone sent. One
        at a time, and only ever set through selectMenu. */
-    /* q is the term the matcher uses, folded and trimmed. raw is exactly
-       what was typed, because the text in the box is the visitor's, not
-       the app's. setSearch writes both, so they cannot drift. */
+    /* Three spellings of one term. raw is exactly what was typed,
+       because the text in the box is the visitor's, not the app's. code
+       is that trimmed with its case left alone, which is what a code is
+       matched on. q is code folded, for the name and the ingredients.
+       setSearch writes all three, so they cannot drift. */
     return {
       method: 'all', family: null, pattern: null,
-      pourable: false, shared: false, q: '', raw: ''
+      pourable: false, shared: false, q: '', code: '', raw: ''
     };
   }
 
@@ -1045,7 +1047,8 @@
      term clears the text in the box with it. */
   function setSearch(raw) {
     filter.raw = raw;
-    filter.q = raw.trim().toLowerCase();
+    filter.code = raw.trim();
+    filter.q = filter.code.toLowerCase();
   }
 
   /* Everything but the shelf choice: the segments, a bottle, a shape, a
@@ -1111,8 +1114,13 @@
     if (filter.pattern && patternIdOf(d) !== filter.pattern) return false;
     if (shelfGate() && !canPour(d, held)) return false;
     if (filter.q) {
-      var hay = (d.name + ' ' + ingredientLine(d) + ' ' + d.code).toLowerCase();
-      if (hay.indexOf(filter.q) < 0) return false;
+      /* A name and an ingredient fold, so rye finds Rye. A code does not,
+         because case is what the shorthand spends instead of a second
+         letter: q is a quarter and Q is three quarters, h a half ounce
+         and H a packed highball. Folded, every one of those searches
+         returned the other one's drinks as well, which is no answer. */
+      var hay = (d.name + ' ' + ingredientLine(d)).toLowerCase();
+      if (hay.indexOf(filter.q) < 0 && d.code.indexOf(filter.code) < 0) return false;
     }
     return true;
   }
@@ -2079,8 +2087,12 @@
           ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
           esc(s.label) + '</button>';
       }).join('') + '</div>' +
+      /* autocapitalize off is load-bearing, not tidiness: a phone
+         capitalises the first letter of a field by default, so a code
+         typed as q,h,q arrives as Q,h,q, which is a different drink. */
       '<input class="search" id="q" type="search" placeholder="Name, ingredient, or code…" ' +
-        'value="' + esc(filter.raw) + '" autocomplete="off" spellcheck="false">';
+        'value="' + esc(filter.raw) + '" autocomplete="off" spellcheck="false" ' +
+        'autocapitalize="off" autocorrect="off">';
 
     if (filter.method === 'families' && data.kin) {
       html += '<div class="chips">';
@@ -3620,7 +3632,7 @@
     if (searchTimer) clearTimeout(searchTimer);
     searchTimer = setTimeout(function () {
       searchTimer = null;
-      if (filter.q) track('search', { search_term: filter.q });
+      if (filter.q) track('search', { search_term: filter.code });
     }, 700);
   });
 
