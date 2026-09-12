@@ -7,7 +7,7 @@
 One person's shelf, pouring for guests and for himself.
 Three methods, stirred, shaken, and built. The menu is large because the bottles
 overlap, not because the bar is.
-185 drinks (88 stirred, 72 shaken, 25 built), 50 ingredients.
+185 drinks (87 stirred, 73 shaken, 25 built), 50 ingredients.
 
 The printed card writes a contextual shorthand called Barline. A
 bare number is ounces beside a spirit and dashes beside bitters;
@@ -40,7 +40,6 @@ never renamed, never reused. Every drink has a page of its own at
 - [Palace Hotel](https://fewbottles.com/drink/palace-hotel/): `1h,1h,1b,cl`; Cognac; cognac, sweet verm., orange liq.
 - [Metropole](https://fewbottles.com/drink/metropole/): `1h,1h,2,1,cc`; Cognac; cognac, dry verm., Peychaud's, orange bitt.
 - [Brandy Crusta](https://fewbottles.com/drink/brandy-crusta/): `2,q,q,q,2,Rl`; Cognac; cognac, maraschino, demerara, lemon, Angostura
-- [Ritz](https://fewbottles.com/drink/ritz/): `Q,h,q,q,3,cfo`; Cognac; cognac, maraschino, demerara, lemon, Angostura
 - [Old-Fashioned](https://fewbottles.com/drink/old-fashioned/): `2,1b,2,R`; Bourbon; bourbon, demerara, Angostura
 - [Boulevardier](https://fewbottles.com/drink/boulevardier/): `1h,1,1,R`; Bourbon; bourbon, Campari, sweet verm.
 - [Fancy Cocktail](https://fewbottles.com/drink/fancy-cocktail/): `1h,q,1b,2,cl`; Bourbon; bourbon, orange liq., demerara, Angostura
@@ -132,6 +131,7 @@ never renamed, never reused. Every drink has a page of its own at
 - [Sidecar](https://fewbottles.com/drink/sidecar/): `1h,1,Q,cs`; Cognac; cognac, orange liq., lemon
 - [Between the Sheets](https://fewbottles.com/drink/between-the-sheets/): `1,1,1,Q,cl`; Cognac; cognac, light rum, orange liq., lemon
 - [Champs-Élysées](https://fewbottles.com/drink/champs-elysees/): `1h,h,Q,q,1,cl`; Cognac; cognac, Chartreuse, lemon, simple, Angostura
+- [Ritz](https://fewbottles.com/drink/ritz/): `Q,h,q,q,3,2,cfo`; Cognac; cognac, maraschino, demerara, lemon, Angostura, Champagne
 - [Brandy Alexander](https://fewbottles.com/drink/brandy-alexander/): `1,1,1,c`; Cognac; cognac, cacao, cream
 - [Brandy Milk Punch](https://fewbottles.com/drink/brandy-milk-punch/): `2,2,h,Rcin`; Cognac; cognac, cream, simple
 - [Buster Brown](https://fewbottles.com/drink/buster-brown/): `2,Q,h,3,co`; Bourbon; bourbon, lemon, demerara, orange bitt.

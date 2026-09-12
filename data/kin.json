@@ -127,7 +127,6 @@
         "vermouth-arita",
         "little-honey",
         "brandy-crusta",
-        "ritz",
         "brass-rail",
         "queen-elizabeth"
       ]
@@ -222,6 +221,7 @@
         "french-75",
         "air-mail",
         "old-cuban",
+        "ritz",
         "queen-bee",
         "seelbach",
         "champagne-cocktail",
@@ -623,43 +623,6 @@
         {
           "id": "rendezvous",
           "why": "gin and lime juice for cognac and lemon juice"
-        }
-      ]
-    },
-    "ritz": {
-      "pattern": "daisy",
-      "kin": [
-        {
-          "id": "honeymoon",
-          "why": "apple brandy, Bénédictine, and orange liqueur for cognac and maraschino liqueur"
-        },
-        {
-          "id": "champs-elysees",
-          "why": "Chartreuse and simple syrup for maraschino liqueur and demerara syrup"
-        },
-        {
-          "id": "fine-and-dandy",
-          "why": "gin and orange liqueur for cognac and maraschino liqueur"
-        },
-        {
-          "id": "pegu-club",
-          "why": "gin and lime juice for cognac and lemon juice"
-        },
-        {
-          "id": "brandy-crusta",
-          "why": "more cognac"
-        },
-        {
-          "id": "kings-jubilee",
-          "why": "light rum for cognac"
-        },
-        {
-          "id": "rendezvous",
-          "why": "gin and lime juice for cognac and lemon juice"
-        },
-        {
-          "id": "katinka",
-          "why": "vodka and lime juice for cognac and lemon juice"
         }
       ]
     },
@@ -3463,6 +3426,10 @@
           "why": "gin and lemon juice for aged rum and lime juice"
         },
         {
+          "id": "ritz",
+          "why": "cognac and lemon juice for aged rum and lime juice"
+        },
+        {
           "id": "queen-bee",
           "why": "vodka and lemon juice for aged rum and lime juice"
         },
@@ -3527,6 +3494,10 @@
         {
           "id": "air-mail",
           "why": "honey syrup for simple syrup"
+        },
+        {
+          "id": "ritz",
+          "why": "cognac and lemon juice for aged rum and lime juice"
         },
         {
           "id": "french-75",
@@ -3648,10 +3619,6 @@
           "why": "gin and lime juice for apple brandy and lemon juice"
         },
         {
-          "id": "ritz",
-          "why": "cognac and maraschino liqueur for apple brandy, Bénédictine, and orange liqueur"
-        },
-        {
           "id": "katinka",
           "why": "vodka and lime juice for apple brandy and lemon juice"
         },
@@ -3662,6 +3629,10 @@
         {
           "id": "sidecar",
           "why": "cognac for apple brandy"
+        },
+        {
+          "id": "hat-tip",
+          "why": "gin and elderflower liqueur for apple brandy, Bénédictine, and orange liqueur"
         }
       ]
     },
@@ -3800,16 +3771,53 @@
           "why": "gin and lime juice for cognac and lemon juice"
         },
         {
-          "id": "ritz",
-          "why": "maraschino liqueur and demerara syrup for Chartreuse and simple syrup"
-        },
-        {
           "id": "brass-rail",
           "why": "aged rum and Bénédictine for cognac and Chartreuse"
         },
         {
           "id": "kings-jubilee",
           "why": "light rum and maraschino liqueur for cognac and Chartreuse"
+        },
+        {
+          "id": "rendezvous",
+          "why": "gin and lime juice for cognac and lemon juice"
+        }
+      ]
+    },
+    "ritz": {
+      "pattern": "sparkling",
+      "kin": [
+        {
+          "id": "old-cuban",
+          "why": "aged rum and lime juice for cognac and lemon juice"
+        },
+        {
+          "id": "air-mail",
+          "why": "aged rum and lime juice for cognac and lemon juice"
+        },
+        {
+          "id": "queen-bee",
+          "why": "vodka and elderflower liqueur for cognac and maraschino liqueur"
+        },
+        {
+          "id": "french-75",
+          "why": "gin and simple syrup for cognac and demerara syrup"
+        },
+        {
+          "id": "seelbach",
+          "why": "bourbon and orange liqueur for cognac and maraschino liqueur"
+        },
+        {
+          "id": "champagne-cocktail",
+          "why": "without lemon juice and maraschino liqueur"
+        },
+        {
+          "id": "death-in-the-afternoon",
+          "why": "with absinthe"
+        },
+        {
+          "id": "negroni-sbagliato",
+          "why": "with sweet vermouth and Campari"
         }
       ]
     },
@@ -4187,6 +4195,10 @@
       "pattern": "sparkling",
       "kin": [
         {
+          "id": "ritz",
+          "why": "cognac and maraschino liqueur for vodka and elderflower liqueur"
+        },
+        {
           "id": "air-mail",
           "why": "aged rum and lime juice for vodka and lemon juice"
         },
@@ -4300,6 +4312,10 @@
         {
           "id": "old-cuban",
           "why": "aged rum and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "ritz",
+          "why": "cognac and demerara syrup for gin and simple syrup"
         },
         {
           "id": "queen-bee",
@@ -4536,12 +4552,12 @@
           "why": "cognac and maraschino liqueur for gin and orange liqueur"
         },
         {
-          "id": "ritz",
-          "why": "cognac and maraschino liqueur for gin and orange liqueur"
-        },
-        {
           "id": "katinka",
           "why": "vodka and lime juice for gin and lemon juice"
+        },
+        {
+          "id": "sidecar",
+          "why": "cognac for gin"
         }
       ]
     },
@@ -5424,12 +5440,12 @@
           "why": "lemon juice for lime juice"
         },
         {
-          "id": "ritz",
-          "why": "lemon juice and maraschino liqueur for lime juice and Bénédictine"
-        },
-        {
           "id": "little-honey",
           "why": "lemon juice and elderflower liqueur for lime juice and Bénédictine"
+        },
+        {
+          "id": "katinka",
+          "why": "apricot liqueur for Bénédictine"
         }
       ]
     },
@@ -5934,6 +5950,10 @@
           "why": "vodka for cognac"
         },
         {
+          "id": "ritz",
+          "why": "with lemon juice and maraschino liqueur"
+        },
+        {
           "id": "old-cuban",
           "why": "aged rum for cognac"
         },
@@ -6072,6 +6092,10 @@
         {
           "id": "negroni-sbagliato",
           "why": "with sweet vermouth and Campari"
+        },
+        {
+          "id": "ritz",
+          "why": "cognac and maraschino liqueur for bourbon and orange liqueur"
         },
         {
           "id": "old-cuban",
@@ -6551,6 +6575,10 @@
           "why": "with vodka and lemon juice"
         },
         {
+          "id": "ritz",
+          "why": "with cognac and lemon juice"
+        },
+        {
           "id": "air-mail",
           "why": "with aged rum and lime juice"
         },
@@ -6582,6 +6610,10 @@
         {
           "id": "queen-bee",
           "why": "with vodka and lemon juice"
+        },
+        {
+          "id": "ritz",
+          "why": "with cognac and lemon juice"
         },
         {
           "id": "air-mail",

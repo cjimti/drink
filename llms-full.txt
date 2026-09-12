@@ -3,7 +3,7 @@
 > Classic drinks from one small home bar, decoded from the house
 > shorthand on the printed card.
 
-185 drinks, 88 stirred, 72 shaken, 25 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
+185 drinks, 87 stirred, 73 shaken, 25 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
 
 Barline reads left to right in build order, base spirit first, and
 ends with one token for glass plus garnish. A bare number is ounces
@@ -212,25 +212,6 @@ Joseph Santini, an Italian bartender in New Orleans, built the Crusta in the 185
 
 - [The Oxford Companion to Spirits and Cocktails, The Brandy Crusta](https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-266)
 - [Difford's Guide, Brandy Crusta](https://www.diffordsguide.com/cocktails/recipe/310/brandy-crusta)
-
-#### Ritz
-
-`Q,h,q,q,3,cfo` · stirred · Cognac · Daisy family
-
-- 3/4 oz Cognac
-- 1/2 oz Maraschino liqueur
-- 1/4 oz Demerara syrup
-- 1/4 oz Lemon juice
-- 3 dashes Angostura bitters
-- Stir with ice until cold, then strain.
-- Coupe, Flamed orange twist
-
-Three-quarters of an ounce of cognac, so this is a small drink. Half an ounce of maraschino is the sweet and the cherry; a quarter each of demerara and lemon. Three dashes of Angostura is a lot of bark for so little spirit. Stirred, coupe, flamed orange twist.
-
-Dale DeGroff built a Ritz Cocktail at Aurora in New York in 1985, later printed in The Craft of the Cocktail (2002) as a tribute to the Ritz drinks of Paris and Madrid: three-quarters cognac, half orange liqueur, a quarter each of maraschino and lemon, topped with Champagne, and a flamed orange twist. This menu keeps the small cognac, the maraschino, the lemon, and the flamed twist. It drops the Champagne and the orange liqueur, adds a quarter of demerara and three dashes of Angostura, and stirs it.
-
-- [Imbibe, Ritz Cocktail](https://imbibemagazine.com/recipe/ritz-cocktail/)
-- [Difford's Guide, Ritz Cocktail](https://www.diffordsguide.com/cocktails/recipe/1677/ritz-cocktail)
 
 ### Bourbon
 
@@ -1798,6 +1779,26 @@ An ounce and a half of cognac, half an ounce of Chartreuse, three-quarters of le
 The earliest known recipe is in Drinks Long and Short, published in London in 1925 by Nina Toye and A. H. Adair, written out for a party of six: three glasses of brandy, one of the herbal liqueur, and one and a half of sweetened lemon juice, shaken with Angostura. Harry Craddock printed the same proportions in the 1930 The Savoy Cocktail Book with cognac named in place of brandy. No creator is documented; historians place the drink in the first half of the 1920s and treat it as French, named for the avenue between the Arc de Triomphe and the Place de la Concorde. This menu pours an ounce and a half of cognac, half an ounce of Chartreuse, three-quarters of lemon, a quarter of simple, and a dash of Angostura, shaken, coupe, lemon twist.
 
 - [Coqtail, Champs-Elysees cocktail recipe and story](https://www.coqtail.com/en/champs-elysees-cocktail-recipe-story/)
+
+#### Ritz
+
+`Q,h,q,q,3,2,cfo` · shaken · Cognac · Sparkling family
+
+- 3/4 oz Cognac
+- 1/2 oz Maraschino liqueur
+- 1/4 oz Demerara syrup
+- 1/4 oz Lemon juice
+- 3 dashes Angostura bitters
+- 2 oz Champagne
+- Shake hard with ice, then strain.
+- Coupe, Flamed orange twist
+
+Three-quarters of an ounce of cognac, half an ounce of maraschino for the sweet and the cherry, a quarter each of demerara and lemon, three dashes of Angostura. Shaken, then two ounces of Champagne, so the wine is the biggest pour in the glass. Coupe, flamed orange twist. Dry and bubbly, cherry and bark over a little brandy, with burnt orange on the surface.
+
+Dale DeGroff built a Ritz Cocktail at Aurora in New York in 1985, later printed in The Craft of the Cocktail (2002) as a tribute to the Ritz drinks of Paris and Madrid: three-quarters cognac, half orange liqueur, a quarter each of maraschino and lemon, topped with Champagne, and a flamed orange twist. This menu keeps the small cognac, the maraschino, the lemon, the Champagne, and the flamed twist. It drops the orange liqueur and adds a quarter of demerara and three dashes of Angostura. The printed card left the Champagne off, and the menu restored it in 2026, because three-quarters of an ounce of cognac is DeGroff's measure for a drink with two ounces of wine on top.
+
+- [Imbibe, Ritz Cocktail](https://imbibemagazine.com/recipe/ritz-cocktail/)
+- [Difford's Guide, Ritz Cocktail](https://www.diffordsguide.com/cocktails/recipe/1677/ritz-cocktail)
 
 #### Brandy Alexander
 

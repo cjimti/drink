@@ -357,8 +357,10 @@
 
   function loadPrintOpts() {
     try {
-      var o = JSON.parse(localStorage.getItem(PRINT_STORE) || 'null');
-      if (o && typeof o === 'object') {
+      /* No store reads as the defaults, not as whatever was held last:
+         another tab clearing storage lands here too. */
+      var o = JSON.parse(localStorage.getItem(PRINT_STORE) || 'null') || {};
+      if (typeof o === 'object') {
         printOpts.icon = o.icon !== false;
         printOpts.recipe = !!o.recipe;
         printOpts.taste = !!o.taste;
@@ -3345,6 +3347,27 @@
     $('#main').scrollTop = y;
   }
 
+  /* Another tab of the site wrote a store. Each tab reads storage once at
+     boot, so without this the stale tab shows the old shelf and its next
+     tick writes the old shelf back over the new one. Read everything
+     again and repaint. Nothing here saves: a write fires this event in
+     the other tab, and two tabs would answer each other for ever. An
+     Undo snapshot is from before the other tab's change, so it goes. */
+  var STORES = [STORE, BRAND_STORE, TITLE_STORE, PRINT_STORE, INTRO_STORE];
+
+  function storesChanged(e) {
+    if (e.key !== null && STORES.indexOf(e.key) < 0) return;
+    loadHave();
+    loadOwn();
+    loadMenuTitle();
+    loadPrintOpts();
+    loadIntro();
+    applyPrintFlags();
+    syncHaveFromBrands();
+    if (e.key === null || e.key === STORE || e.key === BRAND_STORE) dropUndo();
+    afterShelf(true);
+  }
+
   /* Every figure on the shelf is relative to what is stocked, so selecting
      one rewrites the whole list. Put the scroll back where it was, or the
      row you just selected leaves the screen under your finger. */
@@ -3916,6 +3939,7 @@
     showVersion();
     repaintMenu();
     route();
+    window.addEventListener('storage', storesChanged);
   }).catch(function (err) {
     $('#loading').textContent = 'Could not load the menu. ' + err;
   });
