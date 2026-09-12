@@ -203,7 +203,11 @@ def article(drink, ctx):
     html = (
         f'  <p class="page__eyebrow">{escape(ctx["family"])}, {escape(drink["method"])}</p>\n'
         f'  <h1 class="page__name">{escape(drink["name"])}</h1>\n'
-        f'  <p class="page__code" aria-label="Barline">{escape(drink["code"])}</p>\n'
+        # ARIA has no aria-label on a paragraph, so a reader dropped the
+        # word and read a bare 2,1,1,cl. The word goes in the paragraph
+        # instead, where nothing can ignore it.
+        f'  <p class="page__code"><span class="sr-only">Barline </span>'
+        f'{escape(drink["code"])}</p>\n'
         f'  <ul class="page__pours">\n{lines}    </ul>\n'
         f'  <p class="page__method">{escape(ctx["how"])}</p>\n'
         f'  <p class="page__serve">{escape(ctx["serve"])}.</p>\n'

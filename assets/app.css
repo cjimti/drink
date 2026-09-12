@@ -286,6 +286,23 @@ a { color: inherit; text-decoration: none; }
   border-radius: 2px;
 }
 
+/* For a reader that listens. A heading the design does not want on
+   screen, the word Barline over a code, the running count after a tick:
+   all of it is in the page and none of it takes a pixel. Not
+   display:none, because that takes it out of the tree as well, and
+   these are the lines a screen reader is here for. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── Top bar ──────────────────────────────────────────────── */
 
 .topbar {
@@ -2898,7 +2915,7 @@ body.page .topbar { position: sticky; top: 0; }
   }
 
   .topbar, .tabbar, .undo, .menu-aside, .night, .filters, .info__nav, .intro, .tonight__hit, .tonight__pane, .tonight__acts,
-  .shared, .tally__acts, .bar-reset, .bar-view, .starters, .next, .drink__missing, .loading, .bottle__more, .shelf__copy,
+  .shared, .tally__acts, .bar-reset, .bar-view, .starters, .next, .loading, .bottle__more, .shelf__copy,
   .recipe, .recipe-tabs, .recipe-panel--taste, .recipe-panel--history,
   .recipe-panel--kin, .recipe-panel--share, .recipe-refs {
     display: none !important;
@@ -3027,6 +3044,15 @@ body.page .topbar { position: sticky; top: 0; }
   .family { font-size: 10pt; margin: 12pt 0 2pt; padding-top: 8pt; }
 
   .drink.is-pourable .drink__name { color: #000; }
+
+  /* A short drink is greyed on screen because the list beside it is
+     pourable. On paper .42 of black is about 2.8:1, which is a row you
+     cannot read, so it prints at full ink and the line saying which
+     bottle it wants prints with it. Grey on screen, words on paper. */
+  .drink.is-short .drink__name,
+  .drink.is-short .drink__line,
+  .drink.is-short .drink__glass { opacity: 1; }
+  .drink__missing { color: var(--muted); font-size: 7.5pt; }
   .drink__name { font-size: 8.5pt; }
   .drink__code { font-size: 7.5pt; }
   .drink__line { font-size: 8.5pt; }

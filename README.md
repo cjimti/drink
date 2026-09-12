@@ -54,7 +54,7 @@ family those drinks sit in.
 
 | Path | What it is |
 |------|-----------|
-| `index.html` | The whole shell. Three tabs, no router beyond the hash. |
+| `index.html` | The whole shell. Four tabs, no router beyond the hash. |
 | `assets/app.js` | Decoder, filters, and the marginal-gain engine. |
 | `assets/app.css` | Every colour is a token, defined twice — dark and light. |
 | `data/cocktails.json` | The menu. Each drink carries both a `code` and a `build`. |
@@ -154,8 +154,12 @@ Add one object to `cocktails` in `data/cocktails.json`:
 why the checker compares them. Write the code as it appears on the paper
 menu, spell the build out, and let `make verify` catch the disagreement.
 
-Then run `make kin` so the new drink joins its family, and `make llms`
-so it lands in the agent dumps. Verify will fail on a stale copy of either.
+Then run `make kin` so the new drink joins its family, `make llms` so it
+lands in the agent dumps, `make pages` so it gets its own address, and
+`make cards` so that address unfurls into a picture. Verify fails on a
+stale copy of any of the four. Cards are the one step with something to
+install: Pillow and rsvg-convert draw them, though the check that they
+are current needs neither.
 
 Ingredients that take no measure (egg white, muddled mint) get `null`. An ingredient
 poured on top rather than into the shaker — the bitters in a `c3` sour —

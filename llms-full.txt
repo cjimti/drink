@@ -208,7 +208,7 @@ George J. Kappeler prints the Metropole in 1895 Modern American Drinks as the ho
 
 Two ounces of cognac, then a quarter each of maraschino, demerara, and lemon. The lemon is an accent; the drink is still a cocktail. Two dashes of Angostura sit under cherry and brown sugar. Stirred. Rocks with ice and a lemon twist. It sits.
 
-Joseph Santini, an Italian bartender in New Orleans, built the Crusta in the 1850s, either at the City Exchange in the French Quarter or at Jewel of the South on Gravier Street, which he opened in 1855. Jerry Thomas prints it in the 1862 Bar-Tender's Guide, misspelling Santini as Santina and calling him Spanish. The name is the sugar crust on the rim; the lemon is a dash, not a pour. David Wondrich, in The Oxford Companion, treats that citrus as an accent, and traces the Sidecar through the Daisy instead. This menu pours two ounces of cognac, a quarter each of maraschino, demerara, and lemon, two dashes of Angostura, over ice, no crust.
+Joseph Santini, an Italian bartender in New Orleans, built the Crusta in the 1850s, either at the City Exchange in the French Quarter or at Jewel of the South on Gravier Street, which he opened in 1855. Jerry Thomas prints it in the 1862 Bar-Tender's Guide, misspelling Santini as Santina and calling him Spanish. The name is the sugar crust on the rim, and the lemon in the original is a dash. David Wondrich, in The Oxford Companion, treats that citrus as an accent, and traces the Sidecar through the Daisy instead. This menu pours two ounces of cognac, a quarter each of maraschino, demerara, and lemon, two dashes of Angostura, over ice, no crust.
 
 - [The Oxford Companion to Spirits and Cocktails, The Brandy Crusta](https://www.spiritsanddistilling.com/dictionary/acref-9780199311132-e-266)
 - [Difford's Guide, Brandy Crusta](https://www.diffordsguide.com/cocktails/recipe/310/brandy-crusta)
@@ -244,7 +244,7 @@ Dale DeGroff built a Ritz Cocktail at Aurora in New York in 1985, later printed 
 - Stir with ice until cold, then strain.
 - Rocks, iced
 
-Two ounces of bourbon, one barspoon of demerara, two dashes of Angostura. The sugar is a film; the bitters are bark and clove against the corn. Rocks with ice. It sits.
+Two ounces of bourbon, one barspoon of demerara, two dashes of Angostura. The barspoon of demerara tastes of molasses and little else; the bitters are bark and clove against the corn. Rocks with ice. It sits.
 
 The cocktail itself is spirit, sugar, water, and bitters, defined in The Balance and Columbian Repository on 13 May 1806. By the 1870s bartenders were dressing the Whiskey Cocktail with curacao, maraschino, and absinthe; drinkers who wanted the older formula asked for an old-fashioned whiskey cocktail. Robert Hess and David Wondrich, in The Oxford Companion, reject the Pendennis Club origin: Chicago papers were already talking about old-fashioned cocktails in 1880, a year before the Louisville club was founded. This menu pours two ounces of bourbon, one barspoon of demerara, and two dashes of Angostura, over ice. No fruit.
 
@@ -577,7 +577,7 @@ Stanley Clisby Arthur prints Cocktail à la Louisiane in Famous New Orleans Drin
 - Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
-Two ounces of rye, a quarter ounce of Fernet, one barspoon of demerara, two dashes of Angostura. The Fernet is mint and bitter against the whiskey; the sugar is a film. Stirred, rocks with ice, orange twist. An Old-Fashioned with Fernet in the glass.
+Two ounces of rye, a quarter ounce of Fernet, one barspoon of demerara, two dashes of Angostura. The Fernet is mint and bitter against the whiskey; the barspoon of demerara reads as molasses. Stirred, rocks with ice, orange twist. An Old-Fashioned with Fernet in the glass.
 
 Robert Vermeire prints a Fernet Cocktail in Cocktails: How to Mix Them (1922), equal Fernet and cognac or rye, and notes that Canadians of Toronto appreciated it. David Embury, in The Fine Art of Mixing Drinks (1948), names it the Toronto: Canadian whisky, a quarter ounce of Fernet, sugar, Angostura. Modern specs keep two ounces of rye and a quarter of Fernet. This menu pours that, with a barspoon of demerara and two dashes of Angostura, over ice with an orange twist.
 
@@ -649,7 +649,7 @@ Michael McIlroy made the Greenpoint at Milk & Honey in New York in 2006, one of 
 - Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
-An ounce and a half of scotch against a full ounce of sweet vermouth, so the grape sits nearly even with the malt. Half an ounce of Bénédictine is honey and herbs, a pour not a dash, enough to coat the drink. Stirred, coupe, lemon twist. Scotch first, then the liqueur's spice.
+An ounce and a half of scotch against a full ounce of sweet vermouth, so the grape sits nearly even with the malt. Half an ounce of Bénédictine is enough honey and herbs to coat the drink. Stirred, coupe, lemon twist. Scotch first, then the liqueur's spice.
 
 The Bobby Burns is a Scotch Manhattan with Bénédictine. Harry Craddock prints it in The Savoy Cocktail Book in 1930 as equal Italian vermouth and Scotch whisky with three dashes of Bénédictine. Albert Stevens Crockett, a year later in Old Waldorf-Astoria Bar Days, lists a Robert Burns with absinthe and orange bitters, and says it may have been named for the poet or for a cigar salesman who bought at the old Waldorf bar. Earlier printings use Baby Burns (Bishop and Babcock, 1900) and Robert Burns (Grohusko, 1910). This menu keeps Craddock's scotch, sweet vermouth, and Bénédictine, yet it pours an ounce and a half of whiskey, a full ounce of vermouth, and a half ounce of the liqueur.
 
@@ -702,7 +702,7 @@ The Rob Roy is a Scotch Manhattan, named for Reginald De Koven and Harry B. Smit
 - Stir with ice until cold, then strain.
 - Rocks, iced
 
-Two ounces of scotch, one barspoon of simple, one dash of Angostura and one of orange bitters. The sugar is a film; peel and bark sit under the malt. Stirred, rocks with ice. Scotch first, then the two bitters against the whiskey.
+Two ounces of scotch, one barspoon of simple, one dash of Angostura and one of orange bitters. One barspoon of simple is a trace of sweetness; peel and bark sit under the malt. Stirred, rocks with ice. Scotch first, then the two bitters against the whiskey.
 
 The cocktail is spirit, sugar, water, and bitters, defined in The Balance and Columbian Repository on 13 May 1806. By the 1870s bartenders were dressing the Whiskey Cocktail with curacao and absinthe; drinkers who wanted the older formula asked for an old-fashioned whiskey cocktail. Scotch is one of the spirits that definition already allowed. This menu pours two ounces of scotch, one barspoon of simple, one dash of Angostura and one of orange bitters, over ice. No fruit.
 
@@ -773,7 +773,7 @@ Albert Stevens Crockett prints the Country Club in the 1935 Old Waldorf-Astoria 
 - Stir with ice until cold, then strain.
 - Coupe
 
-Two ounces of light rum to one of sweet vermouth, a Manhattan ratio on cane. A quarter ounce of apricot liqueur is stone fruit, not a dash. Stirred, coupe, no twist on the menu. Rum first, then grape, then a thin apricot film.
+Two ounces of light rum to one of sweet vermouth, a Manhattan ratio on cane. A quarter ounce of apricot liqueur carries stone fruit through it. Stirred, coupe, no twist on the menu. Rum first, then grape, then a thin apricot film.
 
 A Yacht Club Cocktail of rum, Italian vermouth, and apricot prints in the 1948 Ron Daiquiri Coctelera booklet from Havana: two-thirds Daiquiri rum, one-third Italian vermouth, a dash of apricot brandy, stirred. David Embury includes a Yacht Club of the same bones in The Fine Art of Mixing Drinks the same year; Difford's adapts that printing. This menu keeps the two-to-one rum and sweet vermouth and puts a quarter ounce of apricot liqueur in place of the dash.
 
@@ -988,7 +988,7 @@ A vodka Martini prints in a 1935 Smirnoff pamphlet at three parts vodka to one o
 - Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
-Equal ounces of gin, Campari, and sweet vermouth, so Campari is a third of the drink, then a quarter ounce of absinthe in the mix, not a rinse. That is a real pour of anise, enough to sit on the Campari rather than perfume the glass. Stirred, coupe, orange twist. Bitter orange, grape, and wormwood, served up.
+Equal ounces of gin, Campari, and sweet vermouth, so Campari is a third of the drink, then a quarter ounce of absinthe stirred in. That much anise sits on top of the Campari and stays there. Stirred, coupe, orange twist. Bitter orange, grape, and wormwood, served up.
 
 The Quill first prints in the 1996 edition of Harry's ABC of Mixing Cocktails, where Andrew and Duncan MacElhone added forty-odd recipes to Harry MacElhone's original books and credited this one to Frank C. Payne of New York. It is not in the earlier editions, nor in MacElhone's 1927 Barflies and Cocktails. Payne was a theatrical press agent in the Theatrical Press Representatives of America, which published a magazine called The Quill. The drink is a Negroni with absinthe. This menu keeps the equal ounces and puts a quarter ounce of absinthe in the build, coupe, orange twist.
 
@@ -1079,7 +1079,7 @@ O.H. Byron prints the Martinez in 1884 The Modern Bartender's Guide as "Same as 
 - Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
-Equal ounces and a half of gin and dry vermouth, then a quarter ounce of Bénédictine, honey and herbs as a pour rather than a dash. Two dashes of orange bitters keep peel in the mix. Stirred, coupe, orange twist. A wet Martini with an herbal film.
+Equal ounces and a half of gin and dry vermouth, then a quarter ounce of Bénédictine, which puts honey and herbs through the middle of it. Two dashes of orange bitters keep peel in the mix. Stirred, coupe, orange twist. A wet Martini with an herbal film.
 
 George J. Kappeler prints the Ford Cocktail in 1895 Modern American Drinks: three dashes of Bénédictine, three dashes of orange bitters, half a jigger of Tom gin, half a jigger of French vermouth, orange peel. He does not name a Ford. Ted Haigh, in Vintage Spirits and Forgotten Cocktails, points to Malcolm Webster Ford, the 1880s all-around athlete and journalist, rather than Henry, whose company postdates the recipe. This menu keeps the equal gin and dry vermouth and the orange bitters, yet it pours a quarter ounce of Bénédictine, coupe, orange.
 
@@ -1136,7 +1136,7 @@ The Vancouver prints in the About Town Cocktail Book, issued in Vancouver around
 - Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
-An ounce and a half of gin against three-quarters of sweet vermouth, then a half ounce of cognac, grape spirit under gin. One dash of absinthe is a thin anise wash, not a pour. Stirred, coupe, lemon twist. Two spirits and vermouth, wormwood at the edge.
+An ounce and a half of gin against three-quarters of sweet vermouth, then a half ounce of cognac, grape spirit under gin. One dash of absinthe puts a thin anise edge on it. Stirred, coupe, lemon twist. Two spirits and vermouth, wormwood at the edge.
 
 The Wiffin is not a pre-1970 bar-book drink. P. G. Wodehouse, in the 1928 story "The Passing of Ambrose," has Ambrose Wiffin sketch a cocktail of gin, Italian vermouth, a spot of old brandy, and a dash of absinthe. David Wondrich reconstructed the formula in Australian Bartender in 2011: English gin, Italian vermouth, cognac, and a dash or two of absinthe. This menu pours an ounce and a half of gin, three-quarters sweet vermouth, a half ounce of cognac, and one dash of absinthe, coupe, lemon.
 
@@ -1154,7 +1154,7 @@ The Wiffin is not a pre-1970 bar-book drink. P. G. Wodehouse, in the 1928 story 
 - Stir with ice until cold, then strain.
 - Coupe, Cherry
 
-An ounce and a half of gin against three-quarters of sweet vermouth, then a quarter ounce of Bénédictine, honey and herbs as a film rather than a half-ounce pour. One dash of orange bitters. Stirred, coupe, cherry. Gin first, grape, then a thin herbal coat. Wetter and less herbal than the Vancouver on this menu.
+An ounce and a half of gin against three-quarters of sweet vermouth, then a quarter ounce of Bénédictine for honey and herbs. One dash of orange bitters. Stirred, coupe, cherry. Gin first, grape, then a thin herbal coat. Wetter and less herbal than the Vancouver on this menu.
 
 The Fitchett prints in the same About Town Cocktail Book as the Vancouver, around 1925. The unnamed writer credits Joseph A. Fitchett, head bar steward of the Vancouver Club: of the thousand and one drinks he can mix, it is the best. The formula is fifty percent gin, thirty percent Italian vermouth, twenty percent Bénédictine, a dash of orange bitters, olive or cherry. It is the sweet-vermouth sibling of the Vancouver in that book. This menu keeps the gin and sweet vermouth, yet it pours only a quarter ounce of Bénédictine, coupe, cherry.
 
@@ -1171,7 +1171,7 @@ The Fitchett prints in the same About Town Cocktail Book as the Vancouver, aroun
 - Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
-Two ounces of gin to one of dry vermouth, so the wine is a third of the drink, not a rinse. One dash of orange bitters is peel in the glass. Stirred, coupe, lemon twist. It drinks wet and cold: juniper, then the vermouth's wormwood and grape, then a thin orange film.
+Two ounces of gin to one of dry vermouth, so the wine is a third of the drink. One dash of orange bitters is peel in the glass. Stirred, coupe, lemon twist. It drinks wet and cold: juniper, then the vermouth's wormwood and grape, then a thin orange film.
 
 The first gin-and-vermouth drinks print in 1883 newspaper copy from Cleveland and Chicago, still called Manhattans, then as Martinez in O.H. Byron's 1884 The Modern Bartender's Guide and as Martini in Harry Johnson's 1888 Bartenders' Manual: Old Tom, sweet vermouth, curaçao, gum, and bitters. The Dry Martini, French vermouth and a drier gin, is named in New York by 1896 and is the dominant version by 1900. Two-to-one gin to vermouth appears in the late 1890s and is standard by the 1910s; orange bitters stay until the 1940s, then drop as the ratio marches past five-to-one. This menu keeps the wet 2:1, one dash of orange bitters, coupe, lemon.
 
@@ -1189,7 +1189,7 @@ The first gin-and-vermouth drinks print in 1883 newspaper copy from Cleveland an
 - Stir with ice until cold, then strain.
 - Coupe
 
-Two ounces of gin to one of dry vermouth, the wet Martini on this menu, then a half ounce of orange liqueur as candied peel, and a barspoon of absinthe in the mix, not a rinse. The anise is a pour you can taste, laid over the orange. Stirred, coupe, no garnish. Wet gin, peel, and wormwood.
+Two ounces of gin to one of dry vermouth, the wet Martini on this menu, then a half ounce of orange liqueur as candied peel, and a barspoon of absinthe stirred in. The anise comes through over the orange. Stirred, coupe, no garnish. Wet gin, peel, and wormwood.
 
 Villa Straylight does not appear in the pre-1970 manuals, nor under that name in Difford's, Punch, or Imbibe. It is a house drink on this menu, named for the Tessier-Ashpool villa at the end of Freeside in William Gibson's 1984 Neuromancer. The build is this menu's wet Martini, two ounces of gin to one of dry vermouth, plus a half ounce of orange liqueur and a barspoon of absinthe in the mix. Harry Johnson's 1888 Martini already carried orange curaçao; the absinthe is the Tuxedo's anise, poured rather than rinsed. Coupe, no garnish.
 
@@ -1224,7 +1224,7 @@ Jacob A. Didier prints the Casino in 1909 The Reminder: two dashes each of maras
 - Stir with ice until cold, then strain.
 - Coupe
 
-Two ounces of gin, three-quarters of dry vermouth, a quarter ounce of orange liqueur, two dashes of orange bitters. The vermouth still leads the dressing; the liqueur is peel and a little sugar, not a third of the drink. Stirred, coupe. Drier than this menu's Martini, with candied orange instead of a twist.
+Two ounces of gin, three-quarters of dry vermouth, a quarter ounce of orange liqueur, two dashes of orange bitters. The vermouth still leads the dressing; the quarter ounce of liqueur is peel and a little sugar. Stirred, coupe. Drier than this menu's Martini, with candied orange instead of a twist.
 
 Wayne Collins built the Dry Orange Martini in 2003 for Maxxium UK: two ounces of gin, three-quarters of dry vermouth, a quarter of orange liqueur, two dashes of orange bitters. Collins was a London bartender who ran Mixxit, Maxxium's training programme, and later put the White Negroni into wider print. The parent is the Dry Martini; Harry Johnson's 1888 Martini already carried orange curaçao, which later books dropped as the drink dried out. This menu keeps Collins's measures and the coupe.
 
@@ -1242,7 +1242,7 @@ Wayne Collins built the Dry Orange Martini in 2003 for Maxxium UK: two ounces of
 - Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
-Two ounces of gin against three-quarters of dry vermouth, so the gin leads. A quarter ounce of maraschino is cherry pit and almond, and three dashes of orange bitters is a lot of peel. The absinthe is a rinse, a thin anise film on the glass rather than a pour. Stirred, coupe, orange twist. A dressed Martini, gin first, then cherry, peel, and wormwood.
+Two ounces of gin against three-quarters of dry vermouth, so the gin leads. A quarter ounce of maraschino is cherry pit and almond, and three dashes of orange bitters is a lot of peel. The absinthe is a rinse, a thin anise film on the glass. Stirred, coupe, orange twist. A dressed Martini, gin first, then cherry, peel, and wormwood.
 
 Harry Johnson prints the Tuxedo in his 1900 Bartenders' Manual: equal Old Tom and French vermouth, dashes of maraschino, absinthe, and orange bitters. The name is the Tuxedo Club in Tuxedo Park, New York, opened in 1886. Harry Craddock, in the 1930 Savoy Cocktail Book, splits the family: his No. 1 is gin, dry vermouth, lemon peel, and absinthe; his No. 2 is Johnson's original with dry gin in place of Old Tom. This menu's Tuxedo #2 keeps the maraschino, the orange bitters, and the absinthe, yet it pours two ounces of gin to three-quarters of vermouth, a quarter of maraschino, three dashes of bitters, and an absinthe rinse, coupe, orange.
 
@@ -1277,7 +1277,7 @@ Ada Coleman created the Hanky Panky at the Savoy's American Bar in London, where
 - Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
-Two ounces of gin to one of dry vermouth, a dry Martini ratio. One barspoon of crème de cacao is chocolate as a film. Two dashes of orange bitters are peel. Stirred, coupe, lemon twist. Gin, dry wine, and a thin cocoa finish.
+Two ounces of gin to one of dry vermouth, a dry Martini ratio. One barspoon of crème de cacao is a trace of chocolate. Two dashes of orange bitters are peel. Stirred, coupe, lemon twist. Gin, dry wine, and a thin cocoa finish.
 
 Hugo R. Ensslin prints a Racquet Club Cocktail in Recipes for Mixed Drinks (1916/1917): gin, French vermouth, orange bitters. Harry Craddock's Savoy keeps gin and French vermouth with orange bitters and a lemon. Later specs put a barspoon of crème de cacao in the dressing, chocolate against the dry gin. This menu pours two ounces of gin, one of dry vermouth, a barspoon of cacao, two dashes of orange bitters, lemon twist.
 
@@ -1497,7 +1497,7 @@ Hugo R. Ensslin prints the Chrysanthemum in Recipes for Mixed Drinks (1917, and 
 - Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
-Two ounces of dry vermouth, three-quarters Benedictine, two dashes of orange bitters. The liqueur is a real pour of honey and spice, not a few dashes. Orange bitters pull peel through the wine. Stirred, coupe, lemon twist.
+Two ounces of dry vermouth, three-quarters Benedictine, two dashes of orange bitters. That three-quarters of an ounce carries honey and spice. Orange bitters pull peel through the wine. Stirred, coupe, lemon twist.
 
 Albert Stevens Crockett prints Tiptop in Old Waldorf Bar Days (1931): four dashes of Benedictine, two dashes of Angostura, one jigger of French vermouth, stirred, lemon peel. No bartender is named. Difford's later scales the Benedictine to three-quarters of an ounce. This menu keeps that pour and the lemon twist, and uses two dashes of orange bitters in place of Angostura.
 
@@ -2148,7 +2148,7 @@ A drink called Stan Lee does not appear in the pre-1970 manuals, nor under that 
 - Shake hard with ice, then strain.
 - Rocks, iced
 
-Equal ounces and a quarter of light rum and Benedictine, three-quarters lemon. The liqueur is honey and spice, the lemon a sour cut, the rum a cane floor. Rocks glass with ice: it sits and dilutes. Herbal punch, not a coupe sour.
+Equal ounces and a quarter of light rum and Benedictine, three-quarters lemon. The liqueur is honey and spice, the lemon a sour cut, the rum a cane floor. Rocks glass with ice: it sits and dilutes. Herbal punch.
 
 Jeff Berry and Annene Kaye print the Lani-Honi in Beachbum Berry's Grog Log. It was served aboard the Matson Line's SS Mariposa on its 42-day South Seas cruise in 1962: an ounce and a half of Benedictine, an ounce of light Puerto Rican rum, half an ounce of lemon, shaken and strained into a wine goblet of crushed ice. The original is a liqueur drink with rum riding second. This menu equalizes rum and Benedictine at an ounce and a quarter each, raises the lemon to three-quarters, and pours it over ice in a rocks glass.
 
@@ -2166,7 +2166,7 @@ Jeff Berry and Annene Kaye print the Lani-Honi in Beachbum Berry's Grog Log. It 
 - Shake hard with ice, then strain.
 - Coupe
 
-The Daiquiri's two ounces of light rum and three-quarters lime, with only a half ounce of simple, then a barspoon of Campari. The Campari is a bitter orange film, not a pour. Pink at the rim, dry at the back. Coupe.
+The Daiquiri's two ounces of light rum and three-quarters lime, with only a half ounce of simple, then a barspoon of Campari. That barspoon of Campari is a bitter orange film. Pink at the rim, dry at the back. Coupe.
 
 John Lermayer mixed The Rum Drink at Sweet Liberty in Miami Beach; Eater printed it in March 2016: two ounces of white rum, three-quarters lime, three-quarters simple, one spoon of Campari, shaken, coupe. Kevin Armstrong's Dry Daiquiri, at London's Match Bar in 2005, is an earlier Campari Daiquiri, with passion fruit syrup in the mix. This menu keeps Lermayer's name, rum, lime, and barspoon of Campari, and cuts the simple to half an ounce.
 
@@ -2183,7 +2183,7 @@ John Lermayer mixed The Rum Drink at Sweet Liberty in Miami Beach; Eater printed
 - Shake hard with ice, then strain.
 - Coupe, Cherry
 
-An ounce and a half of light rum, half an ounce of maraschino, half an ounce of lemon. Cherry stone and almond against the lemon, rum underneath. Coupe, cherry. Maraschino is half the sour; it is not a dash.
+An ounce and a half of light rum, half an ounce of maraschino, half an ounce of lemon. Cherry stone and almond against the lemon, rum underneath. Coupe, cherry. Maraschino is half the sour, ounce for ounce with the lemon.
 
 Harry Craddock invented the King's Jubilee in 1935 for the Silver Jubilee of King George V, while head bartender at the American Bar in the Savoy. William James Tarling prints it in the 1937 Cafe Royal Cocktail Book, Coronation Edition, as Craddock's: half Daiquiri rum, a quarter Luxardo maraschino (dry), a quarter lemon juice. The United Kingdom Bartenders' Guild Approved Cocktails of the same year carries the same formula. This menu is an ounce and a half of light rum and half an ounce each of maraschino and lemon, coupe, cherry.
 
@@ -2274,7 +2274,7 @@ The Caipirinha is Brazil's national cocktail: cachaça, lime, and sugar, muddled
 - Shake hard with ice, then strain.
 - Coupe
 
-An ounce and a half of cachaça, a full ounce of honey syrup, three-quarters lemon, half an ounce of grapefruit. Half an ounce of Peychaud's is a pour, not a dash, so anise and cherry run through the sour. Shaken, coupe. Cane, honey, and a lot of bitters.
+An ounce and a half of cachaça, a full ounce of honey syrup, three-quarters lemon, half an ounce of grapefruit. Half an ounce of Peychaud's runs anise and cherry through the sour. Shaken, coupe. Cane, honey, and a lot of bitters.
 
 Brett Adams and Jacob Grier print Pey-Lé in Raising the Bar (2022): an ounce and a half of cachaça, an ounce of honey syrup, three-quarters lemon, half an ounce of grapefruit, and half an ounce of Peychaud's, shaken, coupe. The name is the bitters. A drink of this name does not appear in the pre-1970 manuals. This menu keeps that pour, including the half ounce of Peychaud's.
 
@@ -2506,7 +2506,7 @@ Lauchlan Rose of Edinburgh patented an alcohol-free lime cordial in 1867, the sa
 - Shake hard with ice, then strain.
 - Rocks, iced, Lemon twist
 
-An ounce and a half of gin against a full ounce of lemon, so the citrus is a real pour, then a half ounce of simple and three ounces of Champagne. Shaken, then the wine. Rocks with ice and a lemon twist, not a flute. The lemon stays loud over the bubbles; the cube melts into it.
+An ounce and a half of gin against a full ounce of lemon, so the citrus is a real pour, then a half ounce of simple and three ounces of Champagne. Shaken, then the wine. Rocks with ice and a lemon twist. The lemon stays loud over the bubbles; the cube melts into it.
 
 The name is the French 75-millimetre field gun of the First World War. The first drink so called, reported by O. O. McIntyre in the Washington Herald in 1915, is gin, applejack, grenadine, and lemon; Robert Vermeire, in 1922, credits Henry Tépé of Henry's Bar in Paris. The gin, lemon, sugar, and Champagne formula first prints in Judge Jr's 1927 Here's How, in a tall glass: if you use club soda, you have a Tom Collins. Harry Craddock repeats it in the 1930 Savoy Cocktail Book, poured over cracked ice. The flute is later. This menu keeps the gin and the ice, yet it pours a full ounce of lemon and three of Champagne into a rocks glass with a lemon twist.
 

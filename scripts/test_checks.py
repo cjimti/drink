@@ -302,6 +302,44 @@ def run_pressed(failures):
     report("pressed/clean", check_style.check_pressed(app), False, failures)
 
 
+def name_cases():
+    """(name, markup, should it be reported) for the ARIA naming rule."""
+    return [
+        ("label on a p", '<p aria-label="Barline">2,1,1,cl</p>', True),
+        ("labelledby on a span", '<span aria-labelledby="h">x</span>', True),
+        ("label on a span with a role",
+         '<span role="status" aria-label="Count">3</span>', False),
+        ("label on a button", '<button aria-label="Close">x</button>', False),
+        ("the words in the markup instead",
+         '<p><span class="sr-only">Barline </span>2,1,1,cl</p>', False),
+    ]
+
+
+def run_names(failures):
+    """A name ARIA would throw away, on the fixtures and on the real files.
+
+    The drink pages are mutated as well: a fixture says what the rule
+    means, and putting the old aria-label back on a real page says the
+    rule is pointed at the files it claims to check.
+    """
+    for name, markup, expected in name_cases():
+        report(f"names/{name}", check_style.check_names("t.html", markup),
+               expected, failures)
+    page = (ROOT / "drink" / "martini" / "index.html").read_text()
+    report("names/page clean", check_style.check_names("p.html", page),
+           False, failures)
+    broken = page.replace('<p class="page__code"><span class="sr-only">'
+                          'Barline </span>',
+                          '<p class="page__code" aria-label="Barline">')
+    report("names/page relabelled", check_style.check_names("p.html", broken),
+           True, failures)
+    app = (ROOT / "assets" / "app.js").read_text()
+    report("names/app clean",
+           check_style.check_names("assets/app.js",
+                                   check_style.js_markup(app)),
+           False, failures)
+
+
 def run_menu(failures):
     """A top has to sit beside something that can fill a glass."""
     bar = check_menu.load("bar.json")
@@ -591,7 +629,8 @@ def main():
     """Every case, then the count."""
     failures = []
     for run in (run_css, run_contrast, run_js, run_py, run_house,
-                run_pressed, run_menu, run_methods, run_mixer_method,
+                run_pressed, run_names, run_menu, run_methods,
+                run_mixer_method,
                 run_method_line, run_glasses, run_fonts, run_manifest,
                 run_plates, run_pages, run_lexer, run_worker):
         run(failures)

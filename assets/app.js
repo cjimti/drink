@@ -133,6 +133,17 @@
 
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
 
+  /* Say a figure out loud. The two regions are in index.html, outside
+     the containers that get rewritten, because a live region replaced
+     by innerHTML announces nothing. Writing the same words again is
+     silent in every reader, and a region inside a hidden view is too,
+     which is what keeps a tick on the Bar tab from also reading out the
+     Menu's count. */
+  function announce(sel, text) {
+    var el = $(sel);
+    if (el && el.textContent !== text) el.textContent = text;
+  }
+
   /* One spelling for searching, so benedictine finds Benedictine and
      Bénédictine alike. NFD splits a letter from the accent riding on
      it and the range strips the accent, which is the whole of it: no
@@ -1602,8 +1613,11 @@
     var drinks = n + ' ' + (n === 1 ? 'drink' : 'drinks');
     return '<div class="tonight">' +
       '<div class="tonight__print">' +
-        '<h1 class="tonight__print-title">' +
-          esc(tonight ? nightTitle() : cardTitle()) + '</h1>' +
+        /* The menu's own name, on paper and in big type. Not a heading:
+           the Menu tab's one h1 is in index.html, and this line is a
+           title the visitor typed, which changes under them. */
+        '<p class="tonight__print-title">' +
+          esc(tonight ? nightTitle() : cardTitle()) + '</p>' +
         '<p class="tonight__print-of">' + drinks + '</p>' +
       '</div>' +
       hitRow('', ' data-tonight="open"', 'Big type', 'for a phone by the bottles', false) +
@@ -1663,6 +1677,14 @@
     return w;
   }
 
+  /* A drink the shelf cannot pour prints the line naming what it is short
+     of, which the screen shows in grey and paper shows in ink. One more
+     line on the sheet is one more line of weight, or the hand-cut column
+     runs long on a My Shelf print after Show all. */
+  function rowWeight(d, w, held, showShelf) {
+    return showShelf && missingFor(d, held).length ? w + 0.5 : w;
+  }
+
   function sectionHead(label, blurb) {
     return '<h2 class="method__title">' + esc(label) + '</h2>' +
       '<div class="method__rule"></div>' +
@@ -1680,7 +1702,8 @@
         if (!inPat.length) return;
         var sec = { attrs: ' id="pattern-' + esc(p.id) + '"', head: sectionHead(p.label, p.blurb), rows: [] };
         inPat.forEach(function (d) {
-          sec.rows.push({ html: renderDrink(d, held, showShelf), w: w, head: false });
+          sec.rows.push({ html: renderDrink(d, held, showShelf),
+            w: rowWeight(d, w, held, showShelf), head: false });
         });
         secs.push(sec);
       });
@@ -1696,7 +1719,8 @@
         if (!inFamily.length) return;
         sec.rows.push({ html: '<h3 class="family">' + esc(f.label) + '</h3>', w: HEAD_WEIGHT.family, head: true });
         inFamily.forEach(function (d) {
-          sec.rows.push({ html: renderDrink(d, held, showShelf), w: w, head: false });
+          sec.rows.push({ html: renderDrink(d, held, showShelf),
+            w: rowWeight(d, w, held, showShelf), head: false });
         });
       });
       secs.push(sec);
@@ -2071,6 +2095,18 @@
       '</button>';
   }
 
+  /* What the filter row just did to the list. Silent on the first paint:
+     a count nobody has changed yet is not news, and a reader landing on
+     the Menu would hear it before the page. */
+  var lastShown = null;
+
+  function announceShown(n) {
+    if (lastShown !== null && n !== lastShown) {
+      announce('#menu-live', n + ' of ' + data.menu.cocktails.length + ' shown');
+    }
+    lastShown = n;
+  }
+
   function renderFilters() {
     var held = heldNow();
     var n = data.menu.cocktails.filter(function (d) { return matches(d, held); }).length;
@@ -2122,10 +2158,12 @@
       '<div class="chips" role="group" aria-labelledby="shelf-h">' + renderShelfChips() +
       (otherFiltersOn() ? '<button class="chip" data-clear="1">Clear</button>' : '') +
       '</div>' +
-      '<p class="filters__note"><b>' + n + '</b> of ' + data.menu.cocktails.length + ' shown</p>' +
+      '<p class="filters__note" aria-hidden="true"><b>' + n + '</b> of ' +
+        data.menu.cocktails.length + ' shown</p>' +
       '</div>';
 
     $('#filters').innerHTML = html;
+    announceShown(n);
 
     document.querySelectorAll('#filters .chips').forEach(function (el, i) {
       if (i < chipX.length) el.scrollLeft = chipX[i];
@@ -2503,6 +2541,9 @@
     /* The count is only worth reading if it leads to the list it counts,
        so the whole figure is the way through to that menu. */
     var up = lastCan !== null && can > lastCan;
+    if (lastCan !== null && can !== lastCan) {
+      announce('#bar-live', plural(can, 'drink', 'drinks') + ' you can pour of ' + total);
+    }
     lastCan = can;
 
     var figure = '<span class="tally__n' + (up ? ' is-up' : '') + '">' + can + '</span>' +
@@ -3635,14 +3676,15 @@
     setSearch(e.target.value);
     /* Repaint the list but leave the field alone, or the caret jumps. */
     renderMenu();
+    var n = data.menu.cocktails.filter(function (d) { return matches(d, heldNow()); }).length;
     var note = document.querySelector('.filters__note');
-    if (note) {
-      var n = data.menu.cocktails.filter(function (d) { return matches(d, heldNow()); }).length;
-      note.innerHTML = '<b>' + n + '</b> of ' + data.menu.cocktails.length + ' shown';
-    }
+    if (note) note.innerHTML = '<b>' + n + '</b> of ' + data.menu.cocktails.length + ' shown';
+    /* The count is spoken on the same pause the search event waits for:
+       a figure read out on every letter is a figure nobody hears. */
     if (searchTimer) clearTimeout(searchTimer);
     searchTimer = setTimeout(function () {
       searchTimer = null;
+      announceShown(n);
       if (filter.q) track('search', { search_term: filter.code });
     }, 700);
   });

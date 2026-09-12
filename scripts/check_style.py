@@ -427,6 +427,33 @@ def js_markup(src):
     return "".join(out)
 
 
+# ARIA gives a paragraph, a span and their kin no way to be named. A
+# reader drops aria-label on one of those and reads whatever text is
+# there, so `<p aria-label="Barline">2,1,1,cl</p>` was read as a bare
+# code. The word belongs in the markup, in a .sr-only span, where
+# nothing can ignore it. An explicit role lifts the rule: a span that
+# says role="status" is a status, and a status takes a name.
+NAMELESS = re.compile(
+    r"<(p|span|em|strong|small|code|b|i)\b"
+    r"((?:[^>\"']|\"[^\"]*\"|'[^']*')*)>", re.S)
+
+
+def check_names(name, text):
+    """No aria-label where ARIA throws the name away."""
+    errs = []
+    for m in NAMELESS.finditer(text):
+        attrs = m.group(2)
+        if "role=" in attrs:
+            continue
+        for key in ("aria-label", "aria-labelledby"):
+            if key + "=" in attrs:
+                n = text.count("\n", 0, m.start()) + 1
+                errs.append(f"{name}:{n} <{m.group(1)}> with {key} — ARIA "
+                            f"ignores a name on that role; put the words in "
+                            f"a .sr-only span instead")
+    return errs
+
+
 # A toggle says pressed; a tab in a tablist says selected. Either is a
 # state a screen reader reads out; a class is not.
 STATE_ATTRS = ("aria-pressed", "aria-selected")
@@ -599,9 +626,12 @@ def main():
     contrast_errs, ratios = check_contrast((("dark", dark), ("light", light)))
     errs += contrast_errs
     errs += check_html(html, js)
+    errs += check_names("index.html", html)
+    errs += check_names("assets/app.js", js_markup(js))
     pages = page_files()
     for name, text in pages.items():
         errs += check_page(name, text)
+        errs += check_names(name, text)
     errs += check_delegation(js)
     errs += check_track(js)
     errs += check_bigint(js)
@@ -628,6 +658,7 @@ def main():
             + f"  (worst ground, floor {FLOOR})")
     print(f"  a11y    labels, alt text and unique ids in index.html and "
           f"{len(pages)} static page(s)")
+    print("  names   no aria-label on a role that throws one away")
     print("  wiring  every click branch reachable, every track() key known, "
           "every drink id addressable")
     print("  search  a code keeps the case it was typed in, on a phone too")
