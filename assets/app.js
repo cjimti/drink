@@ -206,38 +206,38 @@
      means different things in different slots. `2` is two ounces of rye
      and two dashes of Angostura, and only the ingredient knows which. */
   function readAmount(token, ingredient) {
-    if (token === null || token === undefined) {
-      return { text: '\u00b7', note: 'one' };
-    }
-    if (token === 'r') return { text: 'rinse', note: '' };
-    if (token === 't') return { text: 'top', note: '' };
+    /* Egg white and muddled mint carry no amount in the shorthand and
+       get no word here either: a bunch of mint was never `one Mint`.
+       The middle dot holds the column and says the pour has no measure,
+       which is what the card says too. */
+    if (token === null || token === undefined) return '\u00b7';
+    if (token === 'r') return 'rinse';
+    if (token === 't') return 'top';
 
     var m;
 
     if ((m = /^(\d*)b$/.exec(token))) {
-      var b = m[1] === '' ? 1 : +m[1];
-      return { text: plural(b, 'barspoon', 'barspoons'), note: '' };
+      return plural(m[1] === '' ? 1 : +m[1], 'barspoon', 'barspoons');
     }
 
     if ((m = /^(\d*)d$/.exec(token))) {
-      var d = m[1] === '' ? 1 : +m[1];
-      return { text: plural(d, 'dash', 'dashes'), note: '' };
+      return plural(m[1] === '' ? 1 : +m[1], 'dash', 'dashes');
     }
 
     /* A bare number beside bitters counts dashes, not ounces. */
     if (/^\d+$/.test(token) && ingredient && ingredient.unit === 'dash') {
-      return { text: plural(+token, 'dash', 'dashes'), note: '' };
+      return plural(+token, 'dash', 'dashes');
     }
 
     if ((m = /^(\d+)([hqQ])$/.exec(token))) {
-      return { text: m[1] + ' ' + FRACTION[m[2]] + ' oz', note: '' };
+      return m[1] + ' ' + FRACTION[m[2]] + ' oz';
     }
 
-    if (FRACTION[token]) return { text: FRACTION[token] + ' oz', note: '' };
+    if (FRACTION[token]) return FRACTION[token] + ' oz';
 
-    if (/^\d+$/.test(token)) return { text: token + ' oz', note: '' };
+    if (/^\d+$/.test(token)) return token + ' oz';
 
-    return { text: token, note: '' };
+    return token;
   }
 
   /* The last token of a code is one word: a glass, then any garnishes
@@ -1212,33 +1212,26 @@
     return '<span class="' + cls + '" aria-hidden="true">' + svg + '</span>';
   }
 
-  /* The instruction you follow at the bar. The blurb in cocktails.json is
-     the heading over that section of the menu and reads like one, so the
-     sentence for a single drink lives here with the decoder. A method
-     with no line here falls back to its blurb, so a fourth one still
-     says something. */
-  var METHOD_HOW = {
-    stirred: 'Stir with ice until cold, then strain.',
-    shaken: 'Shake hard with ice, then strain.',
-    built: 'Build in the glass over ice, then lift once with a barspoon.'
-  };
-
   /* Most built drinks are packed with ice, but the Champagne Cocktail,
      the Seelbach and Death in the Afternoon are poured into a dry glass,
      and telling somebody to build those over ice is a wrong instruction,
      not a rounding error. The uppercase glass letter is the one carrying
      ice, so the line reads off the serve token the same way the drawing
      does, rather than off a list of ids that would go stale. */
-  var BUILT_DRY = 'Build in the glass with no ice, then top.';
-
   function icedGlass(serve) {
     return serve[0] === 'R' || serve[0] === 'H';
   }
 
+  /* The instruction you follow at the bar, `how` on the method. The
+     blurb beside it is the heading over that section of the menu and
+     reads like one, so it is the fallback and not the line. The drink
+     pages and the agent dump read the same two strings out of the same
+     file, which is why they are in the data rather than here. */
   function methodLine(id, serve) {
-    if (id === 'built' && !icedGlass(serve)) return BUILT_DRY;
     var m = methodBy[id];
-    return METHOD_HOW[id] || (m ? m.blurb : id);
+    if (!m) return id;
+    if (m.how_dry && !icedGlass(serve)) return m.how_dry;
+    return m.how || m.blurb;
   }
 
   function renderPours(d, held) {
@@ -1247,7 +1240,7 @@
 
     d.build.forEach(function (p) {
       var i = ing[p[0]] || { name: p[0] };
-      var a = readAmount(p[1], i);
+      var amt = readAmount(p[1], i);
       var isGarnish = p[2] === 'g';
       var absent = shelfInUse && !held[p[0]];
       /* The card calls for demerara, so the row still says demerara. What
@@ -1255,11 +1248,10 @@
       var use = absent ? standInHeld(p[0], held) : null;
 
       html += '<div class="pour">' +
-        '<div class="pour__amt' + (p[1] === null ? ' pour__amt--none' : '') + '">' + esc(a.text) + '</div>' +
+        '<div class="pour__amt' + (p[1] === null ? ' pour__amt--none' : '') + '">' + esc(amt) + '</div>' +
         '<div class="pour__ing' + (absent && !use ? ' is-out' : '') + '">' + esc(i.name) +
         (use ? '<span class="pour__sub">' + esc(shortName(use)) + ' stands in</span>' : '') +
         (isGarnish ? '<span class="pour__tag">on top</span>' : '') +
-        (a.note ? '<span class="pour__tag">' + esc(a.note) + '</span>' : '') +
         '</div></div>';
     });
 
@@ -1887,8 +1879,9 @@
 
   function renderRailIntro() {
     var html = '<div class="card">' +
-      '<h2 class="card__h">' + data.menu.cocktails.length +
-        ' drinks, from a few bottles.</h2>' +
+      '<h2 class="card__h">' +
+        plural(data.menu.cocktails.length, 'drink', 'drinks') +
+        ', from a few bottles.</h2>' +
       '<p class="card__k card__k--top">How this works</p>' +
       '<ol class="rules">';
     STEPS.forEach(function (r) {
@@ -1921,8 +1914,8 @@
     var up = lastRail !== null && can > lastRail;
     lastRail = can;
     var figure = '<span class="card__n' + (up ? ' is-up' : '') + '">' + can + '</span>' +
-      '<span class="card__of">drinks ' + (viewingShared() ? 'they' : 'you') +
-        ' can pour<br>of ' + total + '</span>';
+      '<span class="card__of">' + (can === 1 ? 'drink' : 'drinks') + ' ' +
+        (viewingShared() ? 'they' : 'you') + ' can pour<br>of ' + total + '</span>';
 
     var html = '<div class="card">' +
       (can && !shelfGate()
@@ -2497,7 +2490,8 @@
     lastCan = can;
 
     var figure = '<span class="tally__n' + (up ? ' is-up' : '') + '">' + can + '</span>' +
-      '<span class="tally__of">drinks you can pour<br>of ' + total + '</span>';
+      '<span class="tally__of">' + (can === 1 ? 'drink' : 'drinks') +
+        ' you can pour<br>of ' + total + '</span>';
 
     var html = '<div class="bar-rail"><div class="tally">' +
       (can
@@ -2632,8 +2626,9 @@
   function renderKey() {
     $('#key-body').innerHTML = renderBarlineBody() +
       '<p class="colophon">' +
-      esc(data.menu.cocktails.length + ' drinks, ' + data.bar.ingredients.length +
-          ' ingredients. The codes are the ones off the printed menu, with the ' +
+      esc(plural(data.menu.cocktails.length, 'drink', 'drinks') + ', ' +
+          plural(data.bar.ingredients.length, 'ingredient', 'ingredients') +
+          '. The codes are the ones off the printed menu, with the ' +
           'long drinks written in the same shorthand; every recipe is generated ' +
           'from its code, so the two cannot drift apart.') +
       '</p>' +

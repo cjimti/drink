@@ -3,7 +3,7 @@
 > Classic drinks from one small home bar, decoded from the house
 > shorthand on the printed card.
 
-185 drinks, 89 stirred, 72 shaken, 24 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
+185 drinks, 88 stirred, 72 shaken, 25 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
 
 Barline reads left to right in build order, base spirit first, and
 ends with one token for glass plus garnish. A bare number is ounces
@@ -29,6 +29,7 @@ Spirit only. Stir on ice until cold, strain, no dilution past that.
 - 3 dashes Orange bitters
 - 10 dashes Angostura bitters
 - 2 barspoons Absinthe
+- Stir with ice until cold, then strain.
 - Rocks, iced
 
 Aged rum and sweet vermouth sit two to one, the Martinez ratio, with a quarter ounce of maraschino as the cherry glue. Ten dashes of Angostura is a bark flood, and three orange bitters keep peel in the mix. Two barspoons of absinthe is a pour you can taste, anise laid over the rum. Ice in the rocks glass is the point: this one is meant to sit and dilute.
@@ -45,6 +46,7 @@ The Pedro Martinez is a rum Martinez from Michael Shea at Rum Club in Portland, 
 - 1 barspoon Demerara syrup
 - 2 dashes Angostura bitters
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 Two ounces of aged rum, one barspoon of demerara, nothing more for sugar. The molasses of the syrup and the barrel of the rum are the same family, so the drink reads as rum first, then spice. Two dashes of Angostura and one of orange bitters keep clove and peel in the glass. Rocks, ice, and an orange twist: it sits.
@@ -60,6 +62,7 @@ The Old-Fashioned takes its name from drinkers in the 1870s who asked for an old
 - 1 oz Aged rum
 - 1 oz Campari
 - 1 oz Sweet vermouth
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 Equal ounces of aged rum, Campari, and sweet vermouth, over ice. Rum in the gin slot puts molasses and overripe fruit where juniper was, and the Campari has to push through that instead of sitting beside it. The cube gives up water slowly, so it rounds off as it stands. Rocks with ice, orange twist.
@@ -78,6 +81,7 @@ Joaquín Simó built the Kingston Negroni at Death & Co in New York's East Villa
 - 1 oz Dry vermouth
 - 1/2 oz Apple brandy
 - 1/2 oz Grenadine
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 Equal gin and dry vermouth, a half ounce of apple brandy riding underneath, and a half ounce of grenadine that tastes of pomegranate. The gin is the drink; the apple is a peel of orchard. Dry vermouth keeps it lean, so the grenadine is the only roundness. Coupe, cherry.
@@ -95,6 +99,7 @@ The So So Cocktail appears in Harry MacElhone's 1923 Harry of Ciro's ABC of Mixi
 - 1 1/2 oz Gin
 - 1/2 oz Grenadine
 - 1/4 oz Absinthe
+- Stir with ice until cold, then strain.
 - Coupe
 
 Equal ounces and a half of apple brandy and gin, so neither wins. Half an ounce of grenadine is a real pour, pomegranate against the orchard, and a quarter ounce of absinthe is enough anise to coat the glass. Stirred, no juice, coupe. Pink, wormwood-edged brandy and gin.
@@ -110,6 +115,7 @@ Robert Vermeire prints the Dempsey in Cocktails How to Mix Them (1922) and says 
 - 1 1/2 oz Cognac
 - 3/4 oz Apple brandy
 - 3/4 oz Sweet vermouth
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 Cognac first, an ounce and a half, then three-quarters each of apple brandy and sweet vermouth. The apple is a second brandy. No juice, no bitters, stirred. Two brandies and vermouth, orchard under grape. Coupe, cherry.
@@ -126,6 +132,7 @@ Harry Craddock prints Corpse Reviver No. 1 in The Savoy Cocktail Book in 1930: h
 - 1 oz Sweet vermouth
 - 1/2 oz Fernet
 - 1/2 oz Maraschino liqueur
+- Stir with ice until cold, then strain.
 - Coupe
 
 Equal ounces of apple brandy and sweet vermouth, a fifty-fifty Manhattan on orchard. Half an ounce of Fernet, half an ounce of maraschino, so mint and cherry sit against the apple. Stirred, coupe, no twist.
@@ -144,6 +151,7 @@ Jim Meehan prints the Newark in The PDT Cocktail Book (2011), credited to barten
 - 1 oz Cognac
 - 1 oz Dry vermouth
 - 1 oz Orange liqueur
+- Stir with ice until cold, then strain.
 - Coupe
 
 Equal ounces of cognac, dry vermouth, and orange liqueur, so the orange is a third of the drink. Candied peel sits against the cognac; dry vermouth cuts the sugar. Stirred, no bitters, coupe, no twist. A stiff orange Manhattan, grape and peel.
@@ -159,6 +167,7 @@ The Burnt Fuselage first appears in Harry MacElhone's 1927 Barflies and Cocktail
 - 1 1/2 oz Cognac
 - 1 1/2 oz Sweet vermouth
 - 1 barspoon Orange liqueur
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Equal ounces and a half of cognac and sweet vermouth, grape on grape, a Manhattan ratio. One barspoon of orange liqueur is peel. No bitters. Stirred, coupe, lemon twist. A brandy Manhattan with a thin orange film.
@@ -175,6 +184,7 @@ A drink called Palace Hotel does not appear in the pre-1970 manuals under that n
 - 1 1/2 oz Dry vermouth
 - 2 dashes Peychaud's bitters
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 Equal ounces and a half of cognac and dry vermouth, so neither wins. Two dashes of Peychaud's pull it toward cherry and anise. One dash of orange bitters is peel on the dry vermouth. Stirred, coupe, cherry. It reads pink and lean.
@@ -193,6 +203,7 @@ George J. Kappeler prints the Metropole in 1895 Modern American Drinks as the ho
 - 1/4 oz Demerara syrup
 - 1/4 oz Lemon juice
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Lemon twist
 
 Two ounces of cognac, then a quarter each of maraschino, demerara, and lemon. The lemon is an accent; the drink is still a cocktail. Two dashes of Angostura sit under cherry and brown sugar. Stirred. Rocks with ice and a lemon twist. It sits.
@@ -211,6 +222,7 @@ Joseph Santini, an Italian bartender in New Orleans, built the Crusta in the 185
 - 1/4 oz Demerara syrup
 - 1/4 oz Lemon juice
 - 3 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Coupe, Flamed orange twist
 
 Three-quarters of an ounce of cognac, so this is a small drink. Half an ounce of maraschino is the sweet and the cherry; a quarter each of demerara and lemon. Three dashes of Angostura is a lot of bark for so little spirit. Stirred, coupe, flamed orange twist.
@@ -229,6 +241,7 @@ Dale DeGroff built a Ritz Cocktail at Aurora in New York in 1985, later printed 
 - 2 oz Bourbon
 - 1 barspoon Demerara syrup
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced
 
 Two ounces of bourbon, one barspoon of demerara, two dashes of Angostura. The sugar is a film; the bitters are bark and clove against the corn. Rocks with ice. It sits.
@@ -245,6 +258,7 @@ The cocktail itself is spirit, sugar, water, and bitters, defined in The Balance
 - 1 1/2 oz Bourbon
 - 1 oz Campari
 - 1 oz Sweet vermouth
+- Stir with ice until cold, then strain.
 - Rocks, iced
 
 An ounce and a half of bourbon against a full ounce each of Campari and sweet vermouth. The whiskey leads a little; Campari is nearly a third of the drink. Stirred, rocks with ice. Bitter orange, grape, and corn whiskey, and the cube.
@@ -262,6 +276,7 @@ The Boulevardier first appears in print in Harry MacElhone's 1927 Barflies and C
 - 1/4 oz Orange liqueur
 - 1 barspoon Demerara syrup
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 An ounce and a half of bourbon, a quarter ounce of orange liqueur, one barspoon of demerara, two dashes of Angostura. The orange liqueur is peel and a little sugar. Stirred, coupe, lemon twist. An Old-Fashioned with curacao in the sugar slot, served up.
@@ -277,6 +292,7 @@ Jerry Thomas prints the Fancy Brandy Cocktail and Fancy Gin Cocktail in the 1862
 - 2 oz Bourbon
 - 1 oz Sweet vermouth
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 Two ounces of bourbon to one of sweet vermouth, so the whiskey leads. Two dashes of Angostura sit under the vermouth's grape and spice. Stirred, coupe, cherry. Corn, bark, and the cherry at the bottom.
@@ -294,6 +310,7 @@ The Manhattan is American whiskey, Italian vermouth, and bitters, first named in
 - 1/2 oz Maraschino liqueur
 - 1 dash Angostura bitters
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 Two ounces of bourbon, half an ounce of maraschino. One dash of Angostura, one of orange bitters. The cherry liqueur is almond and pit as much as fruit, and it does the sweetening. Stirred, rocks with ice, orange twist.
@@ -309,6 +326,7 @@ The Fancy Free first appears in Crosby Gaige's Cocktail Guide and Ladies' Compan
 
 - 2 oz Bourbon
 - 1/2 oz Bénédictine
+- Stir with ice until cold, then strain.
 - Rocks, iced
 
 Two ounces of bourbon, half an ounce of Bénédictine, nothing else. Honey, baking spice, and herbs against the whiskey. Stirred, rocks with ice. Short, sweet, herbal whiskey.
@@ -325,6 +343,7 @@ The Frisco first prints in William "Cocktail Bill" Boothby's 1934 The World's Dr
 - 3/4 oz Lime juice
 - 1/2 oz Sweet vermouth
 - 1/2 oz Orange liqueur
+- Stir with ice until cold, then strain.
 - Coupe, Mint
 
 Two ounces of bourbon against three-quarters of an ounce of lime, so the lime is loud. Half an ounce each of sweet vermouth and orange liqueur dress it: grape and peel under the citrus. Stirred, despite the juice. Coupe, mint. Bourbon and lime sit in the same glass, cold.
@@ -342,6 +361,7 @@ At least three drinks share the name Derby. The gin-and-peach-bitters version is
 - 1/2 oz Cognac
 - 1/4 oz Orange liqueur
 - 1 dash Angostura bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced
 
 Three-quarters of an ounce of bourbon, three-quarters of Bénédictine, so the herbal liqueur is a full partner. Half an ounce of cognac, a quarter of orange liqueur, one dash of Angostura. Stirred, rocks with ice. Honey, orange peel, grape, corn, and bark, a small drink that sits.
@@ -357,6 +377,7 @@ The Cock 'n' Bull Special is named for Jack Morgan's British-style pub on Hollyw
 - 2 oz Bourbon
 - 3/4 oz Sweet vermouth
 - 1/4 oz Fernet
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Two ounces of bourbon, three-quarters of sweet vermouth, and a quarter ounce of Fernet standing where the bitters would be. That quarter is enough to run mint and bitter bark the whole length of the drink. Stirred, coupe, lemon twist. A Manhattan with menthol in it.
@@ -375,6 +396,7 @@ Albert Stevens Crockett prints the Fanciulli in Old Waldorf Bar Days in 1931, re
 - 1 oz Campari
 - 1 oz Dry vermouth
 - 1 barspoon Demerara syrup
+- Stir with ice until cold, then strain.
 - Rocks, iced
 
 Equal ounces of rye, Campari, and dry vermouth, so Campari is a third of the drink. Bitter orange and rye heat sit against a dry wine cut, and one barspoon of demerara is brown sugar in a lean formula, rounding the Campari. Rocks with ice. It sits.
@@ -392,6 +414,7 @@ The Old Pal first prints in Harry MacElhone's 1927 Barflies and Cocktails, not i
 - 1 oz Cognac
 - 1 oz Sweet vermouth
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Equal ounces of rye, cognac, and sweet vermouth, so neither spirit leads. The cognac rounds the rye; two dashes of Angostura sit under grape and barrel. Stirred, coupe, lemon. A Manhattan that split the whiskey with brandy.
@@ -408,6 +431,7 @@ David Wondrich, in The Oxford Companion, treats the Saratoga as two competing dr
 - 1 3/4 oz Rye
 - 1/2 oz Bénédictine
 - 1 dash Angostura bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced
 
 An ounce and three-quarters of rye against a half ounce of Benedictine. Honey, baking spice, and herbs ride on the whiskey, and one dash of Angostura is bark at the end. Rocks with ice. It sits.
@@ -425,6 +449,7 @@ The Monte Carlo first prints in David Embury's 1948 The Fine Art of Mixing Drink
 - 1 barspoon Absinthe
 - 1 barspoon Simple syrup
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Lemon twist
 
 Two ounces of rye, then a barspoon each of maraschino, absinthe, and simple. The absinthe is in the drink, anise against cherry pit and sugar. Two dashes of Angostura. Rocks with ice, lemon. Rye first, then wormwood.
@@ -442,6 +467,7 @@ Jerry Thomas prints the Improved Whiskey Cocktail in the 1876 Bar-Tender's Guide
 - 1 barspoon Simple syrup
 - 4 dashes Peychaud's bitters
 - rinse Absinthe
+- Stir with ice until cold, then strain.
 - Rocks
 
 Two ounces of rye, one barspoon of simple, four dashes of Peychaud's. The absinthe is a rinse, a thin anise film on the glass. Four dashes of Peychaud's is a lot: cherry and spice, enough to pink the drink. Rocks with no ice. The barspoon of sugar is the softness in it.
@@ -457,6 +483,7 @@ The Sazerac takes its name from Sazerac de Forge et Fils cognac, imported into N
 - 2 oz Rye
 - 1/2 oz Sweet vermouth
 - 1/2 oz Maraschino liqueur
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 Two ounces of rye, then a half ounce each of sweet vermouth and maraschino. The vermouth is grape and sugar; the cherry liqueur is almond and pit. Stirred, coupe, cherry. Rye first, then a thin cherry film.
@@ -473,6 +500,7 @@ Vincenzo Errico built the Red Hook at Sasha Petraske's Milk & Honey in New York 
 - 3/4 oz Sweet vermouth
 - 1/4 oz Absinthe
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 Two ounces of rye, three-quarters sweet vermouth, a quarter ounce of absinthe. The absinthe is in the drink, anise over grape, and two dashes of Angostura sit under both. Stirred, coupe, cherry. A Manhattan with wormwood in it.
@@ -489,6 +517,7 @@ Jacques Straub prints the Waldorf in 1913 Manual of Mixed Drinks as equal rye, I
 - 3/4 oz Sweet vermouth
 - 1/4 oz Apricot liqueur
 - 1 dash Angostura bitters
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 Two and a half ounces of rye, three-quarters sweet vermouth, a quarter of apricot liqueur. Stone fruit against a large rye pour. One dash of Angostura. Stirred, coupe, cherry. The apricot is orchard on a Manhattan.
@@ -508,6 +537,7 @@ Julie Reiner built The Slope in 2006 and named it for Park Slope, first served a
 - 1 barspoon Bénédictine
 - 1 dash Angostura bitters
 - 1 dash Peychaud's bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Lemon twist
 
 Three-quarters of an ounce each of rye, cognac, and sweet vermouth, equal and small. One barspoon of Benedictine is honey and herbs. One dash of Angostura, one of Peychaud's. Rocks with ice, lemon. Split-base Manhattan with an herbal film.
@@ -526,6 +556,7 @@ Walter Bergeron, head bartender at the Hotel Monteleone in New Orleans, built th
 - 3/4 oz Bénédictine
 - 2 barspoons Absinthe
 - 3 dashes Peychaud's bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist, Cherry
 
 Equal three-quarters of rye, sweet vermouth, and Benedictine, so the herbal liqueur is a third of the drink. Two barspoons of absinthe is anise you can taste. Three dashes of Peychaud's. Stirred, coupe, lemon and cherry. Honey, wormwood, and rye.
@@ -543,6 +574,7 @@ Stanley Clisby Arthur prints Cocktail à la Louisiane in Famous New Orleans Drin
 - 1/4 oz Fernet
 - 1 barspoon Demerara syrup
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 Two ounces of rye, a quarter ounce of Fernet, one barspoon of demerara, two dashes of Angostura. The Fernet is mint and bitter against the whiskey; the sugar is a film. Stirred, rocks with ice, orange twist. An Old-Fashioned with Fernet in the glass.
@@ -559,6 +591,7 @@ Robert Vermeire prints a Fernet Cocktail in Cocktails: How to Mix Them (1922), e
 - 2 oz Rye
 - 3/4 oz Sweet vermouth
 - 1/2 oz Cynar
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 Two ounces of rye to three-quarters of sweet vermouth, so the whiskey leads. Half an ounce of Cynar is artichoke bitter in the Campari slot. Stirred, coupe, cherry. A rye Negroni, leaner, no gin.
@@ -576,6 +609,7 @@ Audrey Saunders built the Little Italy at Pegu Club in New York in 2005: two oun
 - 1 oz Dry vermouth
 - 1/2 oz Maraschino liqueur
 - 1 barspoon Cynar
+- Stir with ice until cold, then strain.
 - Coupe
 
 Two ounces of rye, a full ounce of dry vermouth, half an ounce of maraschino, a barspoon of Cynar. The dry vermouth keeps the whiskey lean, and the maraschino carries the sugar as cherry pit and almond. The barspoon of Cynar is the artichoke bitterness that arrives last and stays. Stirred, coupe, no ice.
@@ -593,6 +627,7 @@ Chad Solomon made the Bensonhurst in 2006 while working at Milk & Honey in Manha
 - 1/2 oz Sweet vermouth
 - 1 dash Angostura bitters
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Two ounces of rye with a half ounce each of yellow Chartreuse and sweet vermouth, the two of them splitting the sweet slot evenly under the whiskey. A dash each of Angostura and orange bitters. Stirred, coupe, lemon twist. Rye spice, then honey and herbs, then grape, with the bitters holding the seam.
@@ -611,6 +646,7 @@ Michael McIlroy made the Greenpoint at Milk & Honey in New York in 2006, one of 
 - 1 1/2 oz Scotch
 - 1 oz Sweet vermouth
 - 1/2 oz Bénédictine
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 An ounce and a half of scotch against a full ounce of sweet vermouth, so the grape sits nearly even with the malt. Half an ounce of Bénédictine is honey and herbs, a pour not a dash, enough to coat the drink. Stirred, coupe, lemon twist. Scotch first, then the liqueur's spice.
@@ -628,6 +664,7 @@ The Bobby Burns is a Scotch Manhattan with Bénédictine. Harry Craddock prints 
 - 3/4 oz Sweet vermouth
 - 3/4 oz Dry vermouth
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist, Cherry
 
 An ounce and a half of scotch, then three-quarters each of sweet and dry vermouth, so the whiskey leads and the vermouths split. Two dashes of Angostura sit under both. Stirred, coupe, lemon and cherry. A Perfect Manhattan on scotch: malt, grape, and bark.
@@ -644,6 +681,7 @@ The Affinity first appears in The New York Sun on 28 October 1907 as a Broadway 
 - 2 oz Scotch
 - 1 oz Sweet vermouth
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe
 
 Two ounces of scotch to one of sweet vermouth, the Manhattan ratio. Two dashes of orange bitters, not Angostura, so peel rather than bark sits under the malt. Stirred, coupe, no garnish on the menu. Leaner than a bourbon Manhattan, orange oil in the grape.
@@ -661,6 +699,7 @@ The Rob Roy is a Scotch Manhattan, named for Reginald De Koven and Harry B. Smit
 - 1 barspoon Simple syrup
 - 1 dash Angostura bitters
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced
 
 Two ounces of scotch, one barspoon of simple, one dash of Angostura and one of orange bitters. The sugar is a film; peel and bark sit under the malt. Stirred, rocks with ice. Scotch first, then the two bitters against the whiskey.
@@ -678,6 +717,7 @@ The cocktail is spirit, sugar, water, and bitters, defined in The Balance and Co
 - 3/4 oz Gin
 - 3/4 oz Sweet vermouth
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 Three-quarters of an ounce each of scotch, gin, and sweet vermouth, so none of the three wins. Two dashes of orange bitters keep peel in the mix. Stirred, coupe, cherry. Juniper against malt, grape in the middle. A short equal-parts drink: two and a quarter ounces before the ice.
@@ -695,6 +735,7 @@ Jacques Straub prints an Auto Cocktail in 1914 Drinks as equal French vermouth, 
 - 3/4 oz Sweet vermouth
 - 1/2 oz Fernet
 - 1/2 oz Bénédictine
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 An ounce and a half of scotch, three-quarters of sweet vermouth, half an ounce each of Fernet and Bénédictine. The whiskey leads a Rob Roy; Fernet is mint against peat, Bénédictine honey and spice. Stirred, coupe, cherry.
@@ -713,6 +754,7 @@ Chantal Tseng built Telling Phoebe as a homage to R.O. Kwon's novel The Incendia
 - 1 oz Dry vermouth
 - 1/2 oz Orange liqueur
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 An ounce and a half of light rum against a full ounce of dry vermouth, nearly even. Half an ounce of orange liqueur is peel and sugar, and one dash of orange bitters sits under both. Stirred, coupe, lemon twist. Lean rum, dry grape, candied orange.
@@ -728,6 +770,7 @@ Albert Stevens Crockett prints the Country Club in the 1935 Old Waldorf-Astoria 
 - 2 oz Light rum
 - 1 oz Sweet vermouth
 - 1/4 oz Apricot liqueur
+- Stir with ice until cold, then strain.
 - Coupe
 
 Two ounces of light rum to one of sweet vermouth, a Manhattan ratio on cane. A quarter ounce of apricot liqueur is stone fruit, not a dash. Stirred, coupe, no twist on the menu. Rum first, then grape, then a thin apricot film.
@@ -745,6 +788,7 @@ A Yacht Club Cocktail of rum, Italian vermouth, and apricot prints in the 1948 R
 - 3/4 oz Dry vermouth
 - 1/2 oz Orange liqueur
 - 1 barspoon Grenadine
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 An ounce and a half of light rum, three-quarters of dry vermouth, half an ounce of orange liqueur, a barspoon of grenadine. Stirred, so it comes out clear and heavy in the glass. The barspoon of grenadine is pomegranate on the finish and a shade of colour; the orange liqueur is where the sugar actually is. Coupe, orange twist.
@@ -762,6 +806,7 @@ Havana, mid-1910s. The earliest known recipe is in John B. Escalante's Manual de
 - 1 1/4 oz Cachaça
 - 3/4 oz Campari
 - 3/4 oz Sweet vermouth
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 An ounce and a quarter of cachaça against three-quarters each of Campari and sweet vermouth. The cane spirit leads a little; Campari is still a third of the drink. Stirred, rocks with ice, orange twist. A Negroni in sugarcane, grassy and bitter orange.
@@ -778,6 +823,7 @@ Swap gin for cachaça in a Negroni and the drink is a Brazilian Negroni, a subst
 - 1/2 oz Grenadine
 - 1/4 oz Fernet
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 An ounce and a half of cachaça, half an ounce of grenadine, a quarter of Fernet. The pomegranate is the sugar; the Fernet is mint and bitter against the cane. Two dashes of orange bitters are peel. Stirred, coupe, orange twist.
@@ -793,6 +839,7 @@ Brett Adams and Jacob Grier print the Cornerstone in Raising the Bar (2022), in 
 - 2 oz Cachaça
 - 1/2 oz Sweet vermouth
 - 1/2 oz Cynar
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 Two ounces of cachaça with a half ounce each of sweet vermouth and Cynar. The cachaça is grassy and raw sugar, the vermouth rounds it, and the Cynar puts artichoke bitterness on the end. Stirred, rocks with ice, orange twist. It gets colder and wider as the cube goes.
@@ -813,6 +860,7 @@ The Rabo de Galo, rooster's tail, took hold in São Paulo in the mid-1950s after
 - 1/2 oz Sweet vermouth
 - 1/2 oz Dry vermouth
 - 1 dash Angostura bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 An ounce and a half of tequila against a full ounce of Campari, so the bitter leads. Half an ounce each of sweet and dry vermouth split the wine, a Perfect Negroni with agave. One dash of Angostura is spice. Stirred, rocks, ice, orange twist.
@@ -830,6 +878,7 @@ The Rosita first appears, creator unknown, in the 1974 Mr. Boston Official Barte
 - 1/4 oz Orange liqueur
 - 1/4 oz Sweet vermouth
 - 2 dashes Angostura bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 Two ounces of tequila, a quarter of orange liqueur, a quarter of sweet vermouth. The vermouth is the sugar; the orange liqueur is peel. Two dashes of Angostura. Stirred, rocks, ice, orange twist. It drinks as a tequila Fancy Cocktail, spirit first, liqueur as dressing.
@@ -848,6 +897,7 @@ Jerry Thomas prints the Fancy Brandy Cocktail in 1862 as the plain Cocktail stra
 - 1 oz Rye
 - 1/2 oz Bénédictine
 - 4 dashes Peychaud's bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 Equal ounces of mezcal and rye, so smoke and pepper share the glass. Half an ounce of Bénédictine is honey and baking spice. Four dashes of Peychaud's pull anise and cherry through both spirits. Stirred, rocks with ice, orange twist.
@@ -866,6 +916,7 @@ The El Camino is the house cocktail of the Chestnut Club in Santa Monica, on the
 - 1 oz Sweet vermouth
 - 1/2 oz Maraschino liqueur
 - 2 dashes Peychaud's bitters
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 Three-quarters each of mezcal and cognac, a full ounce of sweet vermouth, so the wine leads. Half an ounce of maraschino is cherry and almond. Two dashes of Peychaud's. Stirred, coupe, orange twist. A smoky Martinez, grape and pit.
@@ -882,6 +933,7 @@ Ezra Star built the 1910 at Drink in Boston around 2014, named for the year the 
 - 1 oz Mezcal
 - 1 oz Campari
 - 1 oz Sweet vermouth
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 Equal ounces of mezcal, Campari, and sweet vermouth, over ice. Smoke and roasted agave stand where juniper does in the original, and the smoke is the loudest thing in the glass until the ice opens it up. Campari and mezcal are bitter in different directions, and holding those two apart is most of what the vermouth is for. Rocks with ice, orange twist.
@@ -899,6 +951,7 @@ There is no single author. Phil Ward, who opened the agave bar Mayahuel in New Y
 - 1 1/2 oz Vodka
 - 3/4 oz Bénédictine
 - 1 dash Angostura bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Lemon twist
 
 An ounce and a half of vodka, three-quarters of Bénédictine, one dash of Angostura. Honey and herbs, vodka as the thinner so the liqueur is a third of the drink. Stirred, rocks with ice, lemon twist. It sits, herbal and sweet, with bark at the end.
@@ -913,6 +966,7 @@ The formula is the Gypsy Queen: vodka, Bénédictine, and bitters. David Wondric
 
 - 2 oz Vodka
 - 1/2 oz Dry vermouth
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Two ounces of vodka, half an ounce of dry vermouth. Four to one; the wine is in the drink. Stirred, coupe, lemon twist. Cold, grape.
@@ -931,6 +985,7 @@ A vodka Martini prints in a 1935 Smirnoff pamphlet at three parts vodka to one o
 - 1 oz Campari
 - 1 oz Sweet vermouth
 - 1/4 oz Absinthe
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 Equal ounces of gin, Campari, and sweet vermouth, so Campari is a third of the drink, then a quarter ounce of absinthe in the mix, not a rinse. That is a real pour of anise, enough to sit on the Campari rather than perfume the glass. Stirred, coupe, orange twist. Bitter orange, grape, and wormwood, served up.
@@ -947,6 +1002,7 @@ The Quill first prints in the 1996 edition of Harry's ABC of Mixing Cocktails, w
 - 1 oz Gin
 - 1 oz Campari
 - 1 oz Sweet vermouth
+- Stir with ice until cold, then strain.
 - Rocks, iced
 
 Equal ounces of gin, Campari, and sweet vermouth. Campari is a third of the drink: bitter orange against grape and juniper. Stirred, rocks with ice, no twist on the menu. The cube is the dilution, so the Campari stays loud as it sits.
@@ -964,6 +1020,7 @@ The usual story puts Count Camillo Negroni at Caffe Casoni on Via de' Tornabuoni
 - 1 oz Dry vermouth
 - 1/2 oz Apricot liqueur
 - 1/2 oz Orange liqueur
+- Stir with ice until cold, then strain.
 - Coupe
 
 Equal ounces of gin and dry vermouth, then a half ounce each of apricot liqueur and orange liqueur, so the two liqueurs together match the gin. Stone fruit and candied peel sit against a dry wine cut. Stirred, coupe, no twist on the menu. Apricot and orange on a wet Martini.
@@ -981,6 +1038,7 @@ Harry MacElhone prints the Claridge in 1922 Harry's ABC of Mixing Cocktails, cre
 - 1/2 oz Campari
 - 1/2 oz Dry vermouth
 - 1/2 oz Orange liqueur
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 An ounce of gin against half ounces of Campari, dry vermouth, and orange liqueur, so gin leads and the three modifiers split. Bitter orange and candied peel sit against a dry wine cut, leaner than a Negroni and more orange. Stirred, coupe, orange twist.
@@ -1000,6 +1058,7 @@ Named for Lucien Gaudin, a French fencer who won gold in foil and epee at the 19
 - 1/4 oz Maraschino liqueur
 - 1 dash Orange bitters
 - 1 dash Angostura bitters
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 An ounce and a half of gin against a full ounce of sweet vermouth and a half of dry, so the wine is wet and split. A quarter ounce of maraschino is cherry pit and almond, and one dash each of orange bitters and Angostura keep peel and bark in the mix. Stirred, coupe, orange. It drinks as a gin Manhattan with both vermouths and a cherry film.
@@ -1017,6 +1076,7 @@ O.H. Byron prints the Martinez in 1884 The Modern Bartender's Guide as "Same as 
 - 1 1/2 oz Dry vermouth
 - 1/4 oz Bénédictine
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 Equal ounces and a half of gin and dry vermouth, then a quarter ounce of Bénédictine, honey and herbs as a pour rather than a dash. Two dashes of orange bitters keep peel in the mix. Stirred, coupe, orange twist. A wet Martini with an herbal film.
@@ -1036,6 +1096,7 @@ George J. Kappeler prints the Ford Cocktail in 1895 Modern American Drinks: thre
 - 1/4 oz Orange liqueur
 - 1/4 oz Lemon juice
 - 1 dash Angostura bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 An ounce and a half of gin, then a half ounce each of sweet and dry vermouth, a Perfect Martini ratio. A quarter ounce of orange liqueur and a quarter ounce of lemon sit in the same glass: peel and pith, enough lemon that the drink is tart even stirred. One dash of Angostura. Coupe, lemon twist. Citrus in a stirred gin drink.
@@ -1054,6 +1115,7 @@ Harry Craddock prints the Journalist in The Savoy Cocktail Book in 1930: two-thi
 - 3/4 oz Dry vermouth
 - 1/2 oz Bénédictine
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Olive
 
 An ounce and a half of gin against three-quarters of dry vermouth, so the wine is a real pour, then a half ounce of Bénédictine, honey and herbs nearly even with the vermouth. One dash of orange bitters. Stirred, coupe, orange twist. Gin first, then the liqueur's spice on a dry wine.
@@ -1071,6 +1133,7 @@ The Vancouver prints in the About Town Cocktail Book, issued in Vancouver around
 - 3/4 oz Sweet vermouth
 - 1/2 oz Cognac
 - 1 dash Absinthe
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 An ounce and a half of gin against three-quarters of sweet vermouth, then a half ounce of cognac, grape spirit under gin. One dash of absinthe is a thin anise wash, not a pour. Stirred, coupe, lemon twist. Two spirits and vermouth, wormwood at the edge.
@@ -1088,6 +1151,7 @@ The Wiffin is not a pre-1970 bar-book drink. P. G. Wodehouse, in the 1928 story 
 - 3/4 oz Sweet vermouth
 - 1/4 oz Bénédictine
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Cherry
 
 An ounce and a half of gin against three-quarters of sweet vermouth, then a quarter ounce of Bénédictine, honey and herbs as a film rather than a half-ounce pour. One dash of orange bitters. Stirred, coupe, cherry. Gin first, grape, then a thin herbal coat. Wetter and less herbal than the Vancouver on this menu.
@@ -1104,6 +1168,7 @@ The Fitchett prints in the same About Town Cocktail Book as the Vancouver, aroun
 - 2 oz Gin
 - 1 oz Dry vermouth
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Two ounces of gin to one of dry vermouth, so the wine is a third of the drink, not a rinse. One dash of orange bitters is peel in the glass. Stirred, coupe, lemon twist. It drinks wet and cold: juniper, then the vermouth's wormwood and grape, then a thin orange film.
@@ -1121,6 +1186,7 @@ The first gin-and-vermouth drinks print in 1883 newspaper copy from Cleveland an
 - 1 oz Dry vermouth
 - 1/2 oz Orange liqueur
 - 1 barspoon Absinthe
+- Stir with ice until cold, then strain.
 - Coupe
 
 Two ounces of gin to one of dry vermouth, the wet Martini on this menu, then a half ounce of orange liqueur as candied peel, and a barspoon of absinthe in the mix, not a rinse. The anise is a pour you can taste, laid over the orange. Stirred, coupe, no garnish. Wet gin, peel, and wormwood.
@@ -1137,6 +1203,7 @@ Villa Straylight does not appear in the pre-1970 manuals, nor under that name in
 - 2 oz Gin
 - 1/2 oz Maraschino liqueur
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Cherry
 
 Two ounces of gin, a half ounce of maraschino, two dashes of orange bitters. The cherry liqueur is almond and pit as much as fruit, and it does the sweetening; there is no lemon. Stirred. Rocks with ice and a cherry. It sits: gin first, then a cherry film, and the cube.
@@ -1154,6 +1221,7 @@ Jacob A. Didier prints the Casino in 1909 The Reminder: two dashes each of maras
 - 3/4 oz Dry vermouth
 - 1/4 oz Orange liqueur
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe
 
 Two ounces of gin, three-quarters of dry vermouth, a quarter ounce of orange liqueur, two dashes of orange bitters. The vermouth still leads the dressing; the liqueur is peel and a little sugar, not a third of the drink. Stirred, coupe. Drier than this menu's Martini, with candied orange instead of a twist.
@@ -1171,6 +1239,7 @@ Wayne Collins built the Dry Orange Martini in 2003 for Maxxium UK: two ounces of
 - 1/4 oz Maraschino liqueur
 - 3 dashes Orange bitters
 - rinse Absinthe
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 Two ounces of gin against three-quarters of dry vermouth, so the gin leads. A quarter ounce of maraschino is cherry pit and almond, and three dashes of orange bitters is a lot of peel. The absinthe is a rinse, a thin anise film on the glass rather than a pour. Stirred, coupe, orange twist. A dressed Martini, gin first, then cherry, peel, and wormwood.
@@ -1187,6 +1256,7 @@ Harry Johnson prints the Tuxedo in his 1900 Bartenders' Manual: equal Old Tom an
 - 1 1/2 oz Gin
 - 1 1/2 oz Sweet vermouth
 - 1 barspoon Fernet
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 Equal ounces and a half of gin and sweet vermouth, a fifty-fifty Martinez ratio. One barspoon of Fernet is mint and bitter, enough to taste, not enough to own the drink. Stirred, coupe, orange twist.
@@ -1204,6 +1274,7 @@ Ada Coleman created the Hanky Panky at the Savoy's American Bar in London, where
 - 1 oz Dry vermouth
 - 1 barspoon Crème de cacao
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Two ounces of gin to one of dry vermouth, a dry Martini ratio. One barspoon of crème de cacao is chocolate as a film. Two dashes of orange bitters are peel. Stirred, coupe, lemon twist. Gin, dry wine, and a thin cocoa finish.
@@ -1220,6 +1291,7 @@ Hugo R. Ensslin prints a Racquet Club Cocktail in Recipes for Mixed Drinks (1916
 - 1 oz Chartreuse
 - 1 oz Sweet vermouth
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Lemon twist
 
 Equal ounces of gin, green Chartreuse, and sweet vermouth, so the herbal liqueur is a third of the drink. One dash of orange bitters is peel. Stirred, rocks with ice, lemon twist. Gin, Chartreuse, and grape, and the cube.
@@ -1236,6 +1308,7 @@ Harry Johnson prints the Bijou in his 1900 Bartender's Manual as equal Plymouth 
 - 1 oz Gin
 - 1 oz Cynar
 - 1 oz Sweet vermouth
+- Stir with ice until cold, then strain.
 - Rocks, iced, Orange twist
 
 Equal ounces of gin, Cynar, and sweet vermouth, so the artichoke amaro is a third of the drink. Stirred, rocks with ice, orange twist. A Negroni with Cynar in the Campari slot, softer bitter, still orange.
@@ -1252,6 +1325,7 @@ Cin-Cyn is a play on cin-cin, the Italian toast, and on Cynar. It is a Negroni w
 - 3/4 oz Cynar
 - 1/2 oz Maraschino liqueur
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 An ounce and a half of gin, three-quarters of Cynar, half an ounce of maraschino. The gin leads; artichoke bitter and cherry liqueur split the rest. Two dashes of orange bitters. Stirred, coupe, lemon twist.
@@ -1267,6 +1341,7 @@ Alise Moffatt built Physically Forgotten at Shift Drinks in Portland, Oregon. Br
 - 1 1/2 oz Gin
 - 3/4 oz Campari
 - 3/4 oz Dry vermouth
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 An ounce and a half of gin, three-quarters of Campari, three-quarters of dry vermouth. More gin than either modifier, and dry vermouth in the sweet slot, so the juniper stays in front and the Campari reads as bitter orange peel over a lean drink. Stirred, coupe, lemon twist.
@@ -1282,6 +1357,7 @@ Giovanni Raimondo made the Cardinale at the Excelsior Hotel in Rome in 1950, for
 - 2 oz Gin
 - 1/2 oz Chartreuse
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Two ounces of gin to a half ounce of yellow Chartreuse, so the liqueur is a fifth of the pour: honey, dried herbs, and a faint saffron cast in the glass. One dash of orange bitters. Stirred, coupe, lemon twist. Juniper first, sweetness second, and an herbal finish that outlasts both.
@@ -1298,6 +1374,7 @@ The Alaska first appears in Jacques Straub's Manual of Mixed Drinks in 1913, mad
 - 1 oz Gin
 - 1 oz Apple brandy
 - 1 oz Apricot liqueur
+- Stir with ice until cold, then strain.
 - Coupe
 
 Equal ounces of gin, apple brandy, and apricot, three bottles at the same weight. Stirred, coupe. Juniper and orchard apple with apricot over the top, and since the apricot is a liqueur it is the sugar in the drink as well as the fruit. Three ounces of spirit and nothing to lengthen it, so it drinks warm and slow.
@@ -1313,6 +1390,7 @@ Harry Craddock prints the Angel Face in The Savoy Cocktail Book in 1930 as a thi
 - 1 1/2 oz Gin
 - 1 1/2 oz Dry vermouth
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Olive
 
 An ounce and a half each of gin and dry vermouth, one dash of orange bitters. Half the drink is wine, so it is softer and lower proof than the Martini and the vermouth's grape and wormwood share the front with the juniper. Stirred, coupe, an olive. Salt from the olive against the wine.
@@ -1329,6 +1407,7 @@ Equal parts was the Martini ratio before Prohibition. Hugo Ensslin prints the Fi
 - 2 oz Gin
 - 1/2 oz Dry vermouth
 - 1/4 oz Olive brine
+- Stir with ice until cold, then strain.
 - Coupe, Olive
 
 Two ounces of gin, half an ounce of dry vermouth, a quarter ounce of brine from the olive jar. The brine is salt and a little vinegar, and it turns the drink savoury and slightly cloudy. Juniper first, then salt, then the vermouth. Stirred, coupe, an olive.
@@ -1347,6 +1426,7 @@ John O'Connor at the Waldorf-Astoria is credited with the first one in 1901, a M
 - 1 1/2 oz Sweet vermouth
 - 1 1/2 oz Dry vermouth
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 Equal ounces and a half of sweet and dry vermouth, so neither wins. Two dashes of orange bitters are peel on the split wine. Stirred, no spirit, coupe, orange twist. Grape and spice, cold, with a thin orange film on the wine.
@@ -1363,6 +1443,7 @@ Albert Stevens Crockett, in Old Waldorf Bar Days (1931), lists the Duplex as equ
 - 2 oz Sweet vermouth
 - 1 oz Dry vermouth
 - 1 dash Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Two ounces of sweet vermouth to one of dry, so the sweet leads. One dash of orange bitters is peel on the grape. Stirred, coupe, lemon twist. Grape and spice, the sweet vermouth leading, with a thin lemon oil on top.
@@ -1379,6 +1460,7 @@ Panache is French for mixed. Philip Greene, in To Have and Have Another (2012), 
 - 2 oz Dry vermouth
 - 1 oz Sweet vermouth
 - 1/4 oz Maraschino liqueur
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist, Cherry
 
 Two ounces of dry vermouth to one of sweet, so the dry wine is two thirds of the drink, then a quarter ounce of maraschino. No bitters, no base spirit. Cherry glue on two vermouths, dry leading. Stirred, coupe, lemon and cherry.
@@ -1395,6 +1477,7 @@ Robert Vermeire prints it as Diplomate in Cocktails: How to Mix Them (1922), "ve
 - 2 oz Dry vermouth
 - 1/2 oz Bénédictine
 - 2 barspoons Absinthe
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 Two ounces of dry vermouth, half an ounce of Benedictine, two barspoons of absinthe. The vermouth is the drink; the liqueur is honeyed spice; two barspoons of absinthe is a pour, anise laid over the wine. Stirred, coupe, orange twist.
@@ -1411,6 +1494,7 @@ Hugo R. Ensslin prints the Chrysanthemum in Recipes for Mixed Drinks (1917, and 
 - 2 oz Dry vermouth
 - 3/4 oz Bénédictine
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Lemon twist
 
 Two ounces of dry vermouth, three-quarters Benedictine, two dashes of orange bitters. The liqueur is a real pour of honey and spice, not a few dashes. Orange bitters pull peel through the wine. Stirred, coupe, lemon twist.
@@ -1428,6 +1512,7 @@ Albert Stevens Crockett prints Tiptop in Old Waldorf Bar Days (1931): four dashe
 - 1 1/2 oz Dry vermouth
 - 1 dash Angostura bitters
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Olive, Lemon twist
 
 Equal ounces and a half of dry sherry and dry vermouth, so there is no base spirit. One dash of Angostura, two of orange bitters. Stirred, coupe, olive and lemon twist. Nutty, dry wine, a little bark.
@@ -1445,6 +1530,7 @@ Louis Eppinger is credited with the Bamboo at the Grand Hotel in Yokohama, somet
 - 1 oz Sweet vermouth
 - 1/4 oz Lemon juice
 - 6 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Rocks, iced, Lemon twist
 
 Two ounces of Cynar, an ounce of sweet vermouth, a quarter of lemon, six dashes of orange bitters. No base spirit, so it is low proof, and artichoke bitterness runs the whole length of it with the vermouth holding what sugar there is. The quarter ounce of lemon is the odd part, and it is what keeps the Cynar from going flat. Rocks with ice, lemon twist.
@@ -1461,6 +1547,7 @@ Stephen Cole made the Bitter Giuseppe at The Violet Hour in Chicago in 2007, whe
 - 1 1/2 oz Sherry
 - 3/4 oz Sweet vermouth
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe, Orange twist
 
 An ounce and a half of sherry to three-quarters of sweet vermouth, two fortified wines and nothing stronger, so it pours low. Two dashes of orange bitters. Stirred, coupe, orange twist. Nutty dry wine under the vermouth's grape and sugar, light enough to drink before dinner.
@@ -1478,6 +1565,7 @@ The Adonis is named for William Gill's Adonis, a musical burlesque that opened i
 - 1 1/2 oz Dry vermouth
 - 1 dash Maraschino liqueur
 - 2 dashes Orange bitters
+- Stir with ice until cold, then strain.
 - Coupe
 
 The Bamboo with maraschino in it: an ounce and a half each of amontillado and dry vermouth, a dash of maraschino, two dashes of orange bitters. Nutty, dry wine, with the maraschino's cherry and almond just showing and the orange bitters on the finish. Stirred, coupe, nothing on top. Low proof, dry, and fragrant.
@@ -1485,22 +1573,6 @@ The Bamboo with maraschino in it: an ounce and a half each of amontillado and dr
 Named for the coronation of Edward VII, set for June 1902 and put back to August by the King's appendix. It first prints in Charles Mahoney's 1905 Hoffman House Bartender's Guide, credited to Joseph Rose of Murry Bros. Cafe in Newark, New Jersey, where it had taken second prize in the Police Gazette bartenders' contest of 1903. Harry Craddock's 1930 Savoy Cocktail Book has it as half sherry, half French vermouth, a dash of maraschino, two dashes of orange bitters, shaken. This menu stirs it, since there is no juice in it: an ounce and a half each of sherry and dry vermouth, a dash of maraschino, two of orange bitters, coupe.
 
 - [Difford's Guide, Coronation Cocktail No. 1](https://www.diffordsguide.com/cocktails/recipe/470/coronation-cocktail-no1)
-
-### Fernet
-
-#### Fernet and Ginger
-
-`1,4,RLw` · stirred · Fernet · Highball family
-
-- 1 oz Fernet
-- 4 oz Ginger beer
-- Rocks, iced, Lime wheel
-
-One ounce of Fernet, four ounces of ginger beer, over ice. The ginger beer is the drink; the Fernet is mint and bitter through the spice. Lime squeezed in and dropped. A highball. It sits.
-
-Fernet and ginger beer is a bartender's highball, Fernet-Branca lengthened with ginger, a squeeze of lime. It does not appear under a fixed name in the pre-1970 manuals; it belongs to the Fernet-Branca cult that took hold in San Francisco bars in the 2000s and then everywhere else. Brett Adams and Jacob Grier print it in Raising the Bar (2022) as an ounce of Fernet and four of ginger beer, lime wedge in. This menu keeps that pour, rocks with ice.
-
-- [Punch, The Magic of Fernet-Branca Cocktails](https://punchdrink.com/articles/dark-magic-fernet-branca-hanky-panky-cocktail-recipe/)
 
 ## Shaken
 
@@ -1516,6 +1588,7 @@ Anything with juice, egg, or syrup carrying the drink. Hard shake, double strain
 - 1 oz Lime juice
 - 1/2 oz Demerara syrup
 - 2 dashes Angostura bitters
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of aged rum against a full ounce of lime and only a half ounce of demerara: tart, brown sugar, barrel. Two dashes of Angostura pull clove and bark through the lime. Coupe.
@@ -1532,6 +1605,7 @@ The Daiquiri is credited to Jennings Stockton Cox, an American mining engineer a
 - 3/4 oz Lime juice
 - 3/4 oz Honey syrup
 - 2 oz Champagne
+- Shake hard with ice, then strain.
 - Rocks, iced
 
 A rum sour of an ounce and a half of aged rum, three-quarters lime, three-quarters honey, then two ounces of Champagne over ice in a rocks glass. Honey is thicker and waxier than sugar, so the rum tastes darker than a Daiquiri. The bubbles and the melt are the lift.
@@ -1550,8 +1624,9 @@ The Air Mail first saw print in Bacardi and Its Many Uses, a 1930 pamphlet from 
 - 1 oz Lemon juice
 - 1/2 oz Simple syrup
 - 2 dashes Orange bitters
-- one Egg white
+- Egg white
 - 3 dashes Angostura bitters (on top)
+- Shake hard with ice, then strain.
 - Coupe, 3 dashes of bitters
 
 An ounce and a half of aged rum, a half of Benedictine, a full ounce of lemon, a half of simple: a rum sour with a herbal liqueur in the sugar slot. Egg white gives it a foam cap. Two dashes of orange bitters sit in the shake; three dashes of Angostura are dropped on the foam, clove and bark on the white. Coupe.
@@ -1568,8 +1643,9 @@ Tony Abou-Ganim built the Brass Rail as a nightcap for his cousin Helen David, w
 - 3/4 oz Lime juice
 - 1 oz Simple syrup
 - 2 dashes Angostura bitters
-- one Mint
+- Mint
 - 2 oz Champagne
+- Shake hard with ice, then strain.
 - Coupe, Mint
 
 An ounce and a half of aged rum, three-quarters of lime, a full ounce of simple, two dashes of Angostura, mint shaken in, then two ounces of Champagne. An ounce of syrup is a heavy pour of sugar, and the bitters and the bubbles are what hold it up. Shaking the mint takes the oil and leaves the leaf whole. Coupe, mint on top.
@@ -1585,6 +1661,7 @@ Audrey Saunders built the Old Cuban in 2001 and put it on at Bemelmans Bar in th
 - 2 oz Aged rum
 - 1 oz Crème de cacao
 - 3/4 oz Lime juice
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of aged rum, a full ounce of crème de cacao, three-quarters of lime. The chocolate is a real pour against the rum; the lime cuts it. Shaken, coupe. A Daiquiri with cacao in the sugar slot.
@@ -1603,6 +1680,7 @@ Esquire printed the Ace of Clubs in April 1939, as the house cocktail of a midto
 - 1 1/2 oz Apple brandy
 - 3/4 oz Lime juice
 - 3/4 oz Grenadine
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of apple brandy, three-quarters lime, three-quarters grenadine. Lime, so the sour is sharp and green. Equal grenadine means the drink is as pink as it is tart; the apple sits under pomegranate. Shaken. Coupe.
@@ -1620,7 +1698,8 @@ David Wondrich traces the Jack Rose to Frank Haas at Fred Eberlin's downtown New
 - 3/4 oz Apple brandy
 - 3/4 oz Lime juice
 - 1/2 oz Grenadine
-- one Egg white
+- Egg white
+- Shake hard with ice, then strain.
 - Coupe, Cherry
 
 Gin at an ounce and a half, then three-quarters of apple brandy and three-quarters of lime, a half ounce of grenadine, and egg white. The foam is the texture; the apple is a real pour. Lime and gin keep it sharp. Grenadine is color and a little pomegranate. Coupe, cherry.
@@ -1639,6 +1718,7 @@ The Pink Lady takes its name from Ivan Caryll's 1911 Broadway musical, starring 
 - 1 barspoon Orange liqueur
 - 1/2 oz Lemon juice
 - 1 dash Orange bitters
+- Shake hard with ice, then strain.
 - Rocks, iced, Orange twist
 
 An ounce and a quarter of apple brandy against a full ounce of Benedictine: herb almost even with orchard. A barspoon of orange liqueur and a dash of orange bitters are peel. Half an ounce of lemon lifts it. Rocks, ice, orange twist: it sits and the Benedictine warms.
@@ -1656,6 +1736,7 @@ Hugo R. Ensslin first prints the Honey Moon Cocktail in Recipes for Mixed Drinks
 - 3/4 oz Elderflower liqueur
 - 3/4 oz Orange liqueur
 - 3/4 oz Lemon juice
+- Shake hard with ice, then strain.
 - Coupe, Apple fan
 
 Four equal three-quarter-ounce pours: apple brandy, elderflower liqueur, orange liqueur, lemon. Nothing leads. The elderflower is floral honey against the orchard, and the orange liqueur is peel; the lemon is the whole sour. Coupe, apple garnish. It drinks as a Sidecar that split the cognac and the orange liqueur and put apple and elderflower in their place.
@@ -1673,6 +1754,7 @@ A drink called Southern Point does not appear in the pre-1970 manuals, nor under
 - 1 1/2 oz Cognac
 - 1 oz Orange liqueur
 - 3/4 oz Lemon juice
+- Shake hard with ice, then strain.
 - Coupe, Sugar rim
 
 An ounce and a half of cognac, a full ounce of orange liqueur, three-quarters lemon. The orange liqueur is heavier than the lemon, so the drink is peel and candy. Shaken, coupe, sugar rim.
@@ -1690,6 +1772,7 @@ Robert Vermeire prints the Sidecar in May 1922 in Cocktails How to Mix Them: equ
 - 1 oz Light rum
 - 1 oz Orange liqueur
 - 3/4 oz Lemon juice
+- Shake hard with ice, then strain.
 - Coupe, Lemon twist
 
 An ounce each of cognac, light rum, and orange liqueur, with three-quarters of lemon behind them. Three ounces of alcohol in a coupe, so it drinks hot, and a full third of that is the orange liqueur, carrying the sugar and most of the aroma. The rum sharpens the grape in the cognac; the lemon is what keeps it moving. Coupe, lemon twist.
@@ -1707,6 +1790,7 @@ The earliest documented printing is Frank Shay's 1929 Drawn From The Wood, where
 - 3/4 oz Lemon juice
 - 1/4 oz Simple syrup
 - 1 dash Angostura bitters
+- Shake hard with ice, then strain.
 - Coupe, Lemon twist
 
 An ounce and a half of cognac, half an ounce of Chartreuse, three-quarters of lemon, a quarter of simple, one dash of Angostura. Green is the Chartreuse this wants; the bar keeps green and yellow as brands of the one bottle, and green has the proof to hold up against brandy. A quarter ounce of sugar leaves the herbs and the lemon to do the talking. Coupe, lemon twist.
@@ -1722,6 +1806,7 @@ The earliest known recipe is in Drinks Long and Short, published in London in 19
 - 1 oz Cognac
 - 1 oz Crème de cacao
 - 1 oz Cream
+- Shake hard with ice, then strain.
 - Coupe
 
 Equal ounces of cognac, crème de cacao, and cream, so chocolate and dairy are two thirds of the drink. Shaken, coupe. Grape brandy, cocoa, and a short cream sour with no citrus.
@@ -1738,6 +1823,7 @@ The Alexander starts as a gin drink in Hugo Ensslin's 1916 Recipes for Mixed Dri
 - 2 oz Cognac
 - 2 oz Cream
 - 1/2 oz Simple syrup
+- Shake hard with ice, then strain.
 - Rocks, iced, Grated cinnamon
 
 Two ounces of cognac, two of cream, half an ounce of simple, shaken hard and poured over ice in a rocks glass. Cold, rich, and only a little sweet; the cream rounds the brandy and the grape and oak come through it. Grated cinnamon on top is the first thing you taste. The classic grate is nutmeg, and this shelf keeps cinnamon.
@@ -1757,6 +1843,7 @@ Milk punch is colonial: spirit, milk, sugar, and spice, drunk in Britain and Ame
 - 3/4 oz Lemon juice
 - 1/2 oz Demerara syrup
 - 3 dashes Orange bitters
+- Shake hard with ice, then strain.
 - Coupe, Orange twist
 
 Two ounces of bourbon, three-quarters lemon, half an ounce of demerara, three dashes of orange bitters. The lemon is a full sour; orange bitters are peel over the brown sugar. Shaken, coupe, orange twist.
@@ -1772,6 +1859,7 @@ The Buster Brown prints in the 1933 Mixer's Guide as a whiskey cocktail: a teasp
 - 2 oz Bourbon
 - 3/4 oz Lemon juice
 - 3/4 oz Honey syrup
+- Shake hard with ice, then strain.
 - Rocks, iced
 
 Two ounces of bourbon, three-quarters lemon, three-quarters honey syrup. Honey is thick and floral against the lemon. Shaken, rocks with ice. Bourbon, citrus, and a brown pour that sits.
@@ -1788,7 +1876,8 @@ T.J. Siegal, a childhood friend of Sasha Petraske, asked for honey syrup in his 
 - 2 oz Bourbon
 - 3/4 oz Lemon juice
 - 1/2 oz Demerara syrup
-- one Egg white
+- Egg white
+- Shake hard with ice, then strain.
 - Rocks, iced, Cherry, Lemon twist
 
 Two ounces of bourbon, three-quarters lemon, half an ounce of demerara, egg white. The foam is the texture; demerara is brown sugar under the lemon. Shaken, rocks with ice, cherry and lemon. A short sour with a dry cap.
@@ -1805,6 +1894,7 @@ A whisky sour is named as early as 1826, and Jerry Thomas prints sours in 1862. 
 - 1 oz Lime juice
 - 1/2 oz Simple syrup
 - 2 dashes Angostura bitters
+- Shake hard with ice, then strain.
 - Coupe, Mint
 
 Two ounces of bourbon, a full ounce of lime, half an ounce of simple, two dashes of Angostura. Lime, so the sour is sharp and green; the sugar is thin against that ounce of juice. Shaken, coupe, mint. Clove on the lime.
@@ -1821,6 +1911,7 @@ Lauren Schell built the Expat at Little Branch in Manhattan in 2009. She did not
 - 3/4 oz Lemon juice
 - 1/4 oz Orange liqueur
 - 1 barspoon Simple syrup
+- Shake hard with ice, then strain.
 - Rocks, iced
 
 Two ounces of bourbon, three-quarters lemon, a quarter of orange liqueur, one barspoon of simple. The orange liqueur is peel in the sugar slot. Shaken, rocks with ice. A short sour that sits.
@@ -1837,6 +1928,7 @@ Jerry Thomas prints the Daisy in the 1876 Bar-Tender's Guide as a sour sweetened
 - 3/4 oz Orange liqueur
 - 1/2 oz Sweet vermouth
 - 1/2 oz Lemon juice
+- Shake hard with ice, then strain.
 - Coupe, Lemon twist
 
 Two ounces of bourbon, three-quarters orange liqueur, half an ounce each of sweet vermouth and lemon. The orange liqueur is heavier than the lemon, so peel leads. Shaken, coupe, lemon twist. A Manhattan sour: grape, whiskey, and candy citrus.
@@ -1854,7 +1946,8 @@ The drink is named for the thoroughbred who won 20 of 21 races in 1919 and 1920,
 - 1/2 oz Dry vermouth
 - 1/2 oz Lemon juice
 - 1/4 oz Honey syrup
-- one Egg white
+- Egg white
+- Shake hard with ice, then strain.
 - Rocks, iced, Orange twist
 
 An ounce and a half of bourbon, three-quarters elderflower, half an ounce each of dry vermouth and lemon, a quarter of honey, egg white. The foam carries the flower; dry vermouth keeps it lean. Shaken, rocks with ice, orange twist. Bourbon under elderflower.
@@ -1871,6 +1964,7 @@ A drink called Little Honey does not appear in the pre-1970 manuals, nor under t
 - 2 oz Bourbon
 - 1 oz Grapefruit juice
 - 1/2 oz Honey syrup
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of bourbon, a full ounce of grapefruit, half an ounce of honey syrup. Grapefruit is a third of the glass, so pith and a low bitterness arrive before the corn does. Honey is heavier than sugar and sits under the juice rather than dissolving through it. Shaken, coupe, no ice.
@@ -1891,6 +1985,7 @@ The formula is older than the name. Judge Jr. printed it in Here's How in 1927 a
 - 1/2 oz Grenadine
 - 1/2 oz Lemon juice
 - 1 dash Orange bitters
+- Shake hard with ice, then strain.
 - Coupe, Orange twist
 
 Equal ounces of rye and dry vermouth, so the wine is half the drink. Half an ounce of grenadine, half of lemon, one dash of orange bitters. Shaken, coupe, orange twist. The rye is spice, the grenadine pomegranate, the lemon a sour cut through the dry vermouth.
@@ -1907,7 +2002,8 @@ Delcevare King, a Massachusetts teetotaler, ran a 1924 contest for a word to sha
 - 1 oz Apple brandy
 - 3/4 oz Lemon juice
 - 1/2 oz Simple syrup
-- one Egg white
+- Egg white
+- Shake hard with ice, then strain.
 - Coupe, Grated cinnamon
 
 Equal ounces of rye and apple brandy. Three-quarters of an ounce of lemon, half an ounce of simple, egg white. The foam is the texture; grated cinnamon on the coupe is the spice. Orchard, pepper, lemon, and a dry foam.
@@ -1925,6 +2021,7 @@ The Harvest Sour is Sam Ross at Attaboy in New York, printed by Punch and dated 
 - 3/4 oz Chartreuse
 - 3/4 oz Maraschino liqueur
 - 3/4 oz Lemon juice
+- Shake hard with ice, then strain.
 - Coupe
 
 Equal three-quarters of rye, green Chartreuse, maraschino, and lemon. The Last Word on whiskey: herbal, cherry, and lemon against rye pepper. Shaken, coupe.
@@ -1941,6 +2038,7 @@ Phil Ward built the Final Ward at Death & Co in New York in 2007, a Last Word wi
 - 2 oz Rye
 - 1 oz Grapefruit juice
 - 1/2 oz Grenadine
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of rye, an ounce of grapefruit, half an ounce of grenadine. The grapefruit is sour and bitter where lemon would be only sour, and the grenadine's pomegranate sits under it as the sugar. Rye spice on top, a pink colour. Shaken, coupe. Drier than it looks.
@@ -1960,6 +2058,7 @@ Patrick Gavin Duffy prints it in 1934 in The Official Mixer's Manual as a long d
 - 1/2 oz Sweet vermouth
 - 1/2 oz Grenadine
 - 1/2 oz Lemon juice
+- Shake hard with ice, then strain.
 - Coupe, Cherry
 
 An ounce and a half of scotch, then a half ounce each of sweet vermouth, grenadine, and lemon. The lemon and pomegranate are real pours, not dashes, so the drink is shaken and pink. Coupe, cherry. Scotch, grape, and a sour pomegranate cut.
@@ -1977,6 +2076,7 @@ Harry Craddock prints the Mickie Walker Cocktail in The Savoy Cocktail Book in 1
 - 2 oz Light rum
 - 3/4 oz Lime juice
 - 1/2 oz Simple syrup
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of light rum, three-quarters lime, half an ounce of simple. Lime leads; the sugar is only there to keep the rum from going thin. Shaken hard and strained into a coupe, no ice in the glass, no blender. Cane and pith, cold.
@@ -1993,6 +2093,7 @@ Jennings Stockton Cox, an American mining engineer at the Daiquiri iron mines ne
 - 2 oz Light rum
 - 3/4 oz Lime juice
 - 3/4 oz Honey syrup
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of light rum, three-quarters lime, three-quarters honey syrup. Equal lime and honey, so the sour sits on beeswax rather than cane. Honey is thicker than simple; the rum tastes rounder than the Daiquiri beside it, and a little floral. Coupe.
@@ -2009,6 +2110,7 @@ David Embury, in The Fine Art of Mixing Drinks (1948), writes that a Bee's Knees
 - 2 oz Light rum
 - 3/4 oz Lime juice
 - 1/2 oz Grenadine
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of light rum, three-quarters lime, half an ounce of grenadine. Same bones as the Daiquiri, pomegranate in the sugar slot. Pink, tart, a little berry where the other is only cane. Shaken, coupe.
@@ -2027,6 +2129,7 @@ Harry Craddock prints the Santiago Cocktail in the 1930 Savoy Cocktail Book: two
 - 3/4 oz Lime juice
 - 1/2 oz Grenadine
 - 1 dash Angostura bitters
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of light rum and three-quarters gin, so the rum leads and the gin is botanicals underneath. Three-quarters lime, half an ounce of grenadine, one dash of Angostura. Pink, bark through the pomegranate. Shaken, coupe.
@@ -2042,6 +2145,7 @@ A drink called Stan Lee does not appear in the pre-1970 manuals, nor under that 
 - 1 1/4 oz Light rum
 - 1 1/4 oz Bénédictine
 - 3/4 oz Lemon juice
+- Shake hard with ice, then strain.
 - Rocks, iced
 
 Equal ounces and a quarter of light rum and Benedictine, three-quarters lemon. The liqueur is honey and spice, the lemon a sour cut, the rum a cane floor. Rocks glass with ice: it sits and dilutes. Herbal punch, not a coupe sour.
@@ -2059,6 +2163,7 @@ Jeff Berry and Annene Kaye print the Lani-Honi in Beachbum Berry's Grog Log. It 
 - 3/4 oz Lime juice
 - 1/2 oz Simple syrup
 - 1 barspoon Campari
+- Shake hard with ice, then strain.
 - Coupe
 
 The Daiquiri's two ounces of light rum and three-quarters lime, with only a half ounce of simple, then a barspoon of Campari. The Campari is a bitter orange film, not a pour. Pink at the rim, dry at the back. Coupe.
@@ -2075,6 +2180,7 @@ John Lermayer mixed The Rum Drink at Sweet Liberty in Miami Beach; Eater printed
 - 1 1/2 oz Light rum
 - 1/2 oz Maraschino liqueur
 - 1/2 oz Lemon juice
+- Shake hard with ice, then strain.
 - Coupe, Cherry
 
 An ounce and a half of light rum, half an ounce of maraschino, half an ounce of lemon. Cherry stone and almond against the lemon, rum underneath. Coupe, cherry. Maraschino is half the sour; it is not a dash.
@@ -2093,6 +2199,7 @@ Harry Craddock invented the King's Jubilee in 1935 for the Silver Jubilee of Kin
 - 1/2 oz Cognac
 - 1/2 oz Grenadine
 - 1/2 oz Lemon juice
+- Shake hard with ice, then strain.
 - Coupe
 
 One ounce of light rum, then half ounces of rye, cognac, grenadine, and lemon. Three spirits, rum first. The grenadine is pomegranate, the lemon the sour, the rye and cognac spice and grape under the cane. Shaken, coupe.
@@ -2109,6 +2216,7 @@ Ted Haigh, in Vintage Spirits and Forgotten Cocktails, credits the Twelve Mile L
 - 2 oz Light rum
 - 3/4 oz Elderflower liqueur
 - 1 oz Lime juice
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of light rum, three-quarters elderflower liqueur, a full ounce of lime. No simple: the liqueur is the sugar. Lime is a third of the drink, so it reads tart, then floral. Coupe.
@@ -2126,6 +2234,7 @@ The parent is the Daiquiri, rum, lime, and sugar, in print from Jacques Straub's
 - 1/2 oz Maraschino liqueur
 - 1/2 oz Grapefruit juice
 - 3/4 oz Lime juice
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of light rum, half an ounce of maraschino, half of grapefruit, three-quarters of lime. The maraschino is all the sugar there is, so it runs dry, with cherry pit sitting under the citrus. Grapefruit puts pith and a slow bitterness on top of the lime's acid. Shaken hard and strained into a coupe.
@@ -2143,6 +2252,7 @@ Constantino Ribalaigua Vert, head bartender at El Floridita in Havana, mixed thi
 - 2 oz Cachaça
 - 3 barspoons Sugar
 - 1 1/2 oz Lime juice
+- Shake hard with ice, then strain.
 - Rocks, iced
 
 Two ounces of cachaça, three barspoons of sugar, an ounce and a half of lime, muddled and dumped with the ice. The lime is juice and hull. Grassy cane, pith, and sugar. Rocks with ice. It sits.
@@ -2161,6 +2271,7 @@ The Caipirinha is Brazil's national cocktail: cachaça, lime, and sugar, muddled
 - 3/4 oz Lemon juice
 - 1/2 oz Grapefruit juice
 - 1/2 oz Peychaud's bitters
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of cachaça, a full ounce of honey syrup, three-quarters lemon, half an ounce of grapefruit. Half an ounce of Peychaud's is a pour, not a dash, so anise and cherry run through the sour. Shaken, coupe. Cane, honey, and a lot of bitters.
@@ -2178,6 +2289,7 @@ Brett Adams and Jacob Grier print Pey-Lé in Raising the Bar (2022): an ounce an
 - 2 oz Tequila
 - 3/4 oz Orange liqueur
 - 3/4 oz Lime juice
+- Shake hard with ice, then strain.
 - Coupe, Salt rim
 
 Two ounces of tequila against three-quarters each of orange liqueur and lime. The tequila is the drink; the orange and lime are equal and small, peel and acid around agave. Shaken, coupe, salt rim. Short, no ice in the glass.
@@ -2195,6 +2307,7 @@ The origin is a pile of claims. William J. Tarling prints the same three ingredi
 - 3/4 oz Grenadine
 - 3/4 oz Lime juice
 - 2 dashes Angostura bitters
+- Shake hard with ice, then strain.
 - Coupe, Cherry
 
 Two ounces of tequila, three-quarters grenadine, three-quarters lime. Equal pomegranate and lime, a pink tequila sour. Two dashes of Angostura pull clove through the fruit. Shaken, coupe, cherry. Short.
@@ -2211,6 +2324,7 @@ Charles H. Baker records the Mexican Firing Squad Special in The Gentleman's Com
 - 1 oz Sweet vermouth
 - 1/2 oz Orange liqueur
 - 1/2 oz Lime juice
+- Shake hard with ice, then strain.
 - Rocks, iced, Cherry
 
 An ounce and a half of tequila against a full ounce of sweet vermouth, so the wine is a second base. Half an ounce of orange liqueur and half of lime are the Margarita's other two, cut down. Shaken, rocks, ice, cherry. A tequila Manhattan that took a lime.
@@ -2227,8 +2341,9 @@ A drink called Vermouth-arita does not appear in the pre-1970 manuals, nor under
 - 3/4 oz Honey syrup
 - 1/2 oz Lime juice
 - 1/2 oz Lemon juice
-- one Egg white
+- Egg white
 - 3 dashes Peychaud's bitters (on top)
+- Shake hard with ice, then strain.
 - Coupe, 3 dashes of bitters
 
 Two ounces of tequila, three-quarters honey syrup, half lime, half lemon. The citrus is split, so neither fruit wins; the honey is waxier than sugar. Egg white gives it a foam cap. Three dashes of Peychaud's are dropped on the foam, cherry-anise on the white. Coupe.
@@ -2246,6 +2361,7 @@ The Bee's Knees is a gin sour with honey, first printed in Paris around 1929. Fr
 - 2 oz Mezcal
 - 3/4 oz Orange liqueur
 - 3/4 oz Lime juice
+- Shake hard with ice, then strain.
 - Rocks, Salt rim
 
 Two ounces of mezcal against three-quarters each of orange liqueur and lime. The mezcal is the drink; the orange and lime are equal and small, peel and acid around smoke. Shaken, rocks, no ice, salt rim. Short, same pour as the Margarita, different bottle.
@@ -2262,7 +2378,8 @@ The Margarita's three ingredients take mezcal as readily as tequila. Difford's a
 - 2 oz Mezcal
 - 3/4 oz Lime juice
 - 1/2 oz Honey syrup
-- one Egg white
+- Egg white
+- Shake hard with ice, then strain.
 - Rocks, iced, Lemon twist
 
 Two ounces of mezcal, three-quarters of lime, a half ounce of honey syrup, egg white. The foam carries the smoke up first, then the lime arrives, and the honey sits under all of it. Shaken, rocks with ice, lemon twist. The house sour ratio with mezcal in the whiskey's place.
@@ -2282,6 +2399,7 @@ The sour is the older shape: spirit, citrus, and sugar, printed by Jerry Thomas 
 - 3/4 oz Orange liqueur
 - 1 oz Lemon juice
 - 1 barspoon Simple syrup
+- Shake hard with ice, then strain.
 - Coupe, Sugar rim
 
 Two ounces of vodka, three-quarters orange liqueur, a full ounce of lemon, one barspoon of simple. The lemon is louder than the orange liqueur; a barspoon of sugar barely covers an ounce of juice. Shaken, coupe, sugar rim. Candy, then pith.
@@ -2297,6 +2415,7 @@ Norman Hobday, who ran Henry Africa's in San Francisco, the fern bar that opened
 - 1 1/2 oz Vodka
 - 3/4 oz Apricot liqueur
 - 1/2 oz Lime juice
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of vodka, three-quarters apricot liqueur, half an ounce of lime. Stone fruit and lime; the apricot sweetens the sour by itself. Shaken, coupe. Short, tart apricot.
@@ -2314,6 +2433,7 @@ David Embury prints a Katinka in The Fine Art of Mixing Drinks (1948): vodka, ap
 - 3/4 oz Lemon juice
 - 1/4 oz Honey syrup
 - 1 oz Champagne
+- Shake hard with ice, then strain.
 - Coupe, Lemon twist
 
 Three-quarters each of vodka, elderflower, and lemon, a quarter of honey, an ounce of Champagne. The Champagne is the volume. Shaken, then the wine, coupe, lemon twist. Flower, honey, bubbles, a small drink that foams from the fizz.
@@ -2330,6 +2450,7 @@ Charles H. Baker prints a Queen Bee in 1951 The South American Gentleman's Compa
 - 1 oz Vodka
 - 1 oz Orange liqueur
 - 1 oz Lime juice
+- Shake hard with ice, then strain.
 - Coupe, Lime twist
 
 An ounce each of vodka, orange liqueur, and lime. A third of the glass is lime juice, so it lands sour first and orange second, and the vodka is there to carry both. Three ounces in a coupe rather than the shot glass it usually arrives in, which gives it room to read as a drink. Lime twist.
@@ -2345,6 +2466,7 @@ Two accounts, a decade apart. Peter Miller, writing in Ski in October 1979, put 
 - 2 oz Vodka
 - 3/4 oz Lime juice
 - 1/2 oz Simple syrup
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of vodka to three-quarters of lime and a half ounce of simple, the Gimlet's pour exactly. The lime is the flavor and the vodka is the cold and the length behind it. Shaken, coupe. Tart, thinly sweetened, short.
@@ -2363,6 +2485,7 @@ The Gimlet was gin and Rose's lime cordial, a navy drink that Harry MacElhone pr
 - 2 oz Gin
 - 3/4 oz Lime juice
 - 1/2 oz Simple syrup
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of gin against three-quarters of lime, so the lime is loud, then a half ounce of simple. Shaken, coupe. The lime is fresh and tart; the syrup is a thin coat of sugar, enough to take the edge. Juniper under citrus.
@@ -2380,6 +2503,7 @@ Lauchlan Rose of Edinburgh patented an alcohol-free lime cordial in 1867, the sa
 - 1 oz Lemon juice
 - 1/2 oz Simple syrup
 - 3 oz Champagne
+- Shake hard with ice, then strain.
 - Rocks, iced, Lemon twist
 
 An ounce and a half of gin against a full ounce of lemon, so the citrus is a real pour, then a half ounce of simple and three ounces of Champagne. Shaken, then the wine. Rocks with ice and a lemon twist, not a flute. The lemon stays loud over the bubbles; the cube melts into it.
@@ -2397,6 +2521,7 @@ The name is the French 75-millimetre field gun of the First World War. The first
 - 3/4 oz Lime juice
 - 1/2 oz Simple syrup
 - 2 dashes Angostura bitters
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of gin against three-quarters of lime, a half ounce of simple, two dashes of Angostura. The bitters are bark and clove under the lime. Shaken, coupe. Lime, juniper, and a bitter finish. A Gimlet with spice, not honey.
@@ -2412,7 +2537,8 @@ Robert Vermeire prints the Bennett in 1922 Cocktails: How to Mix Them: two-sixth
 - 2 oz Gin
 - 3/4 oz Lemon juice
 - 1/2 oz Simple syrup
-- one Egg white
+- Egg white
+- Shake hard with ice, then strain.
 - Rocks, iced, Lemon twist
 
 Two ounces of gin, three-quarters of lemon, a half ounce of simple, and egg white. The white is foam and a silk coat; the lemon is tart underneath. Shaken, rocks with ice, lemon twist. It sits: gin, citrus, and a head that lasts while the cube melts.
@@ -2429,6 +2555,7 @@ Jerry Thomas prints the Gin Sour in 1862 How to Mix Drinks as the Gin Fix withou
 - 2 oz Gin
 - 3/4 oz Lemon juice
 - 3/4 oz Honey syrup
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of gin, three-quarters of lemon, three-quarters of honey syrup, so the honey is a full partner to the citrus. Shaken, coupe. The honey is floral and thick where simple would be thin; the lemon keeps it tart. Gin, pith, and a coat of honey.
@@ -2447,6 +2574,7 @@ The Bee's Knees first prints in 1929, twice. Cocktails de Paris credits Frank Me
 - 1/2 oz Lime juice
 - 1 dash Angostura bitters
 - 1 dash Orange bitters
+- Shake hard with ice, then strain.
 - Coupe
 
 One and three-quarters ounces of gin against three-quarters of orange liqueur and only a half ounce of lime, so the lime is a squeeze under the peel. One dash of Angostura and one of orange bitters sit on the orange, bark and pith over a small lime. Shaken, coupe. Gin, candied orange, and a thin lime line.
@@ -2465,7 +2593,8 @@ The Pegu Club was the house cocktail of the British officers' club of the same n
 - 3/4 oz Orange liqueur
 - 3/4 oz Lemon juice
 - 1 barspoon Simple syrup
-- one Egg white
+- Egg white
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of gin, three-quarters each of orange liqueur and lemon, a barspoon of simple, and egg white. The white is foam and a silk coat over lemon pith and candied peel. The barspoon of simple is a thin sweetness against equal orange and lemon. Shaken, coupe.
@@ -2485,6 +2614,7 @@ Two drinks share the name. Harry MacElhone prints a White Lady in 1922 in Harry'
 - 3/4 oz Lemon juice
 - 1 barspoon Simple syrup
 - 2 dashes Angostura bitters
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of gin, three-quarters orange liqueur, three-quarters lemon, a barspoon of simple. Two dashes of Angostura pull bark and clove through the orange. Shaken, coupe. Peel, pith, and a little clove on the gin.
@@ -2502,6 +2632,7 @@ The Fine and Dandy prints in Harry Craddock's 1930 Savoy Cocktail Book: a quarte
 - 3/4 oz Lemon juice
 - 1/4 oz Campari
 - 1/4 oz Orange liqueur
+- Shake hard with ice, then strain.
 - Coupe, Lemon twist
 
 An ounce and a half of gin against three-quarters of lemon; a quarter each of Campari and orange liqueur. The Campari is bitter orange in a sour, so the drink reads pink and like grapefruit. Shaken, coupe, lemon twist. Gin, pith, and a thin bitter film.
@@ -2518,6 +2649,7 @@ Paul Harrington mixed the first Jasmine in 1993 at Townhouse Bar and Grill in Em
 - 1 1/2 oz Gin
 - 1/2 oz Maraschino liqueur
 - 1/2 oz Lime juice
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of gin, half an ounce of maraschino, half an ounce of lime. The cherry liqueur is almond and pit as much as fruit, and it does all the sweetening. Equal maraschino and lime, so neither wins. Shaken, coupe. Gin, cherry stone, and a tart lime line.
@@ -2534,6 +2666,7 @@ Diane Lapis and Anne Peck-Davis print a Rendezvous Cocktail in Cocktails Across 
 - 1 oz Apricot liqueur
 - 3/4 oz Lime juice
 - 2 dashes Peychaud's bitters
+- Shake hard with ice, then strain.
 - Coupe, Lime wheel
 
 Two ounces of gin against a full ounce of apricot liqueur, so the stone fruit is a third of the drink. Three-quarters lime is tart against the apricot; two dashes of Peychaud's pull cherry and anise through it. Shaken, coupe, lemon twist and a wheel. Pink, lime, and apricot.
@@ -2552,6 +2685,7 @@ The Pendennis Club in Louisville, founded in 1881, gives the drink its name. Two
 - 1/4 oz Campari
 - 1/2 oz Lemon juice
 - 1 barspoon Simple syrup
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of gin, three-quarters elderflower, a quarter of Campari, half an ounce of lemon, a barspoon of simple. The elderflower is the sweet; Campari is a bitter pink film. Shaken, coupe. Floral gin, lemon pith, and a thin bitter edge.
@@ -2565,6 +2699,7 @@ No first printing or named bartender turned up for the Hat Tip. Elderflower liqu
 - 1 oz Gin
 - 1 oz Dry vermouth
 - 1/2 oz Elderflower liqueur
+- Shake hard with ice, then strain.
 - Coupe, Olive
 
 Equal ounces of gin and dry vermouth, a fifty-fifty Martini, with a half ounce of elderflower as the sweet. No juice, no bitters. Shaken, so it clouds a little. Coupe, olive. Floral gin, dry wine, and a brine finish.
@@ -2581,7 +2716,8 @@ Harry Craddock's 1930 Savoy Cocktail Book prints an Olivette Cocktail of Plymout
 - 2 oz Gin
 - 3/4 oz Lime juice
 - 3/4 oz Simple syrup
-- one Mint
+- Mint
+- Shake hard with ice, then strain.
 - Coupe, Mint
 
 Two ounces of gin, three-quarters of lime, three-quarters of simple, mint shaken in with them. Lime and sugar are matched at three-quarters each, so it runs sweeter than a Gimlet, and the mint oil sits over the juniper rather than under it. Double strained into a coupe with no soda, mint on top.
@@ -2598,6 +2734,7 @@ The drink comes off the Mint Julep at Snedecor's Tavern on Long Island in the 18
 - 1 oz Gin
 - 1 oz Crème de cacao
 - 1 oz Cream
+- Shake hard with ice, then strain.
 - Coupe
 
 Equal ounces of gin, crème de cacao, and cream. The gin is the drink the Brandy Alexander forgot. Shaken, coupe. Juniper, cocoa, and cream.
@@ -2613,6 +2750,7 @@ Hugo R. Ensslin prints the Alexander in Recipes for Mixed Drinks (1916): equal g
 - 1 oz Campari
 - 1 oz Crème de cacao
 - 1 oz Cream
+- Shake hard with ice, then strain.
 - Coupe
 
 Equal ounces of Campari, crème de cacao, and cream. No base spirit. Bitter orange and chocolate under cream. Shaken, coupe. Pink, cocoa, and a bitter finish.
@@ -2629,6 +2767,7 @@ Brett Adams and Jacob Grier print the Campari Alexander in Raising the Bar (2022
 - 3/4 oz Chartreuse
 - 3/4 oz Maraschino liqueur
 - 3/4 oz Lime juice
+- Shake hard with ice, then strain.
 - Coupe, Cherry
 
 Equal three-quarters of gin, green Chartreuse, maraschino, and lime. Each is a quarter of the drink. Herbal, cherry, and lime around the gin. Shaken, coupe, cherry.
@@ -2646,6 +2785,7 @@ The Last Word is credited to the Detroit Athletic Club around 1915, and to Frank
 - 3/4 oz Scotch
 - 3/4 oz Crème de cacao
 - 3/4 oz Cream
+- Shake hard with ice, then strain.
 - Coupe
 
 Three-quarters each of gin, Scotch, white crème de cacao, and cream, so the two spirits are half the glass and the cream is a quarter of it. Shaken, coupe. Chocolate and smoke over a thin cream body, with juniper coming up behind the whisky.
@@ -2663,6 +2803,7 @@ The Barbary Coast is a Prohibition-era drink with no known author. Harry Craddoc
 - 1 oz Lemon juice
 - 1/2 oz Simple syrup
 - top with Soda water
+- Shake hard with ice, then strain.
 - Highball
 
 The Collins pour, shaken hard first and served tall with no ice in the glass: two ounces of gin, an ounce of lemon, half an ounce of simple, then soda. The shake beats air into the lemon, so there is a foam head over a short cold body. Drink it while the fizz is still on it.
@@ -2681,6 +2822,7 @@ Jerry Thomas prints the Gin Fizz in the 1876 edition of his Bar-tenders Guide, a
 - 1 1/2 oz Dry vermouth
 - 3/4 oz Bénédictine
 - 3/4 oz Lime juice
+- Shake hard with ice, then strain.
 - Coupe
 
 An ounce and a half of dry vermouth, three-quarters of Bénédictine, three-quarters of lime. No base spirit. The liqueur is honey and herbs; the lime matches it, so the drink is tart as well as sweet. Shaken, coupe. Vermouth and Bénédictine, then pith.
@@ -2697,7 +2839,8 @@ Queen Elizabeth is a crowded name. The version here is the vermouth one: dry ver
 - 2 oz Dry vermouth
 - 3/4 oz Lemon juice
 - 1/2 oz Simple syrup
-- one Egg white
+- Egg white
+- Shake hard with ice, then strain.
 - Coupe
 
 Two ounces of dry vermouth, three-quarters lemon, half an ounce of simple, egg white. The foam is the texture; the vermouth is the spirit, so the sour is grape and lemon under a dry foam. Shaken, coupe. A short sour with a dry cap.
@@ -2713,6 +2856,7 @@ A drink called Dry Vermouth Sour does not appear under that name in the pre-1970
 
 - 3 oz Sherry
 - 2 barspoons Sugar
+- Shake hard with ice, then strain.
 - Highball, iced, Orange twist, Mint
 
 Three ounces of amontillado and two barspoons of sugar, shaken until the sugar is gone, then poured over a highball packed with ice. Nutty, dry sherry with just enough sugar to taste like fruit, and very cold. The orange goes in over the top and the mint sits under your nose. Low proof and made for a hot afternoon.
@@ -2735,6 +2879,7 @@ Made in the glass it is served in. Ice, spirit, then the mixer on top; one lift 
 - 2 oz Aged rum
 - 1/2 oz Lime juice
 - top with Ginger beer
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lime wheel
 
 Two ounces of aged rum, half an ounce of lime, and ginger beer over ice. Molasses against ginger heat, with lime cutting across both. Rounder and darker than the same build in vodka, and a lime wheel on the rim.
@@ -2754,6 +2899,7 @@ Bermuda's national drink, and nobody knows who first poured it. The story is Bri
 - 3 dashes Angostura bitters
 - 1/2 oz Cognac
 - top with Champagne
+- Build in the glass with no ice, then top.
 - Highball, Lemon twist
 
 A barspoon of sugar soaked with three dashes of Angostura, half an ounce of cognac, then Champagne poured on top. The sugar is there for the bead as much as the sweetness; it dissolves slowly and keeps a stream of bubbles rising off it. Bitters give it clove and bark, the cognac gives it weight, and the wine stays dry under a lemon twist.
@@ -2770,6 +2916,7 @@ Robert Tomes describes one in Panama in 1855, made with Mumm, bitters, sugar, an
 
 - 2 oz Bourbon
 - top with Soda water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lemon twist
 
 Two ounces of bourbon and soda over ice, with a lemon twist. Water and gas open the whiskey out, so corn and barrel come forward and the vanilla rides up on the bubbles. The twist puts oil on the surface, so the first sip is citrus over sweet grain.
@@ -2785,7 +2932,8 @@ The word turns up in the 1890s. A character asks for a high ball of whiskey in H
 
 - 2 oz Bourbon
 - 1/4 oz Simple syrup
-- one Mint
+- Mint
+- Build in the glass over ice, then lift once with a barspoon.
 - Rocks, iced, Mint
 
 Two ounces of bourbon and a quarter ounce of simple over ice, with mint muddled into the glass. A quarter of syrup against a full pour of whiskey is a light hand, so the drink is bourbon and mint oil, cold. It frosts the glass while it sits and it keeps diluting as it goes.
@@ -2802,6 +2950,7 @@ The word comes through the Arabic julab, rosewater, and the drink through Persia
 - 2 oz Bourbon
 - 1/2 oz Lime juice
 - top with Ginger beer
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lime wheel
 
 Two ounces of bourbon, half an ounce of lime, and ginger beer over ice. Ginger sits on the corn sweetness and the whiskey still reads through the heat. Lime keeps it from going syrupy.
@@ -2819,6 +2968,7 @@ The Mule became a template the moment the Moscow Mule sold vodka: spirit, lime, 
 - 7 dashes Angostura bitters
 - 7 dashes Peychaud's bitters
 - top with Champagne
+- Build in the glass with no ice, then top.
 - Highball, Orange twist
 
 An ounce of bourbon, half an ounce of orange liqueur, then seven dashes each of Angostura and Peychaud's, which is enough bitters to colour the glass and to run the drink. Champagne on top, an orange twist over that. Spiced orange over whiskey, dry at the finish.
@@ -2835,6 +2985,7 @@ Adam Seger created this at the Seelbach Hilton in Louisville in 1995, then inven
 
 - 2 oz Scotch
 - top with Soda water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced
 
 Two ounces of Scotch and soda to the top of an iced glass. Whisky, water, and gas, so what you taste is the bottle you bought, pulled open: smoke and cereal where the neat pour was tight. Long and cold, and it stays that way.
@@ -2853,8 +3004,9 @@ Patrick Gavin Duffy claimed in his 1934 The Official Mixer's Guide that he broug
 - 2 oz Light rum
 - 3/4 oz Lime juice
 - 1/2 oz Simple syrup
-- one Mint
+- Mint
 - top with Soda water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Mint
 
 Two ounces of light rum, three-quarters of lime, half an ounce of simple, mint muddled into the glass, then soda over ice. Bruised mint gives oil; shredded mint gives green. Cane, lime, and cold air. A sprig on top, slapped once to wake it up.
@@ -2874,6 +3026,7 @@ The ancestor is the Draque, cane spirit with lime, sugar, and mint, which Cubans
 - 1/2 oz Lime juice
 - 1/2 oz Simple syrup
 - top with Soda water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Salt rim
 
 Two ounces of tequila, a full ounce of grapefruit, half an ounce each of lime and simple, then soda over ice. Building the grapefruit half out of juice, syrup, and plain soda leaves the agave in front; a grapefruit soda would sit over it. Salt on the rim pulls the bitter edge off the grapefruit.
@@ -2892,6 +3045,7 @@ The paper trail starts with a 1950 brochure for Squirt, an American grapefruit s
 - 2 oz Mezcal
 - 1/2 oz Lime juice
 - top with Ginger beer
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lime wheel
 
 Two ounces of mezcal, half an ounce of lime, and ginger beer over ice. Smoke and ginger are both loud and they hold each other up; the lime keeps the middle clean. Agave all the way down, under a lime wheel.
@@ -2909,6 +3063,7 @@ The Mule template took a Mexican spirit early. Difford's files the tequila versi
 - 2 oz Vodka
 - 1/2 oz Lime juice
 - top with Ginger beer
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lime wheel
 
 Two ounces of vodka, half an ounce of lime, and ginger beer over ice. Ginger and lime carry it, with the vodka as weight underneath, so the drink gets sharper the hotter the ginger beer is. Lime wheel.
@@ -2924,6 +3079,7 @@ The usual story puts it at the Cock 'n Bull in Los Angeles in 1941, where John G
 
 - 2 oz Vodka
 - top with Soda water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lime wheel
 
 Two ounces of vodka and soda over ice. It drinks like cold water with weight in it and a mineral edge off the bubbles. The bottle you poured is all the flavour there is, and a lime wheel is all the seasoning.
@@ -2938,6 +3094,7 @@ Nobody invented this one. It is the highball template with vodka in the spirit s
 
 - 2 oz Vodka
 - top with Tonic water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lime wheel
 
 Two ounces of vodka, then tonic to the top of an iced highball. With no juniper in the way the drink is the tonic itself: quinine bitter, a little sweet, cold and long. The lime wheel is a squeeze of oil and acid on the way in, and it is most of what you smell.
@@ -2952,6 +3109,7 @@ Vodka came up in America in the 1940s and 1950s on the back of the Moscow Mule a
 
 - 2 oz Vodka
 - 4 oz Grapefruit juice
+- Build in the glass over ice, then lift once with a barspoon.
 - Rocks, iced, Salt rim
 
 Two ounces of vodka and four of fresh grapefruit juice, built over ice in a rocks glass with a salt rim. Grapefruit is bitter and sour at once, and the salt on the rim takes the bitter edge down so the fruit reads sweeter than it is. Cold, tart, and salty at the lip. Without the rim it is a Greyhound.
@@ -2968,6 +3126,7 @@ The Greyhound, gin and grapefruit juice, is in Harry Craddock's 1930 Savoy Cockt
 
 - 2 oz Gin
 - top with Tonic water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lime wheel
 
 Two ounces of gin, then tonic to the top of an iced highball. Quinine is bitter and the tonic is sweet, and carrying both at once is what rounds the juniper off. The lime wheel is oil and a squeeze on the way in. Cold and long, with the bitterness arriving last.
@@ -2983,6 +3142,7 @@ Quinine went into carbonated water as a malaria tonic in the 1850s, and Schweppe
 - 2 oz Gin
 - 1/2 oz Lime juice
 - top with Soda water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lime twist
 
 Two ounces of gin, half an ounce of lime, and soda over ice. Lime and bubbles are the only things standing next to the gin, so it lands sharp and the juniper is bare. Long and dry, lime twist on top.
@@ -3000,6 +3160,7 @@ The Rickey is a Washington drink. Joseph Kyle Rickey, a Missouri lobbyist, was d
 - 1 oz Lemon juice
 - 1/2 oz Simple syrup
 - top with Soda water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lemon twist, Cherry
 
 Two ounces of gin against a full ounce of lemon, half an ounce of simple, and soda to the top over ice. A gin sour stretched long, and that much lemon stays loud through the dilution, with the syrup a thin coat under it. Lemon twist and a cherry on top.
@@ -3017,6 +3178,7 @@ The drink is named for John Collins, head waiter at Limmer's Hotel on Conduit St
 - 3/4 oz Elderflower liqueur
 - 3/4 oz Lemon juice
 - top with Soda water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lemon twist
 
 An ounce and a half of gin, three-quarters of elderflower liqueur, three-quarters of lemon, and soda over ice. The elderflower is the sugar in this Collins, so the sweetness arrives floral, and the lemon keeps it tart underneath. Long and light, lemon twist.
@@ -3035,6 +3197,7 @@ A Collins is gin, lemon, sugar, and soda, and the modern habit is to move the su
 - 1 1/2 oz Campari
 - 1 1/2 oz Sweet vermouth
 - top with Soda water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Orange twist
 
 An ounce and a half each of Campari and sweet vermouth, then soda over ice. Equal pours, so bitter orange and grape sit level, and the soda stretches both into something you can drink for an hour. Low proof, and it stays bitter to the end. An orange twist goes over the top.
@@ -3051,6 +3214,7 @@ Gaspare Campari put his bitter together with Turin vermouth at the Caffe Campari
 - 1 oz Campari
 - 1 oz Sweet vermouth
 - top with Champagne
+- Build in the glass over ice, then lift once with a barspoon.
 - Rocks, iced, Orange twist
 
 An ounce each of Campari and sweet vermouth with sparkling wine on top, over ice. Two thirds of a Negroni with the bubbles doing the gin's lifting: bitter orange and grape, lighter and lower in proof, fizzing at the edge under an orange twist.
@@ -3065,6 +3229,7 @@ Sbagliato means bungled. Mirko Stocchetto, at Bar Basso in Milan, reached for th
 
 - 1 1/2 oz Campari
 - top with Tonic water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Orange twist
 
 An ounce and a half of Campari, then tonic to the top of an iced highball. Two bitters meet, gentian and orange peel from the Campari and quinine from the tonic, and the tonic's sugar carries both. Red, dry, and cold. The orange twist sits on the Campari's own orange.
@@ -3080,6 +3245,7 @@ Gaspare Campari made his bitter in Novara in 1860 and the family sold it in Mila
 
 - 2 oz Sweet vermouth
 - top with Tonic water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Orange twist
 
 Two ounces of sweet vermouth, then tonic to the top of an iced highball. Wormwood, vanilla, and dried orange from the vermouth over quinine, with the wine's sugar and the tonic's meeting in the middle. Low proof and long; an orange twist on top.
@@ -3095,6 +3261,7 @@ Spain drinks vermouth as its own occasion, la hora del vermut, poured from the t
 
 - 2 oz Sherry
 - top with Tonic water
+- Build in the glass over ice, then lift once with a barspoon.
 - Highball, iced, Lemon twist
 
 Two ounces of amontillado, then tonic to the top of an iced highball. The sherry is nutty and bone dry, the tonic is bitter and a little sweet, and together they make a long drink with almost no sugar in it. The lemon twist brightens the nut. It drinks like a cold aperitif from Jerez.
@@ -3104,6 +3271,23 @@ In Andalusia sherry has always been a long drink as well as a wine: fino goes in
 - [Difford's Guide, Sherry cocktails](https://www.diffordsguide.com/g/1277/sherry-cocktails)
 - [Punch, Pour Some Tonic On It](https://punchdrink.com/articles/beyond-the-gin-and-tonic-cocktail-recipes/)
 
+### Fernet
+
+#### Fernet and Ginger
+
+`1,4,RLw` · built · Fernet · Highball family
+
+- 1 oz Fernet
+- 4 oz Ginger beer
+- Build in the glass over ice, then lift once with a barspoon.
+- Rocks, iced, Lime wheel
+
+One ounce of Fernet, four ounces of ginger beer, over ice. The ginger beer is the drink; the Fernet is mint and bitter through the spice. Lime squeezed in and dropped. A highball. It sits.
+
+Fernet and ginger beer is a bartender's highball, Fernet-Branca lengthened with ginger, a squeeze of lime. It does not appear under a fixed name in the pre-1970 manuals; it belongs to the Fernet-Branca cult that took hold in San Francisco bars in the 2000s and then everywhere else. Brett Adams and Jacob Grier print it in Raising the Bar (2022) as an ounce of Fernet and four of ginger beer, lime wedge in. This menu keeps that pour, rocks with ice.
+
+- [Punch, The Magic of Fernet-Branca Cocktails](https://punchdrink.com/articles/dark-magic-fernet-branca-hanky-panky-cocktail-recipe/)
+
 ### Absinthe
 
 #### Death in the Afternoon
@@ -3112,6 +3296,7 @@ In Andalusia sherry has always been a long drink as well as a wine: fino goes in
 
 - 1 1/2 oz Absinthe
 - top with Champagne
+- Build in the glass with no ice, then top.
 - Highball
 
 An ounce and a half of absinthe with Champagne poured onto it. The wine goes cloudy as the anise louches, and that milkiness is the trick of it. Anise, wormwood, and fennel over dry bubbles, in a tall glass with no ice. It drinks easier than its proof.

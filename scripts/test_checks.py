@@ -22,6 +22,7 @@ import check_menu                                            # noqa: E402
 import check_style                                           # noqa: E402
 import cards                                                 # noqa: E402
 import jslex                                                 # noqa: E402
+import llms                                                  # noqa: E402
 import pages                                                 # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -284,6 +285,92 @@ def run_menu(failures):
            check_menu.amount_errors("zz", "gin", by_id["gin"]), True, failures)
 
 
+def method_cases(menu):
+    """(name, methods, should it be reported) for the method table.
+
+    `how` is the line a single drink prints and the blurb over the
+    section is not it, so every method carries one. The method made in
+    the serving glass carries the dry line as well.
+    """
+    clean = menu["methods"]
+    built = next(m for m in clean if m["id"] == "built")
+    return [
+        ("clean", clean, False),
+        ("no how", [{k: v for k, v in m.items() if k != "how"}
+                    for m in clean], True),
+        ("empty how", [dict(m, how="  ") for m in clean], True),
+        ("built with no how_dry",
+         [{k: v for k, v in m.items() if k != "how_dry"} for m in clean],
+         True),
+        ("empty how_dry", [dict(built, how_dry="")], True),
+        ("a key nobody reads", [dict(built, howe="typo")], True),
+    ]
+
+
+def run_methods(failures):
+    """Every method carries its instruction, and the dry one carries two."""
+    menu = check_menu.load("cocktails.json")
+    for name, methods, expected in method_cases(menu):
+        errs = []
+        check_menu.check_methods(dict(menu, methods=methods), errs)
+        report(f"method/{name}", errs, expected, failures)
+
+
+def run_mixer_method(failures):
+    """A mixer filling a glass of ice is built, and a fizz is not."""
+    menu = check_menu.load("cocktails.json")
+    bar = check_menu.load("bar.json")
+    by_id = {i["id"]: i for i in bar["ingredients"]}
+    drinks = {d["id"]: d for d in menu["cocktails"]}
+
+    for did in ("fernet-and-ginger", "gin-fizz", "martini"):
+        errs = []
+        check_menu.check_mixer_method(drinks[did], did, by_id, errs)
+        report(f"mixer/{did}", errs, False, failures)
+
+    # The bug this rule is for: a highball over ice, filed stirred.
+    errs = []
+    misfiled = dict(drinks["fernet-and-ginger"], method="stirred")
+    check_menu.check_mixer_method(misfiled, "fernet-and-ginger", by_id, errs)
+    report("mixer/stirred over ice", errs, True, failures)
+
+    # A fizz is shaken and strained into a dry glass, then topped. Pack
+    # that glass with ice and it is a built drink wearing a fizz's name.
+    errs = []
+    iced = dict(drinks["gin-fizz"], serve="H")
+    check_menu.check_mixer_method(iced, "gin-fizz", by_id, errs)
+    report("mixer/shaken over ice", errs, True, failures)
+
+
+def run_method_line(failures):
+    """The line a drink prints reads off the glass, not off the section."""
+    menu = check_menu.load("cocktails.json")
+    methods = llms.methods_by_id(menu)
+    drinks = {d["id"]: d for d in menu["cocktails"]}
+    for did, want in (("champagne-cocktail", "no ice"),
+                      ("gin-and-tonic", "over ice"),
+                      ("fernet-and-ginger", "over ice"),
+                      ("martini", "Stir with ice"),
+                      ("brass-rail", "Shake hard")):
+        line = llms.method_line(drinks[did], methods)
+        report(f"how/{did}", "" if want in line else line, False, failures)
+
+    # Drop the dry line and the Champagne Cocktail is built over ice,
+    # which is the wrong instruction the strings were moved to fix.
+    bare = {k: {i: v for i, v in m.items() if i != "how_dry"}
+            for k, m in methods.items()}
+    report("how/dry glass with no how_dry",
+           "over ice" in llms.method_line(drinks["champagne-cocktail"], bare),
+           True, failures)
+
+    # An amount the shorthand does not write is not read as one either.
+    report("amount/egg white has none",
+           llms.read_amount(None, {}), False, failures)
+    report("amount/egg white reads as itself",
+           "" if llms.pour_text(["egg-white", None], {}) == "egg-white"
+           else "an amount word arrived from somewhere", False, failures)
+
+
 def run_glasses(failures):
     """Every drawing a serve token can reach is on disk and fetched."""
     app = (ROOT / "assets" / "app.js").read_text()
@@ -423,6 +510,23 @@ def run_pages(failures):
 
     texts, present = pages.render(), pages.on_disk()
     report("pages/clean", pages.check_texts(texts, present), False, failures)
+
+    # The page prints the drink's own instruction. A built drink in a dry
+    # glass saying `over ice` is a wrong instruction, on the page a
+    # shared link lands on.
+    dry = texts["drink/champagne-cocktail/index.html"]
+    report("pages/dry built over ice", "over ice" in dry, False, failures)
+    report("pages/dry built line",
+           "" if 'page__method">Build in the glass with no ice' in dry
+           else "the method line is not the drink's own", False, failures)
+    iced = texts["drink/gin-and-tonic/index.html"]
+    report("pages/iced built line",
+           "" if 'page__method">Build in the glass over ice' in iced
+           else "the method line is not the drink's own", False, failures)
+    report("pages/no amount word",
+           "one Egg white" in texts["drink/brass-rail/index.html"], False,
+           failures)
+
     stale = dict(texts, **{next(iter(texts)): "not what pages.py writes\n"})
     report("pages/stale", pages.check_texts(stale, present), True, failures)
     report("pages/orphan", pages.check_texts(
@@ -457,7 +561,8 @@ def main():
     """Every case, then the count."""
     failures = []
     for run in (run_css, run_js, run_py, run_house, run_pressed,
-                run_menu, run_glasses, run_fonts, run_manifest,
+                run_menu, run_methods, run_mixer_method, run_method_line,
+                run_glasses, run_fonts, run_manifest,
                 run_plates, run_pages, run_lexer, run_worker):
         run(failures)
     for f in failures:

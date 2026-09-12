@@ -56,6 +56,14 @@ FONTS = {
 
 CHUNK = "fewbottles"
 
+# What the drawing itself is worth, hashed into every card beside the
+# drink it draws. Bump it by hand when the picture changes: the layout
+# here, the type, the colours above, or the faces in FONTS and in
+# make-og.py. Leave it alone for a comment, a docstring or a refactor,
+# because the script is not what a card is drawn from, and hashing the
+# script stales every card on the shelf over a typo in this sentence.
+DRAW = 1
+
 
 def og_module():
     """make-og.py has the raster pipeline; a hyphen keeps it off import."""
@@ -92,13 +100,7 @@ def pick_glass(serve):
 
 
 def lines_for(drink, by_id):
-    out = []
-    for part in drink["build"]:
-        i = by_id.get(part[0], {"name": part[0]})
-        amt = llms.read_amount(part[1], i)
-        flag = part[2] if len(part) > 2 else None
-        out.append(f"{amt} {i['name']}" + (" on top" if flag == "g" else ""))
-    return out
+    return [llms.pour_text(part, by_id) for part in drink["build"]]
 
 
 def serve_for(drink, notation):
@@ -117,7 +119,8 @@ def spec_for(drink, by_id, notation):
         "serve": serve_for(drink, notation),
         "art": art,
         "svg": svg,
-        "script": (ROOT / "scripts" / "cards.py").read_text(),
+        "draw": DRAW,
+        "fonts": sorted(FONTS.items()),
     }
 
 

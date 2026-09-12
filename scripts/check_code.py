@@ -60,7 +60,7 @@ BUDGET = {
             "adds a branch that calls a named function; it does not grow "
             "the handler"),
     "scripts/check_menu.py:main": dict(
-        lines=115, complexity=39,
+        lines=103, complexity=31,
         why="the menu checker's report, one paragraph per rule, in the "
             "order the failures are worth reading"),
     "scripts/kin.py:classify_by_ratio": dict(

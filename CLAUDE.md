@@ -16,6 +16,15 @@ This file is the working context. Read it before touching the menu.
   mixer last. Nothing counts methods by hand any more. The checker, the
   agent dumps and the segmented control all read `menu.methods`, so a
   fourth method costs one line of data.
+- A method carries two strings. `blurb` is the heading over that part of
+  the card. `how` is the instruction one drink prints, and `built` also
+  carries `how_dry`, because a Gin and Tonic is built over ice and a
+  Champagne Cocktail into a dry flute. The app, the drink pages and the
+  agent dump all read those, so the line is written once. A drink whose
+  build names a mixer and whose glass already holds ice is built: there
+  is nothing to stir. A Gin Fizz is the exception the checker allows,
+  shaken and strained into an empty highball, which is why the card
+  writes it `h` and not `H`.
 - Drinks are grouped under a `family` — the section they print under.
   That is the menu's own filing, not a claim about the base spirit.
   So So Cocktail files under Apple Brandy and is mostly gin; Corpse
@@ -63,7 +72,10 @@ a `g` rather than in the serve token, which is why they still count.
 Two things carry no amount token:
 
 - **Egg white** is written into the build with `null`. It never had a
-  measure in the shorthand and should not gain one.
+  measure in the shorthand and should not gain one anywhere else either:
+  the app's amount column is a middle dot, and the drink pages and the
+  agent dump print the bottle on its own. A muddled bunch of mint was
+  never `one Mint`.
 - **Bitters dropped on the foam** live in the garnish token, not among
   the amounts. The Brass Rail's Angostura is the `3` in `c3`. Those get
   a third build element, `"g"`, so the drink still counts as needing
@@ -270,9 +282,12 @@ because a redirect is what makes a crawler index the front page
 instead. Both are generated and committed, like `kin.json`: `make pages`
 and `make cards` regenerate, `make verify` refuses a stale, missing or
 orphaned one. Each card carries a hash of what it was drawn from in a
-PNG text chunk, so the check reads 174 headers without Pillow and CI
+PNG text chunk, so the check reads every header without Pillow and CI
 holds the line with nothing installed; rendering needs Pillow and
-rsvg-convert, like `make icons`. `sitemap.xml` is written by the same
+rsvg-convert, like `make icons`. Drawn from means the drink, the glass
+art and `DRAW` at the top of `cards.py`, bumped by hand when the picture
+changes. The script's own text is not in that hash: a comment edited
+there used to stale every card on the shelf. `sitemap.xml` is written by the same
 script and lists every page. `404.html` is what GitHub serves for an
 address nothing answers to, a drink dropped from the menu included.
 

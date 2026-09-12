@@ -23,6 +23,9 @@ FULL = ROOT / "llms-full.txt"
 
 FRACTION = {"h": "1/2", "q": "1/4", "Q": "3/4"}
 
+# The glass letters that arrive packed with ice, as app.js reads them.
+ICED_GLASSES = ("R", "H")
+
 
 def load(name):
     return json.loads((ROOT / "data" / name).read_text())
@@ -48,8 +51,16 @@ def split_garnish(rest, codes):
 
 
 def read_amount(token, ingredient):
+    """The amount as a person would say it. `null` says nothing at all.
+
+    Egg white and muddled mint carry no amount in the shorthand and
+    should not gain one here: a bunch of mint in the bottom of the glass
+    was never `one Mint`. The app prints a middle dot in the amount
+    column for the same reason, and `pour_text` prints the bottle on
+    its own.
+    """
     if token is None:
-        return "one"
+        return ""
     if token == "r":
         return "rinse"
     if token == "t":
@@ -73,6 +84,51 @@ def read_amount(token, ingredient):
     if token.isdigit():
         return f"{token} oz"
     return token
+
+
+def pour_text(part, by_id, top="on top"):
+    """`1 oz Apple brandy`, or `Egg white` where there is no amount.
+
+    The one place an amount is joined to its bottle, so the dump, the
+    drink pages and the share cards read alike and a pour with no
+    amount leaves no gap in front of the name. `top` is how that
+    caller writes the bitters dropped on the foam.
+    """
+    i = by_id.get(part[0], {"name": part[0]})
+    line = f"{read_amount(part[1], i)} {i['name']}".strip()
+    flag = part[2] if len(part) > 2 else None
+    return f"{line} {top}" if flag == "g" else line
+
+
+def iced_glass(serve):
+    """Whether the glass this is poured into carries ice.
+
+    The uppercase glass letter is the one packed with it, so the
+    instruction reads off the serve token the same way `icedGlass` does
+    in app.js and the glass table does in check_menu.py.
+    """
+    return serve[:1] in ICED_GLASSES
+
+
+def method_line(drink, methods):
+    """The instruction a single drink prints, as the app prints it.
+
+    `how` on the method is the line you follow at the bar; the blurb
+    beside it is the heading over that section of the card. A method
+    carrying `how_dry` uses it for a glass with no ice, because telling
+    somebody to build a Champagne Cocktail over ice is a wrong
+    instruction, not a rounding error.
+    """
+    m = methods.get(drink["method"])
+    if not m:
+        return drink["method"]
+    if m.get("how_dry") and not iced_glass(drink["serve"]):
+        return m["how_dry"]
+    return m.get("how") or m.get("blurb", drink["method"])
+
+
+def methods_by_id(menu):
+    return {m["id"]: m for m in menu["methods"]}
 
 
 COUNT_WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"}
@@ -122,15 +178,7 @@ def serve_line(drink, notation, codes):
 
 
 def decode_build(drink, by_id):
-    lines = []
-    for part in drink["build"]:
-        iid, token = part[0], part[1]
-        flag = part[2] if len(part) > 2 else None
-        i = by_id.get(iid, {"name": iid})
-        amt = read_amount(token, i)
-        extra = " (on top)" if flag == "g" else ""
-        lines.append(f"- {amt} {i['name']}{extra}")
-    return lines
+    return [f"- {pour_text(part, by_id, '(on top)')}" for part in drink["build"]]
 
 
 def write_llms(menu, bar, notation, kin):
@@ -211,6 +259,7 @@ def write_full(menu, bar, notation, kin):
     by_id = {i["id"]: i for i in bar["ingredients"]}
     families = {f["id"]: f["label"] for f in menu["families"]}
     codes = garnish_codes(notation)
+    methods = methods_by_id(menu)
     pattern_of = {}
     pattern_label = {}
     if kin:
@@ -265,6 +314,10 @@ def write_full(menu, bar, notation, kin):
                 lines.append(f"`{d['code']}` · " + " · ".join(meta))
                 lines.append("")
                 lines.extend(decode_build(d, by_id))
+                # The instruction for this drink, not the blurb over the
+                # section: a built drink in a dry glass is not built over
+                # ice, and the section heading cannot say both.
+                lines.append(f"- {method_line(d, methods)}")
                 lines.append(f"- {serve_line(d, notation, codes)}")
                 lines.append("")
                 if d.get("taste"):

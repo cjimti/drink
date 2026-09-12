@@ -85,6 +85,17 @@ BOTTLE_TIERS = {
     "solid", "elevated", "excellent", "exceptional", "alternatives",
 }
 SHELF_KEYS = {"id", "label", "blurb", "ingredients"}
+METHOD_KEYS = {"id", "label", "blurb", "how", "how_dry"}
+
+# The glass letters that arrive packed with ice, as app.js reads them.
+ICED_GLASSES = {"R", "H"}
+
+# The method made in the glass it is served in, which is the only one
+# whose instruction changes with the glass: a Gin and Tonic is built over
+# ice and a Champagne Cocktail into a dry flute. Stirred and shaken keep
+# their ice in the mixing glass, so one line covers both for them. A
+# fourth in-glass method joins the set here and brings a `how_dry`.
+IN_GLASS = {"built"}
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 HTML = re.compile(r"<[^>]+>")
 MD_LINK = re.compile(r"\[[^\]]+\]\([^)]+\)")
@@ -348,6 +359,93 @@ def check_shelves(bar, errs):
             held.add(iid)
 
 
+def check_bottles_copy(bar, errs):
+    """The paragraph over the shopping list, where there is one."""
+    copy = bar.get("bottles_copy")
+    if copy is None:
+        return
+    if not isinstance(copy, str) or not copy.strip():
+        errs.append("bar: bottles_copy must be a non-empty string")
+    elif HTML.search(copy):
+        errs.append("bar: bottles_copy contains HTML")
+
+
+def check_used(by_id, used, errs):
+    """Every bottle on the shelf is one some drink wants.
+
+    A garnish letter counts as use, so the bar cannot quietly drift.
+    `catalog` is the exception, a type on the shopping list before any
+    drink calls for it, and it fails the other way round: once a drink
+    wants it, it is not a catalog entry any more.
+    """
+    for iid in sorted(by_id):
+        catalog = by_id[iid].get("catalog") is True
+        if iid in used:
+            if catalog:
+                errs.append(f"bar {iid}: catalog but a drink calls for it")
+        elif not catalog:
+            errs.append(f"bar: {iid} is stocked but no drink calls for it")
+
+
+def iced_glass(serve):
+    """Whether this glass arrives with ice in it. `icedGlass` in app.js."""
+    return serve[:1] in ICED_GLASSES
+
+
+def check_methods(menu, errs):
+    """A method carries the line a single drink prints, not just a blurb.
+
+    `blurb` is the heading over that section of the card and reads like
+    one. `how` is the instruction you follow at the bar, and the app, the
+    drink pages and the agent dump all print it, so it is required and a
+    fourth method cannot arrive without one.
+
+    `how_dry` is the second line, for a glass with no ice. The method
+    made in the serving glass needs it: nearly every built drink is
+    packed with ice, and the Champagne Cocktail, the Seelbach and Death
+    in the Afternoon are poured dry. One sentence cannot be right for
+    both.
+    """
+    for m in menu["methods"]:
+        who = m.get("id", "<no id>")
+        extra = sorted(set(m) - METHOD_KEYS)
+        if extra:
+            errs.append(f"method {who}: unexpected key(s) {', '.join(extra)}")
+        for key in ("label", "blurb", "how"):
+            if not isinstance(m.get(key), str) or not m.get(key, "").strip():
+                errs.append(f"method {who}: {key} must be a non-empty string")
+        if who in IN_GLASS and not m.get("how_dry"):
+            errs.append(f"method {who}: made in the serving glass, so it "
+                        f"needs how_dry; `how` alone would tell somebody to "
+                        f"build a dry drink over ice")
+        dry = m.get("how_dry")
+        if dry is not None and (not isinstance(dry, str) or not dry.strip()):
+            errs.append(f"method {who}: how_dry must be a non-empty string")
+
+
+def check_mixer_method(d, who, by_id, errs):
+    """A mixer poured into a glass of ice is built in that glass.
+
+    Soda, tonic and ginger beer fill the rest of the glass over the ice
+    already in it. There is nothing to stir and nothing to shake, so a
+    drink like that filed anywhere but `built` prints a wrong
+    instruction: Fernet and Ginger shipped as `stirred`, and the app
+    told a guest to stir a highball and strain it.
+
+    The dry glass is the exception that has to stay. A Gin Fizz is
+    shaken with lemon and syrup, strained into an empty highball, and
+    topped from there, which is why the card writes it `h` and not `H`.
+    The ice in the serving glass is what says the drink was made in it.
+    """
+    if d["method"] in IN_GLASS or not iced_glass(d["serve"]):
+        return
+    for entry in d["build"]:
+        if (by_id.get(entry[0]) or {}).get("kind") == "mixer":
+            errs.append(f"{who}: {entry[0]} fills a glass that already has "
+                        f"ice in it, so the drink is built, not {d['method']}")
+            return
+
+
 def check_notes(d, who, errs):
     """Optional taste / history / refs, when present, have to be the contract.
 
@@ -440,13 +538,8 @@ def main():
     gbottle, stocked = garnish_bottles(notation), set(by_id)
 
     errs = []
-    copy = bar.get("bottles_copy")
-    if copy is not None:
-        if not isinstance(copy, str) or not copy.strip():
-            errs.append("bar: bottles_copy must be a non-empty string")
-        elif HTML.search(copy):
-            errs.append("bar: bottles_copy contains HTML")
-
+    check_bottles_copy(bar, errs)
+    check_methods(menu, errs)
     check_bits(bar, errs)
     check_stand_ins(bar, errs)
     check_shelves(bar, errs)
@@ -476,6 +569,7 @@ def main():
             errs.append(f"{who}: unknown family {d['family']!r}")
 
         check_notes(d, who, errs)
+        check_mixer_method(d, who, by_id, errs)
 
         # ── the build ────────────────────────────────────────────
         parts = []
@@ -516,15 +610,7 @@ def main():
         if rebuilt != d["code"]:
             errs.append(f"{who}: code {d['code']!r} but build spells {rebuilt!r}")
 
-    for iid in sorted(stocked):
-        catalog = by_id[iid].get("catalog") is True
-        if iid in used:
-            if catalog:
-                errs.append(f"bar {iid}: catalog but a drink calls for it")
-            continue
-        if catalog:
-            continue
-        errs.append(f"bar: {iid} is stocked but no drink calls for it")
+    check_used(by_id, used, errs)
 
     for e in errs:
         print(f"  MENU  {e}")

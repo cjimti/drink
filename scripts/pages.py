@@ -68,13 +68,7 @@ def card_url(did):
 
 def pours(drink, by_id):
     """`1 oz Apple brandy`, one per build entry, the amount decoded."""
-    out = []
-    for part in drink["build"]:
-        i = by_id.get(part[0], {"name": part[0]})
-        amt = llms.read_amount(part[1], i)
-        flag = part[2] if len(part) > 2 else None
-        out.append(f"{amt} {i['name']}" + (" on top" if flag == "g" else ""))
-    return out
+    return [llms.pour_text(part, by_id) for part in drink["build"]]
 
 
 def description(drink, lines, serve):
@@ -133,7 +127,7 @@ def head(drink, ctx):
 def json_ld(drink, ctx):
     """A Recipe that names its author, on the same ids index.html uses."""
     did = drink["id"]
-    steps = [ctx["blurb"], f"Serve: {ctx['serve'].lower()}."]
+    steps = [ctx["how"], f"Serve: {ctx['serve'].lower()}."]
     recipe = {
         "@type": "Recipe",
         "@id": page_url(did) + "#recipe",
@@ -211,7 +205,7 @@ def article(drink, ctx):
         f'  <h1 class="page__name">{escape(drink["name"])}</h1>\n'
         f'  <p class="page__code" aria-label="Barline">{escape(drink["code"])}</p>\n'
         f'  <ul class="page__pours">\n{lines}    </ul>\n'
-        f'  <p class="page__method">{escape(ctx["blurb"])}</p>\n'
+        f'  <p class="page__method">{escape(ctx["how"])}</p>\n'
         f'  <p class="page__serve">{escape(ctx["serve"])}.</p>\n'
         f'  <p class="page__open"><a class="btn" href="/#drink/{did}">Open in the menu</a></p>\n')
     if drink.get("taste"):
@@ -247,7 +241,6 @@ def context(drink, tables):
     """Everything a page needs that is not on the drink object itself."""
     menu, by_id, notation, kin = tables
     families = {f["id"]: f["label"] for f in menu["families"]}
-    blurbs = {m["id"]: m.get("blurb", "") for m in menu["methods"]}
     labels = {p["id"]: p["label"] for p in kin.get("patterns", [])}
     row = kin.get("drinks", {}).get(drink["id"], {})
     lines = pours(drink, by_id)
@@ -259,7 +252,7 @@ def context(drink, tables):
         "names": {d["id"]: d["name"] for d in menu["cocktails"]},
         "kin": kin.get("drinks", {}),
         "family": families.get(drink["family"], drink["family"]),
-        "blurb": blurbs.get(drink["method"], ""),
+        "how": llms.method_line(drink, llms.methods_by_id(menu)),
         "shape": labels.get(row.get("pattern") or ""),
         "lines": lines,
         "serve": serve,

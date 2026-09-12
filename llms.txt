@@ -7,7 +7,7 @@
 One person's shelf, pouring for guests and for himself.
 Three methods, stirred, shaken, and built. The menu is large because the bottles
 overlap, not because the bar is.
-185 drinks (89 stirred, 72 shaken, 24 built), 50 ingredients.
+185 drinks (88 stirred, 72 shaken, 25 built), 50 ingredients.
 
 The printed card writes a contextual shorthand called Barline. A
 bare number is ounces beside a spirit and dashes beside bitters;
@@ -117,7 +117,6 @@ never renamed, never reused. Every drink has a page of its own at
 - [Bitter Giuseppe](https://fewbottles.com/drink/bitter-giuseppe/): `2,1,q,6,Rl`; Vermouth; Cynar, sweet verm., lemon, orange bitt.
 - [Adonis](https://fewbottles.com/drink/adonis/): `1h,Q,2,co`; Vermouth; sherry, sweet verm., orange bitt.
 - [Coronation No. 1](https://fewbottles.com/drink/coronation-1/): `1h,1h,d,2,c`; Vermouth; sherry, dry verm., maraschino, orange bitt.
-- [Fernet and Ginger](https://fewbottles.com/drink/fernet-and-ginger/): `1,4,RLw`; Fernet; Fernet, ginger beer
 
 ## Shaken
 
@@ -219,6 +218,7 @@ never renamed, never reused. Every drink has a page of its own at
 - [Campari & Tonic](https://fewbottles.com/drink/campari-and-tonic/): `1h,t,Ho`; Vermouth; Campari, tonic
 - [Vermouth & Tonic](https://fewbottles.com/drink/vermouth-and-tonic/): `2,t,Ho`; Vermouth; sweet verm., tonic
 - [Sherry & Tonic](https://fewbottles.com/drink/sherry-and-tonic/): `2,t,Hl`; Vermouth; sherry, tonic
+- [Fernet and Ginger](https://fewbottles.com/drink/fernet-and-ginger/): `1,4,RLw`; Fernet; Fernet, ginger beer
 - [Death in the Afternoon](https://fewbottles.com/drink/death-in-the-afternoon/): `1h,t,h`; Absinthe; absinthe, Champagne
 
 ## Optional
