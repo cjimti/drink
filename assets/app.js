@@ -69,6 +69,7 @@
   var tonight = false;    /* big type for the bar, session only, never saved */
   var shared = null;      /* { have, code } once a shared link has been opened; stays for the session */
   var introDone = false;  /* the first-run strip has been dismissed, for good */
+  var kinFailed = false;  /* data/kin.json did not arrive, so Shapes stays off */
   var shelfView = 'mine'; /* 'mine' or a named shelf id; session only, never saved */
   var loadedShelf = null; /* the named shelf with a chip on the Menu, once one has been switched to; session only */
   var shelfOpen = null;   /* named shelf whose Switch / Add choice is open, session only */
@@ -2019,45 +2020,21 @@
      do with it. Three steps, in the Key tab's own numbered treatment,
      because that is what this site already looks like when it explains
      itself. The strip above the list on a phone says the short version;
-     up here there is room for the whole of it. */
-  var STEPS = [
-    {
-      h: 'The menu',
-      t: 'Everything on the left is what this bar pours, most of it from a ' +
-         'handful of bottles. Tap a drink for the recipe. The small code beside ' +
-         'its name is the shorthand off my printed menu, and the Key tab ' +
-         'decodes every letter of it.'
-    },
-    {
-      h: 'Your bottles',
-      t: 'Tick what you own on the Bar tab. The number beside a bottle you do ' +
-         'not have is how many new drinks buying it opens, not how many recipes ' +
-         'mention it. Tap that number to see them.'
-    },
-    {
-      h: 'My Shelf',
-      t: 'Narrows the list to the drinks your own bottles make. Print that in ' +
-         'black and white for the counter, or turn it into one link and send it ' +
-         'to a guest.'
-    }
-  ];
+     up here there is room for the whole of it.
+
+     The words are in index.html, so a laptop has them on the first paint.
+     They are read once, here, before the first repaint takes the rail
+     over, and there is no second copy of them in this file. */
+  var RAIL_STEPS = (function () {
+    var el = document.getElementById('rail-steps');
+    return (el && el.outerHTML) || '';
+  })();
 
   function renderRailIntro() {
-    var html = '<div class="card">' +
+    return '<div class="card">' +
       '<h2 class="card__h">' +
         plural(data.menu.cocktails.length, 'drink', 'drinks') +
-        ', from a few bottles.</h2>' +
-      '<p class="card__k card__k--top">How this works</p>' +
-      '<ol class="rules">';
-    STEPS.forEach(function (r) {
-      html += '<li class="rule">' +
-        '<div class="rule__h">' + esc(r.h) + '</div>' +
-        '<p class="rule__t">' + esc(r.t) + '</p>' +
-        '</li>';
-    });
-    return html + '</ol><div class="card__acts">' +
-      '<a class="btn" href="#bar">Open the Bar tab</a>' +
-      '</div></div>';
+        ', from a few bottles.</h2>' + RAIL_STEPS + '</div>';
   }
 
   /* Whose bottles the rail is counting. Yours, a sender's, or the named
@@ -2184,18 +2161,25 @@
     return !introDone && !shared && stocked().length === 0 && !asideLive();
   }
 
-  function renderIntro() {
-    if (!showIntro()) return '';
-    return '<div class="intro">' +
-      '<h2 class="intro__h">Tick your bottles, and this becomes your menu.</h2>' +
-      '<p class="intro__p">Open the Bar tab, tick what you own, and the list ' +
-        'shrinks to what you can pour tonight. Every bottle you have not ' +
-        'ticked shows how many drinks it would add.</p>' +
-      '<div class="intro__acts">' +
-        '<button type="button" class="btn intro__go" data-intro-open="1">Open the Bar tab</button>' +
-        '<button type="button" class="intro__no" data-intro-dismiss="1">Not now</button>' +
-      '</div>' +
-      '</div>';
+  /* The strip is in index.html, so a first visit paints it before the
+     menu has loaded; from then on this is the one rule that shows it. */
+  function syncIntro() {
+    $('#intro').hidden = !showIntro();
+  }
+
+  /* Before the data, a rougher answer to the same question. A visitor
+     with a shelf, or who waved the strip off, or who came in on a shared
+     link, would otherwise watch it flash up while the menu loads. Nothing
+     is validated here: syncIntro() decides for good once the data is in. */
+  function introEarly() {
+    var gone = /[?&]s=/.test(location.search);
+    try {
+      var bar = JSON.parse(localStorage.getItem(STORE) || '{}');
+      gone = gone || !!localStorage.getItem(INTRO_STORE) ||
+        (!!bar && typeof bar === 'object' &&
+          Object.keys(bar).some(function (k) { return bar[k] === true; }));
+    } catch (e) { /* the data decides */ }
+    if (gone) $('#intro').hidden = true;
   }
 
   /* Spirits first, because they are how anyone actually chooses a drink, then
@@ -2236,6 +2220,21 @@
     lastShown = n;
   }
 
+  /* Shapes reads data/kin.json, which arrives after the menu has painted.
+     Until it does the segment is there and off, with no data-method for
+     the click delegate to find, and it says why rather than appearing
+     from nowhere a second later. */
+  function segButton(s) {
+    var on = filter.method === s.id;
+    var off = s.id === 'families' && !data.kin;
+    var why = kinFailed ? 'Shapes did not load' : 'Shapes are loading';
+    return '<button type="button" class="seg__b' + (on ? ' is-on' : '') + '"' +
+      (off ? ' aria-disabled="true" title="' + why + '" aria-label="' + why + '"'
+        : ' data-method="' + s.id + '"') +
+      ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
+      esc(s.label) + '</button>';
+  }
+
   function renderFilters() {
     var held = heldNow();
     var n = data.menu.cocktails.filter(function (d) { return matches(d, held); }).length;
@@ -2251,16 +2250,12 @@
     var seg = [{ id: 'all', label: 'All' }].concat(data.menu.methods.map(function (m) {
       return { id: m.id, label: m.label };
     }));
-    if (data.kin) seg.push({ id: 'families', label: 'Shapes' });
+    seg.push({ id: 'families', label: 'Shapes' });
 
-    var html = renderIntro() + '<div class="filters">' +
-      '<div class="seg' + (seg.length > 3 ? ' seg--wide' : '') + '">' + seg.map(function (s) {
-        var on = filter.method === s.id;
-        return '<button class="seg__b' + (on ? ' is-on' : '') +
-          '" data-method="' + s.id + '"' +
-          ' aria-pressed="' + (on ? 'true' : 'false') + '">' +
-          esc(s.label) + '</button>';
-      }).join('') + '</div>' +
+    syncIntro();
+    var html = '<div class="filters">' +
+      '<div class="seg' + (seg.length > 3 ? ' seg--wide' : '') + '">' +
+        seg.map(segButton).join('') + '</div>' +
       /* autocapitalize off is load-bearing, not tidiness: a phone
          capitalises the first letter of a field by default, so a code
          typed as q,h,q arrives as Q,h,q, which is a different drink. */
@@ -2983,7 +2978,7 @@
     }
     open = {};
     open[id] = true;
-    recipePane[id] = pane || (data.kin ? 'kin' : 'recipe');
+    recipePane[id] = pane || 'kin';
     repaintMenu();
     syncTitle();
     var el = document.getElementById('drink-' + id);
@@ -3980,22 +3975,15 @@
 
   /* ── boot ──────────────────────────────────────────────── */
 
-  var GLASS_FILES = [
-    'nick-nora', 'nick-nora-twist', 'nick-nora-pick', 'nick-nora-wheel',
-    'rocks', 'rocks-twist', 'rocks-pick', 'rocks-wheel',
-    'rocks-cube', 'rocks-cube-twist', 'rocks-cube-pick', 'rocks-cube-wheel',
-    'highball', 'highball-twist', 'highball-wheel', 'highball-pick',
-    'highball-ice', 'highball-ice-twist', 'highball-ice-wheel',
-    'highball-ice-pick'
-  ];
-
+  /* Every drawing a serve token can ask for, in one file made from the
+     SVGs by scripts/glasses.py. Twenty requests for twenty drawings
+     used to stand between a phone and the first row. */
   function loadGlassArt() {
-    return Promise.all(GLASS_FILES.map(function (id) {
-      return fetch('assets/glasses/' + id + '.svg').then(function (r) {
-        if (!r.ok) return;
-        return r.text().then(function (t) { glassMarkup[id] = t; });
-      }).catch(function () { /* art is decorative */ });
-    }));
+    return fetch('assets/glasses/all.json').then(function (r) {
+      return r.ok ? r.json() : {};
+    }).then(function (art) {
+      glassMarkup = art;
+    }).catch(function () { /* art is decorative */ });
   }
 
   /* The data carries the release on its query, as app.js and app.css do
@@ -4028,17 +4016,32 @@
     a.addEventListener('click', skipTo);
   });
 
+  /* The Related pane and the Shapes view read kin.json, and nothing on
+     the first paint does, so it comes after. paneOf() already answers
+     with the recipe while data.kin is unset, and a drink asked to open on
+     Related gets it on this repaint. */
+  function loadKin() {
+    fetch('data/kin.json?v=' + versionLabel).then(jsonOf).then(function (kin) {
+      kin.patterns.forEach(function (p) { patternBy[p.id] = p; });
+      data.kin = kin;
+    }).catch(function () {
+      kinFailed = true;
+    }).then(function () {
+      if (!$('#view-menu').hidden) repaintMenu();
+    });
+  }
+
+  introEarly();
+
   Promise.all([
     fetch('data/cocktails.json?v=' + versionLabel).then(jsonOf),
     fetch('data/bar.json?v=' + versionLabel).then(jsonOf),
     fetch('data/notation.json?v=' + versionLabel).then(jsonOf),
-    fetch('data/kin.json?v=' + versionLabel).then(jsonOf),
     loadGlassArt()
   ]).then(function (res) {
     data.menu = res[0];
     data.bar = res[1];
     data.notation = res[2];
-    data.kin = res[3];
 
     data.bar.ingredients.forEach(function (i) {
       ing[i.id] = i;
@@ -4046,7 +4049,6 @@
     });
     data.menu.cocktails.forEach(function (d) { cocktailBy[d.id] = d; });
     data.menu.methods.forEach(function (m) { methodBy[m.id] = m; });
-    data.kin.patterns.forEach(function (p) { patternBy[p.id] = p; });
     data.notation.glasses.forEach(function (g) { glassBy[g.code] = g; });
     data.notation.garnishes.forEach(function (g) { garnishBy[g.code] = g; });
     garnishCodes = data.notation.garnishes.map(function (g) { return g.code; })
@@ -4065,6 +4067,7 @@
     openSharedLink();
 
     $('#loading').hidden = true;
+    document.body.classList.add('is-ready');
     showVersion();
     repaintMenu();
     route();
@@ -4073,10 +4076,15 @@
        above is what reads the hash a guest arrived on. */
     window.addEventListener('hashchange', route);
     window.addEventListener('storage', storesChanged);
+    loadKin();
   }).catch(function () {
     /* Whoever reads this cannot use the site, so it says what to do and
        leaves the exception out of the page. */
     $('#loading').textContent = 'The menu did not load. Check the connection and reload.';
+    /* The strip and the rail's steps point at a Bar tab that is not
+       there, so they go with the menu. */
+    $('#intro').hidden = true;
+    document.body.classList.add('is-ready');
   });
 
   /* Service worker: production only, and actively evicted anywhere else.

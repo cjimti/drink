@@ -1,7 +1,8 @@
 # fewbottles.com
 
 Static site for one home bar's cocktail list. No build step, no
-framework, no database. Everything renders from three JSON files.
+framework, no database. Everything renders from four JSON files: three written
+by hand, and `kin.json` generated from them.
 
 This file is the working context. Read it before touching the menu.
 
@@ -25,7 +26,7 @@ This file is the working context. Read it before touching the menu.
   is nothing to stir. A Gin Fizz is the exception the checker allows,
   shaken and strained into an empty highball, which is why the card
   writes it `h` and not `H`.
-- Drinks are grouped under a `family` — the section they print under.
+- Drinks are grouped under a `family`: the section they print under.
   That is the menu's own filing, not a claim about the base spirit.
   So So Cocktail files under Apple Brandy and is mostly gin; Corpse
   Reviver No. 1 files there and leads with cognac. Leave it alone.
@@ -44,7 +45,7 @@ slots, and the decoder resolves it against the ingredient:
 - A bare number is **ounces** beside a spirit, **dashes** beside bitters.
   `2` is two ounces of rye or two dashes of Angostura.
 - `h` `q` `Q` are 1/2, 1/4, 3/4 oz. Case is meaningful and always will
-  be — `q` is a quarter, `Q` is three quarters.
+  be: `q` is a quarter, `Q` is three quarters.
 - A digit and a fraction combine: `1h` is 1 1/2 oz.
 - `b` is barspoons, `d` is dashes, bare `b`/`d` mean one.
 - `r` in an amount slot is a **rinse**. `r` as the last token is a rocks
@@ -55,14 +56,14 @@ slots, and the decoder resolves it against the ingredient:
 - The last token is the glass (`c` coupe, `r` rocks, `R` rocks with ice,
   `h` highball for a fizz, `H` highball packed with ice) followed by
   garnish letters, packed together. `ccin` is a coupe with grated
-  cinnamon, not `c` + `i` + `n` — the decoder matches longest first, and
+  cinnamon, not `c` + `i` + `n`. The decoder matches longest first, and
   that is load-bearing. `h` is a half ounce everywhere except the last
   slot, where it is the tall glass. `r` already makes that bargain, and
   the serve token being last is what keeps it safe.
 
 Garnish is on the shelf but never gates a drink. The letter for it
 rides the serve token, and `notation.json` names the bottle it calls for
-— a lemon twist costs a lemon — so the shelf stocks it and the Bar tab
+(a lemon twist costs a lemon), so the shelf stocks it and the Bar tab
 counts who wants it. But **the build gates and the serve token does
 not.** Garnish is optional; a Martini with no olive is still a Martini,
 and the expanded recipe just strikes the missing twist through. `3` is
@@ -86,7 +87,7 @@ Two things carry no amount token:
 
 ### `data/cocktails.json`
 
-**IDs are stable keys — never rename or reuse one.** They key the
+**IDs are stable keys. Never rename or reuse one.** They key the
 expanded-recipe state and any link anyone has sent.
 
 Every drink carries both `code` and `build`. This is deliberate
@@ -102,7 +103,7 @@ Every bottle any drink can call for, grouped by `kind` for the shelf.
 `unit: "dash"` is what tells the decoder a bare number counts dashes;
 `unit: "none"` marks the unmeasured ones. `shelf` overrides the name on
 the Bar tab where the bottle and the pour want different words for the
-same thing — one lemon is `Lemon juice` in a recipe and `Lemons` in a
+same thing: one lemon is `Lemon juice` in a recipe and `Lemons` in a
 bowl. `notes` is optional: a house recipe for making that bottle
 (`parts` weighed amounts, `copy` the method). `bottles` is the shopping
 list for that type, grouped by quality (`solid`, `elevated`, `excellent`,
@@ -111,7 +112,7 @@ the row reveals notes and the brand list when either is there, and does
 nothing when there is neither. Ticking a brand ticks the parent; the last
 brand unticked unticks it. An unknown bottle still ticks the parent on
 its own. Homemade syrups are
-weighed — a kitchen scale is required. The checker fails on a stocked ingredient no
+weighed, so a kitchen scale is required. The checker fails on a stocked ingredient no
 drink uses, and a garnish letter counts as use, so the bar cannot
 quietly drift. `catalog` is the exception: a type on the shopping list
 before any drink calls for it. Those still need bottles.
@@ -131,7 +132,7 @@ always gates. Egg white already worked this way.
 this one. It is a hard gate turned soft where soft is honest: the card
 writes the Old-Fashioned with demerara, and a shelf holding simple pours
 it. A drink standing in counts as pourable, so the Bar tab's figure for
-demerara drops to nothing once simple is ticked — buying it unlocks
+demerara drops to nothing once simple is ticked: buying it unlocks
 nothing new, and that is the true answer. The list is tiny on purpose;
 simple and demerara are the whole of it. Each direction is written out
 and the checker refuses a stand-in of a different `kind`, so nothing
@@ -142,7 +143,7 @@ card calls for demerara.
 ### `data/notation.json`
 
 The key tab, and the table the decoder reads from. Adding a garnish
-letter here is what makes it decodable — there is no second list in the
+letter here is what makes it decodable; there is no second list in the
 JavaScript. `ingredient` on a garnish is the bottle it costs, and that
 is the only place the mapping lives, so the same table that makes a
 letter readable makes it countable.
@@ -157,7 +158,7 @@ the bottle that changed. The app does not recompute this.
 `family` on a cocktail is still the printed-card section. Kin is a
 second filing: the Martini and the Manhattan sit under gin and bourbon
 on the card, and in the same pattern here. Do not write a `pattern`
-onto the cocktail object — the generated file is the one source, and
+onto the cocktail object. The generated file is the one source, and
 `make verify` refuses a drift the same way it refuses a code that does
 not match its build.
 
@@ -183,7 +184,7 @@ how many recipes mention it. A bottle used in twelve drinks that unlocks
 none reads `in 12`, greyed, and that is the honest answer.
 
 This is the feature the site exists for. If it ever gets slow, memoise
-it — do not replace it with a usage count.
+it; do not replace it with a usage count.
 
 The count is also the way in. Tapping it opens the Menu tab with the
 shelf filter on, where the same list renders with a Print menu reveal
@@ -201,7 +202,7 @@ regression.
 **Next bottles** is the same figure lifted: the three best unopened
 bottles, each naming the drinks it actually opens and what the solid
 tier costs. Three, never more, and never ranked by usage count. It waits
-for a shelf worth improving on — from nothing every figure is zero, and
+for a shelf worth improving on. From nothing every figure is zero, and
 a heading over three `+0` rows is worse than no heading.
 
 **Three rows, always, while anything is still short.** Single bottles run
@@ -231,7 +232,7 @@ the letterspaced cap.
 The two columns are CSS multicol, which WebKit has never honoured on
 paper (WebKit bug 15546, open since 2007): every browser on iOS, and
 Safari on a Mac, would print one long column. So on WebKit `app.js`
-renders the list already cut in two — `PRINT_SPLIT` — as two floated
+renders the list already cut in two (`PRINT_SPLIT`) as two floated
 halves balanced by a rough weight per row, and the screen CSS hides the
 seam. Chrome and Firefox keep real columns, which balance per sheet.
 Do not replace multicol with the split everywhere: a float pair reads
@@ -243,7 +244,7 @@ menu the order is wrong; multicol gets it right where it works.
 A menu leaves the phone as one number: `fewbottles.com/?s=281474976710655`.
 The shelf is a bitmask. Every ingredient in `bar.json` carries a `bit`,
 and bit N set means that ingredient is stocked. Brands are never in the
-code — a guest needs to know there is gin, not which gin.
+code: a guest needs to know there is gin, not which gin.
 
 **A bit is a stable key, like a cocktail id.** The links live in other
 people's message threads, so a bit is assigned once and never moved or
@@ -258,12 +259,12 @@ in `app.js` stops at version 10, which leaves room for bits 0–621.
 Share menu is the reveal above Print on the pourable list: a QR of the
 link, the link itself, Copy, Send by text (`sms:` with the link in the
 body), and the native share sheet where there is one. The QR encoder is
-the standard written small — byte mode, level M — and is checked against
+the standard written small (byte mode, level M) and is checked against
 a reference library module for module; do not swap it for a CDN.
 
 **One drink shares the same way.** A drink has its own address,
-`fewbottles.com/drink/<id>/`, and the Share tab — last in the recipe
-strip, after Kin — is the same card at a smaller size: the QR for
+`fewbottles.com/drink/<id>/`, and the Share tab, last in the recipe
+strip after Kin, is the same card at a smaller size: the QR for
 somebody standing in front of you with their own phone, the link for a
 thread. A cocktail id is a stable key precisely because these links live
 in other people's messages, exactly like a shelf bit.
@@ -383,7 +384,7 @@ The print stylesheet puts it back to grey, so paper still looks like the
 card.
 
 Dark is the default because a menu gets read in a dim room. **Light mode
-is not an inversion** — it is the printed page, near enough to hold the
+is not an inversion**. It is the printed page, near enough to hold the
 two side by side.
 
 One accent. Brass carries every earned state: a filter that is on, a
@@ -395,7 +396,7 @@ and the italic ingredient lines), DM Mono (codes and quantities).
 Mobile-first, safe-area aware, no shadows.
 
 Every colour is a token on `:root` with a light counterpart. A literal
-hex outside those two blocks is a bug — it will be wrong in one theme.
+hex outside those two blocks is a bug: it will be wrong in one theme.
 `--on-brass` exists because brass goes dark in light mode, so text
 sitting on the brass fill has to flip with it.
 
@@ -404,25 +405,25 @@ sitting on the brass fill has to flip with it.
 `make verify` is the whole pipeline, and there is no build step for it to
 hide behind. It runs, in order:
 
-- `json` — every data file and the manifest parse.
-- `syntax` — `node --check` on `app.js` and `sw.js`, `py_compile` on
+- `json`: every data file and the manifest parse.
+- `syntax`: `node --check` on `app.js` and `sw.js`, `py_compile` on
   every script.
-- `lint` — `check_code.py` and `check_style.py`, below.
-- `test` — `test_checks.py` breaks every rule on purpose and fails if a
+- `lint`: `check_code.py` and `check_style.py`, below.
+- `test`: `test_checks.py` breaks every rule on purpose and fails if a
   checker sleeps through it. A linter nobody has seen fail passes
   everything.
-- `unit` — `app.test.mjs` runs `app.js` in node with `node:test`, the
+- `unit`: `app.test.mjs` runs `app.js` in node with `node:test`, the
   IIFE taken off and a stub page under it, booted on the real data. No
   runner, no `package.json`: node ships both. A case that needs a real
   layout belongs in a browser, not in the stub.
-- `menu` — codes match builds, `kin.json` matches the builds, the agent
+- `menu`: codes match builds, `kin.json` matches the builds, the agent
   dumps, the drink pages and the share cards match the menu.
-- `assets` — every file `index.html` asks for exists, every id the app
+- `assets`: every file `index.html` asks for exists, every id the app
   reaches for is rendered, the worker safeguards are still in place.
 
 **`scripts/check_code.py`** is the linter this repo has instead of eslint,
 because there is no `package.json` and there is not going to be one. It
-measures every function — JavaScript and Python alike — for length,
+measures every function, JavaScript and Python alike, for length,
 cyclomatic complexity, nesting and argument count, and it fails on the
 foot-guns a static site cannot afford: `eval`, a `console.log` shipped to
 somebody's phone, a radix-less `parseInt`, `==`, a bare `except`, a
@@ -441,7 +442,7 @@ the token blocks, a colour token with no light counterpart, a shadow, a
 font stack that is not one of the three tokens, an `<img>` with no `alt`,
 a control with no accessible name, a duplicate id, an `aria-controls`
 pointing at nothing. It also holds the three contracts the app would
-otherwise break silently — a `track()` parameter missing from
+otherwise break silently: a `track()` parameter missing from
 `TRACK_KEYS`, a click branch whose `data-` attribute is missing from the
 delegation selector (a dead button, on the device you did not test), and
 the shelf code read with anything but `BigInt`.
@@ -510,12 +511,12 @@ is the price. Do not raise a limit to make a new function fit.
     said out loud in the summary, not left for review to find.
 
   Fix what this turns up, then run `make verify` again. Report what the
-  pass found — including "nothing" — rather than leaving it implied.
+  pass found, including "nothing", rather than leaving it implied.
 - **A service worker owns an origin, not a project.** Every static site
   in this workspace serves `./`, `index.html` and `assets/app.js`, so a
   worker registered on `http://localhost:8000` will answer for whichever
   project runs there next, cache-first, and go on answering after that
-  dev server is gone. This repo serves on **8010** for that reason — one
+  dev server is gone. This repo serves on **8010** for that reason: one
   port per project, so the origins never overlap.
 - **Declining to register is not a fix.** A worker already installed
   keeps serving the old `app.js`, so a guard added later never executes.
@@ -545,17 +546,17 @@ is the price. Do not raise a limit to make a new function fit.
   believing anything the browser shows you. `make unstick` prints the
   manual recovery.
 - Keep it dependency-free. Vanilla JS, no bundler, no package.json.
-- Transcribe the paper menu faithfully, including its own typos —
+- Transcribe the paper menu faithfully, including its own typos:
   `Improved Coctail` is spelled that way on the card. Fix a recipe only
   when the user says to, not because a reference book disagrees.
-- If a transcribed amount looks way off — half the spirit every sibling
-  pours, a 1 oz Old-Fashioned — ask before writing notes around it. Do
+- If a transcribed amount looks way off (half the spirit every sibling
+  pours, a 1 oz Old-Fashioned), ask before writing notes around it. Do
   not silently correct it, and do not treat an obvious typing error as
   the card.
 - **No em dash in anything the site serves.** `check_style.py` fails on
   one, in `index.html`, `app.css`, `app.js`, `sw.js`, the data files and
   the agent dumps, comments included, and on the escaped `\u2014` spelling
-  too. A dash standing in for a pause is the surest tell of prose nobody
+  too. `README.md` and this file hold to it as well. A dash standing in for a pause is the surest tell of prose nobody
   edited. A comma, a colon or a full stop says the same thing.
 - Copy a visitor reads is plain and first person where it is Craig
   speaking. No word does promotional work, nothing "serves as" anything,

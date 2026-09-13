@@ -18,6 +18,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ORIGIN = "https://fewbottles.com"
+# What the site is, in the one sentence index.html's meta description
+# carries. Read from there, so the agent map cannot say something else.
+DESCRIPTION = re.search(r'<meta name="description" content="([^"]+)">',
+                        (ROOT / "index.html").read_text()).group(1)
 LLMS = ROOT / "llms.txt"
 FULL = ROOT / "llms-full.txt"
 
@@ -205,9 +209,7 @@ def write_llms(menu, bar, notation, kin):
     lines = [
         "# few bottles",
         "",
-        "> Cocktail maxxing on a budget. Classic drinks from a few bottles,",
-        "> in house shorthand, decoded in the browser, with a shelf that shows",
-        "> what you can pour tonight.",
+        "> " + DESCRIPTION,
         "",
         "One person's shelf, pouring for guests and for himself.",
         method_words(menu) + ". The menu is large because the bottles",

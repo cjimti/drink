@@ -12,7 +12,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import jslex  # noqa: E402  (path set above; there is no package here)
+import glasses  # noqa: E402  (path set above; there is no package here)
+import jslex  # noqa: E402
 import stage  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -47,9 +48,6 @@ def check_ids(html, js):
     return dangling, len(wanted)
 
 
-GLASS_DIR = ROOT / "assets" / "glasses"
-
-
 def js_function(js, name):
     """One top-level function of app.js, found by matching its braces."""
     try:
@@ -65,18 +63,20 @@ def js_function(js, name):
     return js[start:]
 
 
-def check_glasses(js):
+def check_glasses(js, art=None):
     """Every drawing a serve token can ask for exists, and none is spare.
 
     `pickGlassArt` turns the glass letter into a filename stem and
     `garnishArt` turns whatever follows it into a suffix. Cross the two and
-    that is every name the app can build. A name with no file behind it
+    that is every name the app can build. A name with no drawing behind it
     fails the way static sites fail: `renderGlass` finds nothing in
     `glassMarkup`, returns an empty string, and the row loses its icon on
-    somebody's phone with nothing in the console. Both lists are read off
-    the app so there is no second copy here to go stale. This one reports
-    rather than prints, because test_checks.py runs it over broken sources
-    and a passing pipeline should say nothing about them.
+    somebody's phone with nothing in the console. The names are read off
+    the app and the drawings off the one file the app fetches,
+    assets/glasses/all.json, which has to match the SVGs it is made from.
+    This one reports rather than prints, because test_checks.py runs it
+    over broken sources and a passing pipeline should say nothing about
+    them.
     """
     stems = re.findall(r"return extra \? '[a-z-]+' \+ extra : '([a-z-]+)';",
                        js_function(js, "pickGlassArt"))
@@ -86,18 +86,23 @@ def check_glasses(js):
     wanted = set(stems)
     wanted |= {f"{stem}-{suf}" for stem in stems for suf in suffixes if suf}
 
-    listed = re.search(r"var GLASS_FILES = \[(.*?)\];", js, re.S).group(1)
-    listed = {n.strip() for n in listed.replace("'", "").split(",") if n.strip()}
-    have = {f.stem for f in GLASS_DIR.glob("*.svg")}
+    drawn = glasses.drawings()
+    art = glasses.shipped() if art is None else art
+    if art is None:
+        return ["assets/glasses/all.json: missing or unreadable, so no row "
+                "has a glass: run make glasses"], len(wanted)
+    have = set(drawn)
+    listed = set(art)
 
     errs = [f"assets/glasses/{n}.svg: a serve token reaches it, nothing draws it"
             for n in sorted(wanted - have)]
-    errs += [f"{n}: drawn but never fetched, so GLASS_FILES has to name it"
-             for n in sorted(wanted - listed)]
-    errs += [f"{n}: fetched by GLASS_FILES and not in assets/glasses"
-             for n in sorted(listed - have)]
-    errs += [f"{n}: fetched by GLASS_FILES at every boot and no serve token "
-             f"asks for it" for n in sorted(listed - wanted)]
+    errs += [f"{n}: drawn but not in assets/glasses/all.json, the one file "
+             f"the app fetches" for n in sorted((wanted & have) - listed)]
+    errs += [f"{n}: in assets/glasses/all.json at every boot and no serve "
+             f"token asks for it" for n in sorted(listed - wanted)]
+    if not errs and art != drawn:
+        errs.append("assets/glasses/all.json does not match the SVGs in "
+                    "assets/glasses: run make glasses")
     return errs, len(wanted)
 
 
@@ -406,6 +411,33 @@ def check_worker(js, sw):
     return errs + check_sw_shell(code)
 
 
+def check_description(html, others):
+    """One sentence says what the site is, and every copy of it agrees.
+
+    The meta description is where it is written. The og and twitter tags
+    and the JSON-LD are what an unfurl, a crawler and an agent quote; the
+    README's first line and humans.txt are what a person reads first. Six
+    places once said six different things. llms.txt reads the sentence
+    out of index.html, so llms.py --check holds that one.
+    """
+    m = re.search(r'<meta name="description" content="([^"]+)">', html)
+    if not m:
+        return ["index.html has no meta description to say what the site is"]
+    said = m.group(1)
+    errs = [f"index.html {tag} is not the meta description"
+            for tag, pat in (("og:description", r'<meta property="og:description" content="([^"]*)">'),
+                             ("twitter:description", r'<meta name="twitter:description" content="([^"]*)">'),
+                             ("the JSON-LD WebSite description", r'"@type": "WebSite",.*?"description": "([^"]*)"'))
+            if (re.search(pat, html, re.S) or [None, None])[1] != said]
+    readme = others.get("README.md", "").split("\n")
+    first = next((line for line in readme[1:] if line.strip()), "")
+    if first != said:
+        errs.append("README.md: the line under the heading is not the meta description")
+    if said not in others.get("humans.txt", ""):
+        errs.append("humans.txt does not carry the meta description")
+    return errs
+
+
 def check_stamps(texts):
     """Every stamp a release makes has exactly one place to land.
 
@@ -562,6 +594,9 @@ def main():
                 ("WORKER", check_worker(js, sw)),
                 ("DATA", check_data(js, sw)),
                 ("STAMP", check_stamps(texts)),
+                ("COPY", check_description(html, {
+                    "README.md": (ROOT / "README.md").read_text(),
+                    "humans.txt": texts["humans.txt"]})),
                 ("SERVED", check_served(refs, stage.SERVED)),
                 ("GLASS", glass), ("FONT", fonts),
                 ("FONT", check_offsite(texts)),
@@ -585,6 +620,7 @@ def main():
     print("  worker  registration guarded, eviction present in app.js and sw.js")
     print("  data    fetched with the release, kept on its path, carried across a release")
     print("  stamps  every release stamp lands exactly once, the tree is unstamped")
+    print("  words   one description in the meta tags, the JSON-LD, the README and humans.txt")
     print(f"  served  {len(refs)} local reference(s) inside the "
           f"{len(stage.SERVED)} path(s) the deploy uploads")
     return 0

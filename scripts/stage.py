@@ -38,6 +38,10 @@ SERVED = [
     "sitemap.xml", "humans.txt", "llms.txt", "llms-full.txt",
     "assets", "data", "drink",
 ]
+# Inside a served directory and never on the site: the README's
+# screenshots live under assets/ beside the rest of the pictures, and
+# nothing the site serves links them.
+NOT_SERVED = ("assets/readme/",)
 
 PAGE = re.compile(r"^drink/[^/]+/index\.html$")
 # What a tag or a branch name may be before it is written into a script
@@ -91,7 +95,8 @@ def tracked():
         ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard",
          "--", *SERVED],
         cwd=ROOT, check=True, capture_output=True, text=True).stdout
-    return sorted({n for n in out.split("\0") if n and (ROOT / n).is_file()})
+    return sorted({n for n in out.split("\0") if n and (ROOT / n).is_file()
+                   and not n.startswith(NOT_SERVED)})
 
 
 def inline_hashes(root, names):
