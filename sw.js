@@ -68,21 +68,11 @@ var SHELL = [
   'assets/fonts/lato-700-latin-ext.woff2',
   'assets/fonts/lato-700-latin.woff2',
   'assets/fonts/montserrat-500-800-latin-ext.woff2',
-  'assets/fonts/montserrat-500-800-latin.woff2',
-  /* The plates on the Info tab. A help page that loses its pictures
-     the first time it is opened with no signal is not much help. */
-  'assets/tools/boston-shaker.png',
-  'assets/tools/japanese-jigger.png',
-  'assets/tools/hawthorne-strainer.png',
-  'assets/tools/barspoon.png',
-  'assets/tools/citrus-peeler.png',
-  'assets/tools/paring-knife.png',
-  'assets/tools/bitters-bottles.png',
-  'assets/tools/bottle-pourers.png',
-  'assets/tools/bar-mat.png',
-  'assets/tools/nick-nora.png',
-  'assets/tools/rocks-glass.png',
-  'assets/tools/highball-glass.png'
+  'assets/fonts/montserrat-500-800-latin.woff2'
+  /* Not the Info tab's plates. The shell is fetched whole on every
+     release by every phone that has the site, and most guests never
+     open that tab. A plate goes network-first like a glass, so it is
+     there offline once it has been seen. */
 ];
 
 /* The four menu files. The app asks for them with ?v=<tag> on the end,
@@ -204,8 +194,8 @@ self.addEventListener('fetch', function (e) {
 
   /* The shell was fetched fresh at install and is keyed to this version,
      so it is safe cache-first. Everything else, a drink page, a glass, a
-     card, the data, goes to the network first and falls back to the copy
-     from last time. That is what stops an edge cache serving the old
+     card, a tool plate, the data, goes to the network first and falls
+     back to the copy from last time. That is what stops an edge cache serving the old
      release for ten minutes after a deploy from being pinned here for
      good, and it keeps the offline copy no more than one visit old.
      The data revalidates rather than downloading whole: GitHub sends an

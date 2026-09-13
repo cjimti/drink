@@ -878,18 +878,35 @@ noscript.fallback a { color: var(--brass); }
 .drink:has(+ .family) { border-bottom: 0; }
 
 .drink__head {
+  position: relative;
   display: flex;
   align-items: stretch;
   gap: 10px;
   width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* The row's control, laid over the whole row. The name is a link to the
+   drink's page and sits above it, sized to the name so a modifier click
+   on the empty part of the row does not open a page. */
+.drink__hit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
   appearance: none;
   background: transparent;
   border: 0;
-  color: inherit;
-  text-align: left;
+  margin: 0;
   padding: 0;
-  cursor: pointer;
+  color: inherit;
   font: inherit;
+  cursor: pointer;
+}
+a.drink__name {
+  position: relative;
+  z-index: 1;
+  justify-self: start;
 }
 
 /* Full height of the row, left of the name. Decorative, because the code

@@ -1487,13 +1487,28 @@
     return html + '</div>';
   }
 
+  /* In a row the name is a link to the drink's own page, so the front
+     page links to every one of them and a cmd-click opens one. A link
+     cannot sit inside a button, so the row's button is a sibling laid
+     over the whole row and the link sits above it. The text is the
+     button's name, read once through aria-labelledby, and hidden as
+     text so a screen reader does not read the row twice; the link is
+     out of the tab order for the same reason, and the Share pane
+     carries the page address for anyone who cannot point. */
+  function rowText(d) {
+    return '<span class="drink__text" id="drink-text-' + esc(d.id) + '" aria-hidden="true">' +
+      '<a class="drink__name" href="/drink/' + esc(d.id) + '/" data-drink="' + esc(d.id) + '"' +
+        ' tabindex="-1">' + esc(d.name) + '</a>';
+  }
+
   /* Name, code, ingredient line, and whatever the shelf has to say about
-     them. A row is one of these behind a button and the wide-screen aside
-     is the same block above the recipe, so a drink is described once. */
-  function renderDrinkText(d, held, showShelf) {
+     them. A row is one of these beside its button and the wide-screen
+     aside is the same block above the recipe, so a drink is described
+     once. */
+  function renderDrinkText(d, held, showShelf, inRow) {
     var missing = missingFor(d, held);
-    var html = '<span class="drink__text">' +
-      '<span class="drink__name">' + esc(d.name) + '</span>' +
+    var html = (inRow ? rowText(d) : '<span class="drink__text">' +
+      '<span class="drink__name">' + esc(d.name) + '</span>') +
       '<span class="drink__code">' + esc(d.code) + '</span>' +
       '<span class="drink__line">' + esc(ingredientLine(d)) + '</span>';
 
@@ -1522,11 +1537,15 @@
     if (showShelf) cls += missing.length ? ' is-short' : ' is-pourable';
     if (open[d.id]) cls += ' is-open';
 
+    /* The button comes first, so a lookup of [data-drink] in the list
+       finds the control and not the link. */
     var html = '<div class="' + cls + '" id="drink-' + esc(d.id) + '">' +
-      '<button class="drink__head" data-drink="' + esc(d.id) + '" ' +
-        'aria-expanded="' + (open[d.id] ? 'true' : 'false') + '">' +
-        renderGlass(d.serve) + renderDrinkText(d, held, showShelf) +
-      '</button>';
+      '<div class="drink__head">' +
+        '<button type="button" class="drink__hit" data-drink="' + esc(d.id) + '"' +
+          ' aria-expanded="' + (open[d.id] ? 'true' : 'false') + '"' +
+          ' aria-labelledby="drink-text-' + esc(d.id) + '"></button>' +
+        renderGlass(d.serve) + renderDrinkText(d, held, showShelf, true) +
+      '</div>';
 
     /* On a wide screen the recipe reads in the aside beside the list, so
        the row stays a row. Paper is not a viewport, so the print blocks go
@@ -3170,6 +3189,22 @@
   /* Which drink a click came out of. Inside the list that is the row it
      sits in; in the wide-screen aside the recipe has been lifted out of
      its row, so the aside says which drink it is holding. */
+  /* A plain click on the name in a row opens the recipe in place, like
+     the rest of the row. A click with a modifier is somebody asking for
+     the page, in a new tab or window, and the browser takes it; a middle
+     click never arrives here at all. Focus goes to the row's button
+     first: the link is hidden text out of the tab order, and the repaint
+     puts focus back on whatever had it. */
+  function drinkClick(e, t) {
+    if (t.tagName === 'A') {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      e.preventDefault();
+      var hit = t.closest('.drink__head').querySelector('.drink__hit');
+      if (hit) hit.focus({ preventScroll: true });
+    }
+    toggleDrink(t.dataset.drink);
+  }
+
   /* A row unfolds its recipe under it. On a wide screen the recipe is
      read in the aside instead, and there is only one of those, so opening
      one drink closes the rest. On a phone the list has always let you
@@ -3771,7 +3806,7 @@
     }
 
     if (t.dataset.drink) {
-      toggleDrink(t.dataset.drink);
+      drinkClick(e, t);
       return;
     }
 
