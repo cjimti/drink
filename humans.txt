@@ -14,5 +14,5 @@ Software: Claude Code, a text editor and a printed card
 Source: https://github.com/cjimti/drink
 Analytics: Google Analytics and Cloudflare Web Analytics, aggregate only. See the Info tab on the site.
 
-Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded from house shorthand, with a shelf that shows what you can pour tonight.
+My printed menu, decoded. Tick what you have, see what you can pour tonight, and which bottle to buy next.
 No framework, no database, no build.

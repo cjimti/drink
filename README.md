@@ -1,6 +1,6 @@
 # fewbottles.com
 
-Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded from house shorthand, with a shelf that shows what you can pour tonight.
+My printed menu, decoded. Tick what you have, see what you can pour tonight, and which bottle to buy next.
 
 <!-- numbers from make stats -->
 Over a hundred and fifty classics, three methods, one small bar. No

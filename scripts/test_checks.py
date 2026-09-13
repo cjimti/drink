@@ -940,7 +940,8 @@ def run_description(failures):
     """The sentence that says what the site is agrees everywhere it is."""
     html = (ROOT / "index.html").read_text()
     others = {"README.md": (ROOT / "README.md").read_text(),
-              "humans.txt": (ROOT / "humans.txt").read_text()}
+              "humans.txt": (ROOT / "humans.txt").read_text(),
+              "manifest.webmanifest": check_assets.manifest()["description"]}
     report("copy/description clean",
            check_assets.check_description(html, others), False, failures)
     said = llms.DESCRIPTION
@@ -956,6 +957,19 @@ def run_description(failures):
         broken = dict(others, **{name: others[name].replace(said, "The house cocktail menu.")})
         report(f"copy/{name} drifted",
                check_assets.check_description(html, broken), True, failures)
+    run_title(html, failures)
+
+
+def run_title(html, failures):
+    """The front page's name agrees with the name its unfurl shows."""
+    report("copy/title clean", check_assets.check_title(html), False, failures)
+    named = llms.TITLE
+    for tag in ("og:title", "twitter:title"):
+        broken = html.replace(f'{tag}" content="{named}"', f'{tag}" content="few bottles: the cocktail menu"')
+        assert broken != html, tag
+        report(f"copy/{tag} drifted", check_assets.check_title(broken), True, failures)
+    report("copy/no title", check_assets.check_title(html.replace(f"<title>{named}</title>", "")),
+           True, failures)
 
 
 def stage_error(fn):

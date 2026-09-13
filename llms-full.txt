@@ -1,7 +1,6 @@
-# few bottles: the cocktail menu
+# few bottles: classic cocktails from a small home bar
 
-> Classic drinks from one small home bar, decoded from the house
-> shorthand on the printed card.
+> Every drink decoded from the house shorthand on the printed card.
 
 185 drinks, 87 stirred, 73 shaken, 25 built, 50 ingredients. The interactive app is https://fewbottles.com/. This file is the same menu spelled out, so nothing has to run JavaScript.
 
