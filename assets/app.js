@@ -42,6 +42,7 @@
   var versionLabel = /^v\d/.test(VERSION) ? VERSION : 'dev';
 
   var FRACTION = { h: '1/2', q: '1/4', Q: '3/4' };
+  var OUNCE = { h: 0.5, q: 0.25, Q: 0.75 };
 
   var data = {};
   var ing = {};          /* id -> ingredient */
@@ -496,6 +497,7 @@
      thousand times per render of the Bar tab. */
   var poursBy = {};
   var needsBy = {};
+  var leadBy = {};
 
   function buildNeeds() {
     data.menu.cocktails.forEach(function (d) {
@@ -509,7 +511,45 @@
 
       poursBy[d.id] = pours;
       needsBy[d.id] = all;
+      leadBy[d.id] = leadBottle(d);
     });
+  }
+
+  /* Ounces, for weighing one pour against another. A dash, a barspoon,
+     a rinse, a top and a pour with no measure all weigh nothing. */
+  function pourOz(token, ingredient) {
+    if (typeof token !== 'string' || (ingredient && ingredient.unit === 'dash')) return 0;
+    var m = /^(\d*)([hqQ])$/.exec(token);
+    if (m) return (m[1] === '' ? 0 : +m[1]) + OUNCE[m[2]];
+    return /^\d+$/.test(token) ? +token : 0;
+  }
+
+  /* The bottle a drink is mostly made of, which is what All files it
+     under. A spirit beats anything else in the glass, so the French 75
+     is gin and not the Champagne on top; with no spirit, the biggest
+     vermouth or liqueur leads, so the Bamboo is sherry. A tie goes to
+     the one poured first. Juice, syrup, bitters and mixers lead only a
+     drink with nothing else in it, and then the first pour does, so no
+     drink is ever left off All.
+     `family` is the printed section and is left alone: So So Cocktail
+     files under Apple Brandy there and under Gin here. */
+  var LEADS = { base: 2, vermouth: 1, modifier: 1 };
+
+  function leadBottle(d) {
+    var best = null;
+    var bestRank = 0;
+    var bestOz = -1;
+    d.build.forEach(function (p) {
+      var i = ing[p[0]];
+      var rank = i ? LEADS[i.kind] || 0 : 0;
+      var oz = pourOz(p[1], i);
+      if (rank > bestRank || (rank === bestRank && rank && oz > bestOz)) {
+        best = p[0];
+        bestRank = rank;
+        bestOz = oz;
+      }
+    });
+    return best || d.build[0][0];
   }
 
   /* Everything a bottle is wanted for, garnish included. This answers
@@ -1790,31 +1830,48 @@
     return showShelf && missingFor(d, held).length ? w + 0.5 : w;
   }
 
+  /* A bottle heading has no blurb: the name is the whole of it. */
   function sectionHead(label, blurb) {
     return '<h2 class="method__title">' + esc(label) + '</h2>' +
       '<div class="method__rule"></div>' +
-      '<p class="method__blurb">' + esc(blurb) + '</p>';
+      (blurb ? '<p class="method__blurb">' + esc(blurb) + '</p>' : '');
   }
 
-  function menuSections(list, held, showShelf) {
-    var secs = [];
+  function drinkRows(drinks, held, showShelf) {
     var w = drinkWeight();
+    return drinks.map(function (d) {
+      return { html: renderDrink(d, held, showShelf),
+        w: rowWeight(d, w, held, showShelf), head: false };
+    });
+  }
 
-    if (filter.method === 'families' && data.kin) {
-      data.kin.patterns.forEach(function (p) {
-        var inPat = p.members.map(function (id) { return cocktailBy[id]; })
-          .filter(function (d) { return d && list.indexOf(d) >= 0; });
-        if (!inPat.length) return;
-        var sec = { attrs: ' id="pattern-' + esc(p.id) + '"', head: sectionHead(p.label, p.blurb), rows: [] };
-        inPat.forEach(function (d) {
-          sec.rows.push({ html: renderDrink(d, held, showShelf),
-            w: rowWeight(d, w, held, showShelf), head: false });
-        });
-        secs.push(sec);
-      });
-      return secs;
-    }
+  function patternSections(list, held, showShelf) {
+    var secs = [];
+    data.kin.patterns.forEach(function (p) {
+      var inPat = p.members.map(function (id) { return cocktailBy[id]; })
+        .filter(function (d) { return d && list.indexOf(d) >= 0; });
+      if (!inPat.length) return;
+      secs.push({ attrs: ' id="pattern-' + esc(p.id) + '"', head: sectionHead(p.label, p.blurb),
+        rows: drinkRows(inPat, held, showShelf) });
+    });
+    return secs;
+  }
 
+  /* All: one section per leading bottle, in shelf order, each drink in
+     the order the card prints it. */
+  function bottleSections(list, held, showShelf) {
+    var secs = [];
+    data.bar.ingredients.forEach(function (i) {
+      var led = list.filter(function (d) { return leadBy[d.id] === i.id; });
+      if (!led.length) return;
+      secs.push({ attrs: '', head: sectionHead(i.name, ''), rows: drinkRows(led, held, showShelf) });
+    });
+    return secs;
+  }
+
+  /* One method: the card's own filing, its printed sections under it. */
+  function methodSections(list, held, showShelf) {
+    var secs = [];
     data.menu.methods.forEach(function (m) {
       var inMethod = list.filter(function (d) { return d.method === m.id; });
       if (!inMethod.length) return;
@@ -1823,14 +1880,17 @@
         var inFamily = inMethod.filter(function (d) { return d.family === f.id; });
         if (!inFamily.length) return;
         sec.rows.push({ html: '<h3 class="family">' + esc(f.label) + '</h3>', w: HEAD_WEIGHT.family, head: true });
-        inFamily.forEach(function (d) {
-          sec.rows.push({ html: renderDrink(d, held, showShelf),
-            w: rowWeight(d, w, held, showShelf), head: false });
-        });
+        sec.rows = sec.rows.concat(drinkRows(inFamily, held, showShelf));
       });
       secs.push(sec);
     });
     return secs;
+  }
+
+  function menuSections(list, held, showShelf) {
+    if (filter.method === 'families' && data.kin) return patternSections(list, held, showShelf);
+    if (filter.method === 'all') return bottleSections(list, held, showShelf);
+    return methodSections(list, held, showShelf);
   }
 
   function joinSections(secs) {
