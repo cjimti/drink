@@ -1,8 +1,6 @@
 # few bottles
 
-> Cocktail maxxing on a budget. Classic drinks from a few bottles,
-> in house shorthand, decoded in the browser, with a shelf that shows
-> what you can pour tonight.
+> Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded from house shorthand, with a shelf that shows what you can pour tonight.
 
 One person's shelf, pouring for guests and for himself.
 Three methods, stirred, shaken, and built. The menu is large because the bottles

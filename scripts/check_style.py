@@ -814,21 +814,33 @@ def shipped_files():
     return out
 
 
-def check_dashes(texts):
-    """No em dash in anything the site serves.
+# Not served, and the first two things a reader of the repo opens. The
+# rule is written in one of them, so neither gets to break it.
+DOCS = ["README.md", "CLAUDE.md"]
+
+
+def doc_files():
+    """The README and the working rules, as {name: text}."""
+    return {n: (ROOT / n).read_text() for n in DOCS}
+
+
+def check_dashes(texts, escaped=True):
+    """No em dash in anything the site serves, or in the two documents.
 
     A dash standing in for a pause is the surest tell of prose nobody
     edited, and it is banned here on the house's say-so rather than on
     taste. Comments count: they ship inside the file. The escaped
     spelling counts too, because JSON writes it that way and no reader
-    can tell which spelling it arrived in.
+    can tell which spelling it arrived in. The two documents are prose
+    and nothing decodes them, so there the escape is only a name for the
+    character, which is how CLAUDE.md states this rule.
     """
     errs = []
     for name, text in sorted(texts.items()):
         for n, line in enumerate(text.splitlines(), 1):
-            if "\u2014" in line or "\\u2014" in line:
-                errs.append(f"{name}:{n} em dash in a served file; a comma, "
-                            f"a colon or a full stop says it")
+            if "\u2014" in line or (escaped and "\\u2014" in line):
+                errs.append(f"{name}:{n} em dash; a comma, a colon or a "
+                            f"full stop says it")
     return errs
 
 
@@ -884,6 +896,7 @@ def main():
     errs += check_search_case(js)
     errs += check_drink_links(js)
     errs += check_dashes(shipped_files())
+    errs += check_dashes(doc_files(), escaped=False)
 
     for e in errs:
         print(f"  STYLE   {e}")
@@ -910,7 +923,7 @@ def main():
     print("  search  a code keeps the case it was typed in, on a phone too")
     print("  state   every button that goes on says so, not just in CSS")
     print(f"  copy    no em dash in the {len(shipped_files())} file(s) the "
-          f"site serves")
+          f"site serves, the README or CLAUDE.md")
     return 0
 
 

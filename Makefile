@@ -2,7 +2,7 @@
 
 .DEFAULT_GOAL := verify
 .PHONY: verify check json syntax lint code style test unit menu kin llms \
-        pages cards assets stage probe serve icons tools events stats clean
+        pages cards glasses assets stage probe serve icons tools events stats clean
 
 ## verify — run every check, then stamp the review-gate sentinel
 verify: check
@@ -80,6 +80,11 @@ pages:
 ##         Needs Pillow and rsvg-convert, like icons; the check does not.
 cards:
 	@python3 scripts/cards.py
+
+## glasses — regenerate assets/glasses/all.json, every glass drawing in the
+##           one file the menu fetches
+glasses:
+	@python3 scripts/glasses.py
 
 ## assets — every file index.html asks for is actually here
 assets:

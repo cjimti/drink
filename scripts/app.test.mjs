@@ -83,7 +83,7 @@ function fetchTree(url) {
 
 /* Boot app.js against the tree with this store. Resolves to the context
    once the loading line is hidden, or rejects with what it said. */
-function boot(store) {
+function boot(store, fetcher = fetchTree) {
   const els = {};
   const $ = (sel) => (els[sel] = els[sel] || element(sel));
   const win = {
@@ -98,7 +98,7 @@ function boot(store) {
     location: { protocol: 'http:', origin: 'http://localhost', pathname: '/',
                 search: '', hash: '', reload() {} },
     history: { replaceState() {} },
-    fetch: fetchTree,
+    fetch: fetcher,
     window: win,
     document: {
       title: 'few bottles', hidden: false, activeElement: null,
@@ -379,4 +379,65 @@ test('a plain click on the name opens the row, a modified one leaves it to the b
   app.drinkClick({ button: 0, preventDefault() { throw new Error('a button click is not prevented'); } },
     { tagName: 'BUTTON', dataset: { drink: 'martini' } });
   assert.equal(app.open.martini, undefined);
+});
+
+/* kin.json comes after the first paint. This holds it back until the
+   case says so, and hands the rest of the tree over as usual. */
+function heldKin() {
+  let release;
+  const gate = new Promise((resolve) => { release = resolve; });
+  const fetcher = (url) => url.startsWith('data/kin.json') ? gate.then(() => release.answer()) : fetchTree(url);
+  release.answer = () => fetchTree('data/kin.json');
+  return { fetcher, land: (answer) => { if (answer) release.answer = answer; release(); } };
+}
+
+const settle = () => new Promise((resolve) => setTimeout(resolve, 20));
+
+test('the menu paints before kin.json, Shapes and Related wait for it', async () => {
+  const kin = heldKin();
+  const ctx = await boot({}, kin.fetcher);
+  const filters = () => ctx.document.getElementById('filters').innerHTML;
+  assert.equal(ctx.data.kin, undefined, 'kin.json is not part of the first paint');
+  assert.match(filters(), /aria-disabled="true" title="Shapes are loading"/);
+  assert.doesNotMatch(filters(), /data-method="families"/, 'an off segment the delegate could still click');
+  ctx.recipePane.martini = 'kin';
+  assert.equal(ctx.paneOf(byId.martini), 'recipe');
+  assert.doesNotMatch(ctx.renderRecipeTabs(byId.martini, 'recipe'), /Related/);
+
+  kin.land();
+  await settle();
+  assert.ok(ctx.data.kin && ctx.data.kin.drinks.martini, 'kin.json landed');
+  assert.match(filters(), /data-method="families"/);
+  assert.doesNotMatch(filters(), /aria-disabled/);
+  assert.equal(ctx.paneOf(byId.martini), 'kin', 'a drink asked to open on Related gets it once it can');
+  assert.match(ctx.renderRecipeTabs(byId.martini, 'kin'), /Related/);
+});
+
+test('a kin.json that never arrives leaves Shapes off and says so', async () => {
+  const kin = heldKin();
+  const ctx = await boot({}, kin.fetcher);
+  kin.land(() => Promise.resolve({ ok: false, url: 'data/kin.json' }));
+  await settle();
+  assert.equal(ctx.data.kin, undefined);
+  assert.match(ctx.document.getElementById('filters').innerHTML, /title="Shapes did not load"/);
+  assert.doesNotThrow(() => ctx.renderMenu());
+});
+
+test('every glass drawing arrives in the one request', () => {
+  const drawn = fs.readdirSync(path.join(ROOT, 'assets/glasses')).filter((f) => f.endsWith('.svg'));
+  assert.equal(Object.keys(app.glassMarkup).length, drawn.length);
+  assert.match(app.renderGlass('Rl'), /^<span class="drink__glass drink__glass--rocks"/);
+});
+
+test('the strip in the HTML stays up for a first visit and goes early for a returning one', async () => {
+  const intro = (ctx) => ctx.document.getElementById('intro');
+  assert.equal(intro(app).hidden, false, 'an empty shelf on a phone width keeps the strip');
+  for (const store of [{ 'drink.bar.v1': '{"gin":true}' }, { 'drink.intro.v1': '1' }]) {
+    const ctx = await boot(store);
+    assert.equal(intro(ctx).hidden, true, JSON.stringify(store));
+  }
+  const ctx = await boot({ 'drink.bar.v1': '{"gin":false}' });
+  intro(ctx).hidden = false;
+  ctx.introEarly();
+  assert.equal(intro(ctx).hidden, false, 'a store with nothing ticked is still a first visit');
 });

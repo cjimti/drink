@@ -149,10 +149,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
          figure is not read twice. -->
     <p class="sr-only" id="menu-live" role="status" aria-live="polite"></p>
     <div class="menu-main">
+      <!-- The first-visit strip and the rail's three steps are written here
+           rather than by app.js, so the first paint has words in it before
+           the script and the menu arrive. app.js hides the strip for anyone
+           it does not apply to, and reads the steps out of the rail once
+           before it takes that column over. -->
+      <div class="intro" id="intro">
+        <h2 class="intro__h">Tick your bottles, and this becomes your menu.</h2>
+        <p class="intro__p">Open the Bar tab, tick what you own, and the list shrinks to what you can pour tonight. Every bottle you have not ticked shows how many drinks it would add.</p>
+        <div class="intro__acts">
+          <button type="button" class="btn intro__go" data-intro-open="1">Open the Bar tab</button>
+          <button type="button" class="intro__no" data-intro-dismiss="1">Not now</button>
+        </div>
+      </div>
       <div id="filters"></div>
       <div id="menu-body"></div>
     </div>
-    <aside class="menu-aside" id="menu-aside" hidden aria-label="Open drink"></aside>
+    <aside class="menu-aside" id="menu-aside" hidden aria-label="Open drink">
+      <div class="card">
+        <h2 class="card__h">Classic drinks, from a few bottles.</h2>
+        <div class="card__steps" id="rail-steps">
+          <p class="card__k card__k--top">How this works</p>
+          <ol class="rules">
+            <li class="rule">
+              <div class="rule__h">The menu</div>
+              <p class="rule__t">Everything on the left is what this bar pours, most of it from a handful of bottles. Tap a drink for the recipe. The small code beside its name is the shorthand off my printed menu, and the Key tab decodes every letter of it.</p>
+            </li>
+            <li class="rule">
+              <div class="rule__h">Your bottles</div>
+              <p class="rule__t">Tick what you own on the Bar tab. The number beside a bottle you do not have is how many new drinks buying it opens, not how many recipes mention it. Tap that number to see them.</p>
+            </li>
+            <li class="rule">
+              <div class="rule__h">My Shelf</div>
+              <p class="rule__t">Narrows the list to the drinks your own bottles make. Print that in black and white for the counter, or turn it into one link and send it to a guest.</p>
+            </li>
+          </ol>
+          <div class="card__acts">
+            <a class="btn" href="#bar">Open the Bar tab</a>
+          </div>
+        </div>
+      </div>
+    </aside>
   </section>
 
   <section class="view" id="view-bar" hidden aria-label="The bar">
@@ -188,6 +225,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>Juice with vodka is a regression. Plenty of modern drinks came out of these older shapes, and those flavor profiles are still terribly underrated.</p>
         <p>I built a small utility. Broad categories, few ingredients, little expense. The complete catalog of classic and modern drinks, with every niche bottle named, can wait until you know what you actually like.</p>
         <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Here you tick what you have, and the menu shows which bottle opens the most drinks next.</p>
+        <p>I built the site with Claude Code, held to the rules in <a href="https://github.com/cjimti/drink/blob/main/CLAUDE.md" rel="noopener">CLAUDE.md</a>. The drinks, the measures, the histories and the words are mine to answer for.</p>
         <p class="info__sign">My shelf, my menu.<br><a href="https://imti.co/" rel="author">Craig Johnston</a></p>
       </div>
     </section>
@@ -409,6 +447,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </a>
 </nav>
 
-<script src="assets/app.js"></script>
+<script defer src="assets/app.js"></script>
 </body>
 </html>

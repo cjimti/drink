@@ -625,6 +625,16 @@ noscript.fallback a { color: var(--brass); }
 }
 .intro__no:hover { color: var(--muted); }
 
+/* The strip and the rail's steps are in the HTML, so they paint before
+   app.js has decided anything. Until it has, a laptop shows the steps in
+   the rail and not the strip, which is what app.js will settle on for a
+   first visit at that width. `is-ready` goes on the body once the menu
+   is in. */
+@media (min-width: 900px) {
+  body:not(.is-ready) .intro { display: none; }
+  body:not(.is-ready) .menu-aside[hidden] { display: block; }
+}
+
 /* ── Undo a bulk shelf write ──────────────────────────────── */
 
 /* Stock everything, Clear the shelf and Make this my shelf each replace
@@ -698,6 +708,8 @@ noscript.fallback a { color: var(--brass); }
 }
 .seg__b:last-child { border-right: 0; }
 .seg__b.is-on { background: var(--bone); color: var(--ground); }
+/* Shapes before data/kin.json has arrived, or when it never does. */
+.seg__b[aria-disabled="true"] { color: var(--faint); cursor: default; }
 
 /* Five segments (All / Stirred / Shaken / Built / Shapes) on a phone.
    Tracking drops a little so the five sit on one line in the 348px a
@@ -2297,6 +2309,7 @@ body.is-tonight .topbar,
 body.is-tonight .undo,
 body.is-tonight .tabbar,
 body.is-tonight #filters,
+body.is-tonight .intro,
 body.is-tonight .shared,
 body.is-tonight .tonight__hit,
 body.is-tonight .tonight__pane,
@@ -2839,7 +2852,7 @@ button.card__fig { cursor: pointer; }
   /* Nothing fills on hover; a fill is what `is-on` means. */
   .chip:not(.is-on):hover, .btn:hover { border-color: var(--muted); color: var(--bone); }
   .info__jump:not(.is-on):hover { border-color: var(--muted); color: var(--bone); }
-  .seg__b:not(.is-on):hover { color: var(--bone); }
+  .seg__b:not(.is-on):not([aria-disabled="true"]):hover { color: var(--bone); }
 }
 
 /* ── Print ────────────────────────────────────────────────────

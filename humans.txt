@@ -10,10 +10,9 @@ From: one home bar.
 Language: English
 Doctype: HTML5
 Standards: HTML, CSS, JavaScript
-Software: a text editor and a printed card
+Software: Claude Code, a text editor and a printed card
 Source: https://github.com/cjimti/drink
 Analytics: Google Analytics and Cloudflare Web Analytics, aggregate only. See the Info tab on the site.
 
-The menu is the card. The site decodes the house shorthand and asks
-the shelf what it can pour. Cocktail maxxing on a budget. No
-framework, no database, no build.
+Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded from house shorthand, with a shelf that shows what you can pour tonight.
+No framework, no database, no build.

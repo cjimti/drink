@@ -499,9 +499,10 @@ def run_pressed(failures):
                failures)
     app = (ROOT / "assets" / "app.js").read_text()
     broken = app.replace(
-        """'" data-method="' + s.id + '"' +\n"""
-        """          ' aria-pressed="' + (on ? 'true' : 'false') + '">' +""",
-        """'" data-method="' + s.id + '">' +""")
+        """        : ' data-method="' + s.id + '"') +\n"""
+        """      ' aria-pressed="' + (on ? 'true' : 'false') + '">' +""",
+        """        : ' data-method="' + s.id + '"') + '>' +""")
+    assert broken != app, "the segment's aria-pressed moved; point this at it"
     report("pressed/segment stripped", check_style.check_pressed(broken),
            True, failures)
     report("pressed/clean", check_style.check_pressed(app), False, failures)
@@ -651,13 +652,14 @@ def run_method_line(failures):
 
 
 def run_glasses(failures):
-    """Every drawing a serve token can reach is on disk and fetched."""
+    """Every drawing a serve token can reach is on disk and in all.json."""
     app = (ROOT / "assets" / "app.js").read_text()
+    art = json.loads((ROOT / "assets" / "glasses" / "all.json").read_text())
     report("glass/clean", check_assets.check_glasses(app)[0], False, failures)
 
-    broken = app.replace(", 'highball-pick'", "")
-    report("glass/never fetched", check_assets.check_glasses(broken)[0], True,
-           failures)
+    broken = {k: v for k, v in art.items() if k != "highball-pick"}
+    report("glass/never fetched", check_assets.check_glasses(app, broken)[0],
+           True, failures)
 
     broken = app.replace(
         "    if (g === 'h') return extra ? 'highball-' + extra : 'highball';",
@@ -666,13 +668,18 @@ def run_glasses(failures):
            failures)
 
     # A drawing every boot fetches and nothing ever shows. Only the new
-    # message counts here: the file is gone too, and that rule would
-    # report it on its own.
-    broken = app.replace("'rocks-cube-wheel',\n",
-                         "'rocks-cube-wheel',\n    'rocks-ice',\n")
+    # message counts here: the file is not on disk either, and the stale
+    # rule would report that on its own.
+    broken = dict(art, **{"rocks-ice": "<svg/>"})
     report("glass/fetched, never asked for",
-           [e for e in check_assets.check_glasses(broken)[0]
+           [e for e in check_assets.check_glasses(app, broken)[0]
             if "no serve token" in e], True, failures)
+
+    # A drawing changed on disk and all.json not made again: every name
+    # still lines up, and the phone draws the old glass.
+    broken = dict(art, rocks=art["rocks"].replace("M80 244h40", "M80 244h41"))
+    report("glass/stale all.json", check_assets.check_glasses(app, broken)[0],
+           True, failures)
 
 
 def run_plates(failures):
@@ -917,6 +924,40 @@ def run_stamps(failures):
            check_assets.check_stamps(tagged), True, failures)
 
 
+def run_doc_dashes(failures):
+    """The README and CLAUDE.md hold to the dash rule CLAUDE.md writes."""
+    dash = "\u2014"
+    docs = check_style.doc_files()
+    report("house/em dash docs clean", check_style.check_dashes(docs, False), False,
+           failures)
+    for name in check_style.DOCS:
+        broken = dict(docs, **{name: docs[name] + "\na " + dash + " b\n"})
+        report(f"house/em dash in {name}", check_style.check_dashes(broken, False),
+               True, failures)
+
+
+def run_description(failures):
+    """The sentence that says what the site is agrees everywhere it is."""
+    html = (ROOT / "index.html").read_text()
+    others = {"README.md": (ROOT / "README.md").read_text(),
+              "humans.txt": (ROOT / "humans.txt").read_text()}
+    report("copy/description clean",
+           check_assets.check_description(html, others), False, failures)
+    said = llms.DESCRIPTION
+    for tag in ("og:description", "twitter:description"):
+        broken = html.replace(f'{tag}" content="{said}"', f'{tag}" content="Personal Cocktail Menu"')
+        assert broken != html, tag
+        report(f"copy/{tag} drifted",
+               check_assets.check_description(broken, others), True, failures)
+    broken = html.replace(f'"description": "{said}"', '"description": "The cocktail menu"')
+    report("copy/JSON-LD drifted",
+           check_assets.check_description(broken, others), True, failures)
+    for name in others:
+        broken = dict(others, **{name: others[name].replace(said, "The house cocktail menu.")})
+        report(f"copy/{name} drifted",
+               check_assets.check_description(html, broken), True, failures)
+
+
 def stage_error(fn):
     """What a stage call refused with, or nothing when it went through."""
     try:
@@ -948,6 +989,8 @@ def run_stage(failures):
     report("stage/index stamped",
            "" if 'src="assets/app.js?v=v9.9.9"' in out["index.html"]
            else "the script tag carries no version", False, failures)
+    report("stage/README screenshots not staged", sorted(
+        n for n in names if n.startswith("assets/readme/")), False, failures)
     report("stage/nothing unserved", sorted(
         n for n in names if n.split("/")[0] not in stage.SERVED), False,
         failures)
@@ -1172,7 +1215,7 @@ def main():
                 run_mixer_method,
                 run_method_line, run_glasses, run_fonts, run_manifest,
                 run_plates, run_pages, run_ids, run_lexer, run_worker,
-                run_data, run_stamps,
+                run_data, run_stamps, run_description, run_doc_dashes,
                 run_stage, run_inline, run_probe, run_served):
         run(failures)
     for f in failures:
