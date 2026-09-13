@@ -416,9 +416,10 @@ def check_description(html, others):
 
     The meta description is where it is written. The og and twitter tags
     and the JSON-LD are what an unfurl, a crawler and an agent quote; the
-    README's first line and humans.txt are what a person reads first. Six
-    places once said six different things. llms.txt reads the sentence
-    out of index.html, so llms.py --check holds that one.
+    README's first line and humans.txt are what a person reads first, and
+    the manifest is what an install sheet shows. Six places once said six
+    different things. llms.txt reads the sentence out of index.html, so
+    llms.py --check holds that one.
     """
     m = re.search(r'<meta name="description" content="([^"]+)">', html)
     if not m:
@@ -435,7 +436,25 @@ def check_description(html, others):
         errs.append("README.md: the line under the heading is not the meta description")
     if said not in others.get("humans.txt", ""):
         errs.append("humans.txt does not carry the meta description")
+    if others.get("manifest.webmanifest") != said:
+        errs.append("manifest.webmanifest: the description is not the meta description")
     return errs
+
+
+def check_title(html):
+    """The front page has one name, and an unfurl quotes that name.
+
+    The og and twitter titles are what a link shows in a thread; the
+    title tag is what a tab, a bookmark and a search result show.
+    llms-full.txt reads its heading out of the title tag.
+    """
+    m = re.search(r"<title>([^<]+)</title>", html)
+    if not m:
+        return ["index.html has no title"]
+    return [f"index.html {tag} is not the title"
+            for tag, pat in (("og:title", r'<meta property="og:title" content="([^"]*)">'),
+                             ("twitter:title", r'<meta name="twitter:title" content="([^"]*)">'))
+            if (re.search(pat, html) or [None, None])[1] != m.group(1)]
 
 
 def check_stamps(texts):
@@ -596,7 +615,9 @@ def main():
                 ("STAMP", check_stamps(texts)),
                 ("COPY", check_description(html, {
                     "README.md": (ROOT / "README.md").read_text(),
-                    "humans.txt": texts["humans.txt"]})),
+                    "humans.txt": texts["humans.txt"],
+                    "manifest.webmanifest": manifest().get("description")})),
+                ("COPY", check_title(html)),
                 ("SERVED", check_served(refs, stage.SERVED)),
                 ("GLASS", glass), ("FONT", fonts),
                 ("FONT", check_offsite(texts)),
@@ -620,7 +641,7 @@ def main():
     print("  worker  registration guarded, eviction present in app.js and sw.js")
     print("  data    fetched with the release, kept on its path, carried across a release")
     print("  stamps  every release stamp lands exactly once, the tree is unstamped")
-    print("  words   one description in the meta tags, the JSON-LD, the README and humans.txt")
+    print("  words   one title in the tab and the unfurl, one description in the meta tags, the JSON-LD, the README, humans.txt and the manifest")
     print(f"  served  {len(refs)} local reference(s) inside the "
           f"{len(stage.SERVED)} path(s) the deploy uploads")
     return 0

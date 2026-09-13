@@ -2,7 +2,7 @@
   "id": "/",
   "name": "few bottles",
   "short_name": "few bottles",
-  "description": "Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded, with a shelf that shows what you can pour.",
+  "description": "My printed menu, decoded. Tick what you have, see what you can pour tonight, and which bottle to buy next.",
   "start_url": "./",
   "scope": "./",
   "lang": "en",

@@ -18,10 +18,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ORIGIN = "https://fewbottles.com"
-# What the site is, in the one sentence index.html's meta description
-# carries. Read from there, so the agent map cannot say something else.
+# What the site is, in the title and the one sentence index.html's meta
+# description carries. Read from there, so the agent files cannot say
+# something else.
+INDEX = (ROOT / "index.html").read_text()
+TITLE = re.search(r"<title>([^<]+)</title>", INDEX).group(1)
 DESCRIPTION = re.search(r'<meta name="description" content="([^"]+)">',
-                        (ROOT / "index.html").read_text()).group(1)
+                        INDEX).group(1)
 LLMS = ROOT / "llms.txt"
 FULL = ROOT / "llms-full.txt"
 
@@ -287,10 +290,9 @@ def write_full(menu, bar, notation, kin):
             pattern_of[did] = row.get("pattern")
 
     lines = [
-        "# few bottles: the cocktail menu",
+        "# " + TITLE,
         "",
-        "> Classic drinks from one small home bar, decoded from the house",
-        "> shorthand on the printed card.",
+        "> Every drink decoded from the house shorthand on the printed card.",
         "",
         f"{n} drinks, {method_counts(menu)}, "
         f"{len(bar['ingredients'])} ingredients. "
