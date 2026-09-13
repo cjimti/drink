@@ -12,7 +12,8 @@ regex body blanked to spaces. Offsets and line counts survive untouched,
 so a match found in the stripped text reports against the real file, and
 brace depth in the stripped text is the real brace depth. Both files in
 this repo strip to a perfectly balanced tree, which is the check that
-says the heuristics below are holding.
+says the heuristics below are holding. `decomment(src)` blanks the
+comments alone, on the same offsets.
 """
 
 # A '/' can only open a regex literal where a value is expected. After a
@@ -70,13 +71,16 @@ def _end_of_comment(src, i):
     return len(src) if j < 0 else j + 2
 
 
-def strip(src):
+def strip(src, literals=True):
     """Blank out string, comment and regex bodies; keep every offset.
 
     The delimiters stay: a blanked string is still quotes with nothing
     between them, so `f('x')` still reads as a call with one argument.
     A comment goes entirely, delimiters and all, because it is not code
     in any sense. Newlines are never touched, in either case.
+
+    With `literals` false only the comments go, and every string and
+    regex reads as written. That is `decomment`.
     """
     out, i, n = list(src), 0, len(src)
     while i < n:
@@ -90,11 +94,22 @@ def strip(src):
         else:
             i += 1
             continue
-        for k in range(i + keep, min(end, n) - keep):
-            if out[k] != "\n":
-                out[k] = " "
+        if literals or not keep:
+            for k in range(i + keep, min(end, n) - keep):
+                if out[k] != "\n":
+                    out[k] = " "
         i = end
     return "".join(out)
+
+
+def decomment(src):
+    """The source with its comments blanked and its literals kept.
+
+    For a check that looks for a line of code by what it says, strings
+    included: `'https:'` has to survive, and a safeguard commented out
+    during debugging must not.
+    """
+    return strip(src, literals=False)
 
 
 def match_pair(text, start, opener="{", closer="}"):
