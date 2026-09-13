@@ -85,6 +85,11 @@ var SHELL = [
   'assets/tools/highball-glass.png'
 ];
 
+/* The four menu files. The app asks for them with ?v=<tag> on the end,
+   and they are stored and matched on the path alone, so one release's
+   copy is still the fallback after the next release changes the query. */
+var DATA = /\/data\/[^/]+\.json$/;
+
 var SHELL_PATHS = SHELL.map(function (path) {
   return new URL(path, self.location.href).pathname;
 });
@@ -107,12 +112,40 @@ self.addEventListener('install', function (e) {
   );
 });
 
+/* The menu is not in the shell, so a new cache starts with no data in
+   it, and deleting the old one would leave the first open after a
+   release with no signal showing no drinks. Copy the old release's data
+   across first, keyed on the path the fetch handler reads it back by.
+   It is only a fallback, network-first replaces it on the next visit
+   with signal, and a copy that fails costs the offline menu, never the
+   activation. */
+function copyData(from, into) {
+  return from.keys().then(function (reqs) {
+    return Promise.all(reqs.map(function (req) {
+      var url = new URL(req.url);
+      if (!DATA.test(url.pathname)) return null;
+      return from.match(req).then(function (res) {
+        return res && into.put(url.origin + url.pathname, res);
+      });
+    }));
+  });
+}
+
+function carryData(stale) {
+  return caches.open(CACHE).then(function (next) {
+    return Promise.all(stale.map(function (k) {
+      return caches.open(k).then(function (old) { return copyData(old, next); });
+    }));
+  }).catch(function () { /* the data was a convenience */ });
+}
+
 self.addEventListener('activate', function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
       var stale = keys.filter(function (k) { return k !== CACHE; });
-      return Promise.all(stale.map(function (k) { return caches.delete(k); }))
-        .then(function () { return stale.length; });
+      return carryData(stale).then(function () {
+        return Promise.all(stale.map(function (k) { return caches.delete(k); }));
+      }).then(function () { return stale.length; });
     }).then(function (n) {
       return self.clients.claim().then(function () { return n; });
     }).then(function (n) {
@@ -160,26 +193,29 @@ self.addEventListener('fetch', function (e) {
     });
   }
 
-  var isData = /\/data\/.*\.json$/.test(url.pathname);
+  var isData = DATA.test(url.pathname);
   var isShell = SHELL_PATHS.indexOf(url.pathname) >= 0;
   /* A shared menu arrives as /?s=<code>, and a drink link can carry a
      query too. The cached copy is keyed on the path, so a navigation has
      to match on the path alone or every link opened offline misses the
      cache it is standing next to. */
   var opts = req.mode === 'navigate' ? { ignoreSearch: true } : undefined;
+  var key = isData ? url.origin + url.pathname : req;
 
   /* The shell was fetched fresh at install and is keyed to this version,
      so it is safe cache-first. Everything else, a drink page, a glass, a
      card, the data, goes to the network first and falls back to the copy
      from last time. That is what stops an edge cache serving the old
      release for ten minutes after a deploy from being pinned here for
-     good, and it keeps the offline copy no more than one visit old. */
+     good, and it keeps the offline copy no more than one visit old.
+     The data revalidates rather than downloading whole: GitHub sends an
+     etag, and a 304 reaches this handler as the 200 already held. */
   if (!isShell) {
     e.respondWith(
-      fetch(req, isData ? { cache: 'no-store' } : undefined)
-        .then(function (res) { return keep(req, res); })
+      fetch(req, isData ? { cache: 'no-cache' } : undefined)
+        .then(function (res) { return keep(key, res); })
         .catch(function () {
-          return caches.match(req, opts).then(function (hit) {
+          return caches.match(key, opts).then(function (hit) {
             return offlineOr(hit, req);
           });
         })

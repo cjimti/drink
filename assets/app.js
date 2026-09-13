@@ -305,11 +305,16 @@
     return Object.prototype.toString.call(v) === '[object Object]';
   }
 
+  /* A bottle id the bar no longer lists is dropped on the way in. Boot
+     saves the shelf straight back, so an id kept here would be written
+     into the store again on every load, forever. */
   function loadHave() {
+    have = {};
     try {
       var v = JSON.parse(localStorage.getItem(STORE));
-      have = plainObject(v) ? v : {};
-    } catch (e) { have = {}; }
+      if (!plainObject(v)) return;
+      Object.keys(v).forEach(function (k) { if (ing[k]) have[k] = v[k]; });
+    } catch (e) { /* unreadable, so the shelf starts empty */ }
   }
 
   function saveHave() {
@@ -565,10 +570,6 @@
   /* The same question put to a set rather than a bottle. */
   function rowGain(ids, held) {
     return pourableCount(withBottles(held, ids)) - pourableCount(held);
-  }
-
-  function subsetOf(small, big) {
-    return small.every(function (id) { return big.indexOf(id) >= 0; });
   }
 
   /* Every drink this shelf cannot pour, each as the bottles it is short
@@ -1005,7 +1006,7 @@
     if (!h) { dropSharedLink(); return; }
     shared = { have: h, code: BigInt(code).toString() };
     filter = emptyFilter();
-    filter.shared = true;
+    selectMenu('shared');
     track('share_open', { bottles: stocked(h).length, drinks: pourableCount(h) });
   }
 
@@ -1851,7 +1852,15 @@
   /* `allGains` re-counts the whole menu once per bottle. That is fine on
      the Bar tab, where it runs on a selection, and not fine on the Menu,
      where the list repaints on every keystroke in the search box. The
-     shelf is the only input, so its code is the whole cache key. */
+     shelf is the only input, so its code is the whole cache key.
+
+     What slow would mean, timed in node on a laptop in September 2026
+     against the 185-drink menu: allGains 0.9 to 1.9 ms, comboRows about
+     9 ms on a shelf of gin alone, and nextBottles a thousandth of a
+     millisecond once its memo below is warm. The review before that put
+     the renderMenu string build at 1.1 ms. comboRows is the one to
+     watch, and it runs once per shelf. If a figure ever gets slow,
+     memoise it further; a usage count is not the same number. */
   var gainsMemo = { key: null, val: null };
 
   function gainsFor(held) {
@@ -1871,8 +1880,11 @@
      some drink is short of, because any other set is one of those with a
      bottle nobody needed added on top. So take each short drink's missing
      bottles as a candidate set, and count the drinks that set pours.
-     Fewest bottles first, then the biggest unlock: the cheapest way out
-     of the dead end leads. */
+     Counted by adding the set to the shelf, the way the single figure
+     is, and not by which short lists fit inside it: a stand-in opens a
+     drink that is short of the other bottle, and only a re-count sees
+     that. Fewest bottles first, then the biggest unlock: the cheapest
+     way out of the dead end leads. */
   function comboRows(held, want) {
     if (want < 1) return [];
     var short = shortOf(held);
@@ -1885,7 +1897,7 @@
       out.push({ ids: miss, gain: 0, uses: 0, n: out.length });
     });
     out.forEach(function (c) {
-      c.gain = short.filter(function (m) { return subsetOf(m, c.ids); }).length;
+      c.gain = rowGain(c.ids, held);
       c.uses = c.ids.reduce(function (n, id) { return n + usageCount(id); }, 0);
     });
     /* Fewest bottles, then the biggest unlock, then the bottles the rest
@@ -1907,8 +1919,18 @@
      more drinks already want, then the order the shelf is written in.
      Single bottles fill the list, and sets fill what they leave.
      The Bar tab and the Menu's rail both read this, so the two lists
-     cannot rank the same shelf differently. */
+     cannot rank the same shelf differently. Memoised on the shelf like
+     the gains, because the sets re-count the menu once each and the
+     rail asks again on every keystroke in the search box. */
+  var nextMemo = { key: null, val: null };
+
   function nextBottles(held) {
+    var key = shelfCode(held);
+    if (nextMemo.key !== key) nextMemo = { key: key, val: rankNext(held) };
+    return nextMemo.val;
+  }
+
+  function rankNext(held) {
     var gains = gainsFor(held);
     var top = data.bar.ingredients.filter(function (i) {
       return !held[i.id] && gains[i.id] > 0;
@@ -3915,11 +3937,21 @@
     }));
   }
 
+  /* The data carries the release on its query, as app.js and app.css do
+     on their tags. The edge holds JSON for ten minutes after a tag, and
+     without it a phone in that window runs this script against the last
+     release's menu. A 404 is refused here rather than parsed, so an HTML
+     error page never reaches the decoder as JSON. */
+  function jsonOf(r) {
+    if (!r.ok) throw new Error(r.url);
+    return r.json();
+  }
+
   Promise.all([
-    fetch('data/cocktails.json').then(function (r) { return r.json(); }),
-    fetch('data/bar.json').then(function (r) { return r.json(); }),
-    fetch('data/notation.json').then(function (r) { return r.json(); }),
-    fetch('data/kin.json').then(function (r) { return r.json(); }),
+    fetch('data/cocktails.json?v=' + versionLabel).then(jsonOf),
+    fetch('data/bar.json?v=' + versionLabel).then(jsonOf),
+    fetch('data/notation.json?v=' + versionLabel).then(jsonOf),
+    fetch('data/kin.json?v=' + versionLabel).then(jsonOf),
     loadGlassArt()
   ]).then(function (res) {
     data.menu = res[0];
@@ -3960,8 +3992,10 @@
        above is what reads the hash a guest arrived on. */
     window.addEventListener('hashchange', route);
     window.addEventListener('storage', storesChanged);
-  }).catch(function (err) {
-    $('#loading').textContent = 'Could not load the menu. ' + err;
+  }).catch(function () {
+    /* Whoever reads this cannot use the site, so it says what to do and
+       leaves the exception out of the page. */
+    $('#loading').textContent = 'The menu did not load. Check the connection and reload.';
   });
 
   /* Service worker: production only, and actively evicted anywhere else.

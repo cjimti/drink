@@ -505,7 +505,12 @@ is the price. Do not raise a limit to make a new function fit.
   has seen, and everything outside the shell (drink pages, glasses,
   cards, data) is network-first with the cached copy as the fallback.
   Only a response that said ok is stored. `check_assets.py` holds all
-  three.
+  three. The four data fetches carry `?v=<version>` the same way, so a
+  new script never reads the last release's menu off the edge; the
+  worker revalidates them with `no-cache`, stores and matches them on
+  the path alone, and copies them into the new cache before deleting
+  the old one, so the first open after a release with no signal still
+  has a menu. `check_assets.py` holds those too.
 - Symptom to recognise: the page loads, or shows stale content, with
   nothing listening on the port. Check `lsof -nP -iTCP:<port>` before
   believing anything the browser shows you. `make unstick` prints the

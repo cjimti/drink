@@ -806,6 +806,63 @@ def run_worker(failures):
            True, failures)
 
 
+def run_data(failures):
+    """The data is fetched with the release and outlives the next one."""
+    js = (ROOT / "assets" / "app.js").read_text()
+    sw = (ROOT / "sw.js").read_text()
+    report("data/clean", check_assets.check_data(js, sw), False, failures)
+
+    bare = js.replace("fetch('data/kin.json?v=' + versionLabel)",
+                      "fetch('data/kin.json')")
+    report("data/fetched without the version",
+           check_assets.check_data(bare, sw) if bare != js else "", True,
+           failures)
+
+    muted = js.replace("fetch('data/bar.json?v=' + versionLabel)",
+                       "fetch('data/bar.json' /* ?v=' + versionLabel */)")
+    report("data/version only in a comment",
+           check_assets.check_data(muted, sw) if muted != js else "", True,
+           failures)
+
+    keyed = sw.replace("var key = isData ? url.origin + url.pathname : req;",
+                       "var key = req;")
+    report("data/kept on the query",
+           check_assets.check_data(js, keyed) if keyed != sw else "", True,
+           failures)
+
+    dropped = sw.replace("return carryData(stale).then(function () {",
+                         "return Promise.resolve().then(function () {")
+    report("data/not carried across a release",
+           check_assets.check_data(js, dropped) if dropped != sw else "",
+           True, failures)
+
+
+def refused(generate, menu):
+    """What a generator says when it is handed this menu, or '' if nothing."""
+    real = llms.load
+    llms.load = lambda name: menu if name == "cocktails.json" else real(name)
+    try:
+        generate()
+        return ""
+    except SystemExit as e:
+        return str(e)
+    finally:
+        llms.load = real
+
+
+def run_ids(failures):
+    """A drink id is never a path of its own, even with check_menu skipped."""
+    menu = llms.load("cocktails.json")
+    bad = dict(menu, cocktails=menu["cocktails"] + [
+        dict(menu["cocktails"][0], id="../x")])
+    for name, generate in (("pages", pages.render), ("cards", cards.wanted)):
+        report(f"{name}/clean ids", refused(generate, menu), False, failures)
+        said = refused(generate, bad)
+        report(f"{name}/id outside the slug", said, True, failures)
+        report(f"{name}/refusal names the id",
+               "" if "'../x'" in said else f"said {said!r}", False, failures)
+
+
 def run_stamps(failures):
     """Each release stamp has one place to land, and the tree is unstamped."""
     texts = check_assets.served_texts()
@@ -971,7 +1028,8 @@ def main():
                 run_menu, run_methods,
                 run_mixer_method,
                 run_method_line, run_glasses, run_fonts, run_manifest,
-                run_plates, run_pages, run_lexer, run_worker, run_stamps,
+                run_plates, run_pages, run_ids, run_lexer, run_worker,
+                run_data, run_stamps,
                 run_stage, run_served):
         run(failures)
     for f in failures:
