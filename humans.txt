@@ -10,7 +10,7 @@ From: one home bar.
 Language: English
 Doctype: HTML5
 Standards: HTML, CSS, JavaScript
-Software: Claude Code, a text editor and a printed card
+Software: a text editor and a printed card
 Source: https://github.com/cjimti/drink
 Analytics: Google Analytics and Cloudflare Web Analytics, aggregate only. See the Info tab on the site.
 

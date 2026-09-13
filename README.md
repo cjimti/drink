@@ -23,12 +23,9 @@ still opens the menu and sends you here.
 
 ## How it is built
 
-I built this with Claude Code. The rules I held it to are in
-[CLAUDE.md](CLAUDE.md), which is the working context for every change:
-every drink id and shelf bit is a key that never moves, every shorthand
+Every drink id and shelf bit is a key that never moves, every shorthand
 code is regenerated from its recipe and refused if the two disagree, and
-nothing is committed until I have read the diff. The drinks, the
-measures, the histories and the words are mine to answer for.
+nothing is committed until I have read the diff.
 
 ## What it does that paper cannot
 
@@ -117,7 +114,7 @@ There is no `package.json`, so `scripts/check_code.py` is the linter
 afford) and `scripts/check_style.py` holds the house rules.
 `scripts/test_checks.py` breaks every rule on purpose and fails if a
 checker sleeps through it, and `scripts/app.test.mjs` runs `app.js` under
-`node:test` on the real data. What each check is for is in CLAUDE.md.
+`node:test` on the real data.
 
 The service worker registers in production only, and off https the app
 actively unregisters any worker it finds. A worker owns an *origin*, not
