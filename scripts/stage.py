@@ -20,6 +20,8 @@ land exactly once. A token that occurs twice stamps the wrong one, and
 one that occurs nowhere leaves the cache named after the placeholder,
 so either refuses the stage and the deploy stops before an upload.
 """
+import base64
+import hashlib
 import re
 import shutil
 import subprocess
@@ -41,6 +43,12 @@ PAGE = re.compile(r"^drink/[^/]+/index\.html$")
 # What a tag or a branch name may be before it is written into a script
 # string and an HTML attribute. A quote in a ref name would be neither.
 VERSION = re.compile(r"^[A-Za-z0-9._+/-]+$")
+
+
+# An inline script, which a Content-Security-Policy has to name by hash. A
+# script with a src is named by its host, and JSON-LD is data, which CSP
+# does not govern.
+INLINE = re.compile(r"<script(?![^>]*\bsrc=)([^>]*)>(.*?)</script>", re.S)
 
 
 class StageError(Exception):
@@ -86,6 +94,28 @@ def tracked():
     return sorted({n for n in out.split("\0") if n and (ROOT / n).is_file()})
 
 
+def inline_hashes(root, names):
+    """{'sha256-<base64>': [page, ...]} for every inline script served.
+
+    The hash is over the exact text between the tags, which is what a
+    browser hashes, so a changed space in the GTM snippet is a new hash
+    and a CSP naming the old one blocks it.
+    """
+    out = {}
+    # Top-level pages first, so a hash shared by 186 pages is shown by
+    # index.html rather than whichever drink sorts first.
+    pages = sorted((n for n in names if n.endswith(".html")),
+                   key=lambda n: (n.count("/"), n))
+    for name in pages:
+        for attrs, body in INLINE.findall((Path(root) / name).read_text()):
+            if "application/ld+json" in attrs:
+                continue
+            digest = hashlib.sha256(body.encode()).digest()
+            key = "sha256-" + base64.b64encode(digest).decode()
+            out.setdefault(key, []).append(name)
+    return out
+
+
 def stamped(version, names):
     """{file: stamped text} for every file a stamp touches."""
     out = {}
@@ -128,6 +158,12 @@ def main():
         print(f"  STAGE  {e}")
         return 1
     print(f"  stage   {n} file(s) into {dest}, {touched} stamped {version}")
+    # The policy lives in a Cloudflare Transform Rule, not in the tree, so
+    # a release that changes an inline script says so here, where the
+    # person cutting it will see it. `make probe` checks the live header.
+    for key, pages in inline_hashes(dest, tracked()).items():
+        more = f" and {len(pages) - 1} more" if len(pages) > 1 else ""
+        print(f"  csp     '{key}'  {pages[0]}{more}")
     return 0
 
 

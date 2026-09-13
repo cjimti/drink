@@ -12,6 +12,14 @@ is, the light theme inverts the ink with one filter, and the file drops
 to a third of the size. Half resolution is still two device pixels per
 CSS pixel at the width the Info tab draws them.
 
+The ink is one colour, so the only thing that varies is coverage, and a
+palette PNG of that one colour at LEVELS evenly spaced alphas carries it.
+The Info tab draws a plate 96 px wide from 624, and at that size eight
+levels come out within 9 of 255 of the full alpha, dark and inverted,
+for a fifth of the bytes. A general quantiser gets there too, but it
+picks its own levels per plate; these are the same for all twelve and
+the same on every run.
+
 Idempotent: a plate that is already ink on nothing is read back through
 its alpha and comes out the same. Pillow, as for make-og.py.
 """
@@ -32,12 +40,13 @@ OUT_W, OUT_H = 624, 936
 # The ground is 18, not 0; everything at or under this is nothing.
 FLOOR = 22
 INK = 0xFB, 0xF8, 0xF1
+LEVELS = 8
 
 
 def alpha_of(im):
     """The drawing as coverage, off the alpha if it already has one."""
-    if "A" in im.getbands():
-        return im.getchannel("A")
+    if "A" in im.getbands() or "transparency" in im.info:
+        return im.convert("RGBA").getchannel("A")
     lum = im.convert("L")
     return lum.point(lambda p: 0 if p <= FLOOR
                      else min(255, (p - FLOOR) * 255 // (255 - FLOOR)))
@@ -50,15 +59,23 @@ def clear_corner(alpha):
     alpha.paste(0, (x0, y0, alpha.width, alpha.height))
 
 
+def ink_on_nothing(alpha):
+    """The ink at LEVELS alphas: a palette image and its tRNS bytes."""
+    top = LEVELS - 1
+    index = alpha.point([round(a * top / 255) for a in range(256)])
+    out = Image.frombytes("P", alpha.size, index.tobytes())
+    out.putpalette(list(INK) * LEVELS)
+    return out, bytes(round(i * 255 / top) for i in range(LEVELS))
+
+
 def convert(path):
     im = Image.open(path)
     alpha = alpha_of(im)
     clear_corner(alpha)
     if alpha.size != (OUT_W, OUT_H):
         alpha = alpha.resize((OUT_W, OUT_H), Image.LANCZOS)
-    out = Image.new("RGBA", alpha.size, INK + (0,))
-    out.putalpha(alpha)
-    out.save(path, optimize=True)
+    out, trns = ink_on_nothing(alpha)
+    out.save(path, optimize=True, transparency=trns)
     return path.stat().st_size
 
 

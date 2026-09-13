@@ -12,7 +12,9 @@ for reading brace depth as function size, so it is worth asserting on the
 actual sources rather than on a fixture.
 """
 import ast
+import json
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -25,6 +27,7 @@ import jslex                                                 # noqa: E402
 import kin                                                   # noqa: E402
 import llms                                                  # noqa: E402
 import pages                                                 # noqa: E402
+import probe                                                 # noqa: E402
 import stage                                                 # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -673,24 +676,37 @@ def run_glasses(failures):
 
 
 def run_plates(failures):
-    """Every tool plate is converted, shown on the Info tab, and cached."""
+    """Every tool plate is converted, shown on the Info tab, and not precached."""
     html = (ROOT / "index.html").read_text()
     sw = (ROOT / "sw.js").read_text()
     plates = check_assets.plate_headers()
     report("plate/clean", check_assets.check_plates(html, sw, plates), False,
            failures)
 
-    raw = dict(plates, **{"barspoon.png": (832, 1248, 2)})
+    raw = dict(plates, **{"barspoon.png": (832, 1248, 2, False)})
     report("plate/unconverted", check_assets.check_plates(html, sw, raw),
            True, failures)
+
+    full = dict(plates, **{"barspoon.png": (624, 936, 6, False)})
+    report("plate/full colour", check_assets.check_plates(html, sw, full),
+           True, failures)
+
+    opaque = dict(plates, **{"barspoon.png": (624, 936, 3, False)})
+    report("plate/palette with no tRNS",
+           check_assets.check_plates(html, sw, opaque), True, failures)
 
     spare = dict(plates, **{"muddler.png": check_assets.PLATE})
     report("plate/shown nowhere", check_assets.check_plates(html, sw, spare),
            True, failures)
 
-    broken = sw.replace("  'assets/tools/barspoon.png',\n", "")
-    report("plate/not cached", check_assets.check_plates(html, broken, plates),
-           True, failures)
+    shelled = sw.replace("  'manifest.webmanifest',\n",
+                         "  'manifest.webmanifest',\n"
+                         "  'assets/tools/barspoon.png',\n")
+    report("plate/back in the shell",
+           check_assets.check_plates(html, shelled, plates), True, failures)
+
+    real = check_assets.plate_headers()["barspoon.png"]
+    report("plate/tRNS read off the file", real[3], True, failures)
 
 
 def run_fonts(failures):
@@ -942,6 +958,72 @@ def run_stage(failures):
         lambda: stage.stage("v1'x", ROOT / "nowhere")), True, failures)
 
 
+def run_inline(failures):
+    """The CSP hashes are of inline scripts, and only of those."""
+    with tempfile.TemporaryDirectory() as tmp:
+        Path(tmp, "a.html").write_text(
+            '<script>x</script><script src="app.js"></script>'
+            '<script type="application/ld+json">{}</script>')
+        Path(tmp, "b.html").write_text("<script>x</script>")
+        Path(tmp, "c.html").write_text("<script>\n  y</script>")
+        found = stage.inline_hashes(tmp, ["a.html", "b.html", "c.html"])
+    # printf x | openssl dgst -sha256 -binary | base64
+    x = "sha256-LXEWQrcmsEQBYnyp+6wy9chTD7GQPMTbAiWHF5IaSIE="
+    report("inline/one script, two pages",
+           "" if found.get(x) == ["a.html", "b.html"] else found, False,
+           failures)
+    report("inline/src and JSON-LD skipped", len(found) != 2, False, failures)
+
+
+def probe_cases():
+    """(name, findings) for the live-origin rules, on made-up responses."""
+    url, home = "http://fewbottles.com/drink/x/", "https://fewbottles.com/"
+    good = {"strict-transport-security": "max-age=86400",
+            "x-content-type-options": "nosniff",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "permissions-policy": "camera=()"}
+    key = "sha256-abc="
+    hashes = {key: ["index.html"]}
+    policy = f"default-src 'self'; script-src 'self' '{key}'"
+
+    def bad(results):
+        return [line for ok, line in results if not ok]
+
+    def redirect(status, where):
+        loc = {"location": where} if where else {}
+        return bad([probe.check_redirect(url, status, loc)])
+
+    def headers(**change):
+        return bad(probe.check_headers(home, dict(good, **change)))
+
+    def csp(value, name="content-security-policy"):
+        return bad(probe.check_csp(home, {name: value}, hashes))
+
+    return [
+        ("redirect/301 to https", redirect(301, "https://fewbottles.com/drink/x/"), False),
+        ("redirect/served on http", redirect(200, ""), True),
+        ("redirect/302", redirect(302, "https://fewbottles.com/drink/x/"), True),
+        ("redirect/stays on http", redirect(301, "http://fewbottles.com/drink/x/"), True),
+        ("redirect/to the front page", redirect(301, home), True),
+        ("headers/all there", headers(), False),
+        ("headers/no hsts", headers(**{"strict-transport-security": None}), True),
+        ("headers/sniffing", headers(**{"x-content-type-options": "sniff"}), True),
+        ("csp/names the script", csp(policy), False),
+        ("csp/report-only counts", csp(policy, "content-security-policy-report-only"), False),
+        ("csp/none", bad(probe.check_csp(home, {}, hashes)), True),
+        ("csp/hash missing", csp("script-src 'self'"), True),
+        ("csp/unsafe-inline", csp(policy + " 'unsafe-inline'"), True),
+        ("csp/default-src only", csp(f"default-src 'self' '{key}'"), False),
+        ("csp/no script source", csp("img-src 'self'"), True),
+    ]
+
+
+def run_probe(failures):
+    """Each live-origin rule, kept and then broken, with no network."""
+    for name, found, expected in probe_cases():
+        report(f"probe/{name}", found, expected, failures)
+
+
 def run_served(failures):
     """Everything the site points at is something the deploy uploads."""
     texts = check_assets.served_texts()
@@ -1006,6 +1088,7 @@ def run_pages(failures):
 
     stale = dict(texts, **{next(iter(texts)): "not what pages.py writes\n"})
     report("pages/stale", pages.check_texts(stale, present), True, failures)
+    run_dates(texts, failures)
     report("pages/orphan", pages.check_texts(
         texts, present | {"drink/nothing-here/index.html"}), True, failures)
 
@@ -1017,6 +1100,52 @@ def run_pages(failures):
     report("cards/orphan", cards.check_cards(
         want, dict(have, **{"nothing-here": ROOT / "assets" / "og.png"})),
         True, failures)
+
+
+def run_dates(texts, failures):
+    """Every drink is dated, an edit moves its date, and the pages say so."""
+    menu, stored = llms.load("cocktails.json"), pages.load_dates()
+    report("dates/clean", pages.check_dates(menu, stored), False, failures)
+    first = menu["cocktails"][0]["id"]
+    edited = json.loads(json.dumps(menu))
+    edited["cocktails"][0]["taste"] = "Edited."
+    report("dates/edited, not re-dated", pages.check_dates(edited, stored),
+           True, failures)
+    report("dates/no date", pages.check_dates(
+        menu, {k: v for k, v in stored.items() if k != first}), True,
+        failures)
+    report("dates/orphan", pages.check_dates(
+        menu, dict(stored, **{"nothing-here": stored[first]})), True,
+        failures)
+
+    today = "2099-01-01"
+    moved = pages.dated(edited, stored, today)[first]
+    report("dates/edit moves modified",
+           "" if (moved["modified"] == today
+                  and moved["published"] == stored[first]["published"])
+           else moved, False, failures)
+    report("dates/untouched keeps its date",
+           pages.dated(menu, stored, today) != stored, False, failures)
+    fresh = pages.dated(menu, {}, today)[first]
+    report("dates/new drink published today",
+           fresh["published"] != today, False, failures)
+
+    page = texts["drink/martini/index.html"]
+    for key in ("datePublished", "dateModified", "totalTime"):
+        report(f"dates/page carries {key}", f'"{key}": ' not in page, False,
+               failures)
+    site = texts["sitemap.xml"]
+    report("dates/sitemap lastmod",
+           site.count("<lastmod>") != len(menu["cocktails"]) + 1
+           or "<priority>" in site, False, failures)
+    untimed = json.loads(json.dumps(menu))
+    untimed["cocktails"][0]["method"] = "thrown"
+    try:
+        pages.refuse_untimed(untimed)
+        refused = ""
+    except SystemExit as e:
+        refused = str(e)
+    report("dates/method with no totalTime", refused, True, failures)
 
 
 def run_lexer(failures):
@@ -1044,7 +1173,7 @@ def main():
                 run_method_line, run_glasses, run_fonts, run_manifest,
                 run_plates, run_pages, run_ids, run_lexer, run_worker,
                 run_data, run_stamps,
-                run_stage, run_served):
+                run_stage, run_inline, run_probe, run_served):
         run(failures)
     for f in failures:
         print(f"  TEST    {f}")

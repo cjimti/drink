@@ -1,15 +1,15 @@
 # fewbottles.com — no build step, so `verify` is the whole pipeline.
 
 .DEFAULT_GOAL := verify
-.PHONY: verify check json syntax lint code style test menu kin llms pages \
-        cards assets stage serve icons tools events stats clean
+.PHONY: verify check json syntax lint code style test unit menu kin llms \
+        pages cards assets stage probe serve icons tools events stats clean
 
 ## verify — run every check, then stamp the review-gate sentinel
 verify: check
 	@scripts/verify-sentinel.sh
 
 ## check — everything CI runs
-check: json syntax lint test menu assets
+check: json syntax lint test unit menu assets
 	@echo "all checks passed"
 
 ## lint — the standard, since there is no eslint and never will be
@@ -33,6 +33,11 @@ style:
 test:
 	@python3 scripts/test_checks.py
 
+## unit — app.js itself, run in node against the real data with node:test.
+##        No package.json and no runner to install: node ships both.
+unit:
+	@node --test --test-reporter=./scripts/unit-report.mjs scripts/app.test.mjs
+
 ## json — every data file parses
 json:
 	@for f in data/*.json manifest.webmanifest; do \
@@ -44,6 +49,8 @@ json:
 syntax:
 	@node --check assets/app.js && echo "  syntax  assets/app.js"
 	@node --check sw.js && echo "  syntax  sw.js"
+	@node --check scripts/app.test.mjs && node --check scripts/unit-report.mjs
+	@echo "  syntax  scripts/*.mjs"
 	@python3 -m py_compile scripts/*.py
 	@echo "  syntax  scripts/*.py"
 
@@ -85,6 +92,13 @@ DEST ?= _site
 stage:
 	@python3 scripts/stage.py $(V) $(DEST)
 
+## probe — the live origin: http redirects to https, HSTS and the security
+##         headers are sent, and the CSP names every inline script's hash.
+##         Read-only, and not part of check or verify: CI has no business
+##         depending on the state of the live edge.
+probe:
+	@python3 scripts/probe.py
+
 ## serve — fetch() needs http://, not file://; sends no-store so edits show up
 ##
 ## Port 8010, not 8000, and that is deliberate. A service worker owns a
@@ -113,7 +127,8 @@ icons:
 
 ## tools — turn freshly generated plates in assets/tools into ink on
 ##         nothing: corner letter painted out, alpha off the drawing,
-##         half size. Safe to run on plates already converted.
+##         half size, one ink at eight alphas in a palette. Safe to run
+##         on plates already converted.
 tools:
 	@python3 scripts/make-tools.py
 

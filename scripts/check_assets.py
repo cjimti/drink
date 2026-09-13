@@ -102,41 +102,58 @@ def check_glasses(js):
 
 
 TOOL_DIR = ROOT / "assets" / "tools"
-# What make-tools.py writes: half the generator's frame, RGBA (colour type 6).
-PLATE = (624, 936, 6)
+# What make-tools.py writes: half the generator's frame, a palette (colour
+# type 3) of the one ink at eight alphas, and the tRNS chunk carrying them.
+PLATE = (624, 936, 3, True)
+
+
+def png_chunks(data):
+    """The chunk types of a PNG, in order, off the bytes."""
+    out, at = [], 8
+    while at + 8 <= len(data):
+        size, kind = struct.unpack(">I4s", data[at:at + 8])
+        out.append(kind.decode("latin-1"))
+        at += size + 12
+    return out
 
 
 def plate_headers():
-    """(width, height, colour type) of every PNG in assets/tools, off IHDR."""
+    """(width, height, colour type, has tRNS) of every PNG in assets/tools."""
     out = {}
     for f in sorted(TOOL_DIR.glob("*.png")):
-        head = f.read_bytes()[:29]
-        w, h, _, ctype = struct.unpack(">IIBB", head[16:26])
-        out[f.name] = (w, h, ctype)
+        data = f.read_bytes()
+        w, h, _, ctype = struct.unpack(">IIBB", data[16:26])
+        out[f.name] = (w, h, ctype, "tRNS" in png_chunks(data))
     return out
 
 
 def check_plates(html, sw, headers):
-    """Every tool plate is converted, on the Info tab, and in the shell.
+    """Every tool plate is converted, on the Info tab, and not in the shell.
 
     The generator writes an opaque 832x1248 frame with a letter in the
     corner; make-tools.py turns that into ink on nothing at half size.
-    Serving the raw frame puts a black rectangle on the light theme, so a
-    plate still in the generator's shape fails here with the command to
-    run. A plate nothing shows is dead weight, like a stocked bottle no
-    drink uses, and one the worker does not cache is a broken picture the
-    first time the help tab opens with no signal.
+    Serving the raw frame puts a black rectangle on the light theme, and a
+    palette with no tRNS is the same rectangle, so a plate in any other
+    shape fails here with the command to run. A plate nothing shows is
+    dead weight, like a stocked bottle no drink uses.
+
+    The plates stay out of the worker's SHELL. The shell is fetched whole
+    on every release by every installed phone, and most guests never open
+    the Info tab; a plate rides the network-first path instead and is
+    offline once it has been seen.
     """
     errs = []
-    for name, (w, h, ctype) in headers.items():
-        if (w, h, ctype) != PLATE:
+    for name, shape in headers.items():
+        if shape != PLATE:
+            w, h, ctype, trns = shape
             errs.append(f"assets/tools/{name} is {w}x{h} colour type "
-                        f"{ctype}, not ink on nothing: run make tools")
+                        f"{ctype}{'' if trns else ' with no tRNS'}, not ink "
+                        f"on nothing: run make tools")
         if f'src="assets/tools/{name}"' not in html:
             errs.append(f"assets/tools/{name}: on disk, shown nowhere")
-        if f"'assets/tools/{name}'" not in sw:
-            errs.append(f"assets/tools/{name}: not in the worker's SHELL, "
-                        f"so it is missing offline")
+        if f"'assets/tools/{name}'" in sw:
+            errs.append(f"assets/tools/{name}: in the worker's SHELL, so "
+                        f"every release downloads it to every phone")
     return errs
 
 
@@ -562,7 +579,8 @@ def main():
     print(f"  glass   {n_glass} drawing(s) a serve token can ask for, all present")
     print(f"  fonts   {n_faces} face(s) served from here, nothing off-origin")
     print("  icons   the manifest installs, maskable and unlocked, with a narrow and a wide screenshot")
-    print(f"  plates  {len(plates)} tool plate(s) converted, shown and cached")
+    print(f"  plates  {len(plates)} tool plate(s) converted, shown, and left "
+          f"out of the shell")
     print(f"  well    {len(WELL_KNOWN)} crawler/agent file(s) present")
     print("  worker  registration guarded, eviction present in app.js and sw.js")
     print("  data    fetched with the release, kept on its path, carried across a release")

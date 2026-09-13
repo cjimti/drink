@@ -61,6 +61,7 @@ family those drinks sit in.
 | `data/bar.json` | Every bottle any drink can call for, garnish included. |
 | `data/notation.json` | The shorthand key, and what the decoder reads from. |
 | `data/kin.json` | Generated families of shape, and each drink's nearest neighbours. |
+| `data/dates.json` | Generated: when each drink was added and last changed, for the drink pages and the sitemap. |
 | `scripts/check_menu.py` | Regenerates each code from its build and refuses a mismatch. |
 | `scripts/kin.py` | Rebuilds `data/kin.json` from the builds. `--check` refuses a drift. |
 | `scripts/check_assets.py` | Missing files, and ids `app.js` reaches for that nothing renders. |
@@ -82,6 +83,7 @@ make llms      # rebuild llms.txt and llms-full.txt from the menu
 make icons     # redraw the home-screen PNG and the X/social card
 make events    # the custom events the app sends, straight from the source
 make stats     # the figures the copy quotes, and the README sentence to paste
+make probe     # the live origin: https redirect, HSTS, security headers, CSP hashes
 ```
 
 `make verify` is the only gate. It parses every JSON file, syntax-checks
@@ -105,7 +107,9 @@ silently: an analytics parameter the dataLayer does not reset, a click
 branch whose `data-` attribute is missing from the delegation selector,
 and the shelf code read as anything but a `BigInt`.
 `scripts/test_checks.py` breaks every one of those rules on purpose and
-fails if a checker sleeps through it.
+fails if a checker sleeps through it. `scripts/app.test.mjs` runs `app.js`
+itself under `node:test`, booted on the real data: the decoder, shelf
+codes, the gate, Next bottles, the QR symbol and malformed stores.
 
 The service worker registers in production only, and off https the app
 actively unregisters any worker it finds. A worker owns an *origin*, not
