@@ -257,6 +257,40 @@ test('next bottles: three rows, never more, singles before sets', () => {
   }
 });
 
+test('All files a drink under the bottle it is mostly made of', () => {
+  const lead = (id) => app.leadBy[id];
+  assert.equal(lead('so-so-cocktail'), 'gin', 'a card section is not the leading bottle');
+  assert.equal(lead('corpse-reviver-1'), 'cognac', 'the card files it under Apple Brandy');
+  assert.equal(lead('vieux-carre'), 'rye', 'a tie goes to the first pour');
+  assert.equal(lead('french-75'), 'gin', 'a spirit leads over the Champagne on top');
+  assert.equal(lead('bamboo'), 'sherry', 'with no spirit, the biggest modifier leads');
+  assert.equal(lead('bitter-giuseppe'), 'cynar', 'two of Cynar over one of vermouth');
+  for (const d of MENU.cocktails) assert.ok(ingredient(lead(d.id)), `${d.id} leads with no bottle`);
+  const juice = { id: 'lemonade', family: 'gin', build: [['lemon', '1'], ['simple', '1'], ['soda-water', 't']] };
+  assert.equal(app.leadBottle(juice), 'lemon', 'nothing to lead, so the first pour does');
+
+  const saved = app.filter.method;
+  const heads = (secs) => secs.map((s) => s.head.match(/<h2[^>]*>([^<]*)</)[1]);
+  const drinks = (secs) => secs.flatMap((s) => s.rows.filter((r) => !r.head)
+    .map((r) => r.html.match(/data-drink="([^"]+)"/)[1]));
+  try {
+    app.filter.method = 'all';
+    const all = app.menuSections(MENU.cocktails, {}, false);
+    assert.equal(heads(all)[0], 'Gin');
+    assert.ok(!heads(all).includes('Stirred'), 'All is not cut by method');
+    assert.ok(all.every((s) => s.rows.every((r) => !r.head)), 'no card sections under a bottle');
+    assert.doesNotMatch(all[0].head, /method__blurb/);
+    assert.deepEqual(plain(drinks(all)).sort(), MENU.cocktails.map((d) => d.id).sort(), 'every drink once');
+
+    app.filter.method = 'stirred';
+    const stirred = app.menuSections(MENU.cocktails.filter((d) => d.method === 'stirred'), {}, false);
+    assert.deepEqual(plain(heads(stirred)), ['Stirred'], 'a method keeps the card filing');
+    assert.match(stirred[0].rows[0].html, /<h3 class="family">/);
+  } finally {
+    app.filter.method = saved;
+  }
+});
+
 test('the whole bar leaves nothing to buy', () => {
   const all = shelf(...BAR.ingredients.map((i) => i.id));
   assert.equal(app.pourableCount(all), MENU.cocktails.length);

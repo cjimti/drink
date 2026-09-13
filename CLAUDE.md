@@ -366,11 +366,25 @@ unfolded, because `q` and `Q` are different pours.
 
 ## Families
 
-A fourth segment after All / Stirred / Shaken. It regroups the same
-menu by shape instead of by method and printed section. Pattern chips
-appear only in that view. Print still hides the Kin pane; a Families
-print is the list under those headings, light palette, same as any
-other menu.
+The segments are All, one per method, then Shapes. A method segment is
+the card's own filing: that method, its printed sections under it.
+
+All is not cut by method. It files every drink under the bottle it is
+mostly made of, one heading per bottle in `bar.json` order, with no
+blurb and no printed sections under it. `leadBottle` in `app.js` picks
+that bottle from the build: a spirit beats anything else in the glass,
+so the French 75 is gin and not the Champagne on top; with no spirit,
+the biggest vermouth or liqueur leads, so the Bamboo is sherry; a tie
+goes to the pour written first. Juice, syrup, bitters and mixers lead
+only a drink with nothing else in it, so no drink falls off All. This
+is a third filing beside `family` and kin, and like kin it is worked
+out, never written onto the cocktail: So So Cocktail is Apple Brandy on
+the card and Gin under All, and both are right.
+
+Shapes regroups the same menu by shape instead. Pattern chips appear
+only in that view. Print still hides the Kin pane; a Shapes print is
+the list under those headings, light palette, same as any other menu,
+and an All print is the list under its bottles.
 
 ## Design
 
