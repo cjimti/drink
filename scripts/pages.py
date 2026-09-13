@@ -285,6 +285,7 @@ def render():
     bar = llms.load("bar.json")
     notation = llms.load("notation.json")
     kin = llms.load("kin.json")
+    llms.refuse_unsafe_ids(menu)
     by_id = {i["id"]: i for i in bar["ingredients"]}
     tables = (menu, by_id, notation, kin)
     out = {f"drink/{d['id']}/index.html": page(d, context(d, tables))
@@ -312,6 +313,12 @@ def check_texts(texts, present):
     return errs
 
 
+def remove_if_empty(folder):
+    """The drink/<id>/ an orphan page leaves behind, once nothing is in it."""
+    if folder.parent == PAGES and folder.is_dir() and not any(folder.iterdir()):
+        folder.rmdir()
+
+
 def main(argv):
     texts = render()
     if "--check" in argv:
@@ -326,6 +333,7 @@ def main(argv):
         return 0
     for rel in on_disk() - set(texts):
         (ROOT / rel).unlink()
+        remove_if_empty((ROOT / rel).parent)
         print(f"  pages   removed {rel}")
     for rel, body in texts.items():
         path = ROOT / rel

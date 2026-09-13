@@ -31,6 +31,20 @@ def load(name):
     return json.loads((ROOT / "data" / name).read_text())
 
 
+# What a drink id may be when it becomes a path: the slug check_menu
+# holds the menu to. make verify runs that first, but make pages or make
+# cards run alone would write wherever an id pointed.
+SAFE_ID = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+
+
+def refuse_unsafe_ids(menu):
+    """Stop, naming the id, before a drink id is used as a file name."""
+    for d in menu["cocktails"]:
+        if not SAFE_ID.fullmatch(str(d.get("id", ""))):
+            raise SystemExit(f"  ID      {d.get('id')!r} is not a slug, so no page or "
+                             f"card is written for it")
+
+
 def plural(n, one, many):
     return f"{n} {one if n == 1 else many}"
 

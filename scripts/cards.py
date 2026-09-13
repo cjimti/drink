@@ -149,6 +149,7 @@ def wanted():
     menu = llms.load("cocktails.json")
     bar = llms.load("bar.json")
     notation = llms.load("notation.json")
+    llms.refuse_unsafe_ids(menu)
     by_id = {i["id"]: i for i in bar["ingredients"]}
     out = {}
     for d in menu["cocktails"]:

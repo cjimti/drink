@@ -378,6 +378,39 @@ def check_stamps(texts):
     return errs
 
 
+def check_data(js, sw):
+    """The menu files are one release with the script, and survive the next.
+
+    `index.html` stamps ?v=<tag> onto app.js and app.css so the edge never
+    pairs a new page with an old script. The data needs the same query or
+    a phone runs the new script against the last release's JSON for the
+    ten minutes the edge holds it. That query changes every release, so
+    the worker has to store and match data on the path alone, and carry
+    it into the new cache before the old one is deleted, or the first
+    open after a release with no signal has no menu. Read decommented,
+    like the worker's other safeguards.
+    """
+    code = jslex.decomment(js)
+    fetches = re.findall(r"fetch\('data/[^']*'[^)]*\)", code)
+    errs = [f"app.js: {f} carries no ?v=' + versionLabel, so the edge can "
+            f"hand this script the previous release's data"
+            for f in fetches if not re.fullmatch(
+                r"fetch\('data/[\w-]+\.json\?v=' \+ versionLabel\)", f)]
+    if not fetches:
+        errs.append("app.js fetches no data/*.json that this check can read")
+    worker = jslex.decomment(sw)
+    if "var key = isData ? url.origin + url.pathname : req;" not in worker \
+            or "keep(key, res)" not in worker or "caches.match(key, opts)" not in worker:
+        errs.append("sw.js stores or matches data on the query: the version "
+                    "changes it every release, and the offline copy is missed")
+    if not re.search(r"carryData\(stale\)\.then\(function \(\) \{\s*"
+                     r"return Promise\.all\(stale\.map\(function \(k\) "
+                     r"\{ return caches\.delete\(k\)", worker):
+        errs.append("sw.js deletes the old cache without carrying the data "
+                    "forward: the first open after a release offline has no menu")
+    return errs
+
+
 SITE = "https://fewbottles.com/"
 NOT_LOCAL = ("http:", "https:", "//", "#", "data:", "mailto:", "sms:")
 
@@ -476,6 +509,7 @@ def main():
     reported = [("MISSING", missing), ("DANGLING", dangling),
                 ("MISSING", check_well_known()),
                 ("WORKER", check_worker(js, sw)),
+                ("DATA", check_data(js, sw)),
                 ("STAMP", check_stamps(texts)),
                 ("SERVED", check_served(refs, stage.SERVED)),
                 ("GLASS", glass), ("FONT", fonts),
@@ -496,6 +530,7 @@ def main():
     print(f"  plates  {len(plates)} tool plate(s) converted, shown and cached")
     print(f"  well    {len(WELL_KNOWN)} crawler/agent file(s) present")
     print("  worker  registration guarded, eviction present in app.js and sw.js")
+    print("  data    fetched with the release, kept on its path, carried across a release")
     print("  stamps  every release stamp lands exactly once, the tree is unstamped")
     print(f"  served  {len(refs)} local reference(s) inside the "
           f"{len(stage.SERVED)} path(s) the deploy uploads")
