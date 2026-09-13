@@ -527,6 +527,35 @@ def js_markup(src, holes=False):
     return "".join(out)
 
 
+PAINT = re.compile(r"(?<![\w-])(style|fill|stroke|stop-color|color)\s*=\s*"
+                   r"(?:\"([^\"]*)\"|'([^']*)')", re.I)
+
+
+def check_js_colours(src):
+    """No literal colour in the markup app.js writes.
+
+    The stylesheet rule reads app.css, and a `style="color:#f00"` built in
+    a string in app.js was never in it. This reads the same markup the
+    a11y rules read: a style attribute, and a fill, stroke, stop-color or
+    color attribute on an inline svg. `currentColor`, `none` and a token
+    pass, as they do in the stylesheet.
+
+    The glass art is not here. `loadGlassArt` inlines svg files from
+    assets/glasses as they are, colours included, and those files are
+    not JavaScript.
+    """
+    markup, errs = js_markup(src), []
+    for m in PAINT.finditer(markup):
+        value = m.group(2) if m.group(2) is not None else m.group(3)
+        found = colour_in(value)
+        if found:
+            line = markup.count("\n", 0, m.start()) + 1
+            errs.append(f"assets/app.js:{line} literal colour "
+                        f"`{found.group(0)}` in a {m.group(1)} attribute "
+                        f"app.js writes; use a token")
+    return errs
+
+
 # ARIA gives a paragraph, a span and their kin no way to be named. A
 # reader drops aria-label on one of those and reads whatever text is
 # there, so `<p aria-label="Barline">2,1,1,cl</p>` was read as a bare
@@ -718,6 +747,16 @@ def check_method_line(src):
     return []
 
 
+def js_body(src, name):
+    """The stripped body of the named function in app.js, or None."""
+    m = re.search(r"function " + name + r"\(", src)
+    if not m:
+        return None
+    stripped = jslex.strip(src)
+    start = stripped.index("{", m.end())
+    return stripped[start:jslex.match_pair(stripped, start)]
+
+
 def check_search_case(src):
     """A code is searched with the case the visitor typed, on a phone too.
 
@@ -735,19 +774,20 @@ def check_search_case(src):
     wrong in the hand, which is where this menu is read.
     """
     errs = []
-    m = re.search(r"function matches\(", src)
-    if not m:
-        return ["assets/app.js matches is gone"]
-    stripped = jslex.strip(src)
-    start = stripped.index("{", m.end())
-    body = stripped[start:jslex.match_pair(stripped, start)]
+    body, hay = js_body(src, "matches"), js_body(src, "hayOf")
+    if body is None or hay is None:
+        return ["assets/app.js matches or hayOf is gone"]
     # By statement rather than by line, so folding the code over two
     # lines is caught the same as folding it on one.
     for stmt in body.split(";"):
-        if "d.code" in stmt and "toLowerCase" in stmt:
+        if "d.code" in stmt and ("toLowerCase" in stmt or "fold(" in stmt):
             errs.append("assets/app.js matches() folds d.code — `Q` would "
                         "return every quarter-ounce drink on the menu")
             break
+    # The haystack is folded whole, so the code has no business in it.
+    if "d.code" in hay:
+        errs.append("assets/app.js hayOf() puts d.code in the folded "
+                    "haystack — `Q` would find every quarter-ounce drink")
     if "d.code" not in body:
         errs.append("assets/app.js matches() no longer searches the code")
 
@@ -829,6 +869,7 @@ def main():
     errs += check_html(html, js)
     errs += check_js_refs(html, js)
     errs += check_js_buttons(js)
+    errs += check_js_colours(js)
     errs += check_names("index.html", html)
     errs += check_names("assets/app.js", js_markup(js))
     pages = page_files()
@@ -850,7 +891,8 @@ def main():
         return 1
 
     print(f"  style   {len(dark)} token(s), {len(light)} with a light "
-          f"counterpart, no literal colour outside them")
+          f"counterpart, no literal colour outside them in app.css or the "
+          f"markup app.js writes")
     for theme in ("dark", "light"):
         worst = {}
         for t, token, _, r in ratios:

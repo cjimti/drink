@@ -282,11 +282,21 @@ def run_house(failures):
                          "d.code.toLowerCase().indexOf(filter.q)")
     report("house/search folds the code",
            check_style.check_search_case(broken), True, failures)
-    broken = app.replace("var hay = fold(d.name + ' ' + ingredientLine(d));",
-                         "var hay = (d.name + ' ' + ingredientLine(d)\n"
-                         "        + ' ' + d.code)\n        .toLowerCase();")
+    line = "if (hayOf(d).indexOf(filter.q) < 0 && d.code.indexOf(filter.code) < 0)"
+    broken = app.replace(line, "var hay = (hayOf(d)\n"
+                         "        + ' ' + d.code)\n        .toLowerCase();\n"
+                         "      " + line)
     report("house/search folds over two lines",
+           check_style.check_search_case(broken) if broken != app else "",
+           True, failures)
+    broken = app.replace("d.code.indexOf(filter.code)",
+                         "fold(d.code).indexOf(filter.q)")
+    report("house/search folds the code with fold()",
            check_style.check_search_case(broken), True, failures)
+    broken = app.replace("var words = [d.name];", "var words = [d.name, d.code];")
+    report("house/search puts the code in the haystack",
+           check_style.check_search_case(broken) if broken != app else "",
+           True, failures)
     broken = app.replace(" && d.code.indexOf(filter.code) < 0", "")
     report("house/search drops the code",
            check_style.check_search_case(broken), True, failures)
@@ -388,6 +398,30 @@ def run_js_markup(failures):
         report(f"aria/{ref} names {id_}",
                "" if check_style.shapes_meet(ref, id_) == want else
                f"expected {want}", False, failures)
+
+    report("colour/app clean", check_style.check_js_colours(app), False,
+           failures)
+    for name, js, expected in (
+            ("hex in a style attribute",
+             "f('<p class=\"next__row\" style=\"color:#ff0000\">' + x);", True),
+            ("named colour in single quotes",
+             "f(\"<span style='background: gold'>\" + x);", True),
+            ("rgb in an svg fill",
+             "f('<svg><path fill=\"rgb(1, 2, 3)\" d=\"M0\"/></svg>');", True),
+            ("hex stroke",
+             "f('<svg><path stroke=\"#111\" d=\"M0\"/></svg>');", True),
+            ("currentColor fill",
+             "f('<svg><path fill=\"currentColor\" d=\"M0\"/></svg>');", False),
+            ("token in a style attribute",
+             "f('<p style=\"color: var(--brass)\">');", False),
+            ("hex in a comment", "/* style=\"color:#ff0000\" */ f(x);", False)):
+        report(f"colour/{name}", check_style.check_js_colours(js), expected,
+               failures)
+    broken = app.replace("'<path fill=\"currentColor\" d=\"'",
+                         "'<path fill=\"#ff0000\" d=\"'")
+    report("colour/the real svg icon in red",
+           check_style.check_js_colours(broken) if broken != app else "",
+           True, failures)
 
     report("button/app clean", check_style.check_js_buttons(app), False,
            failures)
@@ -748,6 +782,28 @@ def run_worker(failures):
     unrouted = sw.replace("req.mode !== 'navigate'", "false")
     report("worker/offline page never served",
            check_assets.check_worker(js, unrouted), True, failures)
+
+    # The debugging comment-out: every word of the eviction is still in
+    # the file, and none of it runs.
+    head = "    } else {\n      navigator.serviceWorker.getRegistrations()"
+    tail = "/* nothing to clean up */ });\n    }\n"
+    at = js.index(head) + len("    } ")
+    end = js.index(tail, at) + len(tail)
+    muted = js[:at] + "".join("// " + line for line in
+                              js[at:end].splitlines(True)) + js[end:]
+    report("worker/eviction commented out",
+           check_assets.check_worker(muted, sw), True, failures)
+
+    gate = ("    if (res.status === 200) {\n"
+            "      var copy = res.clone();\n"
+            "      caches.open(CACHE).then(function (c) { c.put(req, copy); });\n"
+            "    }\n")
+    loose = sw.replace(gate, "    if (res.status === 200) { /* noted */ }\n"
+                       "    var copy = res.clone();\n"
+                       "    caches.open(CACHE).then(function (c) { c.put(req, copy); });\n")
+    report("worker/status checked, put not gated",
+           check_assets.check_worker(js, loose) if loose != sw else "",
+           True, failures)
 
 
 def run_stamps(failures):

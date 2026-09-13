@@ -12,7 +12,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import stage  # noqa: E402  (path set above; there is no package here)
+import jslex  # noqa: E402  (path set above; there is no package here)
+import stage  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -244,6 +245,91 @@ def check_well_known():
             for p in WELL_KNOWN if not (ROOT / p).exists()]
 
 
+def block_span(src, head, lo=0, hi=None):
+    """Where the body of the block `head` opens starts and ends, or None.
+
+    `head` ends on its `{` and is looked for in the decommented source,
+    so a line that only survives in a comment is not found. The closing
+    brace is found in the source with its literals blanked too, on the
+    same offsets, so a brace inside a string cannot mislead it.
+    """
+    code = jslex.decomment(src)
+    at = code.find(head, lo, len(code) if hi is None else hi)
+    if at < 0:
+        return None
+    brace = at + len(head) - 1
+    return brace + 1, jslex.match_brace(jslex.strip(src), brace) - 1
+
+
+def evicts(js):
+    """Off https, app.js unregisters and drops caches, in code that runs.
+
+    The eviction is the else of the https guard. A branch commented out
+    while debugging still names `unregister()` in its comment, so this
+    asks for the else itself and reads what is in it.
+    """
+    guard = block_span(js, "if (location.protocol === 'https:') {")
+    if guard is None:
+        return False
+    code = jslex.decomment(js)
+    other = re.compile(r"\s*else \{").match(code, guard[1] + 1)
+    if other is None:
+        return False
+    body = block_span(js, "else {", other.start(), other.end())
+    text = code[body[0]:body[1]]
+    return ".unregister()" in text and "caches.delete(" in text
+
+
+def keep_gated(sw):
+    """sw.js stores a response only inside its test for a 200.
+
+    The line being present is not the rule: `if (res.status === 200) {}`
+    with the put after it caches a 404 as readily as no line at all.
+    """
+    keep = block_span(sw, "function keep(req, res) {")
+    if keep is None:
+        return False
+    gate = block_span(sw, "if (res.status === 200) {", *keep)
+    if gate is None:
+        return False
+    code = jslex.decomment(sw)
+    puts = code[keep[0]:keep[1]].count(".put(")
+    return puts > 0 and code[gate[0]:gate[1]].count(".put(") == puts
+
+
+def check_app_worker(js):
+    """The registration side: guarded, evicting, and poked on resume."""
+    if "serviceWorker" not in js:
+        return []
+    errs = []
+    if "location.protocol === 'https:'" not in js:
+        errs.append("app.js registers a worker without an https guard")
+    if not evicts(js):
+        errs.append("app.js never unregisters and drops caches off https in code that runs, so a stale worker cannot be evicted")
+    if "updateViaCache" not in js:
+        errs.append("app.js registers without updateViaCache: 'none', so Safari will serve a four-hour-cached sw.js")
+    if ".update()" not in js:
+        errs.append("app.js never pokes update(), so an iOS home-screen WebView will not check on its own")
+    return errs
+
+
+def check_sw_shell(sw):
+    """The worker's shell: fresh at install, offline page cached and served."""
+    errs = []
+    if "fetch(fresh(path)" not in sw or "'v=' + VERSION" not in sw:
+        errs.append("sw.js installs its shell without a version query: an edge cache can hand it the previous release for ten minutes after a tag")
+    if "caches.match(req, { ignoreSearch: true })" not in sw:
+        errs.append("sw.js matches the shell on the query too: a release stamps ?v=<tag> onto the asset tags, and every one would miss the cache offline")
+    shell = re.search(r"var SHELL = \[(.*?)\];", sw, re.S)
+    if "'offline.html'" not in (shell.group(1) if shell else ""):
+        errs.append("sw.js does not cache offline.html with the shell: the one page a dead link can fall back on has to be there before the signal goes")
+    elif not (ROOT / "offline.html").exists():
+        errs.append("sw.js caches offline.html and the file is not in the repo: the install would throw and nothing would cache at all")
+    if "caches.match('offline.html')" not in sw or "req.mode !== 'navigate'" not in sw:
+        errs.append("sw.js never serves offline.html: a drink link opened with no signal lands on the browser's error page")
+    return errs
+
+
 def check_worker(js, sw):
     """A service worker must never be able to take over a dev origin.
 
@@ -252,41 +338,22 @@ def check_worker(js, sw):
     http://localhost:8000 answers for whatever project runs there next,
     cache-first, and keeps answering with no server at all.
 
-    Declining to register is not sufficient — a worker already installed
+    Declining to register is not sufficient: a worker already installed
     goes on serving the old app.js, so the guard never runs. The app has
     to evict, and the worker has to be able to take itself out.
+
+    Every test reads the source with its comments blanked, so a safeguard
+    commented out while debugging is a safeguard gone.
     """
-    errs = []
-
-    if "serviceWorker" in js:
-        if "location.protocol === 'https:'" not in js:
-            errs.append("app.js registers a worker without an https guard")
-        if "unregister()" not in js:
-            errs.append("app.js never unregisters — a stale worker cannot be evicted")
-        if "updateViaCache" not in js:
-            errs.append("app.js registers without updateViaCache: 'none' — Safari will serve a four-hour-cached sw.js")
-        if ".update()" not in js:
-            errs.append("app.js never pokes update() — an iOS home-screen WebView will not check on its own")
-
-    if "self.registration.unregister()" not in sw:
+    errs = check_app_worker(jslex.decomment(js))
+    code = jslex.decomment(sw)
+    if "self.registration.unregister()" not in code:
         errs.append("sw.js cannot take itself out when it wakes up off https")
-    if sw.count(".navigate(") < 2:
+    if code.count(".navigate(") < 2:
         errs.append("sw.js must navigate clients both off https and when a new cache replaces an old one")
-    if "fetch(fresh(path)" not in sw or "'v=' + VERSION" not in sw:
-        errs.append("sw.js installs its shell without a version query — an edge cache can hand it the previous release for ten minutes after a tag")
-    if "if (res.status === 200)" not in sw:
-        errs.append("sw.js caches responses without checking for a 200: a 404 or a 5xx would be pinned until the next tag, and a 206 is part of a file stored as the whole")
-    if "caches.match(req, { ignoreSearch: true })" not in sw:
-        errs.append("sw.js matches the shell on the query too: a release stamps ?v=<tag> onto the asset tags, and every one would miss the cache offline")
-    shell = re.search(r"var SHELL = \[(.*?)\];", sw, re.S)
-    if "'offline.html'" not in (shell.group(1) if shell else ""):
-        errs.append("sw.js does not cache offline.html with the shell — the one page a dead link can fall back on has to be there before the signal goes")
-    elif not (ROOT / "offline.html").exists():
-        errs.append("sw.js caches offline.html and the file is not in the repo — the install would throw and nothing would cache at all")
-    if "caches.match('offline.html')" not in sw or "req.mode !== 'navigate'" not in sw:
-        errs.append("sw.js never serves offline.html — a drink link opened with no signal lands on the browser's error page")
-
-    return errs
+    if not keep_gated(sw):
+        errs.append("sw.js caches responses outside its check for a 200: a 404 or a 5xx would be pinned until the next tag, and a 206 is part of a file stored as the whole")
+    return errs + check_sw_shell(code)
 
 
 def check_stamps(texts):

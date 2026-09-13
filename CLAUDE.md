@@ -336,6 +336,13 @@ All bottles the sheet is the whole card and the link is the bare
 address. `Clear` drops the other filters and keeps the menu you chose.
 `selectMenu` is the only place the two gate flags are written.
 
+The search box over the chips reads a drink's name and, for every
+bottle in its build, the `name`, the `short` and the `shelf` word, all
+folded, so `vermouth`, `bitters`, `lemons` and `creme` find what they
+say. There are no synonyms: `whiskey` does not find bourbon, and a
+second list of words would go stale. The code is matched on its own,
+unfolded, because `q` and `Q` are different pours.
+
 ## Families
 
 A fourth segment after All / Stirred / Shaken. It regroups the same

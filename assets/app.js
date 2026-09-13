@@ -1175,10 +1175,28 @@
          Q is three quarters, h a half ounce and H a packed highball.
          Folded, every one of those searches returned the other one's
          drinks as well, which is no answer. */
-      var hay = fold(d.name + ' ' + ingredientLine(d));
-      if (hay.indexOf(filter.q) < 0 && d.code.indexOf(filter.code) < 0) return false;
+      if (hayOf(d).indexOf(filter.q) < 0 && d.code.indexOf(filter.code) < 0) return false;
     }
     return true;
+  }
+
+  /* What a search reads for one drink: its name, and for every bottle
+     in the build the full name, the short one and the shelf word. The
+     short name alone is sweet verm. and orange bitt., so vermouth and
+     bitters found nothing. The data does not change after boot, so the
+     string is folded once and kept on the drink. */
+  function hayOf(d) {
+    if (d._hay === undefined) {
+      var words = [d.name];
+      d.build.forEach(function (p) {
+        var i = ing[p[0]];
+        if (!i) { words.push(p[0]); return; }
+        words.push(i.name, i.short);
+        if (i.shelf) words.push(i.shelf);
+      });
+      d._hay = fold(words.join(' '));
+    }
+    return d._hay;
   }
 
   function kinRow(d) {
@@ -3850,8 +3868,6 @@
     $('#version-label').textContent = versionLabel;
   }
 
-  window.addEventListener('hashchange', route);
-
   var spyQueued = false;
   $('#main').addEventListener('scroll', function () {
     if (spyQueued || $('#view-info').hidden) return;
@@ -3939,6 +3955,10 @@
     showVersion();
     repaintMenu();
     route();
+    /* Both wait for the data. A tab tapped while Pouring is up used to
+       reach route() with no menu to paint and throw; boot's own route()
+       above is what reads the hash a guest arrived on. */
+    window.addEventListener('hashchange', route);
     window.addEventListener('storage', storesChanged);
   }).catch(function (err) {
     $('#loading').textContent = 'Could not load the menu. ' + err;
