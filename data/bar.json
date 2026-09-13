@@ -67,11 +67,11 @@
     },
     { "bit":  2, "id": "rye",           "name": "Rye",                 "short": "rye",         "kind": "base",
       "bottles": [
-        { "id": "rittenhouse-100",         "name": "Rittenhouse Rye 100",                                        "price": 25, "tier": "solid" },
+        { "id": "rittenhouse-100",         "name": "Rittenhouse Rye 100 Proof",                                  "price": 25, "tier": "solid" },
         { "id": "wild-turkey-rye-101",     "name": "Wild Turkey Rye 101",                                        "price": 25, "tier": "solid" },
-        { "id": "old-forester-rye-100",    "name": "Old Forester Rye 100 Pf",                                    "price": 25, "tier": "solid" },
+        { "id": "old-forester-rye-100",    "name": "Old Forester Rye 100 Proof",                                 "price": 25, "tier": "solid" },
         { "id": "high-west-double-rye",    "name": "High West Double Rye",                                       "price": 25, "tier": "solid" },
-        { "id": "sazerac-6-rye",           "name": "Sazerac 6 Yr Old Rye Whiskey Barrel Select",                 "price": 35, "tier": "elevated" }
+        { "id": "sazerac-6-rye",           "name": "Sazerac 6 Year Rye",                                         "price": 35, "tier": "elevated" }
       ]
     },
     { "bit":  3, "id": "scotch",        "name": "Scotch",              "short": "scotch",      "kind": "base",
@@ -94,7 +94,7 @@
     },
     { "bit":  6, "id": "aged-rum",      "name": "Aged rum",            "short": "aged rum",    "kind": "base",
       "bottles": [
-        { "id": "el-dorado-12",            "name": "El Dorado 12 YO Guyana",                                     "price": 45, "tier": "solid" }
+        { "id": "el-dorado-12",            "name": "El Dorado 12 Year",                                          "price": 45, "tier": "solid" }
       ]
     },
     { "bit":  7, "id": "light-rum",     "name": "Light rum",           "short": "light rum",   "kind": "base",
@@ -150,12 +150,12 @@
 
     { "bit": 14, "id": "campari",        "name": "Campari",            "short": "Campari",     "kind": "modifier",
       "bottles": [
-        { "id": "campari-bottle",          "name": "Campari",                                                    "price": 30, "tier": "excellent" }
+        { "id": "campari-bottle",          "name": "Campari",                                                    "price": 30, "tier": "solid" }
       ]
     },
     { "bit": 15, "id": "maraschino",     "name": "Maraschino liqueur", "short": "maraschino",  "kind": "modifier",
       "bottles": [
-        { "id": "luxardo",                 "name": "Luxardo Maraschino Liqueur",                                 "price": 30, "tier": "excellent" }
+        { "id": "luxardo",                 "name": "Luxardo Maraschino Liqueur",                                 "price": 30, "tier": "solid" }
       ]
     },
     { "bit": 16, "id": "orange-liqueur", "name": "Orange liqueur",     "short": "orange liq.", "kind": "modifier",
@@ -166,7 +166,7 @@
     },
     { "bit": 17, "id": "benedictine",    "name": "B\u00e9n\u00e9dictine",        "short": "B\u00e9n\u00e9dictine", "kind": "modifier",
       "bottles": [
-        { "id": "benedictine-bottle",      "name": "B\u00e9n\u00e9dictine",                                            "price": 35, "tier": "excellent" }
+        { "id": "benedictine-bottle",      "name": "B\u00e9n\u00e9dictine",                                            "price": 35, "tier": "solid" }
       ]
     },
     { "bit": 18, "id": "apricot",        "name": "Apricot liqueur",    "short": "apricot",     "kind": "modifier",
@@ -176,12 +176,12 @@
     },
     { "bit": 19, "id": "elderflower",    "name": "Elderflower liqueur","short": "elderflower", "kind": "modifier",
       "bottles": [
-        { "id": "st-germain",              "name": "St-Germain Elderflower Liqueur",                             "price": 25, "tier": "elevated" }
+        { "id": "st-germain",              "name": "St-Germain Elderflower Liqueur",                             "price": 25, "tier": "solid" }
       ]
     },
     { "bit": 20, "id": "absinthe",       "name": "Absinthe",           "short": "absinthe",    "kind": "modifier",
       "bottles": [
-        { "id": "lucid",                   "name": "Lucid Absinthe Superieure",                     "size": "375ml", "price": 40, "tier": "solid" },
+        { "id": "lucid",                   "name": "Lucid Absinthe Sup\u00e9rieure",                "size": "375ml", "price": 40, "tier": "solid" },
         { "id": "kubler",                  "name": "K\u00fcbler",                                      "size": "375ml", "price": 40, "tier": "solid" },
         { "id": "st-george-verte",         "name": "St. George Absinthe Verte",                     "size": "750ml", "price": 65, "tier": "solid" }
       ]
@@ -199,7 +199,7 @@
     },
     { "bit": 25, "id": "cynar",          "name": "Cynar",              "short": "Cynar",       "kind": "modifier",
       "bottles": [
-        { "id": "cynar-bottle",            "name": "Cynar 33 Proof",                                             "price": 30, "tier": "excellent" },
+        { "id": "cynar-bottle",            "name": "Cynar 33 Proof",                                             "price": 30, "tier": "solid" },
         { "id": "averna",                  "name": "Averna Amaro",                                               "price": 35, "tier": "alternatives" },
         { "id": "ramazzotti",              "name": "Ramazzotti Amaro",                                           "price": 35, "tier": "alternatives" },
         { "id": "montenegro",              "name": "Amaro Montenegro",                                           "price": 40, "tier": "alternatives" },
@@ -213,7 +213,7 @@
     },
     { "bit": 27, "id": "fernet",         "name": "Fernet",             "short": "Fernet",      "kind": "modifier",
       "bottles": [
-        { "id": "fernet-branca",           "name": "Fernet-Branca",                                              "price": 30, "tier": "exceptional" }
+        { "id": "fernet-branca",           "name": "Fernet-Branca",                                              "price": 30, "tier": "solid" }
       ]
     },
     { "bit": 28, "id": "creme-de-cacao", "name": "Cr\u00e8me de cacao",     "short": "cacao",       "kind": "modifier",

@@ -185,7 +185,10 @@ def serve_line(drink, notation, codes):
     garnishes = {g["code"]: g for g in notation["garnishes"]}
     serve = drink["serve"]
     glass = glasses.get(serve[0], {"label": serve[0]})
-    bits = [glass["label"]]
+    # A built drink in a glass that names itself for that, as app.js
+    # glassFor does: sparkling wine topped into the bare highball.
+    built = drink["method"] == "built" and glass.get("label_built")
+    bits = [built or glass["label"]]
     found = split_garnish(serve[1:], codes) or []
     bits.extend(garnishes[c]["label"] for c in found if c in garnishes)
     return ", ".join(bits)

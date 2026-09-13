@@ -227,6 +227,39 @@ def check_manifest(man, sw):
     return errs
 
 
+def png_size(path):
+    """(width, height) off a PNG's IHDR, or None when there is no file."""
+    if not path.exists():
+        return None
+    return struct.unpack(">II", path.read_bytes()[16:24])
+
+
+def check_screenshots(man, size_of=png_size):
+    """The install sheet's pictures exist, say their own size, and cover both forms.
+
+    Chrome's richer install sheet wants a narrow and a wide one, and it
+    drops a screenshot whose `sizes` is not the size of the file, so a
+    retaken picture with the old figure left in the manifest quietly
+    takes the sheet back to the plain one.
+    """
+    errs = []
+    forms = set()
+    for shot in man.get("screenshots", []):
+        src = shot["src"]
+        size = size_of(ROOT / src)
+        forms.add(shot.get("form_factor"))
+        if size is None:
+            errs.append(f"{src}: named in the manifest, not in the repo")
+        elif shot.get("sizes") != f"{size[0]}x{size[1]}":
+            errs.append(f"{src}: the manifest says {shot.get('sizes')}, "
+                        f"the file is {size[0]}x{size[1]}")
+    for want in ("narrow", "wide"):
+        if want not in forms:
+            errs.append(f"manifest has no {want} screenshot, so Chrome shows "
+                        f"the plain install sheet")
+    return errs
+
+
 WELL_KNOWN = [
     "robots.txt",
     "sitemap.xml",
@@ -452,7 +485,8 @@ def references(texts, sw, man):
             for r in re.findall(r"'([^']+)'", re.sub(
                 r"/\*.*?\*/", "", shell.group(1) if shell else "", flags=re.S))]
     out += [("manifest.webmanifest", site_path("manifest.webmanifest", r))
-            for r in [man.get("start_url", "./")] + [i["src"] for i in man.get("icons", [])]]
+            for r in [man.get("start_url", "./")]
+            + [i["src"] for i in man.get("icons", []) + man.get("screenshots", [])]]
     return [(name, path) for name, path in out if path is not None]
 
 
@@ -515,6 +549,7 @@ def main():
                 ("GLASS", glass), ("FONT", fonts),
                 ("FONT", check_offsite(texts)),
                 ("ICON", check_manifest(manifest(), sw)),
+                ("SHOT", check_screenshots(manifest())),
                 ("PLATE", check_plates(html, sw, plates))]
     for tag, errs in reported:
         for e in errs:
@@ -526,7 +561,7 @@ def main():
     print(f"  assets  {n_refs} local reference(s) resolve, {n_ids} element id(s) exist")
     print(f"  glass   {n_glass} drawing(s) a serve token can ask for, all present")
     print(f"  fonts   {n_faces} face(s) served from here, nothing off-origin")
-    print("  icons   the manifest installs, maskable and unlocked")
+    print("  icons   the manifest installs, maskable and unlocked, with a narrow and a wide screenshot")
     print(f"  plates  {len(plates)} tool plate(s) converted, shown and cached")
     print(f"  well    {len(WELL_KNOWN)} crawler/agent file(s) present")
     print("  worker  registration guarded, eviction present in app.js and sw.js")

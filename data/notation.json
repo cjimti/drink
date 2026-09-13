@@ -127,7 +127,9 @@
     {
       "code": "h",
       "label": "Highball",
-      "gloss": "tall glass, no ice: a fizz"
+      "gloss": "tall glass, no ice: a fizz",
+      "label_built": "Highball or flute",
+      "gloss_built": "no ice, sparkling wine on top"
     },
     {
       "code": "H",

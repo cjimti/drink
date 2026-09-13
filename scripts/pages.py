@@ -30,6 +30,12 @@ AUTHOR = "Craig Johnston"
 AUTHOR_URL = "https://imti.co/"
 GTM = "GTM-WTFK3CCS"
 KIN_SHOWN = 6
+ISSUES = "https://github.com/cjimti/drink/issues"
+
+# Every page foot says where a correction goes. A search lands on one
+# drink, and that is the page somebody finds the wrong measure on.
+REPORT = (f'A wrong measure or a bad date is an issue at '
+          f'<a href="{ISSUES}" rel="noopener">github.com/cjimti/drink/issues</a>.')
 
 # The two faces the first screen is set in, served from here. A drink
 # page is where a shared link lands, so it preloads them like the app
@@ -208,6 +214,8 @@ def article(drink, ctx):
         # instead, where nothing can ignore it.
         f'  <p class="page__code"><span class="sr-only">Barline </span>'
         f'{escape(drink["code"])}</p>\n'
+        '  <p class="page__key">The code is the shorthand off my printed menu; '
+        'the <a href="/#key">Key tab</a> decodes every letter.</p>\n'
         f'  <ul class="page__pours">\n{lines}    </ul>\n'
         f'  <p class="page__method">{escape(ctx["how"])}</p>\n'
         f'  <p class="page__serve">{escape(ctx["serve"])}.</p>\n'
@@ -233,11 +241,12 @@ def page(drink, ctx):
         head(drink, ctx) + '<body class="page">\n' + GTM_BODY + topbar() +
         '<main id="main" class="page__main">\n<article class="page__drink">\n'
         + article(drink, ctx) +
-        f'  <p class="page__all"><a href="/">All {n} drinks</a>, and which ones your own shelf pours.</p>\n'
+        '  <p class="page__all">This is one drink on my home bar\'s menu. Tick the bottles '
+        f'you own and the menu lists which of <a href="/">all {n} drinks</a> they pour.</p>\n'
         "</article>\n</main>\n"
         '<footer class="page__foot">\n'
         f'  <p>My shelf, my menu. <a href="{AUTHOR_URL}" rel="author">{AUTHOR}</a>, '
-        f'<a href="/">fewbottles.com</a>.</p>\n'
+        f'<a href="/">fewbottles.com</a>. {REPORT}</p>\n'
         "</footer>\n</body>\n</html>\n")
 
 

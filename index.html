@@ -116,6 +116,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+<!-- Off screen until a keyboard reaches them. On a phone the tab bar
+     comes after the whole list, so the second one is the way to it. -->
+<a class="skip" href="#main">Skip to content</a>
+<a class="skip skip--tabs" href="#tabbar">Skip to tabs</a>
+
 <header class="topbar">
   <a class="topbar__brand" href="#menu">
     <svg class="topbar__mark" viewBox="0 0 40 40" aria-hidden="true">
@@ -182,7 +187,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>You only need a few bottles to start exploring the fundamentals of classic cocktails.</p>
         <p>Juice with vodka is a regression. Plenty of modern drinks came out of these older shapes, and those flavor profiles are still terribly underrated.</p>
         <p>I built a small utility. Broad categories, few ingredients, little expense. The complete catalog of classic and modern drinks, with every niche bottle named, can wait until you know what you actually like.</p>
-        <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Tick what you have. See what opens. Buy the bottle that unlocks the most.</p>
+        <p>I love cocktail books. Hunting down a niche brand and some exotic bottle just to make a drink I might not even like is a frustrating way to learn. Here you tick what you have, and the menu shows which bottle opens the most drinks next.</p>
         <p class="info__sign">My shelf, my menu.<br><a href="https://imti.co/" rel="author">Craig Johnston</a></p>
       </div>
     </section>
@@ -351,9 +356,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section class="info__s" id="info-analytics">
       <h2 class="info__h">Analytics</h2>
       <div class="info__copy">
-        <p>This site is a hobby. I run Google Analytics on it so I can see how it gets used: which tab someone opened, which drink they expanded, which bottle they ticked, whether a menu was printed or shared. That is the whole list.</p>
-        <p>It tells me nothing about who you are. There is no account, no sign-in, no name attached to any of it. Your shelf stays on your phone unless you share it yourself. I do not sell the numbers and I do not market to anyone. I read them so I know which parts of this are worth more work. So far nobody has ever opened a Tip Top, and it is a great drink.</p>
-        <p>The events are in the source: <a href="https://github.com/cjimti/drink/blob/main/assets/app.js" rel="noopener"><code>track()</code> in assets/app.js</a>. A content blocker stops all of it and the site works exactly the same.</p>
+        <p>This site is a hobby. I run Google Analytics on it so I can see how it gets used: which tab someone opened, which drink they expanded, which bottle they ticked, whether a menu was printed or shared. Cloudflare, which sits in front of the site, also counts page views and how fast the pages load with a script of its own, and it sets no cookie. Those two are the whole list.</p>
+        <p>Neither tells me who you are. There is no account, no sign-in, no name attached to any of it. Your shelf stays on your phone unless you share it yourself. I do not sell the numbers and I do not market to anyone. I read them so I know which parts of this are worth more work. So far nobody has ever opened a Tip Top, and it is a great drink.</p>
+        <p>The events are in the source: <a href="https://github.com/cjimti/drink/blob/main/assets/app.js" rel="noopener"><code>track()</code> in assets/app.js</a>. Cloudflare adds its script on the way out, so it is not in the source. A content blocker stops both and the site works exactly the same.</p>
       </div>
     </section>
 
@@ -361,6 +366,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="info__h">Version</h2>
       <div class="info__copy">
         <p>You are running <code id="version-label">dev</code>. Every release is at <a href="https://github.com/cjimti/drink/releases" rel="noopener">github.com/cjimti/drink/releases</a>.</p>
+        <p>A wrong measure or a bad date is an issue at <a href="https://github.com/cjimti/drink/issues" rel="noopener">github.com/cjimti/drink/issues</a>.</p>
       </div>
       <p class="sign">© 2026 <a href="https://imti.co/" rel="noopener">Craig Johnston</a></p>
     </section>
@@ -382,7 +388,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      in the top bar, it lands at the foot of the rail. -->
 <div class="undo" id="undo" role="status" aria-live="polite" hidden></div>
 
-<nav class="tabbar" aria-label="Sections">
+<nav class="tabbar" id="tabbar" aria-label="Sections">
   <a class="tab is-active" href="#menu" data-view="menu" aria-current="page">
     <span class="tab__glyph tab__glyph--menu" aria-hidden="true"></span>
     <span class="tab__label">Menu</span>

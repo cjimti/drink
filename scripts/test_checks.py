@@ -750,6 +750,20 @@ def run_manifest(failures):
     report("icon/orientation locked", check_assets.check_manifest(locked, sw),
            True, failures)
 
+    report("shot/clean", check_assets.check_screenshots(man), False, failures)
+    shots = man["screenshots"]
+    resized = dict(man, screenshots=[dict(shots[0], sizes="1x1")] + shots[1:])
+    report("shot/wrong size", check_assets.check_screenshots(resized), True,
+           failures)
+    lost = dict(man, screenshots=[dict(s, src="assets/screens/nowhere.png")
+                                  for s in shots])
+    report("shot/no file", check_assets.check_screenshots(lost), True,
+           failures)
+    narrow = dict(man, screenshots=[s for s in shots
+                                    if s.get("form_factor") != "wide"])
+    report("shot/no wide", check_assets.check_screenshots(narrow), True,
+           failures)
+
 
 def run_worker(failures):
     """The worker keeps every safeguard, and loses each one on purpose."""
