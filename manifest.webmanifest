@@ -1,9 +1,13 @@
 {
+  "id": "/",
   "name": "few bottles",
   "short_name": "few bottles",
   "description": "Cocktail maxxing on a budget. Classic drinks from a few bottles, decoded, with a shelf that shows what you can pour.",
   "start_url": "./",
   "scope": "./",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["food", "lifestyle"],
   "display": "standalone",
   "background_color": "#121211",
   "theme_color": "#121211",
@@ -13,5 +17,9 @@
     { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "assets/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
     { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "screenshots": [
+    { "src": "assets/screens/menu-phone.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "The menu on a phone, a Martini open on its recipe" },
+    { "src": "assets/screens/menu-laptop.png", "sizes": "2560x1600", "type": "image/png", "form_factor": "wide", "label": "The menu on a laptop, a Martini open in the side panel" }
   ]
 }

@@ -272,7 +272,6 @@
   /* The last token of a code is one word: a glass, then any garnishes
      packed onto it. Longest match first, or `ccin` reads as c + i + n. */
   function readServe(serve) {
-    var glass = glassBy[serve[0]];
     var rest = serve.slice(1);
     var found = [];
 
@@ -287,9 +286,22 @@
     }
 
     return {
-      glass: glass ? glass.label : serve[0],
-      gloss: glass ? glass.gloss : '',
       garnish: found
+    };
+  }
+
+  /* The glass a drink names, and the gloss beside it. A built drink in
+     the bare highball is sparkling wine topped into a dry glass, since a
+     fizz is shaken, and that glass has its own words: the card writes h,
+     and most people pour it into a flute. llms.py serve_line reads the
+     same two fields, so the pages, the dump and the cards agree. */
+  function glassFor(d) {
+    var glass = glassBy[d.serve[0]];
+    if (!glass) return { label: d.serve[0], gloss: '' };
+    var built = d.method === 'built' && glass.label_built;
+    return {
+      label: built ? glass.label_built : glass.label,
+      gloss: (built ? glass.gloss_built : glass.gloss) || ''
     };
   }
 
@@ -1133,12 +1145,18 @@
       html += shelfChip(mode === 'shared' && !filter.unlock, 'data-shared="1"', 'Shared menu',
         pourableCount(shared.have));
     }
-    if (filter.unlock) {
-      html += shelfChip(true, 'data-unlock="' + esc(filter.unlock) + '"',
-        'With ' + rowName({ ids: [filter.unlock] }),
-        unlockedBy([filter.unlock], heldNow()).length);
-    }
+    if (filter.unlock) html += unlockLabel();
     return html;
+  }
+
+  /* The list a +N opened. It says which list is up and is not a control:
+     nothing turns it off but another menu, so it is a label in chip
+     clothes, out of the tab order and silent about being pressed. */
+  function unlockLabel() {
+    return '<span class="chip chip--pour is-on chip--label">' +
+      '<span aria-hidden="true">\u2713 </span>' +
+      esc('With ' + rowName({ ids: [filter.unlock] })) + ' \u00b7 ' +
+      unlockedBy([filter.unlock], heldNow()).length + '</span>';
   }
 
   /* Which bottles get a chip in the filter row. Anything else can still be
@@ -1336,7 +1354,7 @@
         esc(methodLine(d.method, d.serve)) +
       '</span></div>' +
       '<div class="serve__row"><span class="serve__k">Glass</span><span>' +
-        esc(s.glass) + (s.gloss ? ' (' + esc(s.gloss) + ')' : '') +
+        esc(glassFor(d).label) + (glassFor(d).gloss ? ' (' + esc(glassFor(d).gloss) + ')' : '') +
       '</span></div>' +
       (s.garnish.length
         ? '<div class="serve__row"><span class="serve__k">Garnish</span><span>' +
@@ -2283,6 +2301,13 @@
     alternatives: 'Alternatives'
   };
 
+  /* A tier name that needs a line under it to be read right. Ticking an
+     alternative ticks the type, so the drink pours on it, and a shopper
+     should know it pours differently before buying one. */
+  var TIER_GLOSS = {
+    alternatives: 'A different bottle that does the same job. The drink changes and still pours.'
+  };
+
   function bottleHasNotes(i) {
     return !!(i.notes && (i.notes.copy || (i.notes.parts && i.notes.parts.length)));
   }
@@ -2308,7 +2333,8 @@
     TIER_ORDER.forEach(function (tier) {
       var list = byTier[tier];
       if (!list) return;
-      html += '<h3 class="brands__tier">' + esc(TIER_LABEL[tier]) + '</h3>';
+      html += '<h3 class="brands__tier">' + esc(TIER_LABEL[tier]) + '</h3>' +
+        (TIER_GLOSS[tier] ? '<p class="brands__gloss">' + esc(TIER_GLOSS[tier]) + '</p>' : '');
       list.forEach(function (b) {
         var on = !lock && !!own[b.id];
         var meta = brandMeta(b);
@@ -2491,8 +2517,8 @@
     var lock = !editing();
     var html = '<section class="next' + (lock ? ' is-locked' : '') +
       '"><h2 class="next__h">' + esc(nextHead(top)) + '</h2>' +
-      '<p class="next__lead">Choose from recommended bottles to grow ' +
-      'your menu.</p>';
+      '<p class="next__lead">The bottles that add the most drinks, and ' +
+      'what each one opens.</p>';
 
     top.forEach(function (r) { html += nextRow(r, held, lock); });
 
@@ -3946,6 +3972,26 @@
     if (!r.ok) throw new Error(r.url);
     return r.json();
   }
+
+  /* The skip links. A plain #main would be a hash, and a hash here is a
+     route that opens the Menu, so the jump is done by hand: focus goes to
+     the target and the address is left alone. The target is focusable
+     only until focus leaves it; left on for good, a tap on a button
+     Safari does not focus would hand focus to the whole scroller. Wired
+     before the data arrives, since a keyboard can reach them while the
+     menu is pouring. */
+  function skipTo(e) {
+    var to = document.getElementById(e.currentTarget.getAttribute('href').slice(1));
+    if (!to) return;
+    e.preventDefault();
+    to.setAttribute('tabindex', '-1');
+    to.addEventListener('blur', function () { to.removeAttribute('tabindex'); }, { once: true });
+    to.focus();
+  }
+
+  document.querySelectorAll('.skip').forEach(function (a) {
+    a.addEventListener('click', skipTo);
+  });
 
   Promise.all([
     fetch('data/cocktails.json?v=' + versionLabel).then(jsonOf),
