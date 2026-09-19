@@ -1,9 +1,11 @@
 # fewbottles.com
 #
 # The interactive menu is a single page. Every drink also has a page of
-# its own at /drink/<id>/, listed in the sitemap. The drinks themselves
-# live in JSON, and a decoded markdown dump is at /llms-full.txt. Agents
-# should start at /llms.txt.
+# its own at /drink/<id>/, indexed at /drink/ and listed in the sitemap,
+# with a page per section of the printed card at /menu/<section>/ and one
+# per shape at /shape/<pattern>/. The drinks themselves live in JSON, and
+# a decoded markdown dump is at /llms-full.txt. Agents should start at
+# /llms.txt.
 
 User-agent: *
 Allow: /

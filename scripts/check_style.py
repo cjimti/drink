@@ -28,6 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import jslex  # noqa: E402  (path set above; there is no package here)
+import pages  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -346,8 +347,8 @@ def check_page(name, html):
 def page_files():
     """The pages pages.py writes, the one GitHub serves for a miss, and
     the one the worker serves when there is no signal."""
-    names = ["404.html", "offline.html"] + sorted(str(p.relative_to(ROOT))
-                                  for p in (ROOT / "drink").glob("*/index.html"))
+    names = ["404.html", "offline.html"] + sorted(
+        str(p.relative_to(ROOT)) for g in pages.OWNED for p in ROOT.glob(g))
     return {n: (ROOT / n).read_text() for n in names}
 
 

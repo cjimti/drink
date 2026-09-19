@@ -14,17 +14,24 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import glasses  # noqa: E402  (path set above; there is no package here)
 import jslex  # noqa: E402
+import pages  # noqa: E402
 import stage  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
 
 def check_files(html):
-    """Every local href/src in index.html points at a file that exists."""
+    """Every local href/src in index.html points at a file that exists.
+
+    Resolved by site_path, which reads `/drink/` as the folder's own
+    index.html: the front page links the hubs by an address, not by a
+    relative name.
+    """
     refs = re.findall(r'(?:href|src)="([^"]+)"', html)
-    local = [r for r in refs if not r.startswith(("http:", "https:", "//", "#", "data:"))]
+    local = [(r, site_path("index.html", r)) for r in refs]
+    local = [(r, path) for r, path in local if path is not None]
     missing = [f"{r}: index.html asks for it, it is not in the repo"
-               for r in local if not (ROOT / r.split("?")[0]).exists()]
+               for r, path in local if not (ROOT / path).exists()]
     return missing, len(local)
 
 
@@ -476,6 +483,12 @@ def check_stamps(texts):
     errs += [f"{name}: carries a ?v= already; the deploy writes that, the "
              f"tree never does" for name, text in sorted(texts.items())
              if name.endswith(".html") and re.search(r"\.(?:css|js)\?v=", text)]
+    landed = {name for name, _, _ in stage.stamps("v0", set(texts))}
+    errs += [f"{name}: links the stylesheet and no stamp lands on it, so a "
+             f"release serves it against the edge's old app.css"
+             for name, text in sorted(texts.items())
+             if name.endswith(".html") and name not in landed
+             and re.search(r'href="/?assets/app\.css"', text)]
     return errs
 
 
@@ -558,6 +571,17 @@ def references(texts, sw, man):
     return [(name, path) for name, path in out if path is not None]
 
 
+def check_present(refs):
+    """Every local thing the site points at is a file that is here.
+
+    check_files says it for index.html alone. The pages pages.py writes
+    link each other, so a section or a shape with no page written is a
+    404 in the middle of the site, and the sitemap would list it.
+    """
+    return sorted({f"{name} points at {path}, which is not in the repo"
+                   for name, path in refs if not (ROOT / path).exists()})
+
+
 def check_served(refs, served):
     """Every local thing the site points at is a thing the deploy uploads.
 
@@ -593,7 +617,7 @@ def served_texts():
              "assets/app.css", "assets/app.js", "llms.txt", "llms-full.txt",
              "humans.txt", "robots.txt", "sitemap.xml"]
     names += sorted(str(f.relative_to(ROOT))
-                    for f in ROOT.glob("drink/*/index.html"))
+                    for g in pages.OWNED for f in ROOT.glob(g))
     return {n: (ROOT / n).read_text() for n in names}
 
 
@@ -619,6 +643,7 @@ def main():
                     "manifest.webmanifest": manifest().get("description")})),
                 ("COPY", check_title(html)),
                 ("SERVED", check_served(refs, stage.SERVED)),
+                ("MISSING", check_present(refs)),
                 ("GLASS", glass), ("FONT", fonts),
                 ("FONT", check_offsite(texts)),
                 ("ICON", check_manifest(manifest(), sw)),
@@ -642,8 +667,8 @@ def main():
     print("  data    fetched with the release, kept on its path, carried across a release")
     print("  stamps  every release stamp lands exactly once, the tree is unstamped")
     print("  words   one title in the tab and the unfurl, one description in the meta tags, the JSON-LD, the README, humans.txt and the manifest")
-    print(f"  served  {len(refs)} local reference(s) inside the "
-          f"{len(stage.SERVED)} path(s) the deploy uploads")
+    print(f"  served  {len(refs)} local reference(s) resolve to a file, "
+          f"inside the {len(stage.SERVED)} path(s) the deploy uploads")
     return 0
 
 

@@ -337,6 +337,51 @@ drops the parameter from the address. The service worker matches
 navigations with `ignoreSearch` so a shared link opens offline from the
 cached shell.
 
+## Being found
+
+A drink page is a leaf. The front page is the only page every crawler
+reaches, and every row on the Menu is written by `app.js`, so until the
+hubs existed the address a search engine reads had a hundred and
+eighty-five pages under it and no link to one of them. The sitemap
+listed them and nothing else did.
+
+So `scripts/pages.py` writes three kinds of hub beside the drink pages.
+`/drink/` is the index of every drink, A to Z, with what goes in each.
+`/menu/<family>/` is one section of the printed card. `/shape/<pattern>/`
+is one of the shapes `kin.py` files. Every hub links every other hub
+with the count of what it holds, every drink page links the section and
+the shape it belongs to, and `index.html` links `/drink/` from the Info
+tab and from the `<noscript>` fallback. That is the whole path: front
+page, index, hub, drink.
+
+Both filings are already data. `family` is the card's own section and
+`pattern` is what `kin.py` decided, so neither is worked out here and a
+third one is not invented. `leadBottle` stays in `app.js`, because the
+All view is a view and not an address.
+
+**A family id and a pattern id are stable keys now, like a cocktail id
+and a shelf bit.** They are addresses, and addresses live in other
+people's messages and in a search index. Rename one and the page moves,
+the old address answers with `404.html`, and whatever that page had is
+gone. Add a section and it gets a page; drop one and `make pages`
+deletes the page, the same way it deletes a dropped drink's.
+
+A hub carries the same head as a drink page, written by the one `meta`
+block in `pages.py`, and its own JSON-LD: a `CollectionPage` over an
+`ItemList` of what it lists, on the same `#person` and `#website` ids
+everything else uses. A drink page's `BreadcrumbList` is four steps now,
+the front page, the index, its section and the drink. The picture a hub
+link unfurls into is the site's own `assets/og.png`, because a list has
+no glass to draw. In `sitemap.xml` a hub's `lastmod` is the newest drink
+it lists, which is what the date on a list means.
+
+The hubs have no CSS of their own. They are the classes the drink pages
+and `404.html` already carry, so light, dark and print were decided
+before the first hub existed. The one rule the hubs cost is on the drink
+page: `a` is `color: inherit` with no underline everywhere on this site,
+so the eyebrow and the kin note join the group that marks a link, or the
+section and the shape read as plain words.
+
 ## The chip row
 
 The last row of chips over the Menu list is one choice: which shelf the
@@ -492,7 +537,10 @@ is the price. Do not raise a limit to make a new function fit.
   land exactly once fails the deploy before the upload.
   `check_assets.py` holds both ends: the tree carries each token once and
   no `?v=`, and every local thing the site links is inside `SERVED`, so a
-  new asset directory cannot be left off. The worker matches shell files
+  new asset directory cannot be left off. Which files take that `?v=` is
+  read off `pages.OWNED`, the one list of the pages `pages.py` writes, and
+  `check_assets.py` fails on any served page that links the stylesheet
+  with no stamp to land on. The worker matches shell files
   on the path alone for that reason. `make stage V=v9.9.9 DEST=<empty
   dir>` rehearses a release on a laptop, and prints the sha256 of every
   inline script, which the Content-Security-Policy in Cloudflare has to
