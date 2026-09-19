@@ -13,6 +13,7 @@ actual sources rather than on a fixture.
 """
 import ast
 import json
+import re
 import sys
 import tempfile
 from pathlib import Path
@@ -900,6 +901,20 @@ def run_ids(failures):
                "" if "'../x'" in said else f"said {said!r}", False, failures)
 
 
+def run_front_links(failures):
+    """The front page links the index, and a link to nothing is caught."""
+    html = (ROOT / "index.html").read_text()
+    missing, n = check_assets.check_files(html)
+    report("front/clean", missing, False, failures)
+    report("front/links the index",
+           "" if 'href="/drink/"' in html
+           else "index.html does not link the index of every drink",
+           False, failures)
+    gone, _ = check_assets.check_files(
+        html.replace('href="/drink/"', 'href="/nothing-here/"'))
+    report("front/a link to nothing", gone, True, failures)
+
+
 def run_stamps(failures):
     """Each release stamp has one place to land, and the tree is unstamped."""
     texts = check_assets.served_texts()
@@ -922,6 +937,9 @@ def run_stamps(failures):
         'href="/assets/app.css"', 'href="/assets/app.css?v=v1.4.0"')})
     report("stamp/page stamped in the tree",
            check_assets.check_stamps(tagged), True, failures)
+    loose = dict(texts, **{"guide/index.html": texts[page]})
+    report("stamp/a page no stamp lands on",
+           check_assets.check_stamps(loose), True, failures)
 
 
 def run_doc_dashes(failures):
@@ -1105,6 +1123,13 @@ def run_served(failures):
     report("served/a name with nothing behind it", check_assets.check_served(
         refs, stage.SERVED + ["asset"]), True, failures)
 
+    report("served/every reference resolves",
+           check_assets.check_present(refs), False, failures)
+    dead = dict(texts, **{page: texts[page].replace(
+        'href="/menu/', 'href="/nothing-here/')})
+    report("served/a hub link with no page", check_assets.check_present(
+        check_assets.references(dead, sw, man)), True, failures)
+
 
 PAGE = ('<html lang="en"><head><title>t</title>'
         '<meta name="description" content="d"></head>'
@@ -1143,6 +1168,8 @@ def run_pages(failures):
            "one Egg white" in texts["drink/brass-rail/index.html"], False,
            failures)
 
+    run_hubs(texts, failures)
+
     stale = dict(texts, **{next(iter(texts)): "not what pages.py writes\n"})
     report("pages/stale", pages.check_texts(stale, present), True, failures)
     run_dates(texts, failures)
@@ -1157,6 +1184,66 @@ def run_pages(failures):
     report("cards/orphan", cards.check_cards(
         want, dict(have, **{"nothing-here": ROOT / "assets" / "og.png"})),
         True, failures)
+
+
+def json_ld(html):
+    """Every JSON-LD node on a page, as data."""
+    block = re.search(r'<script type="application/ld\+json">\n(.*?)\n</script>',
+                      html, re.S)
+    return json.loads(block.group(1))["@graph"] if block else []
+
+
+def run_hubs(texts, failures):
+    """The index and one page per filing, each listing what it counts."""
+    menu, kin = llms.load("cocktails.json"), llms.load("kin.json")
+    rows = pages.hubs(menu, kin)
+    kinds = {h["kind"] for h in rows}
+    report("hubs/every filing has pages",
+           "" if kinds == {"index", "family", "shape"} else f"wrote {kinds}",
+           False, failures)
+    report("hubs/every page rendered",
+           [pages.hub_path(*pages.hub_key(h)) + "index.html" for h in rows
+            if pages.hub_path(*pages.hub_key(h)) + "index.html" not in texts],
+           False, failures)
+
+    # A section and a shape can share an id, and did: `vermouth` is both.
+    # A hub that drops its namesake from the other filing's list has the
+    # two confused.
+    section = texts["menu/vermouth/index.html"]
+    report("hubs/same id, other filing", "" if '"/shape/vermouth/"' in section
+           else "the Vermouth section does not link the Vermouth shape",
+           False, failures)
+
+    every = texts["drink/index.html"]
+    missing = [d["id"] for d in menu["cocktails"]
+               if f'href="/drink/{d["id"]}/"' not in every]
+    report("hubs/index links every drink", missing, False, failures)
+    report("hubs/a drink links its section",
+           "" if 'href="/menu/vermouth/"' in texts["drink/adonis/index.html"]
+           else "the Adonis page does not link the section it prints under",
+           False, failures)
+
+    # A crumb is a trail of addresses. One of them written relative
+    # resolves against whichever page carries it, and the trail is only
+    # right by accident.
+    loose = [f"{name} {step['item']}"
+             for name in ("drink/adonis/index.html", "menu/gin/index.html",
+                          "shape/sour/index.html", "drink/index.html")
+             for node in json_ld(texts[name])
+             if node["@type"] == "BreadcrumbList"
+             for step in node["itemListElement"]
+             if not step["item"].startswith(pages.ORIGIN + "/")]
+    report("hubs/every crumb is an address", loose, False, failures)
+
+    # A section id that is not a slug would write a folder somewhere
+    # other than where the page says it is, exactly as a drink id would.
+    bad = dict(menu, families=menu["families"] + [
+        {"id": "../x", "label": "Nope"}],
+        cocktails=[dict(menu["cocktails"][0], family="../x")])
+    said = refused(pages.render, bad)
+    report("hubs/section id outside the slug", said, True, failures)
+    report("hubs/refusal names the section",
+           "" if "family ../x" in said else f"said {said!r}", False, failures)
 
 
 def run_dates(texts, failures):
@@ -1192,9 +1279,10 @@ def run_dates(texts, failures):
         report(f"dates/page carries {key}", f'"{key}": ' not in page, False,
                failures)
     site = texts["sitemap.xml"]
+    listed = len(menu["cocktails"]) + len(pages.hubs(menu, llms.load("kin.json"))) + 1
     report("dates/sitemap lastmod",
-           site.count("<lastmod>") != len(menu["cocktails"]) + 1
-           or "<priority>" in site, False, failures)
+           site.count("<lastmod>") != listed or "<priority>" in site, False,
+           failures)
     untimed = json.loads(json.dumps(menu))
     untimed["cocktails"][0]["method"] = "thrown"
     try:
@@ -1229,7 +1317,8 @@ def main():
                 run_mixer_method,
                 run_method_line, run_glasses, run_fonts, run_manifest,
                 run_plates, run_pages, run_ids, run_lexer, run_worker,
-                run_data, run_stamps, run_description, run_doc_dashes,
+                run_data, run_front_links, run_stamps, run_description,
+                run_doc_dashes,
                 run_stage, run_inline, run_probe, run_served):
         run(failures)
     for f in failures:

@@ -26,7 +26,10 @@ import re
 import shutil
 import subprocess
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import pages  # noqa: E402  (path set above; there is no package here)
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -36,14 +39,16 @@ SERVED = [
     "index.html", "404.html", "offline.html", "sw.js",
     "manifest.webmanifest", "CNAME", ".nojekyll", "robots.txt",
     "sitemap.xml", "humans.txt", "llms.txt", "llms-full.txt",
-    "assets", "data", "drink",
+    "assets", "data",
+    # The pages pages.py writes: a drink each, the index over them, one
+    # per section of the card and one per shape.
+    "drink", "menu", "shape",
 ]
 # Inside a served directory and never on the site: the README's
 # screenshots live under assets/ beside the rest of the pictures, and
 # nothing the site serves links them.
 NOT_SERVED = ("assets/readme/",)
 
-PAGE = re.compile(r"^drink/[^/]+/index\.html$")
 # What a tag or a branch name may be before it is written into a script
 # string and an HTML attribute. A quote in a ref name would be neither.
 VERSION = re.compile(r"^[A-Za-z0-9._+/-]+$")
@@ -59,6 +64,16 @@ class StageError(Exception):
     """A stage that would upload something wrong."""
 
 
+def is_page(name):
+    """A page pages.py writes, and so one the deploy stamps.
+
+    Read off that script's own list rather than restated here: a hub
+    left out would link the stylesheet with no ?v= on it and take the
+    edge's four-hour-old copy after a release.
+    """
+    return any(PurePosixPath(name).match(g) for g in pages.OWNED)
+
+
 def stamps(version, names):
     """(file, token, replacement) for every stamp a release makes."""
     out = [
@@ -69,10 +84,10 @@ def stamps(version, names):
         ("index.html", 'src="assets/app.js"',
          f'src="assets/app.js?v={version}"'),
     ]
-    pages = ["404.html", "offline.html"]
-    pages += sorted(n for n in names if PAGE.match(n))
+    static = ["404.html", "offline.html"]
+    static += sorted(n for n in names if is_page(n))
     out += [(p, 'href="/assets/app.css"', f'href="/assets/app.css?v={version}"')
-            for p in pages]
+            for p in static]
     return out
 
 

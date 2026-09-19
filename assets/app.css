@@ -3008,16 +3008,23 @@ body.page .topbar { position: sticky; top: 0; }
   margin-top: 30px;
   color: var(--muted);
 }
+/* The links out of a page, marked: a bare anchor here inherits the
+   colour it sits in and no underline, so the section and the shape a
+   drink belongs to would read as plain words. */
 .page__all a,
 .page__key a,
-.page__foot a {
+.page__foot a,
+.page__eyebrow a,
+.page__note a {
   color: var(--bone);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .page__all a:hover,
 .page__key a:hover,
-.page__foot a:hover { color: var(--brass); }
+.page__foot a:hover,
+.page__eyebrow a:hover,
+.page__note a:hover { color: var(--brass); }
 
 .page__foot {
   max-width: var(--measure);
